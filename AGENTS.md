@@ -1,0 +1,30 @@
+# Masterland proje talimatları
+
+## Devam etmeden önce
+
+`README.md`, `docs/kararlar.md` ve `docs/acik-konular.md` dosyalarını okuyun. İlgili değişikliğin geçmişi için `docs/degisiklik-gecmisi.md` dosyasını kontrol edin.
+
+## Kararların korunması
+
+- Kullanıcının açık kararlarını ve düzeltmelerini `docs/kararlar.md` dosyasına işleyin.
+- Önerileri kullanıcı onaylamadan kesin karar olarak kaydetmeyin. Bunları `docs/acik-konular.md` içinde tutun.
+- Değişen kararın eski anlamını tarihçede koruyun. Tarih ve değişiklik nedenini ekleyin.
+- Yeni oturumların önceki sohbeti bildiğini varsaymayın; gerekli bağlamı dokümanlarda koruyun.
+- Nebula özelliklerini resmî Ultima Online veya başka shard özellikleriyle karıştırmayın. Kaynağı belirtin.
+- Şehir ve kasaba temaları netleşmeden oyun kodlamasına başlamayın; kullanıcı bu sırayı değiştirirse güncelleyin.
+
+## İletişim
+
+Kullanıcı Türkçe, kısa ve kolay taranan yanıtlar istiyor. Uzun paragraflardan kaçının. Soruları mümkün olduğunca tek tek sorun. Kalıcı dokümanlarda açık, normal Türkçe kullanın.
+
+## Ana tasarım sınırı
+
+Şehirdeki rol yalnızca görev ve eşya temasını belirler. Oyunun temel etkileşimi tahtada toplama, iki aynı eşyayı birleştirme, sipariş teslimi ve ilerlemedir. Ayrı tarif veya üretim ekranı eklemeyin. MMORPG hissi, kendiliğinden çok oyunculu altyapı veya savaş gereksinimi anlamına gelmez.
+
+## İsim referansları
+
+Yeni içerik hazırlamadan önce `docs/isim-referanslari.md` ve `data/content-reference.json` dosyalarını okuyun. Şehir, eşya, üretici, müşteri, meslek, unvan ve ilan adlarını görünen isimden türetilmiş anahtarlarla kaydetmeyin. Sabit ID ve değiştirilebilir ad anahtarı kullanın. Görevler eşya isimlerini kopyalamaz; item_id ve quantity ile referans verir. Yeni şehir sırası Skara Brae, New Haven, Cove'dur. Eski tarihçe satırlarını güncel karar sanmayın.
+
+## Aktif uygulama ve kalite
+
+Aktif kök `/Users/erdi/masterland`, uygulama `mobile/` altındadır. Eski SwiftUI oyun kaynakları proje dışına arşivlenmiştir. Expo tarafından üretilen `mobile/ios` düzenlenmez; native ayarlar config plugin ile tekrar üretilebilir tutulur. Gerçek Release simülatöründe görsel ve etkileşim kontrolü olmadan teslim edildiğini belirtmeyin. Test geçmesi pixel-perfect kabulü değildir.

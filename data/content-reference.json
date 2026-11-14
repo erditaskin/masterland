@@ -1,0 +1,1987 @@
+{
+  "version": 26,
+  "locales": {
+    "tr": {
+      "city1_name_tr": "Skara Brae",
+      "city2_name_tr": "New Haven",
+      "city3_name_tr": "Cove",
+      "city4_name_tr": "Minoc",
+      "collection1_name_tr": "Tahıl ve ekmek",
+      "collection2_name_tr": "Sebze hasadı",
+      "collection3_name_tr": "Balıkçılık",
+      "collection4_name_tr": "Odunculuk",
+      "producer1_name_tr": "Buğday Tarlası",
+      "producer2_name_tr": "Sebze tarlası",
+      "producer3_name_tr": "Balıkçı iskelesi",
+      "producer4_name_tr": "Odun yığını",
+      "profession1_name_tr": "Farmer",
+      "profession2_name_tr": "Baker",
+      "profession3_name_tr": "Fisherman",
+      "profession4_name_tr": "Carpenter",
+      "rank1_name_tr": "Apprentice",
+      "title1_name_tr": "Apprentice Farmer",
+      "title2_name_tr": "Apprentice Baker",
+      "rank2_name_tr": "Journeyman",
+      "title3_name_tr": "Journeyman Farmer",
+      "title4_name_tr": "Journeyman Baker",
+      "rank3_name_tr": "Expert",
+      "title5_name_tr": "Expert Farmer",
+      "title6_name_tr": "Expert Baker",
+      "rank4_name_tr": "Adept",
+      "title7_name_tr": "Adept Farmer",
+      "title8_name_tr": "Adept Baker",
+      "rank5_name_tr": "Master",
+      "title9_name_tr": "Master Farmer",
+      "title10_name_tr": "Master Baker",
+      "rank6_name_tr": "Grandmaster",
+      "title11_name_tr": "Grandmaster Farmer",
+      "title12_name_tr": "Grandmaster Baker",
+      "title13_name_tr": "Apprentice Fisherman",
+      "title14_name_tr": "Apprentice Carpenter",
+      "item1_name_tr": "Buğday başağı",
+      "item2_name_tr": "Buğday demeti",
+      "item3_name_tr": "Buğday çuvalı",
+      "item4_name_tr": "Un",
+      "item5_name_tr": "Hamur",
+      "item6_name_tr": "Somun ekmek",
+      "item7_name_tr": "Ekmek sepeti",
+      "item8_name_tr": "Ekmek kasası",
+      "item9_name_tr": "Havuç",
+      "item10_name_tr": "Havuç demeti",
+      "item11_name_tr": "Sebze sepeti",
+      "item12_name_tr": "Sebze kasası",
+      "item13_name_tr": "Hasat sandığı",
+      "item14_name_tr": "Hasat arabası",
+      "item15_name_tr": "Küçük balık",
+      "item16_name_tr": "Büyük balık",
+      "item17_name_tr": "Balık demeti",
+      "item18_name_tr": "Balık sepeti",
+      "item19_name_tr": "Balık kasası",
+      "item20_name_tr": "Balık fıçısı",
+      "item21_name_tr": "Dal",
+      "item22_name_tr": "Kütük",
+      "item23_name_tr": "Tahta",
+      "item24_name_tr": "Tabure",
+      "item25_name_tr": "Sandalye",
+      "item26_name_tr": "Masa",
+      "npc1_name_tr": "Çiftçi",
+      "npc2_name_tr": "Değirmenci",
+      "npc3_name_tr": "Fırıncı",
+      "npc4_name_tr": "Köylü",
+      "npc5_name_tr": "Pazarcı",
+      "npc6_name_tr": "Hancı",
+      "npc7_name_tr": "Feribotçu",
+      "npc8_name_tr": "Kasaba temsilcisi",
+      "quest1_name_tr": "İlk hasat",
+      "quest2_name_tr": "Komşunun sofrası",
+      "quest3_name_tr": "Değirmene teslim",
+      "quest4_name_tr": "İlk un",
+      "quest5_name_tr": "Hamur hazırlığı",
+      "quest6_name_tr": "İlk ekmek",
+      "quest7_name_tr": "Pazar hazırlığı",
+      "quest8_name_tr": "Fırın yeniden dolsun",
+      "quest9_name_tr": "Yolcu azığı",
+      "quest10_name_tr": "Hasat günü",
+      "quest11_name_tr": "Köy fırını",
+      "quest12_name_tr": "Ortak sofra",
+      "quest13_name_tr": "Yeni tarla siparişi",
+      "quest14_name_tr": "Feribot erzağı",
+      "quest15_name_tr": "Kasaba pazarı",
+      "quest16_name_tr": "Büyük fırın siparişi",
+      "quest17_name_tr": "Büyük hasat",
+      "quest18_name_tr": "Usta sofrası",
+      "quest19_name_tr": "Hasat şenliği hazırlığı",
+      "quest20_name_tr": "Pazarın son siparişi",
+      "quest21_name_tr": "Fırının özel siparişi",
+      "quest22_name_tr": "Kasabanın erzağı",
+      "quest23_name_tr": "Şenlik hazırlığı",
+      "quest24_name_tr": "Hasat şenliği",
+      "ui1_label_tr": "Tahta",
+      "ui2_label_tr": "Koleksiyon",
+      "ui3_label_tr": "Şehirler",
+      "ui4_label_tr": "Etkinlikler",
+      "ui5_label_tr": "Market",
+      "ui6_label_tr": "Teslim et",
+      "ui7_label_tr": "Depo",
+      "ui8_label_tr": "Seviye",
+      "ui9_label_tr": "Çırak Balıkçı",
+      "ui10_label_tr": "Çırak Marangoz",
+      "ui11_label_tr": "İskele",
+      "ui12_label_tr": "Ağlar",
+      "ui13_label_tr": "Kereste",
+      "ui14_label_tr": "Atölye",
+      "ui15_label_tr": "Tarla",
+      "ui16_label_tr": "Değirmen",
+      "ui17_label_tr": "Fırın",
+      "ui18_label_tr": "Hasat",
+      "ui19_label_tr": "Çırak Çiftçi",
+      "ui20_label_tr": "Çırak Fırıncı",
+      "ui21_label_tr": "{city_name} İlanları",
+      "ui22_label_tr": "Tüm ilanlar",
+      "ui23_label_tr": "Profil",
+      "ui24_label_tr": "Eşya bilgisi",
+      "ui25_label_tr": "Depoda: {quantity}",
+      "ui26_label_tr": "Kapasiteyi artır",
+      "ui27_label_tr": "Kullanılan: {used}/{capacity}",
+      "ui28_label_tr": "Depoya gönder",
+      "ui29_label_tr": "Yeni keşif",
+      "ui30_label_tr": "Keşif ödülü",
+      "ui31_label_tr": "Ürün grupları",
+      "item27_name_tr": "Tahıl çuvalı",
+      "item28_name_tr": "Kaliteli buğday",
+      "producer5_name_tr": "Değirmen",
+      "item29_name_tr": "Öğütülmüş tahıl",
+      "item30_name_tr": "Un torbası",
+      "item31_name_tr": "İnce un",
+      "item32_name_tr": "Özel ekmek unu",
+      "producer6_name_tr": "Süt Çiftliği",
+      "item33_name_tr": "Süt şişesi",
+      "item34_name_tr": "Krema",
+      "item35_name_tr": "Tereyağı",
+      "item36_name_tr": "Peynir",
+      "producer7_name_tr": "Meyve Bahçesi",
+      "item37_name_tr": "Elma",
+      "item38_name_tr": "Armut",
+      "item39_name_tr": "Çilek",
+      "item40_name_tr": "Meyve kasası",
+      "producer8_name_tr": "Taş Fırın",
+      "item41_name_tr": "Ekmek",
+      "item42_name_tr": "Kruvasan",
+      "item43_name_tr": "Kurabiye",
+      "item44_name_tr": "Turta",
+      "producer9_name_tr": "Pastane",
+      "item45_name_tr": "Pasta tabanı",
+      "item46_name_tr": "Krema dolgusu",
+      "item47_name_tr": "Meyveli tart",
+      "item48_name_tr": "Katlı pasta",
+      "item49_name_tr": "Buğday arabası",
+      "item50_name_tr": "Küçük un torbası",
+      "item51_name_tr": "Un çuvalı",
+      "item52_name_tr": "Un arabası",
+      "item53_name_tr": "Küçük ekmek",
+      "item54_name_tr": "Köy ekmeği",
+      "item55_name_tr": "Elma sepeti",
+      "item56_name_tr": "Elma kasası",
+      "item57_name_tr": "Elma reçeli",
+      "quest25_name_tr": "İlk hasat",
+      "quest26_name_tr": "İkinci hasat",
+      "quest27_name_tr": "İlk öğütme",
+      "quest28_name_tr": "Pazar hazırlığı",
+      "quest29_name_tr": "Fırın açıldı",
+      "quest30_name_tr": "İlk kahvaltı",
+      "app1_name_tr": "Masterland"
+    }
+  },
+  "cities": [
+    {
+      "id": "city1",
+      "order": 1,
+      "name_key": "city1_name_tr",
+      "theme": "Ekin, değirmen ve fırın",
+      "status": "Onaylı",
+      "unlock_level": 1,
+      "unlock_level_status": "Başlangıç",
+      "profession_ids": [
+        "profession1",
+        "profession2"
+      ]
+    },
+    {
+      "id": "city2",
+      "order": 2,
+      "name_key": "city2_name_tr",
+      "theme": "İleri Baker içeriği, bakery ve pastalar",
+      "status": "Onaylı",
+      "unlock_level": 2,
+      "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
+      "profession_ids": [
+        "profession2"
+      ]
+    },
+    {
+      "id": "city3",
+      "order": 3,
+      "name_key": "city3_name_tr",
+      "theme": "Balıkçılık ve marangozluk (carpentry); odunculuk giriş zinciri",
+      "status": "Onaylı",
+      "unlock_level": 5,
+      "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
+      "profession_ids": [
+        "profession3",
+        "profession4"
+      ]
+    },
+    {
+      "id": "city4",
+      "order": 4,
+      "name_key": "city4_name_tr",
+      "theme": "Madencilik ve demircilik",
+      "status": "Sıra önerisi",
+      "unlock_level": null,
+      "unlock_level_status": "Belirlenecek"
+    }
+  ],
+  "collections": [
+    {
+      "id": "collection1",
+      "city_id": "city1",
+      "producer_id": "producer1",
+      "steps": [
+        {
+          "item_id": "item1",
+          "level": 1,
+          "stage": "Ekin"
+        },
+        {
+          "item_id": "item2",
+          "level": 2,
+          "stage": "Ekin"
+        },
+        {
+          "item_id": "item3",
+          "level": 3,
+          "stage": "Ekin"
+        },
+        {
+          "item_id": "item4",
+          "level": 4,
+          "stage": "Değirmen"
+        },
+        {
+          "item_id": "item5",
+          "level": 5,
+          "stage": "Fırın"
+        },
+        {
+          "item_id": "item6",
+          "level": 6,
+          "stage": "Fırın"
+        },
+        {
+          "item_id": "item7",
+          "level": 7,
+          "stage": "Fırın"
+        },
+        {
+          "item_id": "item8",
+          "level": 8,
+          "stage": "Fırın"
+        }
+      ],
+      "status": "Önceki ortak tahıl-un-ekmek zinciri arşivi; bağımsız üretici zincirleri kararına göre yeniden düzenlenecek"
+    },
+    {
+      "id": "collection2",
+      "city_id": "city1",
+      "producer_id": "producer2",
+      "steps": [
+        {
+          "item_id": "item9",
+          "level": 1,
+          "stage": "Hasat"
+        },
+        {
+          "item_id": "item10",
+          "level": 2,
+          "stage": "Hasat"
+        },
+        {
+          "item_id": "item11",
+          "level": 3,
+          "stage": "Hasat"
+        },
+        {
+          "item_id": "item12",
+          "level": 4,
+          "stage": "Hasat"
+        },
+        {
+          "item_id": "item13",
+          "level": 5,
+          "stage": "Hasat"
+        },
+        {
+          "item_id": "item14",
+          "level": 6,
+          "stage": "Hasat"
+        }
+      ],
+      "status": "Taslak"
+    },
+    {
+      "id": "collection3",
+      "city_id": "city3",
+      "producer_id": "producer3",
+      "steps": [
+        {
+          "item_id": "item15",
+          "level": 1
+        },
+        {
+          "item_id": "item16",
+          "level": 2
+        },
+        {
+          "item_id": "item17",
+          "level": 3
+        },
+        {
+          "item_id": "item18",
+          "level": 4
+        },
+        {
+          "item_id": "item19",
+          "level": 5
+        },
+        {
+          "item_id": "item20",
+          "level": 6
+        }
+      ],
+      "status": "Onaylı zincir"
+    },
+    {
+      "id": "collection4",
+      "city_id": "city3",
+      "producer_id": "producer4",
+      "steps": [
+        {
+          "item_id": "item21",
+          "level": 1
+        },
+        {
+          "item_id": "item22",
+          "level": 2
+        },
+        {
+          "item_id": "item23",
+          "level": 3
+        },
+        {
+          "item_id": "item24",
+          "level": 4
+        },
+        {
+          "item_id": "item25",
+          "level": 5
+        },
+        {
+          "item_id": "item26",
+          "level": 6
+        }
+      ],
+      "status": "Onaylı zincir"
+    }
+  ],
+  "quests": [
+    {
+      "id": "quest1",
+      "city_id": "city1",
+      "order": 1,
+      "name_key": "quest1_name_tr",
+      "npc_id": "npc1",
+      "requirements": [
+        {
+          "item_id": "item2",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest2",
+      "city_id": "city1",
+      "order": 2,
+      "name_key": "quest2_name_tr",
+      "npc_id": "npc4",
+      "requirements": [
+        {
+          "item_id": "item10",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [
+        "quest1"
+      ],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest3",
+      "city_id": "city1",
+      "order": 3,
+      "name_key": "quest3_name_tr",
+      "npc_id": "npc2",
+      "requirements": [
+        {
+          "item_id": "item3",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [
+        "quest2"
+      ],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest4",
+      "city_id": "city1",
+      "order": 4,
+      "name_key": "quest4_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item4",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [
+        "quest3"
+      ],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest5",
+      "city_id": "city1",
+      "order": 5,
+      "name_key": "quest5_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item5",
+          "quantity": 1
+        },
+        {
+          "item_id": "item10",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [
+        "quest4"
+      ],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest6",
+      "city_id": "city1",
+      "order": 6,
+      "name_key": "quest6_name_tr",
+      "npc_id": "npc6",
+      "requirements": [
+        {
+          "item_id": "item6",
+          "quantity": 1
+        },
+        {
+          "item_id": "item11",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [
+        "quest5"
+      ],
+      "grants_title_ids": [
+        "title1",
+        "title2"
+      ],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Taslak",
+      "quest_type": "intro",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest7",
+      "city_id": "city1",
+      "order": 7,
+      "name_key": "quest7_name_tr",
+      "npc_id": "npc5",
+      "requirements": [
+        {
+          "item_id": "item3",
+          "quantity": 1
+        },
+        {
+          "item_id": "item11",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest8",
+      "city_id": "city1",
+      "order": 8,
+      "name_key": "quest8_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item5",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest9",
+      "city_id": "city1",
+      "order": 9,
+      "name_key": "quest9_name_tr",
+      "npc_id": "npc7",
+      "requirements": [
+        {
+          "item_id": "item6",
+          "quantity": 1
+        },
+        {
+          "item_id": "item12",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest10",
+      "city_id": "city1",
+      "order": 10,
+      "name_key": "quest10_name_tr",
+      "npc_id": "npc1",
+      "requirements": [
+        {
+          "item_id": "item12",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest11",
+      "city_id": "city1",
+      "order": 11,
+      "name_key": "quest11_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item6",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest12",
+      "city_id": "city1",
+      "order": 12,
+      "name_key": "quest12_name_tr",
+      "npc_id": "npc6",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 1
+        },
+        {
+          "item_id": "item12",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest13",
+      "city_id": "city1",
+      "order": 13,
+      "name_key": "quest13_name_tr",
+      "npc_id": "npc5",
+      "requirements": [
+        {
+          "item_id": "item13",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest14",
+      "city_id": "city1",
+      "order": 14,
+      "name_key": "quest14_name_tr",
+      "npc_id": "npc7",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 1
+        },
+        {
+          "item_id": "item11",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest15",
+      "city_id": "city1",
+      "order": 15,
+      "name_key": "quest15_name_tr",
+      "npc_id": "npc5",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 1
+        },
+        {
+          "item_id": "item13",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest16",
+      "city_id": "city1",
+      "order": 16,
+      "name_key": "quest16_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest17",
+      "city_id": "city1",
+      "order": 17,
+      "name_key": "quest17_name_tr",
+      "npc_id": "npc1",
+      "requirements": [
+        {
+          "item_id": "item14",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest18",
+      "city_id": "city1",
+      "order": 18,
+      "name_key": "quest18_name_tr",
+      "npc_id": "npc6",
+      "requirements": [
+        {
+          "item_id": "item8",
+          "quantity": 1
+        },
+        {
+          "item_id": "item13",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest19",
+      "city_id": "city1",
+      "order": 19,
+      "name_key": "quest19_name_tr",
+      "npc_id": "npc8",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 1
+        },
+        {
+          "item_id": "item14",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest20",
+      "city_id": "city1",
+      "order": 20,
+      "name_key": "quest20_name_tr",
+      "npc_id": "npc5",
+      "requirements": [
+        {
+          "item_id": "item12",
+          "quantity": 2
+        },
+        {
+          "item_id": "item13",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest21",
+      "city_id": "city1",
+      "order": 21,
+      "name_key": "quest21_name_tr",
+      "npc_id": "npc3",
+      "requirements": [
+        {
+          "item_id": "item8",
+          "quantity": 1
+        },
+        {
+          "item_id": "item6",
+          "quantity": 2
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest22",
+      "city_id": "city1",
+      "order": 22,
+      "name_key": "quest22_name_tr",
+      "npc_id": "npc8",
+      "requirements": [
+        {
+          "item_id": "item8",
+          "quantity": 1
+        },
+        {
+          "item_id": "item14",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest23",
+      "city_id": "city1",
+      "order": 23,
+      "name_key": "quest23_name_tr",
+      "npc_id": "npc6",
+      "requirements": [
+        {
+          "item_id": "item7",
+          "quantity": 2
+        },
+        {
+          "item_id": "item13",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    },
+    {
+      "id": "quest24",
+      "city_id": "city1",
+      "order": 24,
+      "name_key": "quest24_name_tr",
+      "npc_id": "npc8",
+      "requirements": [
+        {
+          "item_id": "item8",
+          "quantity": 2
+        },
+        {
+          "item_id": "item14",
+          "quantity": 1
+        }
+      ],
+      "prerequisite_ids": [],
+      "grants_title_ids": [],
+      "unlock_city_id": null,
+      "gold": null,
+      "xp": null,
+      "status": "Yeni level ve ustalık modeline uyarlanacak örnek sipariş",
+      "quest_type": "repeatable_template",
+      "min_player_level": null,
+      "min_mastery_rank_id": null,
+      "reward_scaling_status": "Level, eşya maliyeti ve ustalık gereksinimiyle belirlenecek",
+      "content_review_required": "Yeni bağımsız üretici zincirlerine göre ürün eşlemesi gözden geçirilecek"
+    }
+  ],
+  "milestone_policy": {
+    "city1": {
+      "after_quest_id": "quest6",
+      "grants_title_ids": [
+        "title1",
+        "title2"
+      ],
+      "status": "Onaylı eşik; görev içeriği taslak"
+    },
+    "city3": {
+      "after_intro_quest_count": 6,
+      "grants_title_ids": [
+        "title13",
+        "title14"
+      ],
+      "status": "Onaylı"
+    }
+  },
+  "notes": [
+    "ID sabittir; order değişebilir. Anahtarlar görünen isimden üretilmez.",
+    "Şehir adı bütünleşik görev metinlerine gömülmez.",
+    "Önceki Excel v1 arşivdir: 24 görevde Grandmaster ve son görevle city2 açılması kuralı geçersizdir. Güncel model docs/ilerleme-modeli.md içindedir."
+  ],
+  "progression": {
+    "city_unlock_rule": "player_level",
+    "city_completion_required": false,
+    "unlocked_cities_revisitable": true,
+    "mastery_scope": [
+      "profession_id"
+    ],
+    "mastery_separate_from_player_level": true,
+    "mastery_thresholds": null,
+    "orders": {
+      "repeatable": true,
+      "scale_with_player_level": true,
+      "respect_mastery_requirements": true,
+      "gold_and_xp_scaling": "Belirlenecek",
+      "scale_with_profession_mastery": true,
+      "reward_scaling_dimensions": [
+        "player_level",
+        "profession_mastery",
+        "order_effort"
+      ]
+    },
+    "intro_mastery": "İlk altı görev Apprentice verir; daha yüksek unvanlar sabit kısa görev sırasına bağlı değildir.",
+    "former_duration_targets": "1, 3, 7, 14 gün eğrisi şehir bitirme şartı olmaktan çıkarıldı; şehir açılma level ve XP eğrisine uyarlanacak. Tam zaman hedefleri açık.",
+    "mastery_continuity": {
+      "shared_profession_carries_between_cities": true,
+      "status": "New Haven daha iyi Baker içeriği açıklamasına dayanan tasarım yorumu",
+      "city_specific_content_gates": true
+    },
+    "xp_spendable": false
+  },
+  "ui": {
+    "id": "ui1",
+    "active_city_id": "city1",
+    "reference_asset": "assets/references/ui-reference-01.jpeg",
+    "proposal_asset": "assets/ui/ui-city1-v6.png",
+    "status": "Görsel tasarım önerisi",
+    "grid": {
+      "columns": 6,
+      "rows": 9,
+      "status": "Yalnızca v3 görselinde 54 kare önerisi; nihai tahta kapasitesi ve ekonomi onaylanmadı",
+      "previous_visual_grid": {
+        "columns": 6,
+        "rows": 7
+      }
+    },
+    "display_numbers_status": "Örnek değerler; ekonomi parametresi değildir",
+    "city_variants": [
+      {
+        "city_id": "city1",
+        "asset": "assets/ui/ui-city1-v6.png",
+        "standard_version": 6
+      },
+      {
+        "city_id": "city3",
+        "asset": "assets/ui/ui-city3-v2.png",
+        "standard_version": 1,
+        "status": "Önceki görsel; yeni standarda uyarlanacak"
+      }
+    ],
+    "item_spawn_bar": {
+      "action": "spawn_item",
+      "equal_size": true,
+      "compact": true,
+      "horizontal_scroll": true,
+      "fixed_button_limit": false,
+      "position": "İlan panosu ile tahta arasında",
+      "labels_by_city": {
+        "city1": [
+          "ui15_label_tr",
+          "ui16_label_tr",
+          "ui17_label_tr",
+          "ui18_label_tr"
+        ],
+        "city3": [
+          "ui11_label_tr",
+          "ui12_label_tr",
+          "ui13_label_tr",
+          "ui14_label_tr"
+        ]
+      },
+      "outputs_and_energy_costs": "Her düğmenin çıktı havuzu, açılma eşiği ve dayanıklılık maliyeti ayrıca belirlenecek",
+      "board_generators_visible": false,
+      "visible_text_labels": false,
+      "both_navigation_arrows": true,
+      "requires_energy_when_ready": true,
+      "time_gated_availability": true,
+      "ready_display": "Enerji simgesi ve kullanım maliyeti",
+      "waiting_display": "Saat simgesi, sayaç ve soluk ikon",
+      "recharge_parameters": null,
+      "energy_costs": null
+    },
+    "item_detail": {
+      "bottom_bar_visible": false,
+      "access": "Üst bölümde seçili eşyaya ait bilgi düğmesi",
+      "label_key": null
+    },
+    "storage": {
+      "bottom_nav": true,
+      "label_key": "ui7_label_tr",
+      "purpose": "Fazla ürünleri saklama",
+      "slot_capacity_display": true
+    },
+    "main_nav_label_keys": [
+      "ui1_label_tr",
+      "ui2_label_tr",
+      "ui3_label_tr",
+      "ui7_label_tr",
+      "ui5_label_tr"
+    ],
+    "noticeboard": {
+      "city_title_template_key": "ui21_label_tr",
+      "buyer_portraits": false,
+      "buyer_names": false,
+      "show_quantity_progress": true,
+      "show_gold_and_xp": true,
+      "ready_order_action_key": "ui6_label_tr",
+      "all_orders_action_key": "ui22_label_tr",
+      "recognizable_wood_backing": true,
+      "product_art_priority": true
+    },
+    "titles": {
+      "main_board_visible": false,
+      "access": [
+        "profile",
+        "city_all_orders"
+      ],
+      "goal_rewards_in_all_orders": true
+    },
+    "layout": {
+      "priority": "Tahta yüksekliği",
+      "compact_scene_header": false,
+      "compact_noticeboard": true,
+      "icon_only_spawn_buttons": true,
+      "board_height_share_approx": 0.6,
+      "scene_rule": "Özgün kullanıcının referansındaki belirgin şehir manzarası korunur; dar şeride indirilmez.",
+      "space_savings_from": [
+        "İlan kartları",
+        "İlan başlığındaki tekrarlar",
+        "Yazısız küçük üretim düğmeleri",
+        "Boşluklar ve çerçeveler"
+      ],
+      "integration": "Şehir ön planına doğru yükseltilmiş ortak ahşap ilan panosu, sıkı üretim rafı ve uzun tahta",
+      "producer_group_spacing": "Küçük eşit ikonlar, tek kompakt grup, iki yanda ok"
+    },
+    "collection": {
+      "bottom_nav": true,
+      "label_key": "ui2_label_tr",
+      "city_pages": true,
+      "default_tab": "current_city_id",
+      "group_by": "collection_id",
+      "first_discovery_rewards": true
+    },
+    "latest_city1_mockup": "assets/ui/ui-city1-v10.png",
+    "board_geometry": {
+      "cell_aspect_ratio": 1,
+      "centered": true,
+      "full_width_required": false,
+      "city_themed_side_decoration": true,
+      "decoration_overlaps_cells": false,
+      "status": "user_requested",
+      "mockup_grid": "6x9 proposal",
+      "narrow_board_v8_rejected": true,
+      "surface": "flat subtle checkerboard",
+      "border": "thin wood",
+      "side_decoration": "narrow natural farm environment; restrained lower corner plants",
+      "latest_mockup_status": "proposal_pending_review",
+      "all_rows_same_height": true,
+      "last_row_must_not_be_clipped": true,
+      "layout_formula": "s=min(available_width/columns,available_height/rows); width=columns*s; height=rows*s",
+      "raster_mockup_is_not_geometry_validation": true
+    },
+    "producer_touch_requirements": {
+      "near_square": true,
+      "stable_hitboxes_during_rapid_taps": true,
+      "separate_scroll_arrow_hitboxes": true,
+      "minimum_target_pt": 44,
+      "implementation_test_pending": true
+    },
+    "shared_city_template": {
+      "asset": "assets/ui/ui-city1-v10.png",
+      "status": "approved",
+      "scope": "all_cities",
+      "theme_changes": [
+        "city_scene",
+        "items",
+        "producer_icons",
+        "environment_decoration"
+      ],
+      "economy_values_approved_by_visual": false
+    },
+    "interaction_standard": {
+      "all_buttons_have_animated_feedback": true,
+      "short_soft_interaction_audio": true,
+      "rapid_taps_must_remain_responsive": true,
+      "animations_must_not_move_hitboxes": true,
+      "final_audio_assets_selected": false
+    },
+    "native_acceptance": {
+      "initial_native_visual_rejected": true,
+      "pixel_perfect_fidelity_required": true,
+      "approved_target": "assets/ui/ui-city1-v10.png",
+      "fullscreen_required": true,
+      "mechanical_tests_are_not_visual_acceptance": true,
+      "current_revision_visual_status": "pending_user_review",
+      "measured_pixel_equivalence": false,
+      "approved_source_priority": "User screenshot 2026-11-14 at 22.05.27.png matches V10",
+      "scene_design_size": [
+        933,
+        246
+      ],
+      "scene_absorbs_extra_viewport_height": false,
+      "environment_nonuniform_stretch_allowed": false,
+      "comparison_image": "assets/ui/skara-fidelity-native.png",
+      "visual_review_save_isolated": true,
+      "archived_panorama_roi_mean_absolute_rgb_error": 1.8225324295459058,
+      "single_background_required": true,
+      "background_layer_count": 1,
+      "background_asset": "CityBackground1",
+      "background_scaling": "uniform_cover",
+      "background_ignores_safe_area": true,
+      "safe_area_applies_only_to_controls": true,
+      "previous_roi_metric_valid_for_current_build": false
+    },
+    "city_background_assets": {
+      "city1": "CityBackground1"
+    },
+    "secondary_pages": {
+      "presentation": "full_screen",
+      "scrollable": true,
+      "surface": "parchment_wood_frame",
+      "close_position": "top_right"
+    },
+    "order_cards": {
+      "visible_count": 3,
+      "equal_width": true,
+      "horizontal_scroll": true,
+      "preview_item_count": 1,
+      "additional_items_label": "+N daha",
+      "prototype_repeat_order_count": 5
+    },
+    "selection_feedback": {
+      "scale_on_press": false,
+      "selected_cell_border": true,
+      "native_drag_preview": false
+    },
+    "active_implementation": {
+      "framework": "React Native / Expo",
+      "path": "mobile",
+      "legacy_path": null,
+      "bundle_id": "com.erditaskin.masterland",
+      "user_authorized": "2026-11-15",
+      "visual_acceptance": "pending_user_review",
+      "legacy_status": "SwiftUI game sources archived outside repository"
+    },
+    "typography_candidate": {
+      "headings": "Alegreya 600",
+      "body": "Nunito 600",
+      "numbers": "Nunito 800",
+      "turkish_glyphs_verified": true,
+      "status": "implemented_for_review"
+    },
+    "board_input": {
+      "tap": "select",
+      "drag_equal": "merge",
+      "drag_empty": "move",
+      "invalid_release": "return_to_origin",
+      "selected_item_scale": 1,
+      "drag_runtime": "UI thread"
+    }
+  },
+  "storage": {
+    "purpose": "Tahtadaki fazla ürünleri saklama",
+    "board_transfer_mode": "manual",
+    "capacity_scales_with_level_and_orders": true,
+    "expansion": {
+      "currencies": [
+        "gold",
+        "diamonds"
+      ],
+      "level_and_order_scaling": true,
+      "capacity_scope": null,
+      "slot_model": null,
+      "prices": null,
+      "currency_payment_mode": "Belirlenecek; alternatif altın veya elmas yolları önerisi"
+    },
+    "stacking": {
+      "status": "Kullanıcı olasılık olarak belirtti; karar bekliyor",
+      "same_item_may_share_slot": true,
+      "limit": null
+    },
+    "city_pages": null,
+    "order_consumption_source": null,
+    "notes": [
+      "Şehir ve ürün grubu kartları koleksiyon görünümüne aittir. Depoda şehir sekmesi gereksinimi artık kesin karar değildir.",
+      "İlanın tahtadan, depodan veya ikisinin birleşiminden tüketimi son düzeltme sonrası netleştirilecek."
+    ]
+  },
+  "collection_catalog": {
+    "purpose": "Açılmış ürünlerin kalıcı keşif kartelası",
+    "city_pages": true,
+    "default_city": "current_city_id",
+    "group_by": "producer_id",
+    "visibility": "Şehir ve level ile erişilen ürün grupları",
+    "consumable_inventory": false,
+    "discovery_persists": true,
+    "new_item_reward": {
+      "trigger": "first_item_unlock_in_collection",
+      "xp": {
+        "granted": true,
+        "amount": null
+      },
+      "diamonds": {
+        "chance_based": true,
+        "probability": null,
+        "amount": null
+      },
+      "gold": {
+        "status": "Önceki altın ödülü açıklaması son XP örneğiyle değişti; ayrıca altın verilip verilmeyeceği açık"
+      },
+      "repeat_reward_for_same_item": false
+    },
+    "stock_count_display": {
+      "status": "İsteğe bağlı yardımcı bilgi; stok kaynağı değildir"
+    },
+    "product_group_capacity": {
+      "scope": [
+        "city_id",
+        "producer_id"
+      ],
+      "progression_basis": "Genel level koşulu ve altın/elmasla satın alınan ürün grubu slotu",
+      "new_item_requires_available_capacity": true,
+      "unlock_requirements": [
+        "required_player_level_met",
+        "product_group_slot_purchased"
+      ],
+      "xp_spent": false,
+      "purchase_currencies": [
+        "gold",
+        "diamonds"
+      ],
+      "payment_mode": null,
+      "locked_item_display": "?",
+      "unlocked_item_can_appear_on_board": true,
+      "existing_discoveries_removed_when_full": false,
+      "thresholds": null,
+      "example": {
+        "status": "Kullanıcının açıklayıcı örneği; gerçek item listesi veya eşik kararı değildir",
+        "level1": "Saman; Farm kapasitesi 1",
+        "level2": "Maydanoz leveli yeterli; slot alınmadıysa ? ve tahta çıktısına kapalı",
+        "after_slot_purchase": "Maydanoz açılır; tahtada gelebilir"
+      },
+      "terminology": "Üreticinin yeni ürün türlerini açan kapasitesi; depo slotu değildir."
+    }
+  },
+  "producer_design": {
+    "terminology": "Item grubu, tıklandığında tahtaya ürün çıkaran üreticidir.",
+    "merge_rule": "İki aynı eşya kendi üreticisinin zincirinde bir üst ürüne dönüşür.",
+    "cross_producer_recipes": false,
+    "producer_input_dependencies": false,
+    "cross_producer_order_requirements": true,
+    "candidate_count_per_city": "5–6; bütün üreticilerin ilk anda açık olması şart değil",
+    "plans": [
+      {
+        "producer_id": "producer1",
+        "name_key": "producer1_name_tr",
+        "candidate_chain_item_ids": [
+          "item1",
+          "item2",
+          "item27",
+          "item49"
+        ],
+        "chain_status": "İnceleme taslağı; sıra onaylı, basamaklar korunuyor",
+        "city_id": "city1",
+        "city_assignment_proposal": "city1",
+        "city_assignment_status": "approved"
+      },
+      {
+        "producer_id": "producer5",
+        "name_key": "producer5_name_tr",
+        "candidate_chain_item_ids": [
+          "item29",
+          "item50",
+          "item51",
+          "item52"
+        ],
+        "chain_status": "İnceleme taslağı; sıra onaylı, basamaklar korunuyor",
+        "city_id": "city1",
+        "city_assignment_proposal": "city1",
+        "city_assignment_status": "approved"
+      },
+      {
+        "producer_id": "producer6",
+        "name_key": "producer6_name_tr",
+        "candidate_chain_item_ids": [
+          "item33",
+          "item34",
+          "item35",
+          "item36"
+        ],
+        "chain_status": "İnceleme taslağı; sıra onaylı, basamaklar korunuyor",
+        "city_id": "city1",
+        "city_assignment_proposal": "city1",
+        "city_assignment_status": "approved"
+      },
+      {
+        "producer_id": "producer7",
+        "name_key": "producer7_name_tr",
+        "candidate_chain_item_ids": [
+          "item37",
+          "item55",
+          "item56",
+          "item57"
+        ],
+        "chain_status": "İnceleme taslağı; sıra onaylı, basamaklar korunuyor",
+        "city_id": "city1",
+        "city_assignment_proposal": "city1",
+        "city_assignment_status": "approved"
+      },
+      {
+        "producer_id": "producer8",
+        "name_key": "producer8_name_tr",
+        "candidate_chain_item_ids": [
+          "item53",
+          "item6",
+          "item54",
+          "item7"
+        ],
+        "chain_status": "İnceleme taslağı; sıra onaylı, basamaklar korunuyor",
+        "city_id": "city1",
+        "city_assignment_proposal": "city1",
+        "city_assignment_status": "approved"
+      },
+      {
+        "producer_id": "producer9",
+        "name_key": "producer9_name_tr",
+        "candidate_chain_item_ids": [
+          "item45",
+          "item46",
+          "item47",
+          "item48"
+        ],
+        "chain_status": "Kullanıcının örnek içeriği; sıra ve nihai basamaklar onay bekliyor",
+        "city_id": null,
+        "city_assignment_proposal": "city2",
+        "city_assignment_status": "Öneri; şehir dağılımı henüz onaylanmadı"
+      }
+    ],
+    "material_pool_candidates": {
+      "grain": [
+        "Buğday",
+        "Arpa",
+        "Yulaf",
+        "Mısır"
+      ],
+      "dairy": [
+        "Süt",
+        "Krema",
+        "Tereyağı",
+        "Peynir"
+      ],
+      "fruit": [
+        "Elma",
+        "Armut",
+        "Çilek",
+        "Kiraz"
+      ],
+      "sweetener": [
+        "Bal",
+        "Şeker",
+        "Pekmez"
+      ],
+      "baking": [
+        "Maya",
+        "Un",
+        "Yumurta",
+        "Tuz"
+      ],
+      "decoration": [
+        "Çikolata",
+        "Vanilya",
+        "Badem",
+        "Fındık"
+      ]
+    },
+    "material_pool_status": "İçerik havuzu; tamamı aktif ürün veya yeni üretici değildir"
+  },
+  "city1_opening_plan": {
+    "producer_order_status": "approved",
+    "chain_status": "review_draft",
+    "economy_status": "proposal",
+    "producers": [
+      {
+        "producer_id": "producer1",
+        "order": 1,
+        "order_status": "approved",
+        "required_player_level": 1,
+        "unlock_gold": 0,
+        "economy_status": "proposal",
+        "chain_item_ids": [
+          "item1",
+          "item2",
+          "item27",
+          "item49"
+        ],
+        "chain_status": "review_draft_preserved_from_previous_table",
+        "product_unlocks": [
+          {
+            "item_id": "item1",
+            "tier": 1,
+            "required_player_level": 1,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": false,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item2",
+            "tier": 2,
+            "required_player_level": 1,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item27",
+            "tier": 3,
+            "required_player_level": 3,
+            "gold_cost": 150,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item49",
+            "tier": 4,
+            "required_player_level": 6,
+            "gold_cost": 400,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          }
+        ]
+      },
+      {
+        "producer_id": "producer5",
+        "order": 2,
+        "order_status": "approved",
+        "required_player_level": 2,
+        "unlock_gold": 100,
+        "economy_status": "proposal",
+        "chain_item_ids": [
+          "item29",
+          "item50",
+          "item51",
+          "item52"
+        ],
+        "chain_status": "review_draft_preserved_from_previous_table",
+        "product_unlocks": [
+          {
+            "item_id": "item29",
+            "tier": 1,
+            "required_player_level": 2,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": false,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item50",
+            "tier": 2,
+            "required_player_level": 2,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item51",
+            "tier": 3,
+            "required_player_level": 4,
+            "gold_cost": 200,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item52",
+            "tier": 4,
+            "required_player_level": 7,
+            "gold_cost": 600,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          }
+        ]
+      },
+      {
+        "producer_id": "producer8",
+        "order": 3,
+        "order_status": "approved",
+        "required_player_level": 3,
+        "unlock_gold": 250,
+        "economy_status": "proposal",
+        "chain_item_ids": [
+          "item53",
+          "item6",
+          "item54",
+          "item7"
+        ],
+        "chain_status": "review_draft_preserved_from_previous_table",
+        "product_unlocks": [
+          {
+            "item_id": "item53",
+            "tier": 1,
+            "required_player_level": 3,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": false,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item6",
+            "tier": 2,
+            "required_player_level": 3,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item54",
+            "tier": 3,
+            "required_player_level": 5,
+            "gold_cost": 300,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item7",
+            "tier": 4,
+            "required_player_level": 8,
+            "gold_cost": 900,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          }
+        ]
+      },
+      {
+        "producer_id": "producer6",
+        "order": 4,
+        "order_status": "approved",
+        "required_player_level": 4,
+        "unlock_gold": 500,
+        "economy_status": "proposal",
+        "chain_item_ids": [
+          "item33",
+          "item34",
+          "item35",
+          "item36"
+        ],
+        "chain_status": "review_draft_preserved_from_previous_table",
+        "product_unlocks": [
+          {
+            "item_id": "item33",
+            "tier": 1,
+            "required_player_level": 4,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": false,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item34",
+            "tier": 2,
+            "required_player_level": 4,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item35",
+            "tier": 3,
+            "required_player_level": 6,
+            "gold_cost": 450,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item36",
+            "tier": 4,
+            "required_player_level": 9,
+            "gold_cost": 1200,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          }
+        ]
+      },
+      {
+        "producer_id": "producer7",
+        "order": 5,
+        "order_status": "approved",
+        "required_player_level": 5,
+        "unlock_gold": 800,
+        "economy_status": "proposal",
+        "chain_item_ids": [
+          "item37",
+          "item55",
+          "item56",
+          "item57"
+        ],
+        "chain_status": "review_draft_preserved_from_previous_table",
+        "product_unlocks": [
+          {
+            "item_id": "item37",
+            "tier": 1,
+            "required_player_level": 5,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": false,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item55",
+            "tier": 2,
+            "required_player_level": 5,
+            "gold_cost": 0,
+            "included_in_producer_purchase": true,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item56",
+            "tier": 3,
+            "required_player_level": 7,
+            "gold_cost": 650,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          },
+          {
+            "item_id": "item57",
+            "tier": 4,
+            "required_player_level": 10,
+            "gold_cost": 1600,
+            "included_in_producer_purchase": false,
+            "requires_previous_tier": true,
+            "status": "proposal"
+          }
+        ]
+      }
+    ],
+    "intro_quests": [
+      {
+        "id": "quest25",
+        "name_key": "quest25_name_tr",
+        "city_id": "city1",
+        "order": 1,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item2",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 40,
+        "reward_xp": 8,
+        "prerequisite_ids": [],
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest26",
+        "name_key": "quest26_name_tr",
+        "city_id": "city1",
+        "order": 2,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item2",
+            "quantity": 2
+          }
+        ],
+        "reward_gold": 60,
+        "reward_xp": 12,
+        "prerequisite_ids": [
+          "quest25"
+        ],
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest27",
+        "name_key": "quest27_name_tr",
+        "city_id": "city1",
+        "order": 3,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item50",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 100,
+        "reward_xp": 18,
+        "prerequisite_ids": [
+          "quest26"
+        ],
+        "grants_title_ids": [
+          "title1"
+        ]
+      },
+      {
+        "id": "quest28",
+        "name_key": "quest28_name_tr",
+        "city_id": "city1",
+        "order": 4,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item2",
+            "quantity": 2
+          },
+          {
+            "item_id": "item50",
+            "quantity": 2
+          }
+        ],
+        "reward_gold": 150,
+        "reward_xp": 22,
+        "prerequisite_ids": [
+          "quest27"
+        ],
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest29",
+        "name_key": "quest29_name_tr",
+        "city_id": "city1",
+        "order": 5,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item53",
+            "quantity": 2
+          }
+        ],
+        "reward_gold": 220,
+        "reward_xp": 28,
+        "prerequisite_ids": [
+          "quest28"
+        ],
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest30",
+        "name_key": "quest30_name_tr",
+        "city_id": "city1",
+        "order": 6,
+        "status": "proposal",
+        "requirements": [
+          {
+            "item_id": "item6",
+            "quantity": 1
+          },
+          {
+            "item_id": "item2",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 280,
+        "reward_xp": 32,
+        "prerequisite_ids": [
+          "quest29"
+        ],
+        "grants_title_ids": [
+          "title2"
+        ]
+      }
+    ],
+    "proposed_total_xp_thresholds": {
+      "1": 0,
+      "2": 20,
+      "3": 60,
+      "4": 120,
+      "5": 200
+    },
+    "starting_gold_proposal": 0,
+    "starter_product_capacity_proposal": 2,
+    "capacity_note": "Üretici açılış bedeli ilk iki ürün slotunu içerir. Üst basamak slotlarının level ve fiyatları henüz belirlenmedi; bu giriş görevleri onları istemez.",
+    "quest_eligibility_proposal": "Yalnızca erişilebilir ürünleri isteyen ilanlar gösterilir.",
+    "simulation_excludes": "Keşif XP ve sürpriz elmasları; enerji, bekleme ve tekrar eden ilan süreleri henüz modellenmedi.",
+    "upper_product_economy_status": "proposal",
+    "upper_unlock_rules_proposal": {
+      "level_is_not_spent": true,
+      "previous_tier_required": true,
+      "purchase_is_once_per_product_type": true,
+      "purchase_does_not_spawn_item": true,
+      "purchase_expands_merge_access": true,
+      "unaffordable_or_low_level_merge": "İki kaynak ürün korunur; üst ürünün level ve altın şartı gösterilir. Otomatik ödeme yapılmaz.",
+      "orders": "Kilitli ürün istenmez. Açık alt basamaklarda tekrar eden ilanlarla altın ve XP kazanımı sürer.",
+      "diamond_prices": null,
+      "direct_spawn_policy": "Üst ürün slotu almak doğrudan üst basamak düşme garantisi vermez; başlangıç çıktı havuzları ayrıca belirlenecektir."
+    }
+  },
+  "prototype_scope": {
+    "playable_city_ids": [
+      "city1"
+    ],
+    "locked_map_cities": [
+      "city2",
+      "city3",
+      "city4"
+    ],
+    "persistence": "local_device",
+    "test_order": [
+      "agent_simulator",
+      "user_simulator",
+      "physical_device_hub"
+    ],
+    "ads_and_iap": "after_prototype",
+    "economy": "approved_for_initial_playtest_not_final"
+  },
+  "approved_runtime_rules": {
+    "stamina_capacity": 100,
+    "stamina_cost": 1,
+    "stamina_regeneration_seconds": 120,
+    "producer_output_tier": 1,
+    "producer_batch_cooldown": true,
+    "order_inventory_sources": [
+      "board",
+      "storage"
+    ],
+    "consume_board_first": true,
+    "storage_stack_limit": 1,
+    "discovery_reward_trigger": "first_actual_acquisition",
+    "per_city_board_state": true
+  }
+}

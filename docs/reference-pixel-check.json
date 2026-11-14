@@ -1,0 +1,9 @@
+{
+  "camera_safe_area_top_points" : 48.000000134924981,
+  "cell_side_points" : 54.289389067524112,
+  "full_screen_pixel_equality_claimed" : false,
+  "mean_absolute_rgb_error_0_to_255" : 1.8225324295459058,
+  "reference_scene_height_design_units" : 246,
+  "scope" : "city panorama only, source x0 y82 w933 h80; dynamic HUD excluded",
+  "vertical_registration_adjustment_px" : 0
+}

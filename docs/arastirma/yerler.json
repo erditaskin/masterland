@@ -1,0 +1,4189 @@
+{
+  "project": "ultima",
+  "date": "2026-11-14",
+  "version": 1,
+  "scope": "Nebula, resmi UO dunya dizinleri ve etiketlenmis topluluk ekleri",
+  "locations": [
+    {
+      "id": "S001",
+      "group": "Şehirler",
+      "name": "Minoc",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Madencilik şehri.",
+      "proposed_theme": "Madencilik ve demircilik; mücevher yan koleksiyonu",
+      "collection_candidates": "Iron; Copper; Blackrock; Bloodrock; zırhlar",
+      "sources": [
+        "CITY-cities-and-towns-minoc",
+        "N1"
+      ],
+      "decision": "Onaylı başlangıç teması",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S002",
+      "group": "Şehirler",
+      "name": "Britain",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Yönetim merkezi; saraylar, kütüphane ve müzik kurumları.",
+      "proposed_theme": "Başkent pazarı ve saray siparişleri",
+      "collection_candidates": "Kıyafet; müzik aleti; ziyafet yiyecekleri",
+      "sources": [
+        "CITY-cities-and-towns-britain",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S003",
+      "group": "Şehirler",
+      "name": "Buccaneer’s Den",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Muhafızsız, korsanlar ve hırsızlarla ilişkili adalar.",
+      "proposed_theme": "Korsanlık ve kaçak pazar",
+      "collection_candidates": "Harita; pusula; korsan giysileri; sandık",
+      "sources": [
+        "CITY-cities-and-towns-buccaneers-den",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S004",
+      "group": "Şehirler",
+      "name": "Cove",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Küçük, surlu kıyı yerleşimi; Farmer’s Market bulunur.",
+      "proposed_theme": "Küçük tarım ve yiyecek durağı",
+      "collection_candidates": "Sebze; tahıl; ekmek; erzak",
+      "sources": [
+        "CITY-cities-and-towns-cove",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S005",
+      "group": "Şehirler",
+      "name": "Delucia",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Lost Lands yerleşimi; koyun ve sığırlar giyim endüstrisini destekler.",
+      "proposed_theme": "Terzilik ve hayvansal kaynaklar",
+      "collection_candidates": "Yün; kumaş; deri; giysi",
+      "sources": [
+        "CITY-cities-and-towns-delucia",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S006",
+      "group": "Şehirler",
+      "name": "Heartwood",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Yew altındaki elf yerleşimi; zanaat görevleri bulunur.",
+      "proposed_theme": "Elf marangozluğu ve yaycılık",
+      "collection_candidates": "Elf yayı; süs; ahşap eşya",
+      "sources": [
+        "CITY-heartwood"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S007",
+      "group": "Şehirler",
+      "name": "Jhelom",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Adalar şehri; Dueling Pit ve silah işletmeleri bulunur.",
+      "proposed_theme": "Savaşçı ekipmanı siparişleri",
+      "collection_candidates": "Kılıç; kalkan; silah seti",
+      "sources": [
+        "CITY-cities-and-towns-jhelom",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S008",
+      "group": "Şehirler",
+      "name": "Luna",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Malas şehri; Chivalry ile ilişkili.",
+      "proposed_theme": "Kutsal şövalye koleksiyonları",
+      "collection_candidates": "Parlak zırh; kutsal arma; sancak",
+      "sources": [
+        "CITY-cities-and-towns-luna"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S009",
+      "group": "Şehirler",
+      "name": "Moonglow",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Verity adasında büyü ve mistik sanatlar şehri.",
+      "proposed_theme": "Büyü malzemeleri ve alchemy",
+      "collection_candidates": "Reagent; iksir; büyü kitabı; asa",
+      "sources": [
+        "CITY-cities-and-towns-moonglow",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S010",
+      "group": "Şehirler",
+      "name": "New Haven",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Başlangıç eğitimi yerleşimi.",
+      "proposed_theme": "Yeni gezgin erzakları",
+      "collection_candidates": "Çanta; basit alet; kamp malzemesi",
+      "sources": [
+        "CITY-cities-and-towns-new-haven"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S011",
+      "group": "Şehirler",
+      "name": "New Magincia",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Yıkılan Magincia sonrası yerleşim; bazaar ve bahçeler.",
+      "proposed_theme": "Binek ticareti ve bahçecilik",
+      "collection_candidates": "Binek; çiçek; saksı; pazar malı",
+      "sources": [
+        "CITY-cities-and-towns-new-magincia",
+        "U21"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S012",
+      "group": "Şehirler",
+      "name": "NuJel’m",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Sultan yönetiminde sanat ve eğlence merkezi.",
+      "proposed_theme": "Saray sanatı ve değerli giysiler",
+      "collection_candidates": "Mücevher; kostüm; müzik aleti",
+      "sources": [
+        "CITY-cities-and-towns-nujelm",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S013",
+      "group": "Şehirler",
+      "name": "Ocllo",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Felucca adası; tarım alanları ve yemek işletmesi bulunur.",
+      "proposed_theme": "Çiftçilik ve fırıncılık",
+      "collection_candidates": "Tahıl; un; ekmek; turta",
+      "sources": [
+        "CITY-cities-and-towns-ocllo",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S014",
+      "group": "Şehirler",
+      "name": "Papua",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Lost Lands bataklığında platformlar üzerine kurulmuş yerleşim.",
+      "proposed_theme": "Bataklık bitkileri ve balıkçılık",
+      "collection_candidates": "Bitki; mantar; balık; saz eşya",
+      "sources": [
+        "CITY-cities-and-towns-papua",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S015",
+      "group": "Şehirler",
+      "name": "Royal City",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Ter Mur yönetim merkezi; soulforge ve müze bulunur.",
+      "proposed_theme": "Gargoyle taş işçiliği ve imbuing teması",
+      "collection_candidates": "Heykel; kristal; gargoyle ekipmanı",
+      "sources": [
+        "CITY-cities-and-towns-royal-city"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S016",
+      "group": "Şehirler",
+      "name": "Serpent’s Hold",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Adalar üzerinde askerî kale.",
+      "proposed_theme": "Garnizon tedariki",
+      "collection_candidates": "Kalkan; mızrak; miğfer; erzak",
+      "sources": [
+        "CITY-cities-and-towns-serpents-hold",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S017",
+      "group": "Şehirler",
+      "name": "Skara Brae",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Ranger yurdu; ana kara ile feribot bağlantısı var.",
+      "proposed_theme": "Ranger ve doğa koleksiyonları",
+      "collection_candidates": "Yay; ok; deri ekipman; izci çantası",
+      "sources": [
+        "CITY-cities-and-towns-skara-brae",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S018",
+      "group": "Şehirler",
+      "name": "Trinsic",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Surlu şehir; paladin eğitim ve kışla alanları bulunur.",
+      "proposed_theme": "Paladin ve şövalye setleri",
+      "collection_candidates": "Plate set; arma; sancak",
+      "sources": [
+        "CITY-cities-and-towns-trinsic",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S019",
+      "group": "Şehirler",
+      "name": "Umbra",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Malas içinde necromancer şehri.",
+      "proposed_theme": "Necromancy koleksiyonları",
+      "collection_candidates": "Kemik; karanlık kitap; ritüel eşyası",
+      "sources": [
+        "CITY-cities-and-towns-umbra"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S020",
+      "group": "Şehirler",
+      "name": "Vesper",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Nehir ağzındaki adalar ve köprülerden oluşur.",
+      "proposed_theme": "Nehir ticareti ve gemicilik",
+      "collection_candidates": "Halat; yelken; gemi parçası; ticaret sandığı",
+      "sources": [
+        "CITY-cities-and-towns-vesper",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S021",
+      "group": "Şehirler",
+      "name": "Wind",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Serpent’s Spine içinde gizli yeraltı şehri ve dungeon.",
+      "proposed_theme": "İleri büyücülük",
+      "collection_candidates": "Kristal; gelişmiş kitap; asa",
+      "sources": [
+        "CITY-cities-and-towns-wind",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S022",
+      "group": "Şehirler",
+      "name": "Yew",
+      "origin": "UO + Nebula",
+      "kind": "Şehir",
+      "source_fact": "Orman, çiftlikler, Empath Abbey ve Court of Truth ile ilişkili.",
+      "proposed_theme": "Hayvan terbiyeciliği veya ormancılık",
+      "collection_candidates": "At; lama; ostard; ahşap; yay",
+      "sources": [
+        "CITY-cities-and-towns-yew",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "S023",
+      "group": "Şehirler",
+      "name": "Zento",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Makoto-Jima üzerindeki Tokuno ticaret merkezi.",
+      "proposed_theme": "Samuray ve Tokuno el sanatları",
+      "collection_candidates": "Katana; kimono; bonsai; seramik",
+      "sources": [
+        "CITY-cities-and-towns-zento"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y001",
+      "group": "Ek yerleşimler",
+      "name": "Magincia",
+      "origin": "UO + Nebula",
+      "kind": "Tarihsel şehir",
+      "source_fact": "Nebula dizininde Magincia; UO New Magincia sayfası önceki yıkımı anlatır.",
+      "proposed_theme": "Soylu giysileri ve mücevherler",
+      "collection_candidates": "Mücevher; asa; asil giysi",
+      "sources": [
+        "CITY-cities-and-towns-new-magincia",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y002",
+      "group": "Ek yerleşimler",
+      "name": "Old Haven",
+      "origin": "UO",
+      "kind": "Tarihsel yerleşim",
+      "source_fact": "2007 yayın notlarında Haven harabesi ve New Haven geçişi anlatılır.",
+      "proposed_theme": "Eski yerleşimden hatıralar",
+      "collection_candidates": "Eski alet; hatıra; onarım paketi",
+      "sources": [
+        "U18"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y003",
+      "group": "Ek yerleşimler",
+      "name": "Loredor",
+      "origin": "Nebula",
+      "kind": "Yerleşim",
+      "source_fact": "Nebula şehir dizininde ve craft görev başlıklarında bulunur.",
+      "proposed_theme": "Ustaların karma sipariş merkezi",
+      "collection_candidates": "Meslek aletleri; yüksek seviye setler",
+      "sources": [
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y004",
+      "group": "Ek yerleşimler",
+      "name": "Holy City",
+      "origin": "UO",
+      "kind": "Şehir",
+      "source_fact": "Resmî özel alan dizininde ve Ter Mur yayın notlarında bulunur.",
+      "proposed_theme": "Gargoyle kutsal eşyaları",
+      "collection_candidates": "Taş tablet; tılsım; kutsal süs",
+      "sources": [
+        "U3",
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y005",
+      "group": "Ek yerleşimler",
+      "name": "Ver Lor Reg",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Ilshenar topluluk dizininde Gargoyle City olarak geçer.",
+      "proposed_theme": "Gargoyle metal ve taş işleri",
+      "collection_candidates": "Taş süs; metal alet; gargoyle eşyası",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y006",
+      "group": "Ek yerleşimler",
+      "name": "Lakeshire",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Resmî gezgin kamp rotasında bulunur.",
+      "proposed_theme": "Göl çevresi doğa ve şifacılık",
+      "collection_candidates": "Bitki; balık; çiçek",
+      "sources": [
+        "U7"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y007",
+      "group": "Ek yerleşimler",
+      "name": "Mistas",
+      "origin": "UO",
+      "kind": "Harabe yerleşim",
+      "source_fact": "Resmî kamp rotası ve etkinlik konumlarında geçer.",
+      "proposed_theme": "Arkeoloji ve eski şehir hatıraları",
+      "collection_candidates": "Çömlek; tablet; sikke",
+      "sources": [
+        "U7",
+        "U13"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y008",
+      "group": "Ek yerleşimler",
+      "name": "Montor",
+      "origin": "UO",
+      "kind": "Harabe yerleşim",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Dağ harabeleri ve taş işçiliği",
+      "collection_candidates": "Taş blok; heykel; eski arma",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y009",
+      "group": "Ek yerleşimler",
+      "name": "Desert Outpost East",
+      "origin": "UO",
+      "kind": "Karakol",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Çöl kervanı",
+      "collection_candidates": "Su tulumu; çadır; erzak",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y010",
+      "group": "Ek yerleşimler",
+      "name": "Desert Outpost West",
+      "origin": "UO",
+      "kind": "Karakol",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Çöl tüccarları",
+      "collection_candidates": "Kumaş; baharat; kervan sandığı",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y011",
+      "group": "Ek yerleşimler",
+      "name": "Bet-Lem Reg",
+      "origin": "UO",
+      "kind": "Özel yerleşim",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Gargoyle eski eserleri",
+      "collection_candidates": "Taş tablet; heykel; kristal",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y012",
+      "group": "Ek yerleşimler",
+      "name": "Bandit Town",
+      "origin": "UO",
+      "kind": "Kamp yerleşimi",
+      "source_fact": "Resmî Brigand Camps sayfasında Ilshenar konumu.",
+      "proposed_theme": "Kaçak mallar ve kilitli sandıklar",
+      "collection_candidates": "Maymuncuk; kese; sandık",
+      "sources": [
+        "U11"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "Y013",
+      "group": "Ek yerleşimler",
+      "name": "Fishing Village",
+      "origin": "UO",
+      "kind": "Köy",
+      "source_fact": "Ter Mur topluluk dizininde yer alır.",
+      "proposed_theme": "Balıkçılık köyü",
+      "collection_candidates": "Olta; ağ; balık; yengeç",
+      "sources": [
+        "C2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "Y014",
+      "group": "Ek yerleşimler",
+      "name": "Paws",
+      "origin": "Ultima serisi",
+      "kind": "Köy adayı",
+      "source_fact": "Tek oyunculu Ultima köyü; standart UO yaşayan kasabası olarak doğrulanmış değil.",
+      "proposed_theme": "Küçük fırıncılık durağı",
+      "collection_candidates": "Un; hamur; ekmek; turta",
+      "sources": [
+        "C4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "N001",
+      "group": "Nebula özel alanları",
+      "name": "Wastelands",
+      "origin": "Nebula",
+      "kind": "Harita bölgesi",
+      "source_fact": "Nebula dizininde harita; tarihsel kütüphanede renkli log bölgeleriyle anılır.",
+      "proposed_theme": "Nadir ağaçlar ve vahşi doğa",
+      "collection_candidates": "Renkli kütük; nadir ahşap; doğa eşyası",
+      "sources": [
+        "N1",
+        "N3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N002",
+      "group": "Nebula özel alanları",
+      "name": "Wastelands 1",
+      "origin": "Nebula",
+      "kind": "Alt alan",
+      "source_fact": "Dungeon rehberinde başlık olarak geçer.",
+      "proposed_theme": "Karlı doğa",
+      "collection_candidates": "Buz kristali; soğuk bölge hayvanı",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N003",
+      "group": "Nebula özel alanları",
+      "name": "Wastelands 2",
+      "origin": "Nebula",
+      "kind": "Alt alan",
+      "source_fact": "Dungeon rehberinde başlık olarak geçer.",
+      "proposed_theme": "Buz yaratıkları koleksiyonu",
+      "collection_candidates": "Buz yumurtası; donmuş hatıra",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N004",
+      "group": "Nebula özel alanları",
+      "name": "Wastelands 3",
+      "origin": "Nebula",
+      "kind": "Alt alan",
+      "source_fact": "Dungeon rehberinde harita başlığı; ayrıntı sınırlı.",
+      "proposed_theme": "Keşif malzemeleri",
+      "collection_candidates": "Pusula; harita; kamp eşyası",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N005",
+      "group": "Nebula özel alanları",
+      "name": "Ancient Fire Dungeon",
+      "origin": "Nebula",
+      "kind": "Dungeon alt alanı",
+      "source_fact": "Nebula rehberinde Fire altında geçer.",
+      "proposed_theme": "Kadim ateş kalıntıları",
+      "collection_candidates": "Obsidyen; ateş kristali; kadim süs",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N006",
+      "group": "Nebula özel alanları",
+      "name": "Cold Cave",
+      "origin": "Nebula",
+      "kind": "Mağara",
+      "source_fact": "Nebula rehberinde Ice ile birlikte geçer.",
+      "proposed_theme": "Soğuk mağara koleksiyonu",
+      "collection_candidates": "Buz taşı; donmuş sandık",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N007",
+      "group": "Nebula özel alanları",
+      "name": "Ice Isle",
+      "origin": "Nebula",
+      "kind": "Ada",
+      "source_fact": "Nebula rehberinde harita başlığı.",
+      "proposed_theme": "Kutup hayvanları ve kürkler",
+      "collection_candidates": "Kutup hayvanı; kürk; kışlık giysi",
+      "sources": [
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N008",
+      "group": "Nebula özel alanları",
+      "name": "Britain Dark Hall",
+      "origin": "Nebula",
+      "kind": "Özel yapı",
+      "source_fact": "Nebula özel alan dizininde bulunur; ayrıntılı işlev doğrulanmadı.",
+      "proposed_theme": "Karanlık salon hatıraları",
+      "collection_candidates": "Mühür; koyu sancak; süslü kupa",
+      "sources": [
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N009",
+      "group": "Nebula özel alanları",
+      "name": "Moonglow Dark Hall",
+      "origin": "Nebula",
+      "kind": "Özel yapı",
+      "source_fact": "Nebula özel alan dizininde bulunur; ayrıntılı işlev doğrulanmadı.",
+      "proposed_theme": "Gizemli büyü koleksiyonu",
+      "collection_candidates": "Koyu kristal; mühürlü kitap",
+      "sources": [
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N010",
+      "group": "Nebula özel alanları",
+      "name": "Moonglow Limanı",
+      "origin": "Nebula",
+      "kind": "Liman",
+      "source_fact": "Nebula özel alan dizininde bulunur.",
+      "proposed_theme": "Denizcilik ve balık siparişleri",
+      "collection_candidates": "Ağ; gemi parçası; balık",
+      "sources": [
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N011",
+      "group": "Nebula özel alanları",
+      "name": "Moonglow Faction War Zone",
+      "origin": "Nebula",
+      "kind": "Özel alan",
+      "source_fact": "Nebula özel alan dizininde bulunur.",
+      "proposed_theme": "Lonca sancakları",
+      "collection_candidates": "Arma; sancak; tören ekipmanı",
+      "sources": [
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "N012",
+      "group": "Nebula özel alanları",
+      "name": "Moonglow Kütüphane",
+      "origin": "Nebula",
+      "kind": "Tarihsel yapı",
+      "source_fact": "Nebula ana dizininde kaldırılmış olarak işaretlidir.",
+      "proposed_theme": "Runebook ve harita koleksiyonu",
+      "collection_candidates": "Rune; kitap; harita",
+      "sources": [
+        "N1",
+        "N3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D001",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Ankh",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mabet eserleri",
+      "collection_candidates": "Ankh; tılsım; taş tablet",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D002",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Bedlam",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Şifa ve karanlık koleksiyon",
+      "collection_candidates": "Şişe; bandaj; mühürlü günlük",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D003",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Blighted Grove",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Bozulmuş doğa",
+      "collection_candidates": "Kök; öz; karanlık ağaç",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D004",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Blood",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Kızıl kristaller",
+      "collection_candidates": "Kızıl taş; şişe; tılsım",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D005",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Britain Passage",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Yeraltı keşfi",
+      "collection_candidates": "Fener; harita; eski anahtar",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D006",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Castle Blackthorn Dungeon",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Kale kalıntıları",
+      "collection_candidates": "Saray arması; zırh; mühür",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D007",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Covetous",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Değerli madenler",
+      "collection_candidates": "Kristal; cevher; değerli süs",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D008",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Cyclops Dungeon",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Devlerin eşyaları",
+      "collection_candidates": "Taş alet; dev kupa; heykel",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D009",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Deceit",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Kemik ve kadim büyü",
+      "collection_candidates": "Kemik; kafatası; eski kitap",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D010",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Delucia Trinsic Passage",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Yolculuk hazırlığı",
+      "collection_candidates": "Fener; ip; erzak",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D011",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Despise Felucca",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mağara hatıraları",
+      "collection_candidates": "Taş; tılsım; eski sandık",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D012",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Despise Trammel",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Doğa koleksiyonu",
+      "collection_candidates": "Küre; yaratık hatırası; kristal",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D013",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Destard",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Ejderha koleksiyonları",
+      "collection_candidates": "Yumurta; pul; ejderha heykeli",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D014",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Doom",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Antik eserler",
+      "collection_candidates": "Relik; mühür; süslü zırh",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D015",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Exodus",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mekanik ve golem",
+      "collection_candidates": "Dişli; güç kristali; golem parçası",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D016",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Fan Dancer Dojo",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Dojo koleksiyonları",
+      "collection_candidates": "Yelpaze; ipek; tören kıyafeti",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D017",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Fire",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Ateş koleksiyonu",
+      "collection_candidates": "Kömür; obsidyen; ateş kristali",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D018",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Haven Mine",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Başlangıç madenciliği",
+      "collection_candidates": "Kazma; taş; Iron",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D019",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Hythloth",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Karanlık tılsımlar",
+      "collection_candidates": "Ritüel eşyası; boynuz; mühür",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D020",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Ice",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Buz ve kış",
+      "collection_candidates": "Buz kristali; kürk; kışlık eşya",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D021",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Khaldun",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Kadim mezarlar",
+      "collection_candidates": "Lahit süsü; taş mühür; relik",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D022",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Labyrinth",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Labirent hazineleri",
+      "collection_candidates": "Anahtar; boynuz; minotaur heykeli",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D023",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Lizardman Passage and Ancient Wyrm Lair",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Sürüngen koleksiyonu",
+      "collection_candidates": "Pul; yumurta; taş tılsım",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D024",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Mushroom Caves",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mantarlar",
+      "collection_candidates": "Mantar; spor; şifalı öz",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D025",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Orc Caves",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Ork ekipmanı",
+      "collection_candidates": "Ork maskesi; kaba silah; sancak",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D026",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Painted Caves",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mağara sanatı",
+      "collection_candidates": "Pigment; boyalı taş; mağara resmi",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D027",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Palace of Paroxysmus",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Simya ve tuhaf özler",
+      "collection_candidates": "Şişe; öz; kapalı kazan",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D028",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Prism of Light",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Işık ve kristal",
+      "collection_candidates": "Kristal; prizma; ışıklı süs",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D029",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Ratman Cellar",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Mahzen keşfi",
+      "collection_candidates": "Anahtar; fener; sandık",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D030",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Ratman Mine",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Eski maden",
+      "collection_candidates": "Kazma; hurda; cevher",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D031",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Rock",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Taş işçiliği",
+      "collection_candidates": "Taş blok; mermer; heykel",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D032",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Sanctuary",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Sığınak koleksiyonları",
+      "collection_candidates": "Kumaş; erzak; elf süsü",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D033",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Shadowguard",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Karanlık saray",
+      "collection_candidates": "Ayna; mühür; saray eşyası",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D034",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Shame",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Element koleksiyonları",
+      "collection_candidates": "Toprak taşı; su kristali; element özü",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D035",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Sorcerers’ Dungeon",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Büyücü eserleri",
+      "collection_candidates": "Asa; küre; büyü kitabı",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D036",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Spectre",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Hayalet hatıraları",
+      "collection_candidates": "Soluk kristal; tılsım; mum",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D037",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Spider Cave",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Örümcek ipeği",
+      "collection_candidates": "Ağ; ipek; dokuma",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D038",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Terathan Keep",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Terathan koleksiyonları",
+      "collection_candidates": "Kabuk; ipek; tuhaf zırh",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D039",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "The Citadel",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Gizli okul ekipmanı",
+      "collection_candidates": "Maske; mühür; tören silahı",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D040",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "The Solen Hive",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Böcek kolonisi",
+      "collection_candidates": "Yumurta; kabuk; koloni süsü",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D041",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "The Stygian Abyss",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "İleri kadim eserler",
+      "collection_candidates": "Runik taş; relik; tılsım",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D042",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Tomb of Kings",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Kraliyet mezarı eserleri",
+      "collection_candidates": "Taç; lahit süsü; taş mühür",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D043",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Twisted Weald",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Büyülü orman",
+      "collection_candidates": "Mantar; peri süsü; nadir bitki",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D044",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Underworld",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Yeraltı keşfi",
+      "collection_candidates": "Fener; kristal; gizemli kutu",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D045",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Volcanic Lair",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Volkanik koleksiyon",
+      "collection_candidates": "Lav taşı; obsidyen; ateş yumurtası",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D046",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Wisp Dungeon",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Işıltılı doğa",
+      "collection_candidates": "Işık küresi; büyülü toz; orman tılsımı",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D047",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Wrong",
+      "origin": "UO + Nebula",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Zindan kilitleri",
+      "collection_candidates": "Anahtar; kilit; mühürlü sandık",
+      "sources": [
+        "U2",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "D048",
+      "group": "Dungeonlar ve yeraltı",
+      "name": "Yomotsu Mines",
+      "origin": "UO",
+      "kind": "Dungeon veya geçit",
+      "source_fact": "Dizin kaydı.",
+      "proposed_theme": "Tokuno madenleri",
+      "collection_candidates": "Kazma; cevher; doğu süsü",
+      "sources": [
+        "U2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A001",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Bog of Desolation",
+      "origin": "UO",
+      "kind": "Bataklık",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Bataklık bitkileri",
+      "collection_candidates": "Kök; mantar; bitki özü",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A002",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Cove Orc Fort",
+      "origin": "UO",
+      "kind": "Kale",
+      "source_fact": "Resmî kaynakta ork yerleşimi.",
+      "proposed_theme": "Ork maskeleri ve kaba ekipman",
+      "collection_candidates": "Maske; ork zırhı; sancak",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A003",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Cyclops Camp",
+      "origin": "UO",
+      "kind": "Kamp",
+      "source_fact": "Ilshenar özel alanı.",
+      "proposed_theme": "Dev taş eşyaları",
+      "collection_candidates": "Taş alet; dev kap; heykel",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A004",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Cyclops Pyramid",
+      "origin": "UO",
+      "kind": "Piramit",
+      "source_fact": "Ilshenar özel alanı.",
+      "proposed_theme": "Piramit eski eserleri",
+      "collection_candidates": "Taş tablet; süslü kap; tılsım",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A005",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Cyclops Valley",
+      "origin": "UO",
+      "kind": "Vadi",
+      "source_fact": "Lost Lands özel alanı.",
+      "proposed_theme": "Vadi keşfi",
+      "collection_candidates": "Harita; ip; doğa hatırası",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A006",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Fire Temple",
+      "origin": "UO + Nebula",
+      "kind": "Tapınak",
+      "source_fact": "İki kaynağın da yer dizininde bulunur.",
+      "proposed_theme": "Ateş ritüel eşyaları",
+      "collection_candidates": "Mum; tütsü; ateş tılsımı",
+      "sources": [
+        "U3",
+        "N2"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A007",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Forgotten Pyramid",
+      "origin": "UO",
+      "kind": "Piramit",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Çöl arkeolojisi",
+      "collection_candidates": "Kum taşı; kap; altın süs",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A008",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Hidden Valley",
+      "origin": "UO",
+      "kind": "Vadi",
+      "source_fact": "Trinsic yakınındaki gizli vadi ve büyücü kulesi.",
+      "proposed_theme": "Gizli büyü bahçesi",
+      "collection_candidates": "Şifalı bitki; iksir; gizli kitap",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A009",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Kirin Passage",
+      "origin": "UO",
+      "kind": "Geçit",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Kirin ve büyülü doğa",
+      "collection_candidates": "Kirin temalı hatıra; büyülü süs",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A010",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Lizardman Village",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Ilshenar bataklığına bağlı özel alan.",
+      "proposed_theme": "Sürüngen kabuk ve eşyaları",
+      "collection_candidates": "Pul; taş tılsım; yumurta",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A011",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Ophidian Lair",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Papua kuzeyindeki Lost Lands alanı.",
+      "proposed_theme": "Yılan simgeli koleksiyon",
+      "collection_candidates": "Yılan süsü; pul; iksir",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A012",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Pass of Karnaugh",
+      "origin": "UO",
+      "kind": "Dağ geçidi",
+      "source_fact": "Ilshenar geçidi.",
+      "proposed_theme": "Sefer malzemeleri",
+      "collection_candidates": "Fener; ip; erzak",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A013",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Ratman Lair",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Toplama ve hurda",
+      "collection_candidates": "Hurda; anahtar; küçük sandık",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A014",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Ratman Village",
+      "origin": "UO",
+      "kind": "Yerleşim",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Tuhaf pazar eşyaları",
+      "collection_candidates": "Kap; kese; hurda alet",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A015",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Reg Volom",
+      "origin": "UO",
+      "kind": "Harabe",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Kadim kalıntılar",
+      "collection_candidates": "Tablet; kırık heykel; mühür",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A016",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Serpentine Passage",
+      "origin": "UO",
+      "kind": "Geçit",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Yılan süsleri",
+      "collection_candidates": "Pul; yılan figürü; tılsım",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A017",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Sudiva ve Lenmir Anfinmotas konumu",
+      "origin": "UO",
+      "kind": "Karakterle ilişkili alan",
+      "source_fact": "Resmî dizindeki başlık kişi isimleri; şehir adı değildir.",
+      "proposed_theme": "Ejderha bilgeliği ve büyü eserleri",
+      "collection_candidates": "Kitap; relik; büyülü küre",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A018",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "Temple of Knowledge",
+      "origin": "UO",
+      "kind": "Tapınak",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Bilgi ve yazıcılık",
+      "collection_candidates": "Parşömen; kitap; tablet",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "A019",
+      "group": "Özel alanlar ve anıtlar",
+      "name": "The Hedge Maze",
+      "origin": "UO",
+      "kind": "Labirent",
+      "source_fact": "Resmî özel alan dizininde bulunur.",
+      "proposed_theme": "Bahçe labirenti",
+      "collection_candidates": "Çit; çiçek; bahçe heykeli",
+      "sources": [
+        "U3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "K001",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Castle British",
+      "origin": "UO",
+      "kind": "Saray",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Kraliyet siparişleri",
+      "collection_candidates": "Taç; arma; ziyafet",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K002",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Castle Blackthorn",
+      "origin": "UO",
+      "kind": "Saray",
+      "source_fact": "Britain sayfasında bulunur; dungeon ayrı kayıttır.",
+      "proposed_theme": "Kraliyet koleksiyonları",
+      "collection_candidates": "Sancak; mühür; tören zırhı",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K003",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Britain Public Library",
+      "origin": "UO",
+      "kind": "Kütüphane",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Yazıcılık",
+      "collection_candidates": "Parşömen; kitap; cilt",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K004",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Lord British’s Conservatory",
+      "origin": "UO",
+      "kind": "Müzik kurumu",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Bard koleksiyonu",
+      "collection_candidates": "Flüt; lavta; nota",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K005",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The King’s Men Theater",
+      "origin": "UO",
+      "kind": "Tiyatro",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Sahne ve kostüm",
+      "collection_candidates": "Maske; kostüm; dekor",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K006",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Blue Boar",
+      "origin": "UO",
+      "kind": "Taverna",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Taverna yiyecekleri",
+      "collection_candidates": "Ekmek; et; içecek",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K007",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Cat’s Lair",
+      "origin": "UO",
+      "kind": "Taverna",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Han mutfağı",
+      "collection_candidates": "Turta; yemek; servis takımı",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K008",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Premier Gems",
+      "origin": "UO",
+      "kind": "Dükkân",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Kuyumculuk",
+      "collection_candidates": "Taş; yüzük; kolye",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K009",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Lord’s Clothiers",
+      "origin": "UO",
+      "kind": "Dükkân",
+      "source_fact": "Britain sayfasında bulunur.",
+      "proposed_theme": "Asil terziliği",
+      "collection_candidates": "Kumaş; elbise; pelerin",
+      "sources": [
+        "CITY-cities-and-towns-britain"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K010",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Pirate’s Plunder",
+      "origin": "UO",
+      "kind": "Taverna",
+      "source_fact": "Buccaneer’s Den sayfasında bulunur.",
+      "proposed_theme": "Korsan erzakları",
+      "collection_candidates": "Fıçı; peksimet; korsan kupası",
+      "sources": [
+        "CITY-cities-and-towns-buccaneers-den"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K011",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Cutlass Smithing",
+      "origin": "UO",
+      "kind": "Dükkân",
+      "source_fact": "Buccaneer’s Den sayfasında bulunur.",
+      "proposed_theme": "Korsan silah koleksiyonu",
+      "collection_candidates": "Cutlass; hançer; kanca",
+      "sources": [
+        "CITY-cities-and-towns-buccaneers-den"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K012",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Farmer’s Market Cove",
+      "origin": "UO",
+      "kind": "Pazar",
+      "source_fact": "Cove sayfasında bulunur.",
+      "proposed_theme": "Sebze ve tarım",
+      "collection_candidates": "Tohum; sebze; erzak",
+      "sources": [
+        "CITY-cities-and-towns-cove"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K013",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Barley Inn",
+      "origin": "UO",
+      "kind": "Han",
+      "source_fact": "Delucia sayfasında bulunur.",
+      "proposed_theme": "Kırsal mutfak",
+      "collection_candidates": "Un; ekmek; yemek",
+      "sources": [
+        "CITY-cities-and-towns-delucia"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K014",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Bakery’s Dozen",
+      "origin": "UO",
+      "kind": "Fırın",
+      "source_fact": "Jhelom sayfasında bulunur.",
+      "proposed_theme": "Fırıncılık",
+      "collection_candidates": "Un; hamur; ekmek; pasta",
+      "sources": [
+        "CITY-cities-and-towns-jhelom"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K015",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Dueling Pit",
+      "origin": "UO",
+      "kind": "Arena",
+      "source_fact": "Jhelom sayfasında bulunur.",
+      "proposed_theme": "Turnuva siparişleri",
+      "collection_candidates": "Silah; arma; kupa",
+      "sources": [
+        "CITY-cities-and-towns-jhelom"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K016",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Lyceum",
+      "origin": "UO",
+      "kind": "Bilgi merkezi",
+      "source_fact": "Moonglow sayfasında bu yazımla bulunur; Lycaeum varyantı da kullanılır.",
+      "proposed_theme": "Büyü kitapları ve yazıcılık",
+      "collection_candidates": "Parşömen; kitap; runik cilt",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K017",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Encyclopedia Magicka",
+      "origin": "UO",
+      "kind": "Yapı",
+      "source_fact": "Moonglow sayfasında bulunur.",
+      "proposed_theme": "Büyülü ansiklopedi",
+      "collection_candidates": "Sayfa; kitap; gizli cilt",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K018",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Mage’s Bread",
+      "origin": "UO",
+      "kind": "Fırın",
+      "source_fact": "Moonglow sayfasında bulunur.",
+      "proposed_theme": "Büyücü fırını",
+      "collection_candidates": "Ekmek; kurabiye; büyü temalı pasta",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K019",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Moonglow Zoo",
+      "origin": "UO",
+      "kind": "Hayvanat bahçesi",
+      "source_fact": "Moonglow sayfasında bulunur.",
+      "proposed_theme": "Hayvan ve bakım koleksiyonları",
+      "collection_candidates": "Hayvan; yem; bakım eşyası",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K020",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Moonglow Telescope",
+      "origin": "UO",
+      "kind": "Gözlem noktası",
+      "source_fact": "Moonglow sayfasında bulunur.",
+      "proposed_theme": "Astronomi",
+      "collection_candidates": "Mercek; teleskop; yıldız haritası",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K021",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Moonglow Finest Alchemy",
+      "origin": "UO",
+      "kind": "Dükkân",
+      "source_fact": "Moonglow sayfasında bulunur.",
+      "proposed_theme": "İksirler",
+      "collection_candidates": "Şişe; iksir; simya eşyası",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K022",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Magincia Bazaar",
+      "origin": "UO",
+      "kind": "Pazar",
+      "source_fact": "New Magincia sayfasında bulunur.",
+      "proposed_theme": "Binek ve ticaret",
+      "collection_candidates": "Binek; ticaret sandığı; süs",
+      "sources": [
+        "CITY-cities-and-towns-new-magincia",
+        "U21"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K023",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Magincia Public Garden",
+      "origin": "UO",
+      "kind": "Bahçe",
+      "source_fact": "New Magincia sayfasında bulunur.",
+      "proposed_theme": "Bahçecilik",
+      "collection_candidates": "Tohum; çiçek; süs bitkisi",
+      "sources": [
+        "CITY-cities-and-towns-new-magincia"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K024",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Nujel’m Palace",
+      "origin": "UO",
+      "kind": "Saray",
+      "source_fact": "NuJel’m sayfasında bulunur.",
+      "proposed_theme": "Sultanlık siparişleri",
+      "collection_candidates": "İpek; mücevher; süslü eşya",
+      "sources": [
+        "CITY-cities-and-towns-nujelm"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K025",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Nujel’m Theater",
+      "origin": "UO",
+      "kind": "Tiyatro",
+      "source_fact": "NuJel’m sayfasında bulunur.",
+      "proposed_theme": "Gösteri sanatları",
+      "collection_candidates": "Maske; kostüm; müzik aleti",
+      "sources": [
+        "CITY-cities-and-towns-nujelm"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K026",
+      "group": "Şehir içi küçük duraklar",
+      "name": "The Chessboard",
+      "origin": "UO",
+      "kind": "Anıt ve oyun alanı",
+      "source_fact": "NuJel’m sayfasında bulunur.",
+      "proposed_theme": "Satranç koleksiyonu",
+      "collection_candidates": "Piyon; at; şah; tahta",
+      "sources": [
+        "CITY-cities-and-towns-nujelm"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K027",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Nature’s Best Baked Goods",
+      "origin": "UO",
+      "kind": "Fırın",
+      "source_fact": "Papua sayfasında bulunur.",
+      "proposed_theme": "Bataklık kasabası fırını",
+      "collection_candidates": "Ekmek; turta; baharatlı yiyecek",
+      "sources": [
+        "CITY-cities-and-towns-papua"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K028",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Plenty O’Dough",
+      "origin": "UO",
+      "kind": "Fırın",
+      "source_fact": "Serpent’s Hold sayfasında bulunur.",
+      "proposed_theme": "Garnizon fırını",
+      "collection_candidates": "Peksimet; ekmek; erzak",
+      "sources": [
+        "CITY-cities-and-towns-serpents-hold"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K029",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Empath Abbey",
+      "origin": "UO",
+      "kind": "Manastır",
+      "source_fact": "Yew ve erdemler kaynaklarında bulunur.",
+      "proposed_theme": "Bağcılık ve manastır ürünleri",
+      "collection_candidates": "Üzüm; şişe; mum",
+      "sources": [
+        "CITY-cities-and-towns-yew",
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K030",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Court of Truth",
+      "origin": "UO",
+      "kind": "Mahkeme",
+      "source_fact": "Yew sayfasında bulunur.",
+      "proposed_theme": "Adalet ve resmî belgeler",
+      "collection_candidates": "Belge; mühür; cilt",
+      "sources": [
+        "CITY-cities-and-towns-yew"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K031",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Britannia Prison",
+      "origin": "UO",
+      "kind": "Hapishane",
+      "source_fact": "Yew sayfasında bulunur.",
+      "proposed_theme": "Kilit ve anahtar koleksiyonu",
+      "collection_candidates": "Anahtar; kilit; mühür",
+      "sources": [
+        "CITY-cities-and-towns-yew"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K032",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Paladin Isle",
+      "origin": "UO",
+      "kind": "Ada alt alanı",
+      "source_fact": "Trinsic sayfasında bulunur.",
+      "proposed_theme": "Paladin ekipmanları",
+      "collection_candidates": "Zırh; kutsal arma; sancak",
+      "sources": [
+        "CITY-cities-and-towns-trinsic"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K033",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Queen’s Soulforge",
+      "origin": "UO",
+      "kind": "Özel ocak",
+      "source_fact": "Royal City sayfasında bulunur.",
+      "proposed_theme": "Runik ve kristal süsleme",
+      "collection_candidates": "Kristal; runik taş; süslü eşya",
+      "sources": [
+        "CITY-cities-and-towns-royal-city"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K034",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Royal City Museum",
+      "origin": "UO",
+      "kind": "Müze",
+      "source_fact": "Royal City sayfasında bulunur.",
+      "proposed_theme": "Arkeoloji ve eser koleksiyonu",
+      "collection_candidates": "Fosil; heykel; eski kap",
+      "sources": [
+        "CITY-cities-and-towns-royal-city"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K035",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Shrine of Wisdom",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Luna sayfasında bulunur.",
+      "proposed_theme": "Bilgelik koleksiyonu",
+      "collection_candidates": "Kitap; mum; tılsım",
+      "sources": [
+        "CITY-cities-and-towns-luna"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K036",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Rockuon Cultural Center",
+      "origin": "UO",
+      "kind": "Kültür merkezi",
+      "source_fact": "Zento sayfasında bulunur.",
+      "proposed_theme": "Tokuno el sanatları",
+      "collection_candidates": "Seramik; kimono; süs",
+      "sources": [
+        "CITY-cities-and-towns-zento"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K037",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Suteki Na Craftworks",
+      "origin": "UO",
+      "kind": "Zanaat yapısı",
+      "source_fact": "Zento sayfasında bulunur.",
+      "proposed_theme": "Tokuno zanaat koleksiyonu",
+      "collection_candidates": "Ahşap; seramik; katana",
+      "sources": [
+        "CITY-cities-and-towns-zento"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "K038",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Sea Market",
+      "origin": "UO",
+      "kind": "Yüzen pazar",
+      "source_fact": "Resmî deniz pazarı sayfasında bulunur.",
+      "proposed_theme": "Ana balıkçılık ve denizcilik durağı",
+      "collection_candidates": "Balık; yengeç; ıstakoz; ağ",
+      "sources": [
+        "U8"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "K039",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Winds Tavern",
+      "origin": "UO",
+      "kind": "Taverna",
+      "source_fact": "Sea Market sayfasında bulunur.",
+      "proposed_theme": "Denizci mutfağı",
+      "collection_candidates": "Balık turtası; içecek; kupa",
+      "sources": [
+        "U8"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "K040",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Twin Oaks Tavern",
+      "origin": "UO",
+      "kind": "Taverna",
+      "source_fact": "Resmî Ilshenar rotasında bulunur.",
+      "proposed_theme": "Yol hanı ve fırıncılık",
+      "collection_candidates": "Ekmek; turta; erzak",
+      "sources": [
+        "U7"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "K041",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Hanse’s Hostel",
+      "origin": "UO",
+      "kind": "Han",
+      "source_fact": "Resmî Brigand Camps sayfasında konum referansı.",
+      "proposed_theme": "Gezgin hanı",
+      "collection_candidates": "Yemek; yatak örtüsü; çanta",
+      "sources": [
+        "U11"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "K042",
+      "group": "Şehir içi küçük duraklar",
+      "name": "Gravewater Dock",
+      "origin": "UO",
+      "kind": "İskele",
+      "source_fact": "Resmî Brigand Camps sayfasında konum referansı.",
+      "proposed_theme": "Göl balıkçılığı",
+      "collection_candidates": "Olta; balık; sepet",
+      "sources": [
+        "U11"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M001",
+      "group": "Mabetler",
+      "name": "Shrine of Compassion",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Yardım ve şifa",
+      "collection_candidates": "Bandaj; şifa paketi; mum",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M002",
+      "group": "Mabetler",
+      "name": "Shrine of Honesty",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Bilgelik ve doğruluk",
+      "collection_candidates": "Kitap; mühür; tablet",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M003",
+      "group": "Mabetler",
+      "name": "Shrine of Honor",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Şövalyelik",
+      "collection_candidates": "Arma; sancak; kutsal süs",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M004",
+      "group": "Mabetler",
+      "name": "Shrine of Humility",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Sade yaşam",
+      "collection_candidates": "Bez giysi; ahşap kap; ekmek",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M005",
+      "group": "Mabetler",
+      "name": "Shrine of Justice",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Adalet",
+      "collection_candidates": "Belge; mühür; terazi",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M006",
+      "group": "Mabetler",
+      "name": "Shrine of Sacrifice",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Emek ve armağan",
+      "collection_candidates": "Alet; bağış paketi; ankh",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M007",
+      "group": "Mabetler",
+      "name": "Shrine of Spirituality",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Doğa ve ruhani eşyalar",
+      "collection_candidates": "Mum; tılsım; doğa süsü",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M008",
+      "group": "Mabetler",
+      "name": "Shrine of Valor",
+      "origin": "UO",
+      "kind": "Erdem mabedi",
+      "source_fact": "Sekiz erdemden birine adanmış mabet; harita varyantları tek kayıtta.",
+      "proposed_theme": "Cesaret",
+      "collection_candidates": "Kalkan; kupa; arma",
+      "sources": [
+        "U5"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M009",
+      "group": "Mabetler",
+      "name": "Shrine of Chaos",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Topluluk Shrine kaynağında Chaos mabedi geçer.",
+      "proposed_theme": "Kaos temalı süsler",
+      "collection_candidates": "Kaos arması; koyu ankh; tılsım",
+      "sources": [
+        "C6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "M010",
+      "group": "Mabetler",
+      "name": "Shrine of Singularity",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Ter Mur yayın notlarında bulunur.",
+      "proposed_theme": "Gargoyle kutsal koleksiyonu",
+      "collection_candidates": "Tablet; kutsal taş; tılsım",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M011",
+      "group": "Mabetler",
+      "name": "Shrine of Makoto",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Tokuno doğruluk koleksiyonu",
+      "collection_candidates": "Kâğıt; mühür; tören eşyası",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M012",
+      "group": "Mabetler",
+      "name": "Shrine of Isamu",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Tokuno cesaret koleksiyonu",
+      "collection_candidates": "Arma; tören kılıcı; sancak",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "M013",
+      "group": "Mabetler",
+      "name": "Shrine of Homare",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Tokuno onur koleksiyonu",
+      "collection_candidates": "İpek; tören süsü; sancak",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B001",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Felucca",
+      "origin": "UO + Nebula",
+      "kind": "Ana harita",
+      "source_fact": "Her iki kaynağın harita dizininde bulunur.",
+      "proposed_theme": "Alternatif dünya görsel teması",
+      "collection_candidates": "Şehir koleksiyonlarının farklı görünümleri",
+      "sources": [
+        "U4",
+        "N1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B002",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Trammel",
+      "origin": "UO",
+      "kind": "Ana harita",
+      "source_fact": "Resmî harita dizininde bulunur.",
+      "proposed_theme": "Ana şehirler için görsel dünya",
+      "collection_candidates": "Bölüm haritası; şehir simgeleri",
+      "sources": [
+        "U4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B003",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Lost Lands",
+      "origin": "UO",
+      "kind": "Büyük bölge",
+      "source_fact": "Delucia ve Papua resmî sayfalarında bulunur.",
+      "proposed_theme": "Kayıp topraklar",
+      "collection_candidates": "Keşif; bataklık; nadir doğa eşyaları",
+      "sources": [
+        "CITY-cities-and-towns-delucia",
+        "CITY-cities-and-towns-papua"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B004",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Ilshenar",
+      "origin": "UO",
+      "kind": "Ana harita",
+      "source_fact": "Resmî harita dizininde bulunur.",
+      "proposed_theme": "Harabeler ve farklı topluluklar",
+      "collection_candidates": "Kadim eşya; doğa; mekanik",
+      "sources": [
+        "U4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B005",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Malas",
+      "origin": "UO",
+      "kind": "Ana harita",
+      "source_fact": "Resmî harita dizininde bulunur.",
+      "proposed_theme": "Işık ve karanlık şehirler",
+      "collection_candidates": "Paladin ve necromancy koleksiyonları",
+      "sources": [
+        "U4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B006",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Tokuno Islands",
+      "origin": "UO",
+      "kind": "Ana harita",
+      "source_fact": "Resmî harita dizininde bulunur.",
+      "proposed_theme": "Doğu el sanatları",
+      "collection_candidates": "Katana; kimono; bonsai",
+      "sources": [
+        "U4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B007",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Ter Mur",
+      "origin": "UO",
+      "kind": "Ana harita",
+      "source_fact": "Resmî harita dizininde bulunur.",
+      "proposed_theme": "Gargoyle kültürü",
+      "collection_candidates": "Taş; kristal; runik eşya",
+      "sources": [
+        "U4"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B008",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Valley of Eodon",
+      "origin": "UO",
+      "kind": "Büyük bölge",
+      "source_fact": "Resmî harita ve kabile dizinlerinde bulunur.",
+      "proposed_theme": "Tarih öncesi doğa",
+      "collection_candidates": "Dinozor; yumurta; kabile süsü",
+      "sources": [
+        "U4",
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B009",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Verity Isle",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Moonglow resmî sayfasında bulunur.",
+      "proposed_theme": "Büyü bitkileri",
+      "collection_candidates": "Reagent; çiçek; bitki",
+      "sources": [
+        "CITY-cities-and-towns-moonglow"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B010",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Dagger Isle",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Topluluk kaynağında Deceit ve karlı ada.",
+      "proposed_theme": "Kutup hayvanları",
+      "collection_candidates": "Kutup ayısı; beyaz kurt; kürk",
+      "sources": [
+        "C7"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B011",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Fire Island",
+      "origin": "UO",
+      "kind": "Ada ve volkan",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Volkanik kaynaklar",
+      "collection_candidates": "Obsidyen; lav taşı; kristal",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B012",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Marble Island",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Cyclops Valley resmî sayfasında Lost Lands geçidiyle anılır.",
+      "proposed_theme": "Mermer ve heykel",
+      "collection_candidates": "Mermer; sütun; heykel",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B013",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Justice Island",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Topluluk ada dizininde bulunur.",
+      "proposed_theme": "Adalet hatıraları",
+      "collection_candidates": "Arma; belge; taş süs",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B014",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Barrier Isle",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Trinsic resmî sayfasında bulunur.",
+      "proposed_theme": "Kıyı savunması",
+      "collection_candidates": "Kalkan; sancak; erzak",
+      "sources": [
+        "CITY-cities-and-towns-trinsic"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B015",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Makoto-Jima",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Tokuno ticareti ve mutfağı",
+      "collection_candidates": "Çay; seramik; yemek",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B016",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Isamu-Jima",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Samuray ekipmanları",
+      "collection_candidates": "Katana; zırh; sancak",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B017",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Homare-Jima",
+      "origin": "UO",
+      "kind": "Ada",
+      "source_fact": "Samurai Empire kılavuzunda bulunur.",
+      "proposed_theme": "Tokuno doğası",
+      "collection_candidates": "Bonsai; büyülü hayvan; ipek",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B018",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Serpent’s Spine",
+      "origin": "UO",
+      "kind": "Dağ silsilesi",
+      "source_fact": "Wind resmî sayfasında bulunur.",
+      "proposed_theme": "Dağ madenciliği",
+      "collection_candidates": "Cevher; taş; kazma",
+      "sources": [
+        "CITY-cities-and-towns-wind"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B019",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Deep Forest",
+      "origin": "UO",
+      "kind": "Orman",
+      "source_fact": "Yew resmî sayfasında bulunur.",
+      "proposed_theme": "Ormancılık ve binekler",
+      "collection_candidates": "Kütük; yay; hayvan",
+      "sources": [
+        "CITY-cities-and-towns-yew"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B020",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Serpent Pillars",
+      "origin": "UO",
+      "kind": "Deniz anıtı ve geçit",
+      "source_fact": "Resmî gemi rehberinde Lost Lands deniz geçişleri.",
+      "proposed_theme": "Deniz keşfi",
+      "collection_candidates": "Harita; pusula; sütun figürü",
+      "sources": [
+        "U17"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B021",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Lost Lands Lighthouse",
+      "origin": "UO",
+      "kind": "Deniz feneri",
+      "source_fact": "Yew resmî sayfasında geçit hedefi olarak anılır.",
+      "proposed_theme": "Deniz feneri tedariki",
+      "collection_candidates": "Fener; yağ; mercek",
+      "sources": [
+        "CITY-cities-and-towns-yew"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B022",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Hoppers Bog",
+      "origin": "UO",
+      "kind": "Bataklık",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Bataklık koleksiyonu",
+      "collection_candidates": "Kök; saz; mantar",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B023",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Damwin Thicket",
+      "origin": "UO",
+      "kind": "Koruluk",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Sık orman",
+      "collection_candidates": "Dal; kütük; orman eşyası",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B024",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "City of the Dead",
+      "origin": "UO",
+      "kind": "Özel alan",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Hayalet şehir hatıraları",
+      "collection_candidates": "Mum; kemik; kadim tılsım",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B025",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Terra Sanctum",
+      "origin": "UO",
+      "kind": "Özel alan",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Kutsal doğa",
+      "collection_candidates": "Bitki; taş; tılsım",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B026",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Oasis",
+      "origin": "UO",
+      "kind": "Vaha",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Çöl erzakları",
+      "collection_candidates": "Hurma; su tulumu; çadır",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B027",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Desert Lost Lands",
+      "origin": "UO",
+      "kind": "Çöl alanı",
+      "source_fact": "Resmî champion konum listesinde Desert olarak geçer; dungeon değildir.",
+      "proposed_theme": "Çöl keşfi",
+      "collection_candidates": "Kum taşı; su; kervan eşyası",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B028",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Ice East",
+      "origin": "UO",
+      "kind": "Buz bölgesi",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Buz koleksiyonu",
+      "collection_candidates": "Buz taşı; kürk; kış erzağı",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B029",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Ice West",
+      "origin": "UO",
+      "kind": "Buz bölgesi",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Kutup keşfi",
+      "collection_candidates": "Fener; kış kıyafeti; harita",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B030",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Oaks",
+      "origin": "UO",
+      "kind": "Orman alanı",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Orman lordu koleksiyonu",
+      "collection_candidates": "Meşe; yaprak; orman süsü",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B031",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Tortoise",
+      "origin": "UO",
+      "kind": "Özel alan",
+      "source_fact": "Resmî champion konum listesinde bulunur.",
+      "proposed_theme": "Kaplumbağa ve doğa",
+      "collection_candidates": "Yumurta; kabuk; doğa eşyası",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B032",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Fields of Echoes",
+      "origin": "UO",
+      "kind": "Özel alan",
+      "source_fact": "Resmî dinamik etkinlik konumlarında Homare-Jima alanı.",
+      "proposed_theme": "Yankı ve ruh teması",
+      "collection_candidates": "Çan; tılsım; maske",
+      "sources": [
+        "U13"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B033",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Eastern Refuge",
+      "origin": "UO",
+      "kind": "Özel alan",
+      "source_fact": "Resmî dinamik etkinlik konumlarında Ter Mur alanı.",
+      "proposed_theme": "Sığınak ve alchemy",
+      "collection_candidates": "Şişe; bandaj; iksir",
+      "sources": [
+        "U13"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B034",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Healer Grove",
+      "origin": "UO",
+      "kind": "Koruluk",
+      "source_fact": "Resmî Ilshenar kamp rotasında bulunur.",
+      "proposed_theme": "Şifacılık",
+      "collection_candidates": "Bandaj; bitki; şifa paketi",
+      "sources": [
+        "U7"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "B035",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Gargoyle Mining Camp",
+      "origin": "UO",
+      "kind": "Maden kampı",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Gargoyle madenciliği",
+      "collection_candidates": "Kazma; cevher; taş",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B036",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Harpy Nest",
+      "origin": "UO",
+      "kind": "Yuva alanı",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Tüy ve yuvalar",
+      "collection_candidates": "Tüy; yumurta; süs",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B037",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Meer Catacombs",
+      "origin": "UO",
+      "kind": "Yeraltı alanı",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Kadim kültür eserleri",
+      "collection_candidates": "Tablet; tılsım; kap",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B038",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Lava Ruined Villa",
+      "origin": "UO",
+      "kind": "Harabe",
+      "source_fact": "Ilshenar topluluk dizininde bulunur.",
+      "proposed_theme": "Lav altındaki kalıntılar",
+      "collection_candidates": "Taş; kap; mozaik",
+      "sources": [
+        "C1"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "B039",
+      "group": "Bölgeler adalar ve yollar",
+      "name": "Ilshenar gezgin kampları",
+      "origin": "UO",
+      "kind": "Kamp grubu",
+      "source_fact": "Resmî kamp rotasında çoklu konumlar bulunur.",
+      "proposed_theme": "Gezgin erzakları ve falcılık",
+      "collection_candidates": "Çadır; çanta; kristal küre",
+      "sources": [
+        "U7"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E001",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Jukari yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında ateş ve volkan ile ilişkili.",
+      "proposed_theme": "Volkanik kabile eşyaları",
+      "collection_candidates": "Lav taşı; meşale; kabile süsü",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E002",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Kurak yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında kaplan ve orman ile ilişkili.",
+      "proposed_theme": "Kaplan temalı koleksiyon",
+      "collection_candidates": "Kaplan; maske; desenli eşya",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E003",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Barrab yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında Myrmidex ile ilişkili.",
+      "proposed_theme": "Böcek kabukları ve özler",
+      "collection_candidates": "Kabuk; yumurta; böcek özü",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E004",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Barako yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında ağaç üstü yerleşim ve maymun ile ilişkili.",
+      "proposed_theme": "Ağaç ev ve orman hayvanları",
+      "collection_candidates": "Ahşap; meyve; goril hatırası",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E005",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Urali yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında Dragon Turtle ile ilişkili.",
+      "proposed_theme": "Kaplumbağa koleksiyonu",
+      "collection_candidates": "Yumurta; kabuk; kaplumbağa",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E006",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Sakkhra yerleşimi",
+      "origin": "UO",
+      "kind": "Kabile yerleşimi",
+      "source_fact": "Resmî Eodon kaynağında dinozorlar ile ilişkili.",
+      "proposed_theme": "Dinozor koleksiyonu",
+      "collection_candidates": "Yumurta; fosil; dinozor",
+      "sources": [
+        "U6"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E007",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Eodon Volcano",
+      "origin": "UO",
+      "kind": "Volkan",
+      "source_fact": "Resmî Eodon görev zincirinde bulunur.",
+      "proposed_theme": "Lav taşı koleksiyonu",
+      "collection_candidates": "Lav taşı; obsidyen; ateş süsü",
+      "sources": [
+        "U14"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E008",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Myrmidex Pits",
+      "origin": "UO",
+      "kind": "Yeraltı alanı",
+      "source_fact": "Resmî Eodon görev zincirinde geçer.",
+      "proposed_theme": "Böcek kolonisi koleksiyonu",
+      "collection_candidates": "Yumurta; kabuk; koloni eşyası",
+      "sources": [
+        "U14"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E009",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Dragon Turtle habitat",
+      "origin": "UO",
+      "kind": "Doğal alan",
+      "source_fact": "Resmî champion listesinde bulunur.",
+      "proposed_theme": "Nadir yumurtalar ve kaplumbağalar",
+      "collection_candidates": "Yumurta; kabuk; Dragon Turtle",
+      "sources": [
+        "U9"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E010",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Eodon Ziggurat",
+      "origin": "UO",
+      "kind": "Anıt",
+      "source_fact": "Resmî cooking kaynağında kuş yuvaları ve malzemelerle anılır.",
+      "proposed_theme": "Kakao ve tatlı koleksiyonu",
+      "collection_candidates": "Kakao; çikolata; tatlı",
+      "sources": [
+        "U16"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E011",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Font of Fortune",
+      "origin": "UO",
+      "kind": "Çeşme",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Dilek ve şans koleksiyonu",
+      "collection_candidates": "Sikke; şans tılsımı; süslü kap",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E012",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Room of Experiments",
+      "origin": "UO",
+      "kind": "Oda",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Deney kristalleri",
+      "collection_candidates": "Kristal; şişe; deney eşyası",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E013",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Chamber of Virtue",
+      "origin": "UO",
+      "kind": "Salon",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Erdem simgeleri",
+      "collection_candidates": "Ankh; sembol; tılsım",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E014",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Silver Sapling",
+      "origin": "UO",
+      "kind": "Özel ağaç",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Büyülü bahçecilik",
+      "collection_candidates": "Tohum; filiz; gümüş yaprak",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E015",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Cavern of the Discarded",
+      "origin": "UO",
+      "kind": "Mağara",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Geri kazanım koleksiyonu",
+      "collection_candidates": "Hurda; onarılmış alet; süs",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "E016",
+      "group": "Eodon ve Abyss alt alanları",
+      "name": "Ancient Shrine Underworld",
+      "origin": "UO",
+      "kind": "Mabet",
+      "source_fact": "Stygian Abyss yayın notlarında bulunur.",
+      "proposed_theme": "Kadim ritüel eşyaları",
+      "collection_candidates": "Mum; taş tablet; tılsım",
+      "sources": [
+        "U10"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "I001",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Amoeba Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I002",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Bald Isle",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I003",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Blanche Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I004",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Dot Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I005",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Dragon Isle",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I006",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Eiffel Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I007",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Horseshoe Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I008",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Island of the Soulbinder",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I009",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Iver’s Rounding",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I010",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Ocarina Isle",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I011",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Skull Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I012",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Temple Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I013",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Valor Island",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I014",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Wyvern Isle",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "I015",
+      "group": "Topluluk adıyla bilinen adalar",
+      "name": "Isle of the Divide",
+      "origin": "UO topluluk adlandırması",
+      "kind": "Ada",
+      "source_fact": "UOGuide ada listesinde geçer; resmî isim statüsü ayrıca doğrulanmalı.",
+      "proposed_theme": "Ada keşfi ve hazine",
+      "collection_candidates": "Harita; pusula; hazine sandığı",
+      "sources": [
+        "C3"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Topluluk kaynağı"
+    },
+    {
+      "id": "G001",
+      "group": "Mezarlık durakları",
+      "name": "Britain Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G002",
+      "group": "Mezarlık durakları",
+      "name": "Cove Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G003",
+      "group": "Mezarlık durakları",
+      "name": "Jhelom Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G004",
+      "group": "Mezarlık durakları",
+      "name": "Moonglow Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G005",
+      "group": "Mezarlık durakları",
+      "name": "Nujel’m Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G006",
+      "group": "Mezarlık durakları",
+      "name": "Vesper Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "G007",
+      "group": "Mezarlık durakları",
+      "name": "Yew Cemetery",
+      "origin": "UO",
+      "kind": "Mezarlık",
+      "source_fact": "Resmî mezarlık rehberinde bulunur.",
+      "proposed_theme": "Hatıra ve mezar süsleri",
+      "collection_candidates": "Mum; çiçek; taş süs",
+      "sources": [
+        "U12"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T001",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Kotl City",
+      "origin": "UO",
+      "kind": "Harabe şehir ve dungeon",
+      "source_fact": "Publish 94 içinde Eodon kalıntıları olarak bulunur.",
+      "proposed_theme": "Kadim teknoloji ve automatons",
+      "collection_candidates": "Güç çekirdeği; dişli; automaton parçası",
+      "sources": [
+        "U19"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T002",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Stonegate",
+      "origin": "UO kurgu",
+      "kind": "Kule ve tarihsel konum",
+      "source_fact": "Resmî Silver Gate anlatısında geçer; erişilebilir harita yeri olduğu ayrıca doğrulanmalı.",
+      "proposed_theme": "Zaman ve kadim büyü",
+      "collection_candidates": "Küre; kristal; zaman hatırası",
+      "sources": [
+        "U20"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kurgu; harita durumu açık"
+    },
+    {
+      "id": "T003",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "The Waste",
+      "origin": "UO",
+      "kind": "Çöl",
+      "source_fact": "Samurai Empire kılavuzunda Zento kuzeyindeki çöl.",
+      "proposed_theme": "Çöl ve böcek koleksiyonu",
+      "collection_candidates": "Su tulumu; kabuk; çöl bitkisi",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T004",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Valley of Blossoms",
+      "origin": "UO",
+      "kind": "Vadi",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Çiçek ve bahçe",
+      "collection_candidates": "Tohum; çiçek; bonsai",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T005",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Winter Spur",
+      "origin": "UO",
+      "kind": "Dağlık alan",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Kış ve dağ koleksiyonu",
+      "collection_candidates": "Kış giysisi; buz taşı; sıcak yemek",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T006",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Storm Point",
+      "origin": "UO",
+      "kind": "Burun",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Fırtına denizciliği",
+      "collection_candidates": "Pusula; fener; gemi parçası",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T007",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Defiance Point",
+      "origin": "UO",
+      "kind": "Burun",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Deniz canlıları",
+      "collection_candidates": "Ağ; deniz hatırası; inci",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T008",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Crane Marsh",
+      "origin": "UO",
+      "kind": "Bataklık",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Bataklık ve kuşlar",
+      "collection_candidates": "Saz; tüy; kuş süsü",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T009",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Kitsune Woods",
+      "origin": "UO",
+      "kind": "Orman",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Büyülü tilkiler",
+      "collection_candidates": "Tilki; maske; orman tılsımı",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    },
+    {
+      "id": "T010",
+      "group": "Ek anıtlar ve Tokuno alanları",
+      "name": "Bushido Dojo",
+      "origin": "UO",
+      "kind": "Dojo",
+      "source_fact": "Samurai Empire kılavuzunda geçer.",
+      "proposed_theme": "Samuray tören eşyaları",
+      "collection_candidates": "Bokuto; katana; sancak",
+      "sources": [
+        "U15"
+      ],
+      "decision": "Onay bekliyor",
+      "verification": "Birincil kaynak"
+    }
+  ],
+  "sources": {
+    "N1": {
+      "title": "Nebula yer ve sistem dizini",
+      "url": "https://nebula.web.tr/wiki/index.php/Anasayfa",
+      "note": "Birincil; bazı alt sayfalar erişilemedi. Kütüphane kaldırılmış işaretlidir."
+    },
+    "N2": {
+      "title": "Nebula Dungeon Rehberi",
+      "url": "https://nebula.web.tr/wiki/index.php/Dungeon_Rehberi",
+      "note": "Birincil; 2023 tarihli rehber. Hythloth başlığı yinelenmiştir; ikinci bir yer sayılmadı."
+    },
+    "N3": {
+      "title": "Nebula Moonglow Kütüphane",
+      "url": "https://nebula.web.tr/wiki/index.php/Moonglow_K%C3%BCt%C3%BCphane",
+      "note": "Tarihsel dizin; ana wiki bu alanı kaldırılmış olarak işaretler."
+    },
+    "U1": {
+      "title": "UO şehir dizini",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/",
+      "note": "Birincil; dizindeki bütün şehir bağlantıları tarandı."
+    },
+    "U2": {
+      "title": "UO dungeon dizini",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/dungeons/",
+      "note": "Birincil; Dungeon Chests bir yer olmadığı için kayda alınmadı. Wind şehir kaydıyla birleştirildi."
+    },
+    "U3": {
+      "title": "UO özel alan dizini",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/areas-of-interest/",
+      "note": "Birincil; kişi adları yer adı olarak kullanılmadı."
+    },
+    "U4": {
+      "title": "UO harita bölgeleri",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/facet-maps/",
+      "note": "Birincil; bölge kayıtları şehir sayılmaz."
+    },
+    "U5": {
+      "title": "UO erdemler",
+      "url": "https://uo.com/wiki/ultima-online-wiki/gameplay/the-virtues/",
+      "note": "Birincil; aynı erdemin farklı haritalardaki mabetleri tek kavram kaydında toplandı."
+    },
+    "U6": {
+      "title": "UO Eodon kabileleri",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/the-tribes-of-eodon/",
+      "note": "Birincil; kabile adları yerleşim teması olarak kullanılır."
+    },
+    "U7": {
+      "title": "UO gezgin kampları",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/ilshenar-travelling-gypsies/",
+      "note": "Birincil; Lakeshire, Mistas, Twin Oaks ve Healer Grove rota üzerinde geçer."
+    },
+    "U8": {
+      "title": "UO Sea Market",
+      "url": "https://uo.com/wiki/ultima-online-wiki/gameplay/npc-commercial-transactions/the-floating-emporium-sea-market/",
+      "note": "Birincil; denizcilik ve balıkçılık için doğrudan referans."
+    },
+    "U9": {
+      "title": "UO Champion Spawns",
+      "url": "https://uo.com/wiki/ultima-online-wiki/combat/champion-spawns/",
+      "note": "Birincil; konum isimleri alındı, savaş mekaniği önerilmedi."
+    },
+    "U10": {
+      "title": "UO Stygian Abyss yayın notları",
+      "url": "https://uo.com/wiki/ultima-online-wiki/technical/previous-publishes/2009-2/publish-60-8th-september-stygian-abyss/",
+      "note": "Birincil; alt alan isimleri."
+    },
+    "U11": {
+      "title": "UO eşkıya kampları",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/areas-of-interest/brigand-camps/",
+      "note": "Birincil; Hanse’s Hostel ve Gravewater Dock çevresi dahil."
+    },
+    "U12": {
+      "title": "UO mezarlıklar",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/areas-of-interest/cemeteries/",
+      "note": "Birincil; mezarlıklar ayrı şehirler değildir."
+    },
+    "U13": {
+      "title": "UO dinamik etkinlik konumları",
+      "url": "https://uo.com/wiki/ultima-online-wiki/combat/champion-spawns/dynamic-champion-spawns/",
+      "note": "Birincil; alanın etkinlik geçmişi güncel etkinlik garantisi değildir."
+    },
+    "U14": {
+      "title": "UO Eodon görev zinciri",
+      "url": "https://uo.com/wiki/ultima-online-wiki/gameplay/quests/a-valley-of-one-quest-chain/",
+      "note": "Birincil; kabile yerleşimleri ve volkan."
+    },
+    "U15": {
+      "title": "UO Samurai Empire özgün kılavuzu",
+      "url": "https://mocagh.org/origin/uosamurai-manual.pdf",
+      "note": "Özgün oyun kılavuzunun arşiv kopyası; ada ve shrine isimleri."
+    },
+    "U16": {
+      "title": "UO yemekçilik",
+      "url": "https://uo.com/wiki/ultima-online-wiki/skills/cooking/",
+      "note": "Birincil; Eodon zigguratı ve kuş yuvaları."
+    },
+    "U17": {
+      "title": "UO gemiler",
+      "url": "https://uo.com/wiki/ultima-online-wiki/gameplay/ships-guide/",
+      "note": "Birincil; Serpent Pillars geçişleri."
+    },
+    "U18": {
+      "title": "UO Publish 44",
+      "url": "https://uo.com/wiki/ultima-online-wiki/technical/previous-publishes/2007-2/publish-44/",
+      "note": "Birincil; Old Haven harabesi ve New Haven geçişi."
+    },
+    "U19": {
+      "title": "UO Kotl City",
+      "url": "https://uo.com/wiki/ultima-online-wiki/publish-notes/publish-94/",
+      "note": "Birincil; Eodon Kotl kalıntıları."
+    },
+    "U20": {
+      "title": "UO Stonegate anlatısı",
+      "url": "https://uo.com/wiki/ultima-online-wiki/fiction/the-silver-gate/the-silver-gate/",
+      "note": "Birincil kurgu; yaşayan yerleşim veya erişilebilir bölüm kanıtı değildir."
+    },
+    "U21": {
+      "title": "UO Magincia Bazaar",
+      "url": "https://uo.com/wiki/ultima-online-wiki/ea-store-ultima-online-add-ons/",
+      "note": "Birincil; pet broker ve commodity broker."
+    },
+    "C1": {
+      "title": "UOGuide Ilshenar",
+      "url": "https://www.uoguide.com/Ilshenar",
+      "note": "Topluluk kaynağı; resmi dizinde bulunmayan yerler için ikinci kaynak."
+    },
+    "C2": {
+      "title": "UOGuide Ter Mur",
+      "url": "https://www.uoguide.com/Ter_Mur",
+      "note": "Topluluk kaynağı; Fishing Village."
+    },
+    "C3": {
+      "title": "UOGuide ada listesi",
+      "url": "https://www.uoguide.com/Island",
+      "note": "Topluluk kaynağı; bazı adlar oyuncu kullanımından gelir, resmî ad oldukları varsayılmaz."
+    },
+    "C4": {
+      "title": "UOGuide Paws",
+      "url": "https://www.uoguide.com/Paws",
+      "note": "Tek oyunculu Ultima kökenli; UO içinde yaşayan kasaba olduğu doğrulanmıyor."
+    },
+    "C5": {
+      "title": "UOGuide Lost Lands",
+      "url": "https://www.uoguide.com/The_Lost_Lands",
+      "note": "Topluluk kaynağı; geçitler ve alt bölge adları."
+    },
+    "C6": {
+      "title": "UOGuide Shrine",
+      "url": "https://www.uoguide.com/Shrines",
+      "note": "Topluluk kaynağı; Chaos shrine."
+    },
+    "C7": {
+      "title": "UOGuide Dagger Isle",
+      "url": "https://www.uoguide.com/Dagger_Isle",
+      "note": "Topluluk kaynağı; Ice Island takma adı."
+    },
+    "CITY-cities-and-towns-minoc": {
+      "title": "Minoc",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-minoc/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-britain": {
+      "title": "Britain",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-britain/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-buccaneers-den": {
+      "title": "Buccaneer’s Den",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-buccaneers-den/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-cove": {
+      "title": "Cove",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-cove/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-delucia": {
+      "title": "Delucia",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-delucia/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-heartwood": {
+      "title": "Heartwood",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/heartwood/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-jhelom": {
+      "title": "Jhelom",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-jhelom/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-luna": {
+      "title": "Luna",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-luna/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-moonglow": {
+      "title": "Moonglow",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-moonglow/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-new-haven": {
+      "title": "New Haven",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-new-haven/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-new-magincia": {
+      "title": "New Magincia",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-new-magincia/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-nujelm": {
+      "title": "NuJel’m",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-nujelm/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-ocllo": {
+      "title": "Ocllo",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-ocllo/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-papua": {
+      "title": "Papua",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-papua/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-royal-city": {
+      "title": "Royal City",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-royal-city/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-serpents-hold": {
+      "title": "Serpent’s Hold",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-serpents-hold/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-skara-brae": {
+      "title": "Skara Brae",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-skara-brae/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-trinsic": {
+      "title": "Trinsic",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-trinsic/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-umbra": {
+      "title": "Umbra",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-umbra/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-vesper": {
+      "title": "Vesper",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-vesper/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-wind": {
+      "title": "Wind",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-wind/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-yew": {
+      "title": "Yew",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-yew/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    },
+    "CITY-cities-and-towns-zento": {
+      "title": "Zento",
+      "url": "https://uo.com/wiki/ultima-online-wiki/world/cities-and-towns/cities-and-towns-zento/",
+      "note": "Birincil şehir sayfası; temalar tasarım önerisidir."
+    }
+  }
+}

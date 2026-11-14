@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Masterland",
+    "slug": "masterland",
+    "version": "0.2.0",
+    "scheme": "masterland",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.erditaskin.masterland",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "UIStatusBarHidden": true
+      }
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#142d44"
+        }
+      ],
+      "./plugins/with-ui-tests"
+    ],
+    "icon": "./assets/icon.png"
+  }
+}
