@@ -306,3 +306,8 @@ Kullanıcı `outputs/masterland/skara-concept-set-v1.zip` paketini uygulamanın 
 ## 15 Kasım 2026 — Un ürünleri ve hazır ilan ayrımı
 
 Kullanıcı un torbası ile un çuvalının birbirine fazla benzediğini belirtti. Küçük un torbası (`item50`) kapalı, uzun, mavi bantlı kâğıt paket olarak ayrılır. Büyük un çuvalının mevcut bej/açık çuval görseli korunur. Sabit ürün ID'leri, ad anahtarları ve merge zinciri değişmez. Tamamlanabilir ilanların bütün arka planı belirgin yeşil olur; yalnız kenarlık veya Ver rozetiyle sınırlı kalmaz. Eksik ilan krem rengini korur. Bu karar eşleşebilen merge ürünlerini gösterme özelliği eklemez.
+
+
+## 15 Kasım 2026 — Hazır ilan ürünlerinin tahta hücreleri
+
+Kullanıcı önceki uygulamayı düzeltti: yalnız ilan kartlarının değil, teslim edilebilir ilanlarda istenen ürünlerin tahtadaki hücre arka planlarının yeşil olması gerekiyor. Bütün gereksinimleri karşılanan güncel ilanların ürünleri yeşil hücrede gösterilir. Ürün teslim edildiğinde, taşındığında, merge edildiğinde veya ilan artık tamamlanabilir olmadığında durum yeniden hesaplanır. Bu gösterim seçili eşyanın merge eşini önermez; seçim çerçevesinden bağımsızdır.

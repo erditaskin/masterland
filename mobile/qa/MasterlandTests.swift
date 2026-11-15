@@ -107,8 +107,10 @@ final class MasterlandTests:XCTestCase {
     func testReadyOrderDoubleTapAndFastOpening(){
         app.buttons["producer1"].tap();app.buttons["producer1"].tap();drag(0,1)
         XCTAssertTrue(app.buttons["order-quest25"].label.contains("Hazır"))
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"ready-order-cell-1").firstMatch.exists)
         app.buttons["order-quest25"].tap(withNumberOfTaps:2,numberOfTouches:1)
         XCTAssertTrue(app.buttons["gold"].label.contains("60"))
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"ready-order-cell-1").firstMatch.exists)
         XCTAssertFalse(app.buttons["closePage"].exists)
         app.buttons["producer5"].tap();app.buttons["buyProducer"].tap();app.buttons["closePage"].tap()
         XCTAssertTrue(app.buttons["gold"].label.contains("20"))

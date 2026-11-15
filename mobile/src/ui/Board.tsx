@@ -113,9 +113,13 @@ const Piece = memo(
     a.reduced === b.reduced,
 );
 const BoardGrid = memo(function BoardGrid({
+  board,
+  readyOrderItems,
   cellWidth,
   cellHeight,
 }: {
+  board: (Tile | null)[];
+  readyOrderItems: ReadonlySet<string>;
   cellWidth: number;
   cellHeight: number;
 }) {
@@ -144,6 +148,21 @@ const BoardGrid = memo(function BoardGrid({
             width={cellWidth}
             height={cellHeight}
           />
+          {board[i] && readyOrderItems.has(board[i]!.item) && (
+            <View
+              testID={"ready-order-cell-" + i}
+              collapsable={false}
+              pointerEvents="none"
+              style={{
+                position: "absolute",
+                inset: 0.5,
+                borderRadius: 5,
+                backgroundColor: "#8fa74a",
+                borderWidth: 0.7,
+                borderColor: "#758c39",
+              }}
+            />
+          )}
           <View
             style={{
               position: "absolute",
@@ -160,6 +179,7 @@ const BoardGrid = memo(function BoardGrid({
 });
 export const Board = memo(function Board({
   board,
+  readyOrderItems,
   cellWidth,
   cellHeight,
   frameInset,
@@ -171,6 +191,7 @@ export const Board = memo(function Board({
   onInfo,
 }: {
   board: (Tile | null)[];
+  readyOrderItems: ReadonlySet<string>;
   cellWidth: number;
   cellHeight: number;
   frameInset: number;
@@ -334,7 +355,12 @@ export const Board = memo(function Board({
           backgroundColor: "transparent",
         }}
       >
-        <BoardGrid cellWidth={cellWidth} cellHeight={cellHeight} />
+        <BoardGrid
+          board={board}
+          readyOrderItems={readyOrderItems}
+          cellWidth={cellWidth}
+          cellHeight={cellHeight}
+        />
         {board.map((t, i) =>
           t ? (
             <Piece

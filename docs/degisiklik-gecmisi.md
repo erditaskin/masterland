@@ -297,3 +297,10 @@ Kanonik pakete göre ana ekranın yerleşimi, kare grid, kompakt üreticiler, lo
 `item50` bütün ekranlarda ortak Item bileşeni üzerinden yeni mavi bantlı paket görseline bağlandı. Yerleşik imagegen çıktısı ve alfa sınırları ayrı asset olarak korunur; atlasın diğer ürünleri değiştirilmedi. Ana ilan rafı ve bütün ilanlar sayfasındaki teslim edilebilir kartlar aynı belirgin yeşil zeminle gösterilir. Teslim edilebilirlik hesabı ve tek seferlik ödül akışı değişmedi.
 
 Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe görsel ölçüm, hızlı/çift dokunuşla teslim ve üst basamak merge testlerinin üçü de sıfır hatayla geçti (60,075 saniye). Gerçek ekran görüntüsü incelendi.
+
+
+## 15 Kasım 2026 — Tahtada teslim edilebilir ürün zemini
+
+Önceki turda istenen değişiklik yalnız ilan kartına uygulanmıştı. Düzeltmede hazır ilanlardan türetilen ürün ID'leri BoardGrid'e bağlandı. Yeşil renk ürünün altındaki sabit hücre katmanında çizilir; eşya seçimi ve drag geometrisi değişmez. Teslimden sonra rengin kaldırıldığını kontrol eden native regresyon doğrulaması eklendi.
+
+Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe 3 native test sıfır hatayla geçti. Hazır ürün hücresinin yeşil katmanı oluşuyor; teslim edilen ürünün katmanı kalkıyor. Son ekran görüntüsünde tahta hücrelerinin renk değişimi ayrıca görsel olarak doğrulandı.

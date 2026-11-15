@@ -571,6 +571,17 @@ function Game() {
     () => prioritizeOrderRail(orders(save), save),
     [save],
   );
+  const readyOrderItems = useMemo(
+    () =>
+      new Set(
+        activeOrders
+          .filter((o) =>
+            o.requirements.every((r) => count(save, r.item_id) >= r.quantity),
+          )
+          .flatMap((o) => o.requirements.map((r) => r.item_id)),
+      ),
+    [activeOrders, save],
+  );
   const producerRail = useRef<ComponentRef<typeof ScrollView>>(null),
     railOffset = useRef(0),
     railMax = useRef(0);
@@ -1196,6 +1207,7 @@ function Game() {
             >
               <Board
                 board={c.board}
+                readyOrderItems={readyOrderItems}
                 cellWidth={cellWidth}
                 cellHeight={cellHeight}
                 frameInset={frameInset}
