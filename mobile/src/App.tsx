@@ -74,6 +74,7 @@ const navigation = [
 ] as const;
 const startupAssets = [
   art.city,
+  require("../assets/art/flour-packet-v1.png"),
   art.concept,
   art.approved,
   art.products,
@@ -996,8 +997,10 @@ function Game() {
                             inset: 0,
                             borderRadius: 6,
                             borderWidth: 2,
-                            borderColor: "#4a9155",
-                            backgroundColor: "#8bd17338",
+                            borderColor: "#58782d",
+                            backgroundColor: "#91ad4e",
+                            backgroundImage:
+                              "linear-gradient(180deg, #b4ce78 0%, #86a847 100%)",
                           }}
                         />
                       )}

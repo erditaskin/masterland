@@ -290,3 +290,10 @@ Kullanıcı ekran bazında daha canlı konsept çalışmasını istedi. Splash, 
 ## 15 Kasım 2026 — Konseptlerin native uygulaması
 
 Kanonik pakete göre ana ekranın yerleşimi, kare grid, kompakt üreticiler, loading, ürün açma, koleksiyon ve şehir yolu yeniden düzenlendi. Native splash ilk React Native root layout'unda kapanır; görselin yükleme callback'ine bağlı bekleme kaldırıldı. Gerçek asset/kayıt yükleme ilerlemesi ayrı loading ekranında gösterilir. Şehir haritasının temiz arka planı orijinal konseptin değirmen, fırın, köprü ve liman kompozisyonunu korur. İsimler, sayılar, başarı durumları ve düğmeler native kalır. Harita dört başarı içeren sanallaştırılmış bölümlerle uzar; dönüşte scroll konumu korunur. Ayrıntılı doğrulama ve kabul sınırı skara-native-fidelity.md içindedir.
+
+
+## 15 Kasım 2026 — Ayrışan un ikonu ve yeşil hazır ilan zemini
+
+`item50` bütün ekranlarda ortak Item bileşeni üzerinden yeni mavi bantlı paket görseline bağlandı. Yerleşik imagegen çıktısı ve alfa sınırları ayrı asset olarak korunur; atlasın diğer ürünleri değiştirilmedi. Ana ilan rafı ve bütün ilanlar sayfasındaki teslim edilebilir kartlar aynı belirgin yeşil zeminle gösterilir. Teslim edilebilirlik hesabı ve tek seferlik ödül akışı değişmedi.
+
+Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe görsel ölçüm, hızlı/çift dokunuşla teslim ve üst basamak merge testlerinin üçü de sıfır hatayla geçti (60,075 saniye). Gerçek ekran görüntüsü incelendi.

@@ -301,3 +301,8 @@ Kullanıcı Skara konseptleri sırasında hücrelerin her zaman kare olmasını 
 ## 15 Kasım 2026 — Kanonik konsept paketi
 
 Kullanıcı `outputs/masterland/skara-concept-set-v1.zip` paketini uygulamanın görsel hedefi olarak tekrar belirtti. Harita için `06-city-route-long-v2.png`, tahta için `01-board-compact-v4.png` esastır. Önceki dikdörtgen hücre ölçümleri tarihçedir; gerçek tahta 54 eşit kare hücre kullanır. Konseptteki örnek ilerleme, altın ve ödül durumları oyun kaydını değiştirmek için gerekçe değildir. HUD ve alt navigasyon ikincil sayfalarda görünür kalır. Harita resminin içindeki başarı kartları etkileşimli native bileşenlerdir.
+
+
+## 15 Kasım 2026 — Un ürünleri ve hazır ilan ayrımı
+
+Kullanıcı un torbası ile un çuvalının birbirine fazla benzediğini belirtti. Küçük un torbası (`item50`) kapalı, uzun, mavi bantlı kâğıt paket olarak ayrılır. Büyük un çuvalının mevcut bej/açık çuval görseli korunur. Sabit ürün ID'leri, ad anahtarları ve merge zinciri değişmez. Tamamlanabilir ilanların bütün arka planı belirgin yeşil olur; yalnız kenarlık veya Ver rozetiyle sınırlı kalmaz. Eksik ilan krem rengini korur. Bu karar eşleşebilen merge ürünlerini gösterme özelliği eklemez.

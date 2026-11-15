@@ -348,9 +348,11 @@ export function Pages({
                   style={[
                     card,
                     canDeliver(save, o) && {
-                      borderColor: "#4a9155",
+                      borderColor: "#58782d",
                       borderWidth: 2,
-                      backgroundColor: "#cfe4b8",
+                      backgroundColor: "#91ad4e",
+                      backgroundImage:
+                        "linear-gradient(180deg, #b4ce78 0%, #86a847 100%)",
                     },
                   ]}
                 >

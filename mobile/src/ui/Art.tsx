@@ -2,6 +2,7 @@ import { memo } from "react";
 import { Image, View, type ImageSourcePropType } from "react-native";
 import { art } from "./theme";
 import { product } from "../game/engine";
+import flourBounds from "../../assets/art/flour-packet-v1-bounds.json";
 import itemBounds from "../../assets/art/item-bounds.json";
 function dimensions(source: ImageSourcePropType) {
   const m = Image.resolveAssetSource(source);
@@ -87,7 +88,8 @@ export const Item = memo(function Item({
   const index = approved
     ? p.producer * 2 + p.tier - 1
     : p.producer * 4 + p.tier - 1;
-  const rect = itemBounds[kind][index]!;
+  const flourPacket = id === "item50";
+  const rect = flourPacket ? flourBounds : itemBounds[kind][index]!;
   const ratio = rect[2]! / rect[3]!,
     drawWidth = Math.min(width, height * ratio),
     drawHeight = drawWidth / ratio;
@@ -97,7 +99,11 @@ export const Item = memo(function Item({
       style={{ width, height, alignItems: "center", justifyContent: "center" }}
     >
       <Crop
-        source={art[kind]}
+        source={
+          flourPacket
+            ? require("../../assets/art/flour-packet-v1.png")
+            : art[kind]
+        }
         x={rect[0]!}
         y={rect[1]!}
         w={rect[2]!}
