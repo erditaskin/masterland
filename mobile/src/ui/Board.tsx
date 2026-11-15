@@ -16,8 +16,8 @@ import Animated, {
   type SharedValue,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { Item } from "./Art";
-import { BoardFrame, SkinCrop, skin } from "./Skin";
+import { Item, Crop } from "./Art";
+import { BoardFrame } from "./Skin";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
 interface Drag {
@@ -135,7 +135,24 @@ const BoardGrid = memo(function BoardGrid({
             height: cellHeight,
           }}
         >
-          <SkinCrop rect={skin.cell} width={cellWidth} height={cellHeight} />
+          <Crop
+            source={require("../../assets/art/skara-ui-chrome-v1.png")}
+            x={316}
+            y={1060}
+            w={104}
+            h={84}
+            width={cellWidth}
+            height={cellHeight}
+          />
+          <View
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderWidth: 0.5,
+              borderColor: "#ffedcd",
+              borderRadius: 5,
+            }}
+          />
         </View>
       ))}
     </View>

@@ -114,14 +114,20 @@ export function ActionButton({
         minHeight: 44,
         paddingHorizontal: 18,
         paddingVertical: 10,
-        borderRadius: 12,
-        backgroundColor: colors.navy,
+        borderRadius: 22,
+        backgroundColor: colors.green,
+        backgroundImage:
+          "linear-gradient(180deg, #8abf25 0%, #508c10 55%, #386f12 100%)",
         borderColor: colors.gold,
         borderWidth: 1,
         marginVertical: 5,
+        shadowColor: "#466c10",
+        shadowOpacity: 0.25,
+        shadowRadius: 2,
+        shadowOffset: { width: 0, height: 2 },
       }}
     >
-      <Label color={colors.goldLight} size={15}>
+      <Label title color={colors.goldLight} size={16}>
         {text}
       </Label>
     </Button>

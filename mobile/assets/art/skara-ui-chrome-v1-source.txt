@@ -1,0 +1,1 @@
+Unmodified copy of assets/concepts/skara-v1/01-board-compact-v4.png. Built-in imagegen; original prompt is beside the concept. Native components draw only decorative cell/frame/producer regions. Live text and counters remain native.

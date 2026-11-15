@@ -1,33 +1,164 @@
 import { useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
-import { Animated, ImageBackground, ScrollView, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  View,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
+} from "react-native";
+import tabBounds from "../../assets/art/city-tabs-v3-bounds.json";
 import reference from "../../../data/content-reference.json";
 import {
   achievementProgress,
   achievementState,
   achievements,
   name,
+  type Achievement,
   type Save,
 } from "../game/engine";
 import { Button, Label } from "./Controls";
-import { AchievementIcon } from "./Achievements";
-import { StatusIcon } from "./StatusIcon";
-import { ParchmentPanel } from "./Skin";
+import { RouteIcon } from "./Achievements";
+import { Crop } from "./Art";
+import { routeSections } from "./layout";
 import { colors } from "./theme";
-
-/** One continuous route; native quest nodes and city shortcuts remain interactive. */
+const maps = [
+  require("../../assets/art/skara-route-v2.png"),
+  require("../../assets/art/haven-route-v2.png"),
+  require("../../assets/art/cove-route-v2.png"),
+];
+type Chunk = {
+  id: string;
+  region: number;
+  first: boolean;
+  nodes: typeof achievements;
+};
+function RoutePin({
+  a,
+  save,
+  width,
+  press,
+}: {
+  a: Achievement;
+  save: Save;
+  width: number;
+  press: () => void;
+}) {
+  const state = achievementState(save, a),
+    progress = Math.min(a.target, achievementProgress(save, a));
+  return (
+    <Button
+      testID={"achievement-" + a.id}
+      label={
+        name(a.id) +
+        ", " +
+        (state === "ready"
+          ? "Ödül hazır"
+          : state === "claimed"
+            ? "Alındı"
+            : state === "locked"
+              ? "Kilitli"
+              : progress + "/" + a.target)
+      }
+      onPress={press}
+      style={{ width, height: 145 }}
+    >
+      <Image
+        pointerEvents="none"
+        source={require("../../assets/art/route-card-v2.png")}
+        resizeMode="stretch"
+        style={{ position: "absolute", left: 0, top: 18, width, height: 126 }}
+      />
+      <View
+        pointerEvents="none"
+        style={{ position: "absolute", top: 0, left: (width - 56) / 2 }}
+      >
+        <RouteIcon kind={a.kind} size={56} />
+      </View>
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          left: 14,
+          right: 14,
+          top: 64,
+          alignItems: "center",
+        }}
+      >
+        <Label title size={13} style={{ textAlign: "center", marginBottom: 7 }}>
+          {name(a.id)}
+        </Label>
+        {state === "ready" ? (
+          <View
+            style={{
+              paddingHorizontal: 9,
+              height: 24,
+              justifyContent: "center",
+              borderRadius: 13,
+              backgroundColor: "#57980e",
+              borderWidth: 1,
+              borderColor: "#e7c06d",
+              backgroundImage:
+                "linear-gradient(180deg, #8bc42b 0%, #438607 100%)",
+            }}
+          >
+            <Label title size={12} color="#fff7dc">
+              Ödülü al
+            </Label>
+          </View>
+        ) : state === "claimed" ? (
+          <Label title size={21} color={colors.green}>
+            ✓
+          </Label>
+        ) : state === "locked" ? (
+          <Label size={10} color={colors.muted}>
+            Şehir kilitli
+          </Label>
+        ) : (
+          <View
+            style={{
+              height: 17,
+              width: "100%",
+              borderRadius: 9,
+              borderWidth: 1,
+              borderColor: "#b28d51",
+              backgroundColor: "#d9bd8a",
+              overflow: "hidden",
+            }}
+          >
+            <View
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: ((progress / a.target) * 100 + "%") as `${number}%`,
+                backgroundColor: "#78ad26",
+              }}
+            />
+            <Label title size={11} style={{ textAlign: "center" }}>
+              {progress}/{a.target}
+            </Label>
+          </View>
+        )}
+      </View>
+    </Button>
+  );
+}
+/** Reusable full-height city tiles and virtualized achievement sections keep the route readable. */
 export function CityMap({
   currentCity,
   save,
+  width,
   height,
   onAchievement,
   initialOffset = () => 0,
   onOffsetChange,
   onReturn,
   onInteract,
-  reduced,
 }: {
   currentCity: string;
   save: Save;
+  width: number;
   height: number;
   onAchievement: (id: string) => void;
   initialOffset?: () => number;
@@ -36,361 +167,258 @@ export function CityMap({
   onInteract: () => void;
   reduced: boolean;
 }) {
-  const [inspected, setInspected] = useState<{
-    region: number;
-    quest: number | null;
-  } | null>(null);
-  const [mapWidth, setMapWidth] = useState(300),
-    [active, setActive] = useState(0);
-  const activeRef = useRef(0),
-    scroll = useRef<ComponentRef<typeof ScrollView>>(null);
-  const opacity = useMemo(() => new Animated.Value(1), []);
-  const [restoreOffset] = useState(initialOffset);
+  const [active, setActive] = useState(0),
+    [inspected, setInspected] = useState<number | null>(null);
+  const [offset] = useState(initialOffset);
+  const scroll = useRef<ComponentRef<typeof FlatList<Chunk>>>(null);
+  const stops = reference.ui.city_map.stops;
+  const chunks = useMemo(() => {
+    const order = reference.ui.city_map.achievement_order;
+    const ordered = [...achievements].sort((a, b) => {
+      const ai = order.indexOf(a.id),
+        bi = order.indexOf(b.id);
+      return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi);
+    });
+    return routeSections(stops, ordered);
+  }, [stops]);
+  const plotWidth = width - 67;
+  const tileHeight = (plotWidth * 1230) / 675;
   useEffect(() => {
     const frame = requestAnimationFrame(() =>
-      scroll.current?.scrollTo({ y: restoreOffset, animated: false }),
+      scroll.current?.scrollToOffset({ offset, animated: false }),
     );
     return () => cancelAnimationFrame(frame);
-  }, [mapWidth, restoreOffset]);
-  const regionHeight = mapWidth * 1.6;
-  const stops = reference.ui.city_map.stops;
-  const palette = reference.ui.city_map.region_colors;
-  const locale: Record<string, string> = reference.locales.tr;
-  const inspect = (region: number, quest: number | null) => {
-    onInteract();
-    setInspected({ region, quest });
-    opacity.stopAnimation();
-    opacity.setValue(reduced ? 1 : 0);
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: reduced ? 0 : 130,
-      useNativeDriver: true,
-    }).start();
+  }, [offset, tileHeight]);
+  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    onOffsetChange(e.nativeEvent.contentOffset.y);
+    const index = Math.min(
+      chunks.length - 1,
+      Math.max(
+        0,
+        Math.floor((e.nativeEvent.contentOffset.y + 50) / tileHeight),
+      ),
+    );
+    setActive(chunks[index]!.region);
   };
-  const destination = inspected
-    ? reference.cities.find((c) => c.id === stops[inspected.region]!.city_id)!
-    : null;
+  const activeStop = stops[active]!,
+    here = activeStop.city_id === currentCity && activeStop.travel_enabled;
   return (
-    <View
-      style={{
-        height,
-        backgroundColor: "#d9bc89",
-        borderWidth: 1,
-        borderColor: "#b18a51",
-        borderRadius: 8,
-        overflow: "hidden",
-      }}
-    >
+    <View style={{ width, height, overflow: "hidden" }}>
+      <Button
+        testID={"map-" + activeStop.city_id}
+        label={
+          name(activeStop.city_id) +
+          (here
+            ? ", Buradasın, tahtaya dön"
+            : ", Kilitli, açılma seviyesini göster")
+        }
+        onPress={() => {
+          onInteract();
+          if (here) onReturn();
+          else setInspected(active);
+        }}
+        style={{ height: 22, marginBottom: 4 }}
+      >
+        <Label title size={13} color={colors.ink}>
+          {name(activeStop.city_id)} · Özel Başarılar
+        </Label>
+      </Button>
       <View
         style={{
-          backgroundColor: "#eee0bd",
-          paddingVertical: 9,
-          paddingHorizontal: 12,
-          borderBottomWidth: 1,
-          borderColor: colors.gold,
+          flex: 1,
+          marginLeft: 7,
+          marginRight: 60,
+          borderRadius: 14,
+          overflow: "hidden",
         }}
       >
-        <Label title size={19} color={colors.ink}>
-          {name(stops[active]!.city_id)}
-        </Label>
-        <Label size={11} color={colors.muted}>
-          {locale[stops[active]!.role_key]} · Özel başarılar
-        </Label>
-      </View>
-      <ScrollView
-        ref={scroll}
-        testID="cityRouteScroll"
-        showsVerticalScrollIndicator={false}
-        scrollEventThrottle={32}
-        onScroll={(e) => {
-          onOffsetChange(e.nativeEvent.contentOffset.y);
-          const next = Math.min(
-            2,
-            Math.max(
-              0,
-              Math.floor(
-                (e.nativeEvent.contentOffset.y +
-                  e.nativeEvent.layoutMeasurement.height / 2) /
-                  regionHeight,
-              ),
-            ),
-          );
-          if (next !== activeRef.current) {
-            activeRef.current = next;
-            setActive(next);
-          }
-        }}
-        onLayout={(e) => {
-          setMapWidth(e.nativeEvent.layout.width);
-        }}
-      >
-        <ImageBackground
-          source={require("../../assets/art/world-map-v2.png")}
-          resizeMode="cover"
-          testID="cityMap"
-          style={{ width: "100%", height: regionHeight * 3 }}
-        >
-          {stops.map((stop, i) => {
-            const here = stop.city_id === currentCity && stop.travel_enabled;
+        <FlatList
+          ref={scroll}
+          data={chunks}
+          keyExtractor={(item) => item.id}
+          testID="cityRouteScroll"
+          onScroll={onScroll}
+          scrollEventThrottle={32}
+          initialNumToRender={3}
+          maxToRenderPerBatch={3}
+          windowSize={5}
+          showsVerticalScrollIndicator={true}
+          indicatorStyle="white"
+          getItemLayout={(_, i) => ({
+            length: tileHeight,
+            offset: i * tileHeight,
+            index: i,
+          })}
+          renderItem={({ item }) => {
+            const nodeWidth = plotWidth * 0.44;
             return (
-              <View
-                key={stop.city_id}
-                style={{
-                  position: "absolute",
-                  top: i * regionHeight,
-                  left: 0,
-                  right: 0,
-                  height: regionHeight,
-                }}
-              >
-                <Button
-                  testID={`map-${stop.city_id}`}
-                  label={`${name(stop.city_id)}, ${here ? "Buradasın, tahtaya dön" : "Kilitli, açılma seviyesini göster"}`}
-                  onPress={() => (here ? onReturn() : inspect(i, null))}
-                  style={{
-                    position: "absolute",
-                    top: 10,
-                    left: 12,
-                    right: 57,
-                    minHeight: 43,
-                    borderRadius: 12,
-                    borderWidth: 1,
-                    borderColor: colors.gold,
-                    backgroundColor: "transparent",
-                    padding: 5,
-                  }}
-                >
-                  <View
+              <View style={{ height: tileHeight, overflow: "hidden" }}>
+                {item.region === 0 ? (
+                  <Crop
+                    source={require("../../assets/art/canonical-map-clean-v1.png")}
+                    x={31}
+                    y={320}
+                    w={675}
+                    h={1230}
+                    width={plotWidth}
+                    height={tileHeight}
+                  />
+                ) : (
+                  <Image
                     pointerEvents="none"
+                    source={maps[item.region]}
+                    resizeMode="cover"
                     style={{
                       position: "absolute",
-                      left: -5,
-                      top: -5,
-                      width: mapWidth - 69,
-                      height: 44,
+                      inset: 0,
+                      width: plotWidth,
+                      height: tileHeight,
                     }}
-                  >
-                    <ParchmentPanel width={mapWidth - 69} height={44} />
-                  </View>
+                  />
+                )}
+                {item.nodes.map((a, j) => (
                   <View
+                    key={a.id}
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 5,
+                      position: "absolute",
+                      top: ([17, 330, 580, 860][j]! * plotWidth) / 675,
+                      left: Math.min(
+                        plotWidth - nodeWidth - 2,
+                        ([87, 374, 137, 400][j]! * plotWidth) / 675,
+                      ),
                     }}
                   >
-                    {!here && <StatusIcon kind="lock" />}
-                    <Label title size={18} color={colors.ink}>
-                      {name(stop.city_id)}
-                    </Label>
+                    <RoutePin
+                      a={a}
+                      save={save}
+                      width={nodeWidth}
+                      press={() => onAchievement(a.id)}
+                    />
                   </View>
-                  <Label size={10} color={colors.muted}>
-                    {here ? "Buradasın · Tahtaya dön" : "Kilitli şehir"}
-                  </Label>
-                </Button>
-                {achievements
-                  .filter((a) => a.city_id === stop.city_id)
-                  .map((a, j, list) => {
-                    const state = achievementState(save, a),
-                      progress = Math.min(
-                        a.target,
-                        achievementProgress(save, a),
-                      );
-                    const nodeWidth = (mapWidth - 68) / 2;
-                    return (
-                      <Button
-                        key={a.id}
-                        testID={`achievement-${a.id}`}
-                        label={`${name(a.id)}, ${state === "ready" ? "Ödül hazır" : state === "claimed" ? "Alındı" : state === "locked" ? "Kilitli" : `${progress}/${a.target}`}`}
-                        onPress={() => onAchievement(a.id)}
-                        style={{
-                          position: "absolute",
-                          top:
-                            85 +
-                            (j * (regionHeight - 160)) /
-                              Math.max(1, list.length - 1),
-                          left: j % 2 === 0 ? 8 : mapWidth - 56 - nodeWidth,
-                          width: nodeWidth,
-                          height: 67,
-                          padding: 6,
-                          borderRadius: 13,
-                          borderWidth: 0,
-                          borderColor:
-                            state === "ready" ? "#fff0a3" : colors.gold,
-                          backgroundColor: "transparent",
-                          shadowColor: "#101722",
-                          shadowOpacity: 0.28,
-                          shadowRadius: 4,
-                          shadowOffset: { width: 0, height: 2 },
-                        }}
-                      >
-                        <View
-                          pointerEvents="none"
-                          style={{
-                            position: "absolute",
-                            left: -6,
-                            top: -6,
-                            width: nodeWidth,
-                            height: 67,
-                          }}
-                        >
-                          <ParchmentPanel width={nodeWidth} height={67} />
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            gap: 4,
-                          }}
-                        >
-                          <View
-                            style={{ opacity: state === "locked" ? 0.5 : 1 }}
-                          >
-                            <AchievementIcon kind={a.kind} size={34} />
-                          </View>
-                          <View style={{ flex: 1 }}>
-                            <Label title size={10.5} color={colors.ink}>
-                              {name(a.id)}
-                            </Label>
-                            <Label
-                              size={9}
-                              color={
-                                state === "ready"
-                                  ? "#925715"
-                                  : state === "claimed"
-                                    ? colors.green
-                                    : colors.muted
-                              }
-                            >
-                              {state === "ready"
-                                ? "Ödül hazır"
-                                : state === "claimed"
-                                  ? "Alındı ✓"
-                                  : state === "locked"
-                                    ? "Şehir kilitli"
-                                    : `${progress} / ${a.target}`}
-                            </Label>
-                          </View>
-                        </View>
-                        {(state === "ready" || state === "claimed") && (
-                          <View
-                            pointerEvents="none"
-                            style={{
-                              position: "absolute",
-                              right: -5,
-                              bottom: -4,
-                              width: 16,
-                              height: 16,
-                              borderRadius: 8,
-                              borderWidth: 1,
-                              borderColor: "#c4815e",
-                              backgroundColor:
-                                state === "claimed" ? "#3c7051" : "#974536",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Label size={9} color="#ffe4ac">
-                              {state === "claimed" ? "✓" : "◆"}
-                            </Label>
-                          </View>
-                        )}
-                        <View
-                          style={{
-                            width: "100%",
-                            height: 3,
-                            borderRadius: 2,
-                            marginTop: 4,
-                            backgroundColor: "#c9b28a",
-                          }}
-                        >
-                          <View
-                            style={{
-                              height: 3,
-                              borderRadius: 2,
-                              width: `${state === "locked" ? 0 : (progress / a.target) * 100}%`,
-                              backgroundColor:
-                                state === "ready" ? "#ffd260" : "#78b983",
-                            }}
-                          />
-                        </View>
-                      </Button>
-                    );
-                  })}
+                ))}
               </View>
             );
-          })}
-        </ImageBackground>
-      </ScrollView>
-      <View style={{ position: "absolute", right: 5, top: 75, gap: 7 }}>
-        {stops.map((s, i) => (
+          }}
+        />
+        <View
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 7,
+            backgroundImage:
+              "linear-gradient(90deg, #f9e8c8 0%, #f9e8c800 100%)",
+          }}
+        />
+        <View
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: 7,
+            backgroundImage:
+              "linear-gradient(270deg, #f9e8c8 0%, #f9e8c800 100%)",
+          }}
+        />
+      </View>
+      <Label
+        title
+        size={12}
+        style={{ textAlign: "center", height: 25, paddingTop: 5 }}
+      >
+        Yol devam ediyor ↓
+      </Label>
+      <View style={{ position: "absolute", right: 0, top: 32, gap: 8 }}>
+        {stops.map((stop, i) => (
           <Button
-            key={s.city_id}
-            testID={`jump-${s.city_id}`}
-            label={`${name(s.city_id)} konumuna git`}
+            key={stop.city_id}
+            testID={"jump-" + stop.city_id}
+            label={name(stop.city_id) + " konumuna git"}
             onPress={() => {
               onInteract();
               setInspected(null);
-              scroll.current?.scrollTo({
-                y: i * regionHeight,
+              const index = chunks.findIndex((c) => c.region === i);
+              scroll.current?.scrollToOffset({
+                offset: index * tileHeight,
                 animated: false,
               });
+              setActive(i);
             }}
             style={{
-              width: 43,
-              minHeight: 47,
-              borderRadius: 10,
-              borderWidth: 1,
-              borderColor: active === i ? colors.goldLight : colors.gold,
-              backgroundColor: palette[i],
-              padding: 3,
+              width: 42,
+              height: 66,
             }}
           >
-            <Label title size={15} color={colors.goldLight}>
-              {i + 1}
-            </Label>
-            <Label size={8} color={colors.goldLight}>
-              {name(s.city_id).split(" ")[0]}
+            <View
+              pointerEvents="none"
+              style={{ position: "absolute", inset: 0 }}
+            >
+              <Crop
+                source={require("../../assets/art/city-tabs-v3.png")}
+                x={tabBounds[i]![0]!}
+                y={tabBounds[i]![1]!}
+                w={tabBounds[i]![2]!}
+                h={tabBounds[i]![3]!}
+                width={42}
+                height={66}
+              />
+            </View>
+            <Label
+              title
+              size={10}
+              color={i === 0 ? colors.paper : colors.ink}
+              style={{
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 10,
+                textAlign: "center",
+              }}
+            >
+              {i === 1
+                ? name(stop.city_id).split(" ").at(-1)
+                : name(stop.city_id).split(" ")[0]}
             </Label>
           </Button>
         ))}
       </View>
-      {inspected && destination && (
-        <Animated.View
-          accessible={inspected.region !== 0}
+      {inspected !== null && (
+        <View
+          testID={"map-lock-" + stops[inspected]!.city_id}
+          accessible
           accessibilityRole="alert"
           accessibilityLabel={
-            inspected.region !== 0
-              ? `${name(destination.id)}: ${destination.unlock_level}. seviyede açılacak.`
-              : undefined
-          }
-          testID={
-            inspected.region !== 0
-              ? `map-lock-${destination.id}`
-              : "map-quest-detail"
+            name(stops[inspected]!.city_id) +
+            ": " +
+            reference.cities.find((c) => c.id === stops[inspected]!.city_id)!
+              .unlock_level +
+            ". seviyede açılacak."
           }
           style={{
-            opacity,
             position: "absolute",
             bottom: 8,
             left: 8,
             right: 8,
-            padding: 10,
-            borderRadius: 12,
+            padding: 12,
+            backgroundColor: colors.paper,
             borderWidth: 1,
             borderColor: colors.gold,
-            backgroundColor: "#fff0d8fa",
+            borderRadius: 12,
           }}
         >
-          <Label title size={16}>
-            {name(destination.id)}
-          </Label>
+          <Label title>{name(stops[inspected]!.city_id)}</Label>
           <Label size={12}>
-            {inspected.region !== 0
-              ? `${destination.unlock_level}. seviyede açılacak.`
-              : "Özel başarılarını yol kenarındaki sandıklardan incele."}
+            {
+              reference.cities.find((c) => c.id === stops[inspected]!.city_id)!
+                .unlock_level
+            }
+            . seviyede açılacak.
           </Label>
-        </Animated.View>
+        </View>
       )}
     </View>
   );

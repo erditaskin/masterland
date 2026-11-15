@@ -172,3 +172,42 @@ export function AchievementDetails({
     </View>
   );
 }
+
+export function RouteIcon({
+  kind,
+  size = 56,
+}: {
+  kind: string;
+  size?: number;
+}) {
+  const rects: number[][] = require("../../assets/art/route-icons-v2-bounds.json");
+  const rect =
+    rects[
+      ({ gift: 0, title: 1, xp: 2, energy: 3 } as Record<string, number>)[
+        kind
+      ] ?? 0
+    ]!;
+  const ratio = rect[2]! / rect[3]!,
+    width = Math.min(size, size * ratio),
+    height = width / ratio;
+  return (
+    <View
+      style={{
+        width: size,
+        height: size,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Crop
+        source={require("../../assets/art/route-icons-v2.png")}
+        x={rect[0]!}
+        y={rect[1]!}
+        w={rect[2]!}
+        h={rect[3]!}
+        width={width}
+        height={height}
+      />
+    </View>
+  );
+}

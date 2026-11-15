@@ -52,3 +52,7 @@ Normal ilerleme cihazda `@masterland/save/v2` anahtarıyla saklanır. Bozuk kay�
 - `docs/degisiklik-gecmisi.md`: Önceki kararların tarihçesi.
 
 Eski `ios/` yolları ve Ultima adı geçen tarihsel raporlar geçmiş SwiftUI sürümüne aittir. Eski test sonuçları RN sürümünün kanıtı sayılmaz. Mekanik test başarısı, görsel kabul veya gerçek cihaz performans ölçümü değildir. Ekonomi sayıları deneme ayarıdır; gerçek reklam ve satın alma henüz eklenmemiştir.
+
+## Güncel Skara uygulama doğrulaması
+
+Kanonik konsept paketi, native kare tahta, loading ve şehir yolu uygulamasının ölçümleri ve kabul sınırı `docs/skara-native-fidelity.md` içindedir. Eski görsel turlar güncel kare hücre kararının yerine geçmez.

@@ -118,3 +118,8 @@ Güç modlarının 1/2/4/8 enerji maliyeti ve katı 100 üzeri koşulu kullanıc
 | achievement4 | Fırının Sırrı | Somun ekmeği ilk kez keşfet. | 20 XP, Fırın Dostu |
 | achievement5 | Gezginin Kesesi | On farklı ürün keşfet. | 25 enerji, 5 elmas |
 | achievement6 | Skara Hatırası | Skara’nın altı başlangıç ilanını teslim et. | 25 kapasite, 25 enerji, 30 XP, 100 altın, Skara Gezgini |
+
+
+## Son durum — kanonik Skara uygulaması
+
+Yukarıdaki eski 122:88.75 oranı güncel açık konu değildir. Kullanıcı daha sonraki konsept turunda kare hücre kararını verdi; native ölçüm 54 adet 57×57 pt hücreyi doğruladı. Açık kalan görsel kabul, kanonik konsept ile native uygulamanın kullanıcı tarafından birlikte değerlendirilmesidir. Test başarısı %100 piksel özdeşliği sayılmaz. Gerçek telefonda ses, FPS ve pil ölçümü bu simülatör turunun kapsamı dışındadır.

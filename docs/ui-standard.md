@@ -207,3 +207,8 @@ Sayfa kabuğu: 12 pt dış yatay pay, 36 pt parşömen iç yatay pay, 60 pt üst
 ## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
 
 Güncel hücre hedefi eşit karedir: tek s kenarından 6s×9s iç grid hesaplanır. Son satır dahil hiçbir hücre kalan yüksekliği doldurmak için esnetilmez. Kompakt üst alan ile tahtaya yer açılır. Konseptler assets/concepts/skara-v1 içindedir; PNG oranları uygulama geometri kanıtı değildir. Önceki yatay hücre standardı artık güncel hedef değildir.
+
+
+## 15 Kasım 2026 akşamı — Kanonik Skara native standardı
+
+Önceki raster oran kayıtlarının yerine 6×9 eşit kare hücre kullanılır. Referans `skara-concept-set-v1.zip` paketidir; uygulama ve ölçüm kaydı `skara-native-fidelity.md` içindedir. Yeni onaylı konseptler ürün/koleksiyon için düz krem panel, şehir yolu için kıvrık parşömen kullanır. Ortaklık aynı kapatma konumu, okunabilir iç boşluk, tipografi, renk ve etkileşim davranışıdır. Harita illüstrasyonu kendi kâğıdının içinde kalır. Native HUD ve alt navigasyon ikincil sayfalarda görünürdür.

@@ -43,7 +43,7 @@ export const SkinPanel = memo(function SkinPanel({
   texture?: ImageSourcePropType;
 }) {
   const [x, y, w, h] = rect,
-    b = inset,
+    b = Math.min(inset, w / 2, h / 2),
     k = Math.min(width / w, height / h),
     edge = PixelRatio.roundToNearestPixel(
       Math.min(b * k, width / 3, height / 3),
@@ -98,7 +98,7 @@ export const SkinPanel = memo(function SkinPanel({
 export const skin = {
   cell: [185, 904, 121, 80] as Rect,
   // Uniform cell pitch derived from the full 732 x 710 reference grid (6 x 8).
-  cellAspect: 732 / 6 / (710 / 8),
+  cellAspect: 1,
   board: [40, 531, 777, 754] as Rect,
   plaque: [316, 177, 215, 43] as Rect,
 } as const;
@@ -112,14 +112,27 @@ export const BoardFrame = memo(function BoardFrame({
   height: number;
 }) {
   return (
-    <SkinPanel
-      texture={require("../../assets/art/board-frame-v11.png")}
-      rect={[27, 43, 969, 1459]}
-      width={width}
-      height={height}
-      inset={80}
-      center={false}
-    />
+    <View
+      pointerEvents="none"
+      style={{
+        position: "absolute",
+        left: 0,
+        top: 0,
+        width,
+        height,
+        borderRadius: 12,
+        overflow: "hidden",
+      }}
+    >
+      <SkinPanel
+        texture={require("../../assets/art/skara-ui-chrome-v1.png")}
+        rect={[32, 520, 808, 1115]}
+        width={width}
+        height={height}
+        inset={20}
+        center={false}
+      />
+    </View>
   );
 });
 
@@ -141,3 +154,56 @@ export const ParchmentPanel = memo(function ParchmentPanel({
     />
   );
 });
+
+/** Shared blank production skins; all labels remain live native text. */
+export function PagePaper({
+  width,
+  height,
+  rolled = false,
+}: {
+  width: number;
+  height: number;
+  rolled?: boolean;
+}) {
+  return rolled ? (
+    <SkinPanel
+      texture={require("../../assets/art/map-scroll-v3.png")}
+      rect={[4, 92, 842, 1682]}
+      width={width}
+      height={height}
+      inset={160}
+    />
+  ) : (
+    <SkinPanel
+      texture={require("../../assets/art/page-frame-v2.png")}
+      rect={[0, 0, 1024, 1536]}
+      width={width}
+      height={height}
+      inset={96}
+    />
+  );
+}
+export function TitlePlaque({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
+  return (
+    <View
+      pointerEvents="none"
+      style={{ position: "absolute", left: 0, top: 0, width, height }}
+    >
+      <Crop
+        source={require("../../assets/art/title-plaque-v2.png")}
+        x={60}
+        y={130}
+        w={2050}
+        h={440}
+        width={width}
+        height={height}
+      />
+    </View>
+  );
+}

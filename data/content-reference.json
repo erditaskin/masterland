@@ -1385,6 +1385,14 @@
         "#143e3b",
         "#743951",
         "#17475a"
+      ],
+      "achievement_order": [
+        "achievement1",
+        "achievement3",
+        "achievement2",
+        "achievement6",
+        "achievement4",
+        "achievement5"
       ]
     }
   },

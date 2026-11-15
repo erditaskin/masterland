@@ -285,3 +285,8 @@ Kullanıcı farklı sayfa çerçevelerini, başlık/padding tutarsızlığını 
 ## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
 
 Kullanıcı ekran bazında daha canlı konsept çalışmasını istedi. Splash, loading, ürün alanı açma, koleksiyon, ana tahta ve şehir yolu adayları çizildi. Diğer ekranların sanat yönünü beğendi; ana tahtada kare hücre, küçük üretici rafı ve daha geniş/uzun tahta istedi. Şehir başına çok sayıda başarıyı destekleyen uzun yol yaklaşımı eklendi. Aktif oyun kodu bu konsept turunda değiştirilmedi.
+
+
+## 15 Kasım 2026 — Konseptlerin native uygulaması
+
+Kanonik pakete göre ana ekranın yerleşimi, kare grid, kompakt üreticiler, loading, ürün açma, koleksiyon ve şehir yolu yeniden düzenlendi. Native splash ilk React Native root layout'unda kapanır; görselin yükleme callback'ine bağlı bekleme kaldırıldı. Gerçek asset/kayıt yükleme ilerlemesi ayrı loading ekranında gösterilir. Şehir haritasının temiz arka planı orijinal konseptin değirmen, fırın, köprü ve liman kompozisyonunu korur. İsimler, sayılar, başarı durumları ve düğmeler native kalır. Harita dört başarı içeren sanallaştırılmış bölümlerle uzar; dönüşte scroll konumu korunur. Ayrıntılı doğrulama ve kabul sınırı skara-native-fidelity.md içindedir.

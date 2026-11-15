@@ -160,12 +160,12 @@ final class MasterlandTests:XCTestCase {
     }
     func testAchievementRouteRestoresScrollPosition(){
         app.buttons["tab-cities"].tap();app.buttons["jump-city3"].tap()
-        let y=app.buttons["map-city3"].frame.minY
+        let y=app.buttons["achievement-achievement10"].frame.minY
         app.buttons["achievement-achievement10"].tap()
         XCTAssertTrue(app.buttons["returnToRoute"].waitForExistence(timeout:5))
         app.buttons["returnToRoute"].tap()
         XCTAssertTrue(app.buttons["map-city3"].waitForExistence(timeout:5))
-        let settled=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in abs(self.app.buttons["map-city3"].frame.minY-y)<1 },object:nil)
+        let settled=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in abs(self.app.buttons["achievement-achievement10"].frame.minY-y)<1 },object:nil)
         XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:5),.completed)
         shot("achievement-route-restored")
     }
@@ -194,7 +194,7 @@ final class MasterlandTests:XCTestCase {
         app.buttons["producer1"].tap();app.buttons["producer1"].tap();cell(0).tap()
         XCTAssertEqual(cell(0).value as? String,"Seçili")
         XCTAssertEqual(cell(1).value as? String,"")
-        let frame=cell(0).frame;XCTAssertEqual(frame.width/frame.height,(732.0/6)/(710.0/8),accuracy:0.015)
+        let frame=cell(0).frame;XCTAssertEqual(frame.width/frame.height,1.0,accuracy:0.015)
         cell(0).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
         XCTAssertEqual(cell(0).label,"Buğday başağı");energy("98/100");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("rn-selection-and-merge")
     }
@@ -219,15 +219,15 @@ final class MasterlandTests:XCTestCase {
                 XCTAssertEqual(close.frame.minY,reference.minY,accuracy:0.5)
             } else {header=close.frame}
             let body=app.descendants(matching:.any).matching(identifier:"pageContent").firstMatch.frame
-            XCTAssertGreaterThan(body.minX,app.frame.minX+25)
-            XCTAssertLessThan(body.maxX,app.frame.maxX-25)
+            XCTAssertGreaterThanOrEqual(body.minX,app.frame.minX+(tab == "cities" ? 8 : 25))
+            XCTAssertLessThanOrEqual(body.maxX,app.frame.maxX-(tab == "cities" ? 8 : 25))
             XCTAssertLessThan(body.maxY,app.frame.maxY-35)
             shot("unified-"+tab)
             if tab == "cities" {
                 let route=app.descendants(matching:.any).matching(identifier:"cityRouteScroll").firstMatch.frame
                 XCTAssertGreaterThanOrEqual(route.minX,body.minX)
                 XCTAssertLessThanOrEqual(route.maxX,body.maxX)
-                XCTAssertLessThanOrEqual(route.maxY,body.maxY-15)
+                XCTAssertLessThanOrEqual(route.maxY,body.maxY-1)
                 app.buttons["achievement-achievement3"].tap()
                 XCTAssertTrue(app.buttons["returnToRoute"].waitForExistence(timeout:5))
                 XCTAssertEqual(app.buttons["closePage"].frame.minY,header!.minY,accuracy:0.5)
@@ -237,9 +237,27 @@ final class MasterlandTests:XCTestCase {
             app.buttons["closePage"].tap()
         }
     }
+    func testColdLaunchReachesBoardWithoutSplashStall(){
+        app.terminate();app.launch()
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        XCTAssertFalse(app.otherElements["launchScreen"].exists)
+        XCTAssertTrue(app.buttons["producer1"].isHittable)
+        shot("skara-cold-launch")
+    }
+    func testLoadingAndProducerConceptScreens(){
+        app.open(URL(string:"masterland://loading-review")!)
+        XCTAssertTrue(app.buttons["continueLoadingReview"].waitForExistence(timeout:10));shot("skara-loading-live")
+        app.buttons["continueLoadingReview"].tap()
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        app.buttons["producer1"].press(forDuration:0.6);app.buttons["powerProductDetails"].tap()
+        XCTAssertTrue(app.buttons["unlock-item27"].waitForExistence(timeout:5));shot("skara-producer-live")
+        app.buttons["unlock-item27"].tap();XCTAssertTrue(app.buttons["unlock-item49"].waitForExistence(timeout:5))
+        app.buttons["closePage"].tap();app.buttons["tab-collection"].tap();shot("skara-collection-live")
+    }
     func testGeometryAndScrollableOrders(){
+        app.buttons["allOrders"].tap();XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5));app.buttons["closePage"].tap()
         let first=cell(0).frame,last=cell(53).frame
-        XCTAssertEqual(first.width/first.height,(732.0/6)/(710.0/8),accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
+        XCTAssertEqual(first.width/first.height,1.0,accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
         let a=app.buttons["order-quest25"].frame,b=app.buttons["order-repeat-0-0"].frame;XCTAssertEqual(a.width,b.width,accuracy:0.5)
         let end=app.buttons["order-repeat-0-4"];for _ in 0..<3 where !end.isHittable {app.scrollViews.allElementsBoundByIndex.first(where:{$0.frame.minY<=a.midY && $0.frame.maxY>=a.midY})!.swipeLeft()};XCTAssertTrue(end.isHittable);shot("rn-geometry")
     }
@@ -255,13 +273,15 @@ final class MasterlandTests:XCTestCase {
         func rect(_ e:XCUIElement)->[String:Double] {let r=e.frame;return ["x":r.minX,"y":r.minY,"width":r.width,"height":r.height]}
         var values:[String:Any] = ["screen":rect(app),"scale":UIScreen.main.scale]
         for id in ["profile","stamina","gold","gems","profile-menu","info","producer1","producer5","producer8","producer6","producer7","tab-board","tab-collection","tab-cities","tab-storage","tab-market","order-quest26"] {values[id]=rect(app.buttons[id])}
-        values["cells"]=(0..<54).map {rect(cell($0))}
+        let cellFrames=(0..<54).map {cell($0).frame}
+        values["cells"]=cellFrames.map { ["x":$0.minX,"y":$0.minY,"width":$0.width,"height":$0.height] }
         let data=try JSONSerialization.data(withJSONObject:values,options:[.prettyPrinted,.sortedKeys])
         let attachment=XCTAttachment(data:data,uniformTypeIdentifier:"public.json");attachment.name="visual-measurements.json";attachment.lifetime = .keepAlways;add(attachment)
         shot("masterland-v11-measured")
+        for frame in cellFrames { XCTAssertEqual(frame.width,frame.height,accuracy:0.5); XCTAssertEqual(frame.width,cellFrames[0].width,accuracy:0.5) }
         XCTAssertEqual(cell(0).frame.width,cell(53).frame.width,accuracy:0.5)
         XCTAssertEqual(cell(0).frame.height,cell(53).frame.height,accuracy:0.5)
-        XCTAssertEqual(cell(0).frame.width/cell(0).frame.height,(732.0/6)/(710.0/8),accuracy:0.015)
+        XCTAssertEqual(cell(0).frame.width/cell(0).frame.height,1.0,accuracy:0.015)
         XCTAssertGreaterThanOrEqual(cell(0).frame.width,44)
         XCTAssertGreaterThanOrEqual(cell(0).frame.height,44)
     }

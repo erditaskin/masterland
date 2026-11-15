@@ -3,13 +3,12 @@ import { Animated, ScrollView, Switch, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ActionButton, Button, Divider, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
-import { ParchmentPanel } from "./Skin";
+import { PagePaper, TitlePlaque } from "./Skin";
 import {
   canDeliver,
   energyCap,
   energyCapacityStep,
   energyUpgradeCost,
-  productionPlan,
   city,
   count,
   level,
@@ -23,6 +22,7 @@ import {
 } from "../game/engine";
 import { colors } from "./theme";
 import { AchievementDetails } from "./Achievements";
+import { ProducerDetails, ProducerPortrait } from "./ProducerDetails";
 import { CityMap } from "./CityMap";
 export type Page = {
   kind:
@@ -83,31 +83,38 @@ export function Pages({
       useNativeDriver: true,
     }).start();
   }, [opacity, reduced]);
-  const w = width - 24,
-    h = height - insets.top - insets.bottom - 12,
+  const pageTop = Math.max(insets.top, 20) + 74;
+  const w = width - 16,
+    h = height - insets.bottom - 67 - pageTop,
     c = city(save),
     p = producers[page.index ?? 0]!;
-  const bodyInset = 20;
+  const isMap = page.kind === "cities";
+  const bodyInset = isMap ? 0 : 12;
   const card = {
-    padding: 14,
+    padding: 12,
     marginBottom: 12,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.outline,
-    backgroundColor: "#fff4dc80",
+    backgroundColor: "#fff0cfeb",
+    shadowColor: "#835725",
+    shadowOpacity: 0.12,
+    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 2 },
   } as const;
   const act = (a: Action) => dispatch(a);
   return (
     <Animated.View
       testID="fullScreenPage"
+      pointerEvents="box-none"
       style={{
         position: "absolute",
         inset: 0,
-        backgroundColor: "#102638d9",
+        backgroundColor: "transparent",
         opacity,
-        paddingTop: insets.top + 4,
-        paddingBottom: insets.bottom + 8,
-        paddingHorizontal: 12,
+        paddingTop: pageTop,
+        paddingBottom: 0,
+        paddingHorizontal: 8,
       }}
     >
       <View
@@ -115,23 +122,30 @@ export function Pages({
           width: w,
           height: h,
           backgroundColor: "transparent",
-          paddingHorizontal: 36,
-          paddingTop: 60,
-          paddingBottom: 44,
+          paddingHorizontal: isMap ? 0 : 20,
+          paddingTop: 14,
+          paddingBottom: isMap ? 42 : 20,
           borderRadius: 18,
         }}
       >
-        <ParchmentPanel width={w} height={h} />
+        <PagePaper width={w} height={h} rolled={isMap} />
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
-            minHeight: 52,
-            gap: 12,
-            paddingBottom: 12,
+            minHeight: 44,
+            gap: 8,
+            marginBottom: isMap ? -6 : 4,
+            marginHorizontal: isMap ? 20 : 0,
           }}
         >
-          <Label title size={24} style={{ flex: 1 }}>
+          {!isMap && <TitlePlaque width={w - 92} height={44} />}
+          <Label
+            title
+            size={isMap ? 26 : 21}
+            color={isMap ? "#286331" : colors.goldLight}
+            style={{ flex: 1, textAlign: "center" }}
+          >
             {page.kind === "producer" ? p.name : titles[page.kind]}
           </Label>
           <Button
@@ -144,15 +158,19 @@ export function Pages({
               width: 44,
               height: 44,
               borderRadius: 22,
-              backgroundColor: "#ead1a3",
+              backgroundColor: "#b76c14",
+              borderWidth: 1,
+              borderColor: colors.goldLight,
             }}
           >
-            <Label size={23}>×</Label>
+            <Label size={23} color={colors.goldLight}>
+              ×
+            </Label>
           </Button>
         </View>
         <View
           style={{
-            height: 1,
+            height: isMap ? 0 : 1,
             backgroundColor: colors.outline,
             marginBottom: 0,
           }}
@@ -175,14 +193,51 @@ export function Pages({
           >
             {page.kind === "collection" && (
               <>
-                <Label title size={21} style={{ marginBottom: 16 }}>
-                  {name(save.cityID)}
-                </Label>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 16,
+                  }}
+                >
+                  <Label title size={20}>
+                    {name(save.cityID)}
+                  </Label>
+                  <Label size={12} color={colors.green}>
+                    {
+                      producers
+                        .flatMap((producer) => producer.products)
+                        .filter((item) => save.discoveries.includes(item.id))
+                        .length
+                    }{" "}
+                    / {producers.flatMap((p) => p.products).length} keşif
+                  </Label>
+                </View>
                 {producers.map((producer, i) => (
                   <View key={producer.id} style={card}>
-                    <Label title size={20} style={{ marginBottom: 10 }}>
-                      {producer.name}
-                    </Label>
+                    <Button
+                      label={producer.name + " ürün alanları"}
+                      onPress={() => open({ kind: "producer", index: i })}
+                      style={{ height: 44, marginBottom: 8 }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          width: "100%",
+                          gap: 10,
+                        }}
+                      >
+                        <ProducerPortrait index={i} size={38} />
+                        <Label title size={18} style={{ flex: 1 }}>
+                          {producer.name}
+                        </Label>
+                        <Label size={25} color={colors.navy}>
+                          ›
+                        </Label>
+                      </View>
+                    </Button>
                     <View style={{ flexDirection: "row" }}>
                       {producer.products.map((a) => (
                         <Button
@@ -194,9 +249,15 @@ export function Pages({
                           }
                           onPress={() => open({ kind: "producer", index: i })}
                           style={{
-                            width: "25%",
-                            minHeight: 100,
-                            paddingHorizontal: 2,
+                            flex: 1,
+                            minHeight: 78,
+                            marginHorizontal: 2,
+                            borderRadius: 12,
+                            backgroundColor: save.discoveries.includes(a.id)
+                              ? "#ffedbb"
+                              : "#e8d3ae",
+                            borderWidth: 1,
+                            borderColor: "#e2c392",
                           }}
                         >
                           {save.discoveries.includes(a.id) ? (
@@ -207,16 +268,16 @@ export function Pages({
                             </Label>
                           )}
                           <Label
-                            size={11}
-                            style={{ textAlign: "center", marginTop: 5 }}
+                            size={10}
+                            color={
+                              save.discoveries.includes(a.id)
+                                ? colors.green
+                                : colors.muted
+                            }
                           >
                             {save.discoveries.includes(a.id)
-                              ? a.name
+                              ? "✓"
                               : `Seviye ${a.level}`}
-                          </Label>
-                          <Label size={10} color={colors.muted}>
-                            Depo:{" "}
-                            {c.storage.filter((t) => t.item === a.id).length}
                           </Label>
                         </Button>
                       ))}
@@ -226,71 +287,13 @@ export function Pages({
               </>
             )}
             {page.kind === "producer" && (
-              <>
-                <View style={{ alignItems: "center", paddingVertical: 8 }}>
-                  <Label title size={23}>
-                    {p.name}
-                  </Label>
-                  <Label size={13} color={colors.muted}>
-                    {c.owned.includes(p.id)
-                      ? "Üretim alanları"
-                      : "Yeni bir üretici"}
-                  </Label>
-                </View>
-                {!c.owned.includes(p.id) && (
-                  <ActionButton
-                    testID="buyProducer"
-                    text={`Aç · ${p.price} altın · Seviye ${p.level}`}
-                    onPress={() => act({ type: "buy", id: p.id })}
-                  />
-                )}{" "}
-                {c.owned.includes(p.id) && (
-                  <Label
-                    size={12}
-                    color={colors.muted}
-                    style={{ marginVertical: 12 }}
-                  >
-                    Üretim gücünü değiştirmek için tahtadaki dağıtıcıya basılı
-                    tut. Şu an {productionPlan(save, p).selected}x seçili.
-                  </Label>
-                )}
-                {p.products.map((a) => (
-                  <View
-                    key={a.id}
-                    style={[
-                      card,
-                      { flexDirection: "row", alignItems: "center", gap: 10 },
-                    ]}
-                  >
-                    {save.discoveries.includes(a.id) ? (
-                      <Item id={a.id} size={48} />
-                    ) : (
-                      <View style={{ width: 48, alignItems: "center" }}>
-                        <Label title size={35} color={colors.muted}>
-                          ?
-                        </Label>
-                      </View>
-                    )}
-                    <View style={{ flex: 1 }}>
-                      <Label size={14}>{a.name}</Label>
-                      <Label size={11} color={colors.muted}>
-                        Basamak {a.tier} · Seviye {a.level}
-                      </Label>
-                    </View>
-                    {c.opened.includes(a.id) ? (
-                      <Label size={12} color={colors.green}>
-                        Açık
-                      </Label>
-                    ) : (
-                      <ActionButton
-                        testID={"unlock-" + a.id}
-                        text={`${a.price} altın`}
-                        onPress={() => act({ type: "unlock", id: a.id })}
-                      />
-                    )}
-                  </View>
-                ))}
-              </>
+              <ProducerDetails
+                key={p.id}
+                producer={p}
+                index={page.index ?? 0}
+                save={save}
+                dispatch={dispatch}
+              />
             )}
             {page.kind === "storage" && (
               <>
@@ -385,6 +388,7 @@ export function Pages({
               ))}
             {page.kind === "cities" && (
               <CityMap
+                width={w}
                 save={save}
                 height={Math.max(1, bodyHeight - bodyInset * 2)}
                 onAchievement={(id) => open({ kind: "achievement", id })}

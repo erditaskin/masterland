@@ -296,3 +296,8 @@ Tüm ikincil sayfalar ortak kıvrık parşömen kabuğu, aynı başlık/kapatma 
 ## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
 
 Kullanıcı Skara konseptleri sırasında hücrelerin her zaman kare olmasını yeniden açıkça istedi. Bu karar önceki 122:88.75 oranının yerine geçer; 6×9 kapasite korunur. Üretici rafı küçülür, şehir başlığı yukarı alınır, tahta kenarlara yaklaşır ve uzar. Şehir haritası çok sayıda başarı için uzun kaydırılabilir yol olarak tasarlanır.
+
+
+## 15 Kasım 2026 — Kanonik konsept paketi
+
+Kullanıcı `outputs/masterland/skara-concept-set-v1.zip` paketini uygulamanın görsel hedefi olarak tekrar belirtti. Harita için `06-city-route-long-v2.png`, tahta için `01-board-compact-v4.png` esastır. Önceki dikdörtgen hücre ölçümleri tarihçedir; gerçek tahta 54 eşit kare hücre kullanır. Konseptteki örnek ilerleme, altın ve ödül durumları oyun kaydını değiştirmek için gerekçe değildir. HUD ve alt navigasyon ikincil sayfalarda görünür kalır. Harita resminin içindeki başarı kartları etkileşimli native bileşenlerdir.
