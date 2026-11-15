@@ -173,3 +173,7 @@ Piksel karşılaştırmasında monitör ICC profilli referans ile sRGB simülat�
 Seçili eşyanın yanında, yalnız sonraki basamağı açık olan aynı türden bir başka eşya yumuşak altın çerçeveyle önerilir. En fazla iki vurgu çizilir; eşya veya hitbox büyümez. Sürükleme başlangıcında eşya seçilir. Eski hareketin geciken JS sonucu yeni native sürüklemeyi temizleyemez. Üretici sayaçları iki basamaklı dakika gösterir ve küçük ekranda tek satıra sığar.
 
 Ana ilan ilk sırada kalır. İlk üç görünür kartta mevcut görevler arasından farklı üretim zincirleri öne alınır. Bu yalnız sunum sırasıdır: ilan kimlikleri, gereksinimleri ve ödülleri korunur; hiçbir canlı görev silinmez veya eklenmez. İnceleme örneği meşru bir tekrar ilanı adımında başlatılır; normal kayıt değiştirilmez.
+
+## Basılı tutma ve dokunarak merge
+
+Sürükleme öncesi basılı tutmak hareketi engellemez. Ayrıntı ekranı yalnız hareketsiz uzun basma bırakılınca açılır. Seçili eşyayla aynı ürüne dokunmak sürüklemeyle aynı motor kontrolünü kullanır. Farklı ürüne dokunmak seçim değiştirir; boş hücreye dokunmak ürün taşımaz. Sonraki basamak kilitliyse ürünler korunur ve üretici açma koşulları gösterilir.

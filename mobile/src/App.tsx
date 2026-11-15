@@ -271,7 +271,7 @@ function Game() {
       setSelected(null);
     }, [uiSound]);
   const dispatch = useCallback((action: Action) => {
-    gameStore.dispatch(action);
+    return gameStore.dispatch(action);
   }, []);
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
@@ -340,7 +340,7 @@ function Game() {
     if (!result?.message) return;
     const timer = setTimeout(
       () => setHiddenToastRevision(revision),
-      result.kind === "reward" ? 1400 : 850,
+      result.kind === "blocked" ? 2400 : result.kind === "reward" ? 1400 : 850,
     );
     return () => clearTimeout(timer);
   }, [result, revision]);
@@ -372,10 +372,27 @@ function Game() {
       if (city(current).board[from]?.id !== expected) return null;
       const r = gameStore.dispatch({ type: "move", from, to });
       if (r?.kind === "merge" || r?.kind === "move") setSelected(to);
+      const a = city(current).board[from], b = city(current).board[to];
+      if (r?.kind === "blocked" && a && b && a.item === b.item && from !== to) {
+        const p = product(a.item), producer = producers[p.producer]!;
+        const next = producer.products[p.tier];
+        if (next && !city(current).opened.includes(next.id)) {
+          open({ kind: "producer", index: p.producer });
+        }
+      }
       return r;
     },
-    [],
+    [open],
   );
+  const tapCell = useCallback((i: number) => {
+    const board = city(gameStore.get().save).board;
+    const source = selected === null ? null : board[selected];
+    if (source && selected !== i && board[i]?.item === source.item) {
+      move(selected!, i, source.id);
+    } else {
+      select(i);
+    }
+  }, [selected, move, select]);
   const top = Math.max(insets.top - 8, 20),
     scale = width / 390,
     sx = width / 800,
@@ -1015,6 +1032,7 @@ function Game() {
             hinted={hinted}
             reduced={reduced || save.reducedMotion}
             onSelect={select}
+            onTap={tapCell}
             onMove={move}
             onInfo={info}
           />
@@ -1022,12 +1040,30 @@ function Game() {
         <View style={{ position: "absolute", top: navTop, left: 10 }}>
           <Navigation width={width} open={open} onBoard={boardTab} />
         </View>
+
+      </View>
+      {page && (
+        <Pages
+          page={page}
+          save={save}
+          width={width}
+          height={height}
+          close={close}
+          dispatch={dispatch}
+          open={open}
+          reduced={reduced || save.reducedMotion}
+        />
+      )}
         {!!toast && (
           <View
             pointerEvents="none"
+            testID="actionFeedback"
+            accessible
+            accessibilityRole="alert"
+            accessibilityLabel={toast}
             style={{
               position: "absolute",
-              top: top + 39,
+              top: page ? top + 80 : top + 39,
               left: 50,
               right: 50,
               alignItems: "center",
@@ -1047,19 +1083,6 @@ function Game() {
             </View>
           </View>
         )}
-      </View>
-      {page && (
-        <Pages
-          page={page}
-          save={save}
-          width={width}
-          height={height}
-          close={close}
-          dispatch={dispatch}
-          open={open}
-          reduced={reduced || save.reducedMotion}
-        />
-      )}
       {!!error && (
         <View
           style={{

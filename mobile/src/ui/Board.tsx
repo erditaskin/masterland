@@ -153,6 +153,7 @@ export const Board = memo(function Board({
   hinted,
   reduced,
   onSelect,
+  onTap,
   onMove,
   onInfo,
 }: {
@@ -164,6 +165,7 @@ export const Board = memo(function Board({
   hinted: number;
   reduced: boolean;
   onSelect: (i: number) => void;
+  onTap: (i: number) => void;
   onMove: (from: number, to: number, expected: string) => Result | null;
   onInfo: (i: number) => void;
 }) {
@@ -174,10 +176,10 @@ export const Board = memo(function Board({
     origin = useSharedValue(-1),
     ids = useSharedValue(board.map((t) => t?.id ?? ""));
   const drag = useMemo(() => ({ id, x, y, epoch }), [id, x, y, epoch]);
-  const current = useRef({ onSelect, onMove, onInfo });
+  const current = useRef({ onSelect, onTap, onMove, onInfo });
   useLayoutEffect(() => {
-    current.current = { onSelect, onMove, onInfo };
-  }, [onSelect, onMove, onInfo]);
+    current.current = { onSelect, onTap, onMove, onInfo };
+  }, [onSelect, onTap, onMove, onInfo]);
   useLayoutEffect(() => {
     ids.set(board.map((t) => t?.id ?? ""));
     if (id.get() && !board.some((t) => t?.id === id.get())) {
@@ -187,6 +189,7 @@ export const Board = memo(function Board({
     }
   }, [board, id, ids, x, y]);
   const select = useCallback((i: number) => current.current.onSelect(i), []);
+  const tapCell = useCallback((i: number) => current.current.onTap(i), []);
   const info = useCallback((i: number) => current.current.onInfo(i), []);
   const commit = useCallback(
     (from: number, to: number, expected: string, gestureEpoch: number) => {
@@ -244,17 +247,9 @@ export const Board = memo(function Board({
       .onEnd((e) => {
         "worklet";
         if (!id.get()) return;
-        const col = Math.floor(
-            (((origin.get() % 6) + 0.5) * cellWidth + e.translationX) /
-              cellWidth,
-          ),
-          row = Math.floor(
-            ((Math.floor(origin.get() / 6) + 0.5) * cellHeight +
-              e.translationY) /
-              cellHeight,
-          );
-        const target =
-          col >= 0 && col < 6 && row >= 0 && row < 9 ? row * 6 + col : -1;
+        // The pointer's release position determines the destination. Using the
+        // source cell centre plus translation misroutes off-centre grabs.
+        const target = hitCell(e.x, e.y, cellWidth, cellHeight) ?? -1;
         scheduleOnRN(commit, origin.get(), target, id.get(), epoch.get());
       })
       .onFinalize((_, success) => {
@@ -275,23 +270,26 @@ export const Board = memo(function Board({
         "worklet";
         if (success) {
           const i = hitCell(e.x, e.y, cellWidth, cellHeight);
-          if (i !== null) scheduleOnRN(select, i);
+          if (i !== null) scheduleOnRN(tapCell, i);
         }
       });
     const long = Gesture.LongPress()
       .minDuration(450)
       .maxDistance(5)
-      .onStart((e) => {
+      .onEnd((e, success) => {
         "worklet";
         const i = hitCell(e.x, e.y, cellWidth, cellHeight);
-        if (i !== null && ids.get()[i]) scheduleOnRN(info, i);
+        if (success && i !== null && ids.get()[i]) scheduleOnRN(info, i);
       });
-    return Gesture.Race(pan, Gesture.Exclusive(long, tap));
+    // Holding an item must not prevent a subsequent drag. Show details only
+    // after a stationary hold is released; movement cancels the long press.
+    return Gesture.Simultaneous(pan, Gesture.Exclusive(long, tap));
   }, [
     cellWidth,
     cellHeight,
     commit,
     select,
+    tapCell,
     info,
     id,
     ids,
@@ -357,7 +355,7 @@ export const Board = memo(function Board({
                         : "",
                 }}
                 testID={"cell-" + i}
-                onAccessibilityTap={() => onSelect(i)}
+                onAccessibilityTap={() => onTap(i)}
                 onAccessibilityEscape={() => onSelect(-1)}
                 style={{
                   position: "absolute",

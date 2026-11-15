@@ -14,6 +14,7 @@ import {
   product,
   type Action,
   type Save,
+  type Result,
 } from "../game/engine";
 import { colors } from "./theme";
 export type Page = {
@@ -55,7 +56,7 @@ export function Pages({
   width: number;
   height: number;
   close: () => void;
-  dispatch: (a: Action) => void;
+  dispatch: (a: Action) => Result | null;
   open: (p: Page) => void;
   reduced: boolean;
 }) {
@@ -396,9 +397,9 @@ export function Pages({
                   <Switch
                     testID={"setting-" + kind}
                     value={Boolean(value)}
-                    onValueChange={() =>
-                      act({ type: kind as "sound" | "motion" })
-                    }
+                    onValueChange={() => {
+                      act({ type: kind as "sound" | "motion" });
+                    }}
                     trackColor={{ true: colors.green }}
                   />
                 </View>
@@ -422,8 +423,8 @@ export function Pages({
                     text="Depoya gönder"
                     testID="storeSelected"
                     onPress={() => {
-                      act({ type: "store", index: page.index! });
-                      close();
+                      const result = act({ type: "store", index: page.index! });
+                      if (result?.kind === "tap") close();
                     }}
                   />
                   <ActionButton
@@ -439,7 +440,7 @@ export function Pages({
               ) : (
                 <Label>
                   Eşyayı seçmek için dokun. Birleştirmek için aynı eşyanın
-                  üzerine sürükle.
+                  üzerine sürükle veya ona dokun.
                 </Label>
               );
             })()}

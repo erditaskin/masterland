@@ -249,3 +249,11 @@ Kullanıcı oyunun adını Masterland olarak belirledi; proje kökünü /Users/e
 Kullanıcı 01.14.55 görselini yeni hedef olarak belirledi ve soruya “Bu fotoğrafın hücre oranları da birebir uygulansın” yanıtını verdi. Eski 1:1 hücre şartı bu hedef için değişti. Eşit satırlar, 54 slot ve kayıt kimlikleri korunur. Uniform oran, fotoğrafın 732×710 iç gridinden 6×8 adım hesabıyla 122:88.75 olarak türetildi; bu ölçüm hesabı uygulama tercihidir. Aktif envanter 6×9 kalır. Güncel ayrıntılar ui-standard.md ve reference-fidelity-20261115.md içindedir.
 
 Yeni arayüz: tek kesintisiz ve uniform ölçeklenen liman/teras arka planı, saydam ortak çerçeve, yazısız parşömen ilan kartları, gerçek değerler ve native dokunma yüzeyi. Atlasların şeffaf kenarları metadata ile düzeltilir; görseller veya oyuncu kaydı değiştirilmez. Özgün kısa ses ailesi, tek kanal ve hız sınırı kullanılır. Test başarısı tüm ekran için %100 görsel eşleşme veya kullanıcı kabulü olarak sunulmaz.
+
+## 15 Kasım 2026 — Merge etkileşimi düzeltmesi
+
+Kullanıcı bazı sürüklemelerin birleşmediğini bildirdi ve seçip ikinci eşyaya dokunarak birleşmeyi istedi. Uzun basma ile sürükleme yarışı kaldırıldı; eşya ayrıntısı yalnız hareketsiz basılı tutmanın bırakılmasında açılır. Tıklayarak birleştirme eklendi. Kilitli sonraki basamakta ilgili üretici koşulları açılır.
+
+Ayrıca sürükleme hedefi, kaynak hücre merkezi ile hareket farkından hesaplanıyordu. Merkez dışından tutup hedefin kenarına bırakmak yanlış komşu hücreye yönlenebiliyordu. Hedef artık sabit tahta katmanına göre gerçek bırakma koordinatından hesaplanır. Merkez dışı tutma için ayrı native regresyon senaryosu eklenmiştir.
+
+Uygulama genelindeki incelemede, tam ekran sayfalarda işlem sonucu mesajının sayfanın arkasında kaldığı bulundu. Mesaj katmanı sayfaların üstüne taşındı; engellenen işlemler 2,4 saniye gösterilir. Depoya gönderme başarısız olduğunda ayrıntı sayfası artık kapanmaz. Şehir 2/3 yolculuğu ve gerçek market işlemleri bu prototipte henüz uygulanmamış kapsamdır; test edilmiş özellik gibi sunulmaz.

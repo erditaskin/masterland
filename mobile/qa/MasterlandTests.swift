@@ -25,6 +25,61 @@ final class MasterlandTests:XCTestCase {
         app.buttons["producer5"].tap();app.buttons["producer5"].tap();drag(0,1)
         app.buttons["order-quest27"].tap();XCTAssertTrue(app.buttons["order-quest28"].waitForExistence(timeout:5));shot("rn-first-journey")
     }
+    func testHeldSelectedItemCanStillMerge(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        cell(0).tap()
+        cell(0).press(forDuration:0.7,thenDragTo:cell(1))
+        XCTAssertEqual(cell(0).label,"Boş hücre")
+        XCTAssertEqual(cell(1).label,"Buğday demeti")
+        XCTAssertFalse(app.buttons["closePage"].exists)
+        cell(2).press(forDuration:1.0,thenDragTo:cell(17))
+        XCTAssertEqual(cell(2).label,"Boş hücre")
+        XCTAssertEqual(cell(17).label,"Buğday demeti")
+        shot("held-selection-merge")
+    }
+    func testTapMergeAndLockedTierExplanation(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        cell(0).tap();cell(1).tap()
+        XCTAssertEqual(cell(0).label,"Boş hücre")
+        XCTAssertEqual(cell(1).label,"Buğday demeti")
+        cell(1).tap();cell(3).tap()
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(cell(1).label,"Buğday demeti")
+        XCTAssertEqual(cell(3).label,"Buğday demeti")
+        cell(2).tap();cell(8).tap()
+        XCTAssertEqual(cell(2).label,"Buğday başağı")
+        XCTAssertEqual(cell(8).label,"Küçük un torbası")
+        cell(2).press(forDuration:0.1,thenDragTo:cell(17))
+        XCTAssertEqual(cell(17).label,"Buğday demeti")
+        shot("tap-merge-and-locked-tier")
+    }
+    func testOffCentreGrabUsesReleaseCell(){
+        app.buttons["producer1"].tap();app.buttons["producer1"].tap()
+        let from=cell(0).coordinate(withNormalizedOffset:CGVector(dx:0.15,dy:0.5))
+        let to=cell(1).coordinate(withNormalizedOffset:CGVector(dx:0.85,dy:0.5))
+        from.press(forDuration:0.1,thenDragTo:to)
+        XCTAssertEqual(cell(0).label,"Boş hücre")
+        XCTAssertEqual(cell(1).label,"Buğday demeti")
+        XCTAssertEqual(cell(2).label,"Boş hücre")
+        shot("off-centre-grab-merge")
+    }
+    func testBlockedPurchaseFeedbackIsVisibleAbovePage(){
+        app.buttons["producer5"].tap()
+        XCTAssertTrue(app.buttons["buyProducer"].waitForExistence(timeout:5))
+        app.buttons["buyProducer"].tap()
+        let feedback=app.descendants(matching:.any).matching(identifier:"actionFeedback").firstMatch
+        XCTAssertTrue(feedback.waitForExistence(timeout:3))
+        XCTAssertTrue(feedback.isHittable)
+        XCTAssertTrue(feedback.label.contains("seviye") || feedback.label.contains("altın"))
+        XCTAssertTrue(app.buttons["closePage"].exists)
+        XCTAssertTrue(app.buttons["buyProducer"].exists)
+        app.buttons["closePage"].tap()
+        XCTAssertTrue(app.buttons["gold"].label.contains("0"))
+        shot("visible-blocked-purchase-feedback")
+    }
     func testRapidProducerTapsAndCooldown(){
         for _ in 0..<2 {app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1)};energy("80/100")
         app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1);energy("70/100")

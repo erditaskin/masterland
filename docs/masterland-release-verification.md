@@ -39,3 +39,23 @@ GitHub hedefi: https://github.com/erditaskin/masterland, dal main. Oyuncu kayıt
 ## Güncel görsel/ses turu
 
 15 Kasım 01.14.55 fotoğrafı ve kullanıcının hücre oranı seçimi sonrasında uygulama yeniden işlendi. Güncel ölçümler, 30 saf test, 8 ana ve 4 küçük ekran UI sonucu reference-fidelity-20261115.md dosyasındadır. Önceki ekranlar tarihçedir; son canlı sürümün görsel kanıtı olarak kullanılmaz. Yeni çerçeve, art sınırı metadata’sı, gerçek ilan çeşitliliği, birleşme ipucu ve özgün ses ailesi bu turda eklendi.
+
+
+## 15 Kasım 2026 — Merge hatası sonrası uygulama geneli inceleme
+
+Kullanıcı geri bildirimi sonrasında yalnız ekran görünümü değil, gerçek dokunma akışları yeniden incelendi. Aşağıdaki sorunlar düzeltildi:
+
+- Merkez dışından tutulan eşyanın hedefi, kaynak hücre merkezi üzerinden hesaplanıyordu. Hedef artık parmağın gerçek bırakma konumundan belirlenir.
+- Uzun basma, sonradan başlayan sürüklemeyi engelleyebiliyordu. Hareketsiz uzun basma yalnız bırakılınca ayrıntı açar; sürükleme ile yarışmaz.
+- Seçili eşya ile aynı ürüne dokunmak artık sürüklemeyle aynı merge kontrolünü kullanır. Farklı ürüne dokunmak seçimi değiştirir.
+- Kapalı üst ürün basamağında eşyalar korunur ve ilgili üreticinin level/altın koşulları açılır. Kilit ücretsiz aşılmaz.
+- Tam ekran sayfalardaki işlem mesajları sayfanın arkasında kalıyordu. Geri bildirim katmanı sayfaların üstüne taşındı; engellenen işlem mesajı 2,4 saniye görünür.
+- Depoya gönderme başarısız olursa eşya ayrıntısı kapanmaz.
+
+Strict TypeScript ve lint geçti; 30 motor/girdi/yerleşim testi geçti. Ana iPhone 17 Pro Release simülatöründe 12/12 UI testi 168.256 saniyede, iPhone 13 Pro'da dört kritik regresyon 51.286 saniyede geçti. Gerçek yürütülen test özetleri verification/2026-11-15/app-review-*-tests.json dosyalarındadır. Ana turdan sonra yalnız Switch callback'inin dönüşü void olarak açıklandı; bu son kaynak küçük ekran derlemesinde de test edildi.
+
+Ana tur normal kayıt ve yeniden açma, görev teslimi ve üretici satın alma, depo ve tam ekran sayfalar, kaydırılan ilanlar ve geometri, 30 seri üretim ve cooldown, yanlış bırakma ardından sonraki hareket, ses tercihinde tahta korunması, görsel ölçüm, uzun basarak merge, merkez dışı bırakma, tıklayarak merge ve kilit açıklaması, başarısız satın alma mesajının görünürlüğünü kapsar. Küçük ekranda son dört merge/geri bildirim regresyonu ayrıca çalıştırıldı.
+
+Masaüstü Device Hub üzerinden tıklayarak ve sürükleyerek merge elle görüldü. Ayrıca 150 altın karşılığında Tahıl çuvalı basamağı açıldı; iki Buğday demeti tıklamayla birleştirildi, altın 750'den 600'e düştü ve üst ürün tahtada oluştu. Bu işlemler geçici inceleme modunda yapıldı; normal oyuncu kaydı değiştirilmedi.
+
+İnceleme, uygulanmamış özellikleri tamamlanmış yapmaz: New Haven/Cove yolculuğu henüz oynanabilir değildir; market gerçek satın alma içermez. Fiziksel cihaz performansı/ses algısı ve bütün ekran için pixel-perfect kabulü bu test sonuçlarından çıkarılamaz. Tüm hataların bulunmuş olduğu iddia edilmez.
