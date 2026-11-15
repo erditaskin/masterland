@@ -275,3 +275,8 @@ Kullanıcının başlangıçta pahalı üreticiler ve yüksek level isteyen ekme
 Sabit 100 enerji tavanı, eski kayıtlarda varsayılan 100 kalacak şekilde genişletilebilir kapasiteyle değiştirildi. Mevcut schema 2 kayıtlarına isteğe bağlı kapasite, alınmış başarı listesi ve üretici güç alanları eklendi; kayıt sıfırlanmadı. Yalnız enerji 100’ü geçince seçilen üst ürün çıkar. Kullanıcının onayladığı maliyetler 1/2/4/8’dir. Dolum hızı sabittir.
 
 Harita sıradan görev numaraları yerine koşula bağlı özel başarı kartları taşır. Ödül alımı motor tarafından tek seferlik doğrulanır. İlk hediye kapasiteyi ve mevcut enerjiyi artırır. Başarı ayrıntısından dönüşte konum korunur. Son kullanıcı mesajıyla güç seçimi üreticiye bitişik renkli açılır menüye taşındı. Harita ve başarılar için kıvrık parşömen dokusu eklendi.
+
+
+## 15 Kasım 2026 — Ortak parşömen sayfa standardı
+
+Kullanıcı farklı sayfa çerçevelerini, başlık/padding tutarsızlığını ve kâğıt kenarına taşan haritayı reddetti. Altın sayfa çerçevesi kaldırıldı; bütün sayfalar tek parşömen kabuğuna alındı. Sabit harita yüksekliği gerçek kalan alan ölçümüyle değiştirildi.

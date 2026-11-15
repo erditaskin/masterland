@@ -206,6 +206,37 @@ final class MasterlandTests:XCTestCase {
         }
         app.buttons["tab-storage"].tap();app.buttons["storage-0"].tap();app.buttons["closePage"].tap();XCTAssertEqual(cell(0).label,"Buğday başağı")
     }
+    func testUnifiedParchmentPageGeometry(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        var header:CGRect? = nil
+        for tab in ["collection","storage","market","cities"] {
+            app.buttons["tab-"+tab].tap()
+            let close=app.buttons["closePage"]
+            XCTAssertTrue(close.waitForExistence(timeout:5))
+            if let reference=header {
+                XCTAssertEqual(close.frame.minX,reference.minX,accuracy:0.5)
+                XCTAssertEqual(close.frame.minY,reference.minY,accuracy:0.5)
+            } else {header=close.frame}
+            let body=app.descendants(matching:.any).matching(identifier:"pageContent").firstMatch.frame
+            XCTAssertGreaterThan(body.minX,app.frame.minX+25)
+            XCTAssertLessThan(body.maxX,app.frame.maxX-25)
+            XCTAssertLessThan(body.maxY,app.frame.maxY-35)
+            shot("unified-"+tab)
+            if tab == "cities" {
+                let route=app.descendants(matching:.any).matching(identifier:"cityRouteScroll").firstMatch.frame
+                XCTAssertGreaterThanOrEqual(route.minX,body.minX)
+                XCTAssertLessThanOrEqual(route.maxX,body.maxX)
+                XCTAssertLessThanOrEqual(route.maxY,body.maxY-15)
+                app.buttons["achievement-achievement3"].tap()
+                XCTAssertTrue(app.buttons["returnToRoute"].waitForExistence(timeout:5))
+                XCTAssertEqual(app.buttons["closePage"].frame.minY,header!.minY,accuracy:0.5)
+                shot("unified-achievement")
+                app.buttons["returnToRoute"].tap()
+            }
+            app.buttons["closePage"].tap()
+        }
+    }
     func testGeometryAndScrollableOrders(){
         let first=cell(0).frame,last=cell(53).frame
         XCTAssertEqual(first.width/first.height,(732.0/6)/(710.0/8),accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)

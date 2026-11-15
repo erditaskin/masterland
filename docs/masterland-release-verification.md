@@ -90,3 +90,8 @@ Yeni çizim yerleşik imagegen ile üretildi: mobile/assets/art/world-map-v2.png
 - Harita ve başarı sayfaları kıvrık kenarlı parşömen kullanır. Son görünüm Device Hub üzerinden ayrıca incelendi.
 - Yalnızca Masterland-QA simülatörü açık bırakıldı. Normal kullanıcı kaydı sıfırlanmadı.
 - Elmas ve hediye ile kapasite artışı çalışır. Gerçek para satın alma entegrasyonu henüz yoktur. Elmas maliyetleri ve başarı ödülleri prototip denge değerleridir.
+
+
+## 15 Kasım 2026 — Birleşik parşömen sayfaları
+
+TypeScript, lint ve diff boşluk kontrolü geçti. Son uygulama kodunda sayfa/depo etkileşimi ve haritadan dönüş konumu testleri geçti. Yeni ortak yerleşim testi ayrıca geçti: Koleksiyon, Depo, Market, Şehirler ve Özel Başarı kapatma başlıkları aynı koordinatlardadır; içerik ekran kenarlarından içeridedir ve harita viewportu kâğıdın alt kıvrımına taşmaz. İlk test denemelerinde native ScrollView kimliğinin Other sarmalayıcısında bulunması nedeniyle test sorgusu düzeltildi; bu hatalar geçilmiş test olarak sayılmadı. Gerçek Release ekranları tek tek incelendi. Görsel kullanıcı kabulü yerine test başarısı kullanılmaz.

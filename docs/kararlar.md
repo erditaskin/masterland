@@ -286,3 +286,8 @@ Kapasite başlangıçta 100 olur ve artırılabilir. Elmas, oyun hediyesi ve ile
 Kullanıcının son düzeltmesi: basılı tutma güç seçim modalı açmaz. Üreticiye bitişik renkli menü açar; ekrana sığmayan sağ menü içeri doğru sola yerleşir. Satır seçimi ve dış alana dokunma menüyü kapatır. Ürün alanı yükseltme sayfası ayrı kalır.
 
 Elmas kapasite paketi bu tur prototip ayarı olarak +25 kapasite ve +25 enerji, ilk alımda 10 elmas ve her 25 kapasitede +5 elmas fiyat artışı kullanır. Bu sayıların kullanıcı tarafından nihai ekonomi olarak onaylandığı iddia edilmez. Gerçek para ödeme/receipt bağlantısı henüz uygulanmaz. XP hiçbir kapasite işleminde harcanmaz.
+
+
+## 15 Kasım 2026 — Ortak parşömen sayfa standardı
+
+Tüm ikincil sayfalar ortak kıvrık parşömen kabuğu, aynı başlık/kapatma konumu ve aynı iç boşluklarla açılır. Harita kâğıdın kenarlarını ve alt kıvrımını kapatmaz; kalan iç alana göre ölçülür.

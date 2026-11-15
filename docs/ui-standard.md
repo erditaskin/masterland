@@ -197,3 +197,8 @@ Hazır ilanlar eksik ilanların önüne taşınır; kart yeşil çerçeve ve haf
 Yol üzerindeki sıradan giriş ilanları, özel başarı kartlarıyla değiştirilir. İlanlar tahtadaki satın alma panosunda kalır. Yol kartları unvan, sandık, kapasite/enerji ve XP ödüllerini temsil eder. İlerleme sayısı ve çubuğu, Ödül hazır ve Alındı durumları renkten bağımsız metinle de gösterilir. Yeni başarı simgeleri özgün çizimdir. Şehirler ve başarı ayrıntıları kıvrık kenarlı ferman dokusu taşır; kartlarda küçük mühürler bulunur. Başarı ayrıntısı önceki tam ekran standardına uyar. Yola dönüş son kaydırma konumunu korur. Gelecek iki şehirdeki başarılar kilitli önizlemedir.
 
 Güç menüsü ana tahta üzerinde gerçek üretici koordinatına bağlanır; üst bileşende çizildiği için yatay üretici listesinin sınırında kırpılmaz. Tam ekran modal veya alt drawer kullanılmaz, arka plan karartılmaz. 1x mavi, 2x yeşil, 3x mor, 4x kehribar renktedir. Üreticinin üstünde seçili mod, alt durumunda gerçek enerji maliyeti bulunur. 100 ve altında seçili üst mod korunur ama gerçek maliyet 1 olur. Şehirler sekmesi alınabilir başarı ödülü sayısını gösterir.
+
+
+## 15 Kasım 2026 — Ortak parşömen sayfa standardı
+
+Sayfa kabuğu: 12 pt dış yatay pay, 36 pt parşömen iç yatay pay, 60 pt üst ve 44 pt alt kıvrım koruması. Başlık 24 pt, kapatma 44×44 pt; içerik başlangıcı ayırıcıdan 20 pt aşağıdadır. Harita yüksekliği gerçek içerik viewportundan hesaplanır. Depo hücreleri dört sütunda eşit karelerdir.

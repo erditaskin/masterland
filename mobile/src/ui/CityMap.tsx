@@ -74,23 +74,26 @@ export function CityMap({
     <View
       style={{
         height,
-        backgroundColor: palette[active],
-        borderRadius: 14,
+        backgroundColor: "#d9bc89",
+        borderWidth: 1,
+        borderColor: "#b18a51",
+        borderRadius: 8,
         overflow: "hidden",
       }}
     >
       <View
         style={{
+          backgroundColor: "#eee0bd",
           paddingVertical: 9,
           paddingHorizontal: 12,
           borderBottomWidth: 1,
           borderColor: colors.gold,
         }}
       >
-        <Label title size={19} color={colors.goldLight}>
+        <Label title size={19} color={colors.ink}>
           {name(stops[active]!.city_id)}
         </Label>
-        <Label size={11} color={colors.goldLight}>
+        <Label size={11} color={colors.muted}>
           {locale[stops[active]!.role_key]} · Özel başarılar
         </Label>
       </View>
