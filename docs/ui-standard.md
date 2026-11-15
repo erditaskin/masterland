@@ -217,3 +217,8 @@ Güncel hücre hedefi eşit karedir: tek s kenarından 6s×9s iç grid hesaplan�
 ## Son Skara kabuk düzeltmesi — oyma ahşap
 
 Ana ekranın üretici rafı ve alt menüsündeki turkuaz zeminler kullanıcı isteğiyle oyma ahşaba geçer. Şehir tabelası ahşaptır. İlan yuvaları aynı malzemeyi paylaşır; hazır durumda iç yüzey yeşile döner. Tek arka plan çiftlik avlusuyla tahtayı çevreler. Önceki konsept paketi yerleşim referansıdır; bu son kullanıcı düzeltmesi kabuk malzemesinin güncel kararıdır.
+
+
+## 16 Kasım son düzeltmesi
+
+Skara zemin teması canlı yeşil köydür; geniş toprak avlusu reddedilmiştir. Ahşap kabuk ve kare tahta korunur. Raf altı kutuya uygundur, yön okları taşmaya bağlıdır. Alt menü kütüğün içine oturur. Sağ şehir ayracı kaydırılan bölgeyi takip eder. Kısmi hazır koyu yeşil, tam hazır açık yeşil çerçeve ve çok hafif ortak glow ile belirtilir.

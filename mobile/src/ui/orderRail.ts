@@ -1,4 +1,10 @@
-import { canDeliver, product, type Save, type Order } from "../game/engine";
+import {
+  canDeliver,
+  count,
+  product,
+  type Save,
+  type Order,
+} from "../game/engine";
 /** Keep the main order first; expose available production variety before duplicates. */
 export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
   if (input.length < 2) return input;
@@ -26,4 +32,19 @@ export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
         (a, b) => Number(canDeliver(save, b)) - Number(canDeliver(save, a)),
       )
     : ordered;
+}
+
+/** Fulfilled individual requirements stay distinct from fully deliverable orders. */
+export function orderItemHighlights(input: Order[], save: Save) {
+  const ready = new Set<string>(),
+    partial = new Set<string>();
+  for (const order of input) {
+    const complete = canDeliver(save, order);
+    for (const requirement of order.requirements) {
+      if (count(save, requirement.item_id) >= requirement.quantity)
+        (complete ? ready : partial).add(requirement.item_id);
+    }
+  }
+  for (const id of ready) partial.delete(id);
+  return { ready, partial };
 }

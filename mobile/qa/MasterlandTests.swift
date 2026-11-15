@@ -88,11 +88,16 @@ final class MasterlandTests:XCTestCase {
         XCTAssertTrue(app.buttons["map-city1"].waitForExistence(timeout:5))
         XCTAssertTrue(app.buttons["achievement-achievement6"].label.contains("1/6"))
         app.buttons["jump-city2"].tap()
+        XCTAssertTrue(app.buttons["jump-city2"].isSelected)
+        XCTAssertFalse(app.buttons["jump-city1"].isSelected)
+        shot("active-city-new-haven")
         app.buttons["map-city2"].tap()
         let second=app.descendants(matching:.any).matching(identifier:"map-lock-city2").firstMatch
         XCTAssertTrue(second.waitForExistence(timeout:3))
         XCTAssertTrue(second.label.contains("2. seviyede açılacak"))
         app.buttons["jump-city3"].tap()
+        XCTAssertTrue(app.buttons["jump-city3"].isSelected)
+        XCTAssertFalse(app.buttons["jump-city2"].isSelected)
         app.buttons["map-city3"].tap()
         let third=app.descendants(matching:.any).matching(identifier:"map-lock-city3").firstMatch
         XCTAssertTrue(third.waitForExistence(timeout:3))
@@ -257,6 +262,8 @@ final class MasterlandTests:XCTestCase {
         app.buttons["closePage"].tap();app.buttons["tab-collection"].tap();shot("skara-collection-live")
     }
     func testGeometryAndScrollableOrders(){
+        XCTAssertFalse(app.buttons["producerRailPrev"].exists)
+        XCTAssertFalse(app.buttons["producerRailNext"].exists)
         app.buttons["allOrders"].tap();XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5));app.buttons["closePage"].tap()
         let first=cell(0).frame,last=cell(53).frame
         XCTAssertEqual(first.width/first.height,1.0,accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)

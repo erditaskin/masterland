@@ -325,3 +325,10 @@ Kullanıcı tahtanın çevresindeki kesintisiz koyu yeşil boşluğu reddetti. T
 Şehir adı ahşap tabela üzerinde gösterilir. İlan ve üretici alanları oyma ahşap yuvalara, alt navigasyon aynı ahşap tezgâh diline geçer. Hazır ilanların yeşil durumu ve tahtadaki düşük alfa/yapraklı hazır ürün vurgusu korunur. Ana tahta kapasitesi, eşit kare hücreler, slot ölçüleri ve hit alanları değişmez. Bu yeni kullanıcı isteği önceki turkuaz üretici/menü kabuklarının yerine geçer; ikincil sayfaların onaylı parşömen tasarımını kendiliğinden değiştirmez.
 
 Üretici zincirlerini 7–12 basamağa genişletme talebi tasarım listesi aşamasındadır. Sunulan ürün adları ve zincirler henüz onaylanmadığı için bu ahşap görsel turunda içerik/economy değişikliği yapılmaz.
+
+
+## 16 Kasım 2026 — Yeşil köy ve arayüz düzeltmeleri
+
+Skara'nın onaylı kenar ölçüleri korunur; geniş toprak avlusu yerine canlı yeşil köy bahçesi kullanılır. Ahşap arayüz kalır. Üretici rafı altı kutuya yer bırakır; yeni üretici eklenmez. Oklar yalnız o yönde taşma varsa çıkar. Alt menü içerikleri kütüğün iç sınırlarına oturur. Harita ayracı görüntülenen şehri takip eder: Skara yeşil, New Haven pembe, Cove mavi aktif görünür. Bu harita odağı kilitli şehre seyahat etmez.
+
+Çok ürünlü siparişin bir şartı tamamlanmışsa ilgili ürün hücreleri koyu yeşildir. Bütün sipariş hazırsa canlı açık yeşil çerçeve ve çok hafif glow vardır. Mevcut yapraklı/düşük alfa tasarımı korunur. Aynı ürün başka hazır siparişte isteniyorsa tam hazır önceliklidir. İlan kartları da bu ayrımı gösterir. Glow tek UI-thread SharedValue kullanır; yalnız opaklık 3,6 saniyede döner. Hareketi azalt tercihinde ve hazır ürün kalmadığında animasyon durur.

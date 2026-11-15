@@ -17,6 +17,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import { Item, Crop } from "./Art";
+import { ReadyGlow } from "./ReadyGlow";
 import { BoardFrame } from "./Skin";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
@@ -115,11 +116,15 @@ const Piece = memo(
 const BoardGrid = memo(function BoardGrid({
   board,
   readyOrderItems,
+  partialOrderItems,
+  readyPulse,
   cellWidth,
   cellHeight,
 }: {
   board: (Tile | null)[];
   readyOrderItems: ReadonlySet<string>;
+  partialOrderItems: ReadonlySet<string>;
+  readyPulse: SharedValue<number>;
   cellWidth: number;
   cellHeight: number;
 }) {
@@ -148,70 +153,86 @@ const BoardGrid = memo(function BoardGrid({
             width={cellWidth}
             height={cellHeight}
           />
-          {board[i] && readyOrderItems.has(board[i]!.item) && (
-            <View
-              testID={"ready-order-cell-" + i}
-              collapsable={false}
-              pointerEvents="none"
-              style={{
-                position: "absolute",
-                inset: 1.5,
-                borderRadius: 8,
-                backgroundColor: "rgba(123, 158, 68, 0.15)",
-                backgroundImage:
-                  "linear-gradient(135deg, rgba(91, 139, 49, 0.24) 0%, rgba(150, 184, 88, 0.08) 50%, rgba(91, 139, 49, 0.24) 100%)",
-                borderWidth: 0.6,
-                borderColor: "rgba(82, 119, 40, 0.28)",
-              }}
-            >
-              {[0, 1, 2, 3].map((corner) => (
-                <View
-                  key={corner}
-                  style={{
-                    position: "absolute",
-                    width: 12,
-                    height: 12,
-                    left: corner % 2 === 0 ? 1 : undefined,
-                    right: corner % 2 === 1 ? 1 : undefined,
-                    top: corner < 2 ? 1 : undefined,
-                    bottom: corner >= 2 ? 1 : undefined,
-                    transform: [
-                      {
-                        rotate: ["0deg", "90deg", "270deg", "180deg"][corner]!,
-                      },
-                    ],
-                  }}
-                >
+          {board[i] &&
+            (readyOrderItems.has(board[i]!.item) ||
+              partialOrderItems.has(board[i]!.item)) && (
+              <View
+                testID={
+                  (readyOrderItems.has(board[i]!.item)
+                    ? "ready-order-cell-"
+                    : "partial-order-cell-") + i
+                }
+                collapsable={false}
+                pointerEvents="none"
+                style={{
+                  position: "absolute",
+                  inset: 1.5,
+                  borderRadius: 8,
+                  backgroundColor: readyOrderItems.has(board[i]!.item)
+                    ? "rgba(123, 158, 68, 0.15)"
+                    : "rgba(45, 86, 31, 0.28)",
+                  backgroundImage: readyOrderItems.has(board[i]!.item)
+                    ? "linear-gradient(135deg, rgba(91, 139, 49, 0.24) 0%, rgba(150, 184, 88, 0.08) 50%, rgba(91, 139, 49, 0.24) 100%)"
+                    : undefined,
+                  borderWidth: readyOrderItems.has(board[i]!.item) ? 1.1 : 0.6,
+                  borderColor: readyOrderItems.has(board[i]!.item)
+                    ? "#a3d969"
+                    : "rgba(57, 89, 35, 0.5)",
+                }}
+              >
+                {readyOrderItems.has(board[i]!.item) && (
+                  <ReadyGlow pulse={readyPulse} radius={7} />
+                )}
+                {[0, 1, 2, 3].map((corner) => (
                   <View
+                    key={corner}
                     style={{
                       position: "absolute",
-                      left: 0,
-                      top: 0,
-                      width: 10,
-                      height: 10,
-                      borderTopWidth: 1,
-                      borderLeftWidth: 1,
-                      borderTopLeftRadius: 7,
-                      borderColor: "rgba(71, 112, 34, 0.58)",
+                      width: 12,
+                      height: 12,
+                      left: corner % 2 === 0 ? 1 : undefined,
+                      right: corner % 2 === 1 ? 1 : undefined,
+                      top: corner < 2 ? 1 : undefined,
+                      bottom: corner >= 2 ? 1 : undefined,
+                      transform: [
+                        {
+                          rotate: ["0deg", "90deg", "270deg", "180deg"][
+                            corner
+                          ]!,
+                        },
+                      ],
                     }}
-                  />
-                  <View
-                    style={{
-                      position: "absolute",
-                      left: 3,
-                      top: 3,
-                      width: 3,
-                      height: 5,
-                      borderTopLeftRadius: 3,
-                      borderBottomRightRadius: 3,
-                      backgroundColor: "rgba(112, 144, 48, 0.46)",
-                      transform: [{ rotate: "-45deg" }],
-                    }}
-                  />
-                </View>
-              ))}
-            </View>
-          )}
+                  >
+                    <View
+                      style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        width: 10,
+                        height: 10,
+                        borderTopWidth: 1,
+                        borderLeftWidth: 1,
+                        borderTopLeftRadius: 7,
+                        borderColor: "rgba(71, 112, 34, 0.58)",
+                      }}
+                    />
+                    <View
+                      style={{
+                        position: "absolute",
+                        left: 3,
+                        top: 3,
+                        width: 3,
+                        height: 5,
+                        borderTopLeftRadius: 3,
+                        borderBottomRightRadius: 3,
+                        backgroundColor: "rgba(112, 144, 48, 0.46)",
+                        transform: [{ rotate: "-45deg" }],
+                      }}
+                    />
+                  </View>
+                ))}
+              </View>
+            )}
           <View
             style={{
               position: "absolute",
@@ -229,6 +250,8 @@ const BoardGrid = memo(function BoardGrid({
 export const Board = memo(function Board({
   board,
   readyOrderItems,
+  partialOrderItems,
+  readyPulse,
   cellWidth,
   cellHeight,
   frameInset,
@@ -241,6 +264,8 @@ export const Board = memo(function Board({
 }: {
   board: (Tile | null)[];
   readyOrderItems: ReadonlySet<string>;
+  partialOrderItems: ReadonlySet<string>;
+  readyPulse: SharedValue<number>;
   cellWidth: number;
   cellHeight: number;
   frameInset: number;
@@ -407,6 +432,8 @@ export const Board = memo(function Board({
         <BoardGrid
           board={board}
           readyOrderItems={readyOrderItems}
+          partialOrderItems={partialOrderItems}
+          readyPulse={readyPulse}
           cellWidth={cellWidth}
           cellHeight={cellHeight}
         />

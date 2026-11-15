@@ -318,3 +318,17 @@ Doğrulama: TypeScript, ESLint ve Release üzerinde iki native kontrol geçti. S
 Skara kıyı panoraması korunarak tek tam ekran çiftlik avlusu arka planı hazırlandı. Şehir tabelası ve ortak oyma ahşap tezgâh ayrı alfa assetleridir; promptları yanlarında saklanır. Ana şehir başlığı, üretici/ilan yuvaları ve beşli alt navigasyon bu malzemeye bağlandı. Native yazılar, sayılar, aktif durumlar ve etkileşimler görselden ayrı kalır. WoodTray dokuz parçalı ölçeklemeyle kenarları korur. Yeni arka plan kare hücre geometrisini etkilemez.
 
 Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe kayıt/arka plan, sayfalar/depo, ilan kaydırma, üretici güç menüsü, seri üretim, hızlı ilan teslimi ve 54 hücre ölçümü dahil yedi native kontrol sıfır hatayla geçti. Görsel kontrolde alt menüde Koleksiyon satır taşması bulundu; tek satır/sığdırma düzeltmesi ve ahşap enerji rozetleri sonrası sayfa ve görsel ölçüm kontrollerinin ikisi de tekrar geçti. Son gerçek ekran görsel olarak incelendi; kare hücreler, saydam hazır ürün zemini ve ahşap kabuk birlikte doğrulandı.
+
+
+## 16 Kasım 2026 — Yeşil Skara ve durum tutarlılığı
+
+Toprak avlusu yeşil köy bahçesiyle değiştirildi. Üretici rafındaki space-between kaldırıldı; altı kutuya uygun aralık ve içerik/viewport ölçümüne bağlı yön okları eklendi. Alt menü ahşap içine alındı. Şehir ayracının üç pasif/üç aktif durumlu alfa atlası harita odağına bağlandı. Kısmi/tam hazır ürün ayrımı ve aynı ürünü isteyen farklı ilanların önceliği birim testine eklendi. ReadyGlow ortak Reanimated zamanlayıcısında yalnız düşük yoğunluklu opaklık değiştirir; hareketi azalt tercihini korur.
+
+
+## 16 Kasım 2026 — Simülatör ve fiziksel iPhone doğrulaması
+
+TypeScript ve ESLint geçti; 42 birim testi sıfır hatayla geçti. Release simülatöründe sayfalar/depo, üretici güç menüsü, ilan teslimi, taşmayan raf ve şehir odağı testleri geçti. İlk görsel ölçüm turunda hücreler okunurken koleksiyon sayfası açıldığı için son snapshot alınamadı. Aynı derlemeyle yalnız ölçüm testi tekrar çalıştırıldı ve 54 kare hücre doğrulaması geçti. Bu hata gizlenerek ilk tur altı test geçti denmez.
+
+Kullanıcı telefonu bağlıyken kurulum istedi. Mevcut Apple geliştirme ekibiyle imzalı Release, iPhone 13 Pro / iOS 27.2 üzerine devicectl ile kuruldu. İlk başlatma ekran kilidi nedeniyle engellendi; kullanıcı kilidi açıp uygulamayı başlattı. Device Hub üzerinden gerçek telefonda iki kez üretim (enerji 100'den 98'e), iki dokunuşla merge, ilk ilan teslimi (+60 altın, +20 XP, seviye 2), sürükleyerek merge, koleksiyon ve şehir haritası gözlemlendi. New Haven odağında pembe aktif ayraç ve Skara'nın pasif ayraç durumu doğrulandı. Normal kayıt sıfırlanmadı; inceleme fixture'ı telefonda açılmadı. Test sırasında oluşan normal oyun ilerlemesi korundu.
+
+Bu fiziksel kontrol bir temel akış denemesidir; kapsamlı cihaz FPS/pil/termal ölçümü veya bütün native otomasyon paketinin fiziksel cihazda çalıştırılması değildir. Kurulu uygulama Release ve Metro'dan bağımsızdır. Yerel derleme: /private/tmp/masterland-device-derived/Build/Products/Release-iphoneos/Masterland.app. Kanıt günlükleri /private/tmp/masterland-device-release.log ve /private/tmp/masterland-device-install.log içindedir.

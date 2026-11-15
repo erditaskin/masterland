@@ -12,7 +12,8 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "UIStatusBarHidden": true
-      }
+      },
+      "appleTeamId": "F3F723W4SF"
     },
     "plugins": [
       "expo-asset",

@@ -6,7 +6,7 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from "react-native";
-import tabBounds from "../../assets/art/city-tabs-v3-bounds.json";
+import tabBounds from "../../assets/art/city-tabs-v4-bounds.json";
 import reference from "../../../data/content-reference.json";
 import {
   achievementProgress,
@@ -338,6 +338,7 @@ export function CityMap({
             key={stop.city_id}
             testID={"jump-" + stop.city_id}
             label={name(stop.city_id) + " konumuna git"}
+            selected={active === i}
             onPress={() => {
               onInteract();
               setInspected(null);
@@ -358,11 +359,11 @@ export function CityMap({
               style={{ position: "absolute", inset: 0 }}
             >
               <Crop
-                source={require("../../assets/art/city-tabs-v3.png")}
-                x={tabBounds[i]![0]!}
-                y={tabBounds[i]![1]!}
-                w={tabBounds[i]![2]!}
-                h={tabBounds[i]![3]!}
+                source={require("../../assets/art/city-tabs-v4.png")}
+                x={tabBounds[i + (active === i ? 3 : 0)]![0]!}
+                y={tabBounds[i + (active === i ? 3 : 0)]![1]!}
+                w={tabBounds[i + (active === i ? 3 : 0)]![2]!}
+                h={tabBounds[i + (active === i ? 3 : 0)]![3]!}
                 width={42}
                 height={66}
               />
@@ -370,7 +371,7 @@ export function CityMap({
             <Label
               title
               size={10}
-              color={i === 0 ? colors.paper : colors.ink}
+              color={active === i ? colors.paper : colors.ink}
               style={{
                 position: "absolute",
                 left: 0,

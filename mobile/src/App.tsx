@@ -33,7 +33,8 @@ import { LaunchScreen } from "./ui/LaunchScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
-import { prioritizeOrderRail } from "./ui/orderRail";
+import { ReadyGlow, useReadyPulse } from "./ui/ReadyGlow";
+import { orderItemHighlights, prioritizeOrderRail } from "./ui/orderRail";
 import { fitSquareBoard } from "./ui/layout";
 import { StatusIcon } from "./ui/StatusIcon";
 import { CityWoodSign, WoodTray } from "./ui/Skin";
@@ -85,7 +86,7 @@ const startupAssets = [
   require("../assets/art/skara-route-v2.png"),
   require("../assets/art/canonical-map-clean-v1.png"),
   require("../assets/art/map-scroll-v3.png"),
-  require("../assets/art/city-tabs-v3.png"),
+  require("../assets/art/city-tabs-v4.png"),
   require("../assets/art/haven-route-v2.png"),
   require("../assets/art/cove-route-v2.png"),
   require("../assets/art/page-frame-v2.png"),
@@ -291,8 +292,8 @@ const Navigation = memo(function Navigation({
         width: width - 20,
         height: 55,
         flexDirection: "row",
-        paddingHorizontal: 4,
-        paddingVertical: 3,
+        paddingHorizontal: 11,
+        paddingVertical: 6,
         borderRadius: 12,
         backgroundColor: "transparent",
       }}
@@ -358,7 +359,7 @@ const Navigation = memo(function Navigation({
               </Text>
             </View>
           )}
-          <Sprite kind="icons" index={i} size={35} />
+          <Sprite kind="icons" index={i} size={29} />
           <Text
             numberOfLines={1}
             adjustsFontSizeToFit
@@ -594,20 +595,35 @@ function Game() {
     () => prioritizeOrderRail(orders(save), save),
     [save],
   );
-  const readyOrderItems = useMemo(
-    () =>
-      new Set(
-        activeOrders
-          .filter((o) =>
-            o.requirements.every((r) => count(save, r.item_id) >= r.quantity),
-          )
-          .flatMap((o) => o.requirements.map((r) => r.item_id)),
-      ),
+  const { ready: readyOrderItems, partial: partialOrderItems } = useMemo(
+    () => orderItemHighlights(activeOrders, save),
     [activeOrders, save],
+  );
+  const readyPulse = useReadyPulse(
+    readyOrderItems.size > 0,
+    reduced || save.reducedMotion,
   );
   const producerRail = useRef<ComponentRef<typeof ScrollView>>(null),
     railOffset = useRef(0),
-    railMax = useRef(0);
+    railMax = useRef(0),
+    railViewport = useRef(0),
+    railContent = useRef(0);
+  const [producerEdges, setProducerEdges] = useState({
+    left: false,
+    right: false,
+  });
+  const syncProducerEdges = useCallback(() => {
+    railMax.current = Math.max(0, railContent.current - railViewport.current);
+    const next = {
+      left: railOffset.current > 1,
+      right: railOffset.current < railMax.current - 1,
+    };
+    setProducerEdges((previous) =>
+      previous.left === next.left && previous.right === next.right
+        ? previous
+        : next,
+    );
+  }, []);
   if (
     !ready ||
     loadedAssets < startupAssets.length ||
@@ -963,6 +979,11 @@ function Game() {
                   const ready = o.requirements.every(
                     (r) => count(save, r.item_id) >= r.quantity,
                   );
+                  const partial =
+                    !ready &&
+                    o.requirements.some(
+                      (r) => count(save, r.item_id) >= r.quantity,
+                    );
                   return (
                     <Button
                       testID={"order-" + o.id}
@@ -1007,7 +1028,7 @@ function Game() {
                       }}
                     >
                       <WoodTray width={cardWidth} height={cardHeight} />
-                      {ready && (
+                      {(ready || partial) && (
                         <View
                           pointerEvents="none"
                           style={{
@@ -1015,12 +1036,16 @@ function Game() {
                             inset: 3,
                             borderRadius: 5,
                             borderWidth: 2,
-                            borderColor: "#58782d",
-                            backgroundColor: "#91ad4e",
-                            backgroundImage:
-                              "linear-gradient(180deg, #b4ce78 0%, #86a847 100%)",
+                            borderColor: ready ? "#9cdb68" : "#42652d",
+                            backgroundColor: ready ? "#91ad4e" : "#476a34",
+                            backgroundImage: ready
+                              ? "linear-gradient(180deg, #b4ce78 0%, #86a847 100%)"
+                              : undefined,
                           }}
                         />
+                      )}
+                      {ready && (
+                        <ReadyGlow pulse={readyPulse} inset={3} radius={5} />
                       )}
                       <View
                         style={{
@@ -1134,68 +1159,82 @@ function Game() {
               }}
             >
               <WoodTray width={width - 16 * scale} height={50 * scale} />
-              <Button
-                label="Önceki üreticiler"
-                onPress={() => {
-                  uiSound();
-                  producerRail.current?.scrollTo({
-                    x: Math.max(0, railOffset.current - producerSize * 3),
-                    animated: true,
-                  });
-                }}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 24,
-                }}
-              >
-                <Label title size={30} color={colors.goldLight}>
-                  ‹
-                </Label>
-              </Button>
-              <Button
-                label="Sonraki üreticiler"
-                onPress={() => {
-                  uiSound();
-                  producerRail.current?.scrollTo({
-                    x: Math.min(
-                      railMax.current,
-                      railOffset.current + producerSize * 3,
-                    ),
-                    animated: true,
-                  });
-                }}
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
-                  width: 24,
-                }}
-              >
-                <Label title size={30} color={colors.goldLight}>
-                  ›
-                </Label>
-              </Button>
+              {producerEdges.left && (
+                <Button
+                  testID="producerRailPrev"
+                  label="Önceki üreticiler"
+                  onPress={() => {
+                    uiSound();
+                    producerRail.current?.scrollTo({
+                      x: Math.max(0, railOffset.current - producerSize * 3),
+                      animated: true,
+                    });
+                  }}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: 24,
+                  }}
+                >
+                  <Label title size={30} color={colors.goldLight}>
+                    ‹
+                  </Label>
+                </Button>
+              )}
+              {producerEdges.right && (
+                <Button
+                  testID="producerRailNext"
+                  label="Sonraki üreticiler"
+                  onPress={() => {
+                    uiSound();
+                    producerRail.current?.scrollTo({
+                      x: Math.min(
+                        railMax.current,
+                        railOffset.current + producerSize * 3,
+                      ),
+                      animated: true,
+                    });
+                  }}
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    width: 24,
+                  }}
+                >
+                  <Label title size={30} color={colors.goldLight}>
+                    ›
+                  </Label>
+                </Button>
+              )}
               <ScrollView
                 ref={producerRail}
                 horizontal
                 onScroll={(e) => {
                   railOffset.current = e.nativeEvent.contentOffset.x;
+                  syncProducerEdges();
+                }}
+                scrollEventThrottle={32}
+                bounces={false}
+                onLayout={(e) => {
+                  railViewport.current = e.nativeEvent.layout.width;
+                  syncProducerEdges();
                 }}
                 onContentSizeChange={(w) => {
-                  railMax.current = Math.max(0, w - (width - 76 * scale));
+                  railContent.current = w;
+                  syncProducerEdges();
                 }}
-                style={{ marginHorizontal: 30 * scale }}
+                style={{ marginHorizontal: 24 * scale }}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                   gap: 8 * scale,
                   flexGrow: 1,
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   alignItems: "center",
-                  paddingHorizontal: 0,
+                  paddingHorizontal: 8 * scale,
                 }}
               >
                 {producers.map((p, i) => (
@@ -1222,6 +1261,8 @@ function Game() {
               <Board
                 board={c.board}
                 readyOrderItems={readyOrderItems}
+                partialOrderItems={partialOrderItems}
+                readyPulse={readyPulse}
                 cellWidth={cellWidth}
                 cellHeight={cellHeight}
                 frameInset={frameInset}

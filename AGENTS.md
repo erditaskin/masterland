@@ -42,3 +42,8 @@ Kullanıcı 15 Kasım 2026 akşamı hücrelerin her zaman kare olmasını açık
 ## Son kabuk düzeltmesi — oyma ahşap
 
 Kullanıcının 15 Kasım 2026 gece düzeltmesiyle ana ekrandaki şehir tabelası, ilan/üretici yuvaları ve alt navigasyon oyma ahşap diline geçmiştir. Tek tam ekran arka plan, tahtayı çevreleyen Skara çiftlik avlusudur; kesintisiz koyu yeşil boşluk güncel hedef değildir. Kanonik konsept yerleşim ve kare tahta referansı olarak korunur; bu son açık kullanıcı düzeltmesi kabuk malzemesinde önceliklidir. Ayrıntılar docs/ui-standard.md ve docs/kararlar.md içindedir.
+
+
+## 16 Kasım son düzeltmesi
+
+Skara zemin teması canlı yeşil köydür; geniş toprak avlusu reddedilmiştir. Ahşap kabuk ve kare tahta korunur. Raf altı kutuya uygundur, yön okları taşmaya bağlıdır. Alt menü kütüğün içine oturur. Sağ şehir ayracı kaydırılan bölgeyi takip eder. Kısmi hazır koyu yeşil, tam hazır açık yeşil çerçeve ve çok hafif ortak glow ile belirtilir.

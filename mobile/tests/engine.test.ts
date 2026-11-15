@@ -1,4 +1,4 @@
-import { prioritizeOrderRail } from "../src/ui/orderRail";
+import { orderItemHighlights, prioritizeOrderRail } from "../src/ui/orderRail";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -485,4 +485,41 @@ test("older schema2 records retain default capacity and power with no reset", ()
   assert(!validateSave({ ...s, staminaCapacity: 99 }));
   city(s).powers = { [p.id]: 5 };
   assert(!validateSave(s));
+});
+
+test("order cell highlights distinguish partial, ready and removed requirements", () => {
+  const save = fresh(now);
+  const order = {
+    id: "visual",
+    requirements: [
+      { item_id: "item1", quantity: 1 },
+      { item_id: "item2", quantity: 2 },
+    ],
+    gold: 1,
+    xp: 1,
+    titles: [],
+  };
+  city(save).board[0] = { id: "v1", item: "item1" };
+  city(save).board[1] = { id: "v2", item: "item2" };
+  let result = orderItemHighlights([order], save);
+  assert.deepEqual([...result.partial], ["item1"]);
+  assert.equal(result.ready.size, 0);
+  city(save).board[2] = { id: "v3", item: "item2" };
+  result = orderItemHighlights([order], save);
+  assert.deepEqual([...result.ready], ["item1", "item2"]);
+  assert.equal(result.partial.size, 0);
+  const competing = {
+    ...order,
+    id: "other",
+    requirements: [
+      { item_id: "item1", quantity: 1 },
+      { item_id: "item2", quantity: 3 },
+    ],
+  };
+  result = orderItemHighlights([competing, order], save);
+  assert.equal(result.partial.size, 0);
+  assert.equal(result.ready.size, 2);
+  city(save).board.fill(null);
+  result = orderItemHighlights([order], save);
+  assert.equal(result.ready.size + result.partial.size, 0);
 });

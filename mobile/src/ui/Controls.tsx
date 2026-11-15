@@ -48,6 +48,7 @@ export function Button({
   testID,
   style,
   disabled = false,
+  selected,
 }: {
   children: React.ReactNode;
   onPress: () => void;
@@ -56,6 +57,7 @@ export function Button({
   testID?: string;
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
+  selected?: boolean;
 }) {
   const opacity = useMemo(() => new Animated.Value(1), []);
   return (
@@ -63,6 +65,7 @@ export function Button({
       testID={testID}
       accessibilityRole="button"
       accessibilityLabel={label}
+      accessibilityState={{ selected, disabled }}
       disabled={disabled}
       onPress={onPress}
       onLongPress={onLongPress}
