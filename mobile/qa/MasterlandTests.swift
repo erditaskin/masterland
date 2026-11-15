@@ -87,7 +87,8 @@ final class MasterlandTests:XCTestCase {
     }
     func testSelectionInvalidReleaseAndNextGesture(){
         app.buttons["producer1"].tap();app.buttons["producer1"].tap();cell(0).tap()
-        XCTAssertEqual(cell(1).value as? String,"Birleştirme önerisi")
+        XCTAssertEqual(cell(0).value as? String,"Seçili")
+        XCTAssertEqual(cell(1).value as? String,"")
         let frame=cell(0).frame;XCTAssertEqual(frame.width/frame.height,(732.0/6)/(710.0/8),accuracy:0.015)
         cell(0).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
         XCTAssertEqual(cell(0).label,"Buğday başağı");energy("98/100");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("rn-selection-and-merge")

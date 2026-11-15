@@ -177,3 +177,7 @@ Ana ilan ilk sırada kalır. İlk üç görünür kartta mevcut görevler arası
 ## Basılı tutma ve dokunarak merge
 
 Sürükleme öncesi basılı tutmak hareketi engellemez. Ayrıntı ekranı yalnız hareketsiz uzun basma bırakılınca açılır. Seçili eşyayla aynı ürüne dokunmak sürüklemeyle aynı motor kontrolünü kullanır. Farklı ürüne dokunmak seçim değiştirir; boş hücreye dokunmak ürün taşımaz. Sonraki basamak kilitliyse ürünler korunur ve üretici açma koşulları gösterilir.
+
+## Güncel seçim vurgusu
+
+Seçili eşya tek başına vurgulanır. Birleşebilecek başka üründe otomatik çerçeve veya öneri gösterilmez. Bu karar önceki eşleşme önerisi kuralının yerini alır.

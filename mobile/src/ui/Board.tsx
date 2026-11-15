@@ -33,7 +33,6 @@ const Piece = memo(
     cellWidth,
     cellHeight,
     selected,
-    hinted,
     drag,
     reduced,
   }: {
@@ -42,7 +41,6 @@ const Piece = memo(
     cellWidth: number;
     cellHeight: number;
     selected: boolean;
-    hinted: boolean;
     drag: Drag;
     reduced: boolean;
   }) {
@@ -80,7 +78,7 @@ const Piece = memo(
           style,
         ]}
       >
-        {(selected || hinted) && (
+        {selected && (
           <View
             style={{
               position: "absolute",
@@ -88,9 +86,9 @@ const Piece = memo(
               borderWidth: 1.8,
               borderColor: "#ffe895",
               borderRadius: 5,
-              backgroundColor: selected ? "#fff0ad40" : "#fff2bc2b",
+              backgroundColor: "#fff0ad40",
               shadowColor: "#ffd057",
-              shadowOpacity: selected ? 0.95 : 0.8,
+              shadowOpacity: 0.95,
               shadowRadius: 6,
               shadowOffset: { width: 0, height: 0 },
             }}
@@ -112,7 +110,6 @@ const Piece = memo(
     a.cellWidth === b.cellWidth &&
     a.cellHeight === b.cellHeight &&
     a.selected === b.selected &&
-    a.hinted === b.hinted &&
     a.reduced === b.reduced,
 );
 const BoardGrid = memo(function BoardGrid({
@@ -150,7 +147,6 @@ export const Board = memo(function Board({
   cellHeight,
   frameInset,
   selected,
-  hinted,
   reduced,
   onSelect,
   onTap,
@@ -162,7 +158,6 @@ export const Board = memo(function Board({
   cellHeight: number;
   frameInset: number;
   selected: number | null;
-  hinted: number;
   reduced: boolean;
   onSelect: (i: number) => void;
   onTap: (i: number) => void;
@@ -332,7 +327,6 @@ export const Board = memo(function Board({
               cellWidth={cellWidth}
               cellHeight={cellHeight}
               selected={selected === i}
-              hinted={hinted === i}
               drag={drag}
               reduced={reduced}
             />
@@ -347,12 +341,7 @@ export const Board = memo(function Board({
                 accessibilityRole="button"
                 accessibilityLabel={t ? product(t.item).name : "Boş hücre"}
                 accessibilityValue={{
-                  text:
-                    selected === i
-                      ? "Seçili"
-                      : hinted === i
-                        ? "Birleştirme önerisi"
-                        : "",
+                  text: selected === i ? "Seçili" : "",
                 }}
                 testID={"cell-" + i}
                 onAccessibilityTap={() => onTap(i)}

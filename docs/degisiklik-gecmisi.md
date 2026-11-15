@@ -257,3 +257,7 @@ Kullanıcı bazı sürüklemelerin birleşmediğini bildirdi ve seçip ikinci e�
 Ayrıca sürükleme hedefi, kaynak hücre merkezi ile hareket farkından hesaplanıyordu. Merkez dışından tutup hedefin kenarına bırakmak yanlış komşu hücreye yönlenebiliyordu. Hedef artık sabit tahta katmanına göre gerçek bırakma koordinatından hesaplanır. Merkez dışı tutma için ayrı native regresyon senaryosu eklenmiştir.
 
 Uygulama genelindeki incelemede, tam ekran sayfalarda işlem sonucu mesajının sayfanın arkasında kaldığı bulundu. Mesaj katmanı sayfaların üstüne taşındı; engellenen işlemler 2,4 saniye gösterilir. Depoya gönderme başarısız olduğunda ayrıntı sayfası artık kapanmaz. Şehir 2/3 yolculuğu ve gerçek market işlemleri bu prototipte henüz uygulanmamış kapsamdır; test edilmiş özellik gibi sunulmaz.
+
+## 15 Kasım 2026 — Tahta öneri vurgusu
+
+Kullanıcı isteğiyle eşleşen ikinci üründeki otomatik vurgu kaldırıldı. Önceki iki ürünlü öneri standardının yerini yalnız seçili eşyanın vurgulanması aldı.

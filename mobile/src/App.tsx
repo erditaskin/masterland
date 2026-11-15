@@ -446,15 +446,6 @@ function Game() {
   const [start, next] = levelRange(save),
     progress = Math.max(0, Math.min(1, (save.xp - start) / (next - start))),
     c = city(save);
-  const chosen = selected === null ? null : c.board[selected],
-    chosenProduct = chosen ? product(chosen.item) : null;
-  const nextProduct = chosenProduct
-    ? producers[chosenProduct.producer]?.products[chosenProduct.tier]
-    : null;
-  const hinted =
-    chosen && nextProduct && c.opened.includes(nextProduct.id)
-      ? c.board.findIndex((t, i) => i !== selected && t?.item === chosen.item)
-      : -1;
   return (
     <ImageBackground
       source={art.city}
@@ -1029,7 +1020,6 @@ function Game() {
             cellHeight={cellHeight}
             frameInset={frameInset}
             selected={selected}
-            hinted={hinted}
             reduced={reduced || save.reducedMotion}
             onSelect={select}
             onTap={tapCell}

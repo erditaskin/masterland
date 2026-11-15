@@ -264,3 +264,7 @@ Yeni arayüz: tek kesintisiz ve uniform ölçeklenen liman/teras arka planı, sa
 ## 15 Kasım 2026 — Seçimle birleştirme
 
 Oyuncu iki aynı eşyayı sürükleyip bırakarak veya ilkini seçip ikinciye dokunarak birleştirebilir. Farklı eşyalara dokunmak yalnız seçimi değiştirir. Üst ürün basamağı kapalıysa iki eşya korunur ve ilgili üreticinin açma koşulları gösterilir; level ve altınla açma kuralı kaldırılmaz.
+
+## 15 Kasım 2026 — Eşleşme önerisi kaldırıldı
+
+Kullanıcı, seçili eşyanın birleşebileceği diğer ürünün gösterilmesini istemiyor. Yalnız seçili eşya vurgulanır; eşleşen diğer üründe görsel veya erişilebilirlik önerisi bulunmaz. Merge kuralları değişmez.
