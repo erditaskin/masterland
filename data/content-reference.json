@@ -1,5 +1,5 @@
 {
-  "version": 26,
+  "version": 27,
   "locales": {
     "tr": {
       "city1_name_tr": "Skara Brae",
@@ -1195,24 +1195,35 @@
       "group_by": "collection_id",
       "first_discovery_rewards": true
     },
-    "latest_city1_mockup": "assets/ui/ui-city1-v10.png",
+    "latest_city1_mockup": "assets/references/masterland-visual-target-v11.png",
     "board_geometry": {
-      "cell_aspect_ratio": 1,
+      "cell_aspect_ratio": 1.3746478873239436,
       "centered": true,
       "full_width_required": false,
       "city_themed_side_decoration": true,
       "decoration_overlaps_cells": false,
-      "status": "user_requested",
+      "status": "user_requested_2026_11_15_photo_cell_proportions",
       "mockup_grid": "6x9 proposal",
       "narrow_board_v8_rejected": true,
-      "surface": "flat subtle checkerboard",
-      "border": "thin wood",
-      "side_decoration": "narrow natural farm environment; restrained lower corner plants",
-      "latest_mockup_status": "proposal_pending_review",
+      "surface": "painted parchment, subtly rounded cells",
+      "border": "warm wood and gold bevel, transparent frame",
+      "side_decoration": "quiet navy stone terrace and restrained leaves",
+      "latest_mockup_status": "approved_reference_target_runtime_review_pending",
       "all_rows_same_height": true,
       "last_row_must_not_be_clipped": true,
-      "layout_formula": "s=min(available_width/columns,available_height/rows); width=columns*s; height=rows*s",
-      "raster_mockup_is_not_geometry_validation": true
+      "layout_formula": "preserve reference cell ratio; fit 6x9; anchor board above bottom navigation; use remaining vertical room for city view without stretching the single background",
+      "raster_mockup_is_not_geometry_validation": true,
+      "cell_aspect_ratio_basis": "732x710 source grid, 6 columns x 8 rows, uniform pitch 122x88.75; active inventory remains 6x9",
+      "active_columns": 6,
+      "active_rows": 9,
+      "active_capacity": 54,
+      "reference_grid_bounds": [
+        59,
+        548,
+        732,
+        710
+      ],
+      "reference_width_ratio": 0.97125
     },
     "producer_touch_requirements": {
       "near_square": true,
@@ -1222,7 +1233,7 @@
       "implementation_test_pending": true
     },
     "shared_city_template": {
-      "asset": "assets/ui/ui-city1-v10.png",
+      "asset": "assets/references/masterland-visual-target-v11.png",
       "status": "approved",
       "scope": "all_cities",
       "theme_changes": [
@@ -1231,7 +1242,8 @@
         "producer_icons",
         "environment_decoration"
       ],
-      "economy_values_approved_by_visual": false
+      "economy_values_approved_by_visual": false,
+      "runtime_visual_acceptance": "pending_user_review"
     },
     "interaction_standard": {
       "all_buttons_have_animated_feedback": true,

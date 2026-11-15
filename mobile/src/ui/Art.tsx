@@ -2,6 +2,7 @@ import { memo } from "react";
 import { Image, View, type ImageSourcePropType } from "react-native";
 import { art } from "./theme";
 import { product } from "../game/engine";
+import itemBounds from "../../assets/art/item-bounds.json";
 function dimensions(source: ImageSourcePropType) {
   const m = Image.resolveAssetSource(source);
   if (!m?.width || !m.height) throw Error("Eksik görsel boyutu.");
@@ -68,23 +69,43 @@ export const Sprite = memo(function Sprite({
     <Crop source={source} x={x} y={y} w={w} h={h} width={size} height={size} />
   );
 });
+/** Trim metadata is measured offline; objects keep their native aspect and soft edge. */
 export const Item = memo(function Item({
   id,
   size,
+  width = size,
+  height = size,
 }: {
   id: string;
   size: number;
+  width?: number;
+  height?: number;
 }) {
   const p = product(id),
     approved = p.producer < 4 && p.tier <= 2;
+  const kind = approved ? "approved" : "products";
+  const index = approved
+    ? p.producer * 2 + p.tier - 1
+    : p.producer * 4 + p.tier - 1;
+  const rect = itemBounds[kind][index]!;
+  const ratio = rect[2]! / rect[3]!,
+    drawWidth = Math.min(width, height * ratio),
+    drawHeight = drawWidth / ratio;
   return (
-    <Sprite
-      kind={approved ? "approved" : "products"}
-      index={
-        approved ? p.producer * 2 + p.tier - 1 : p.producer * 4 + p.tier - 1
-      }
-      size={size}
-    />
+    <View
+      pointerEvents="none"
+      style={{ width, height, alignItems: "center", justifyContent: "center" }}
+    >
+      <Crop
+        source={art[kind]}
+        x={rect[0]!}
+        y={rect[1]!}
+        w={rect[2]!}
+        h={rect[3]!}
+        width={drawWidth}
+        height={drawHeight}
+      />
+    </View>
   );
 });
 export function Reference({

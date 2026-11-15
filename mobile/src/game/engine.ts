@@ -518,6 +518,7 @@ export function visualFixture(now: number): Save {
     .flatMap((p) => p.products.slice(0, 2).map((a) => a.id));
   s.discoveries = [...c.opened];
   c.introIndex = 1;
+  c.repeatIndex = 1;
   c.batches[p[1]!.id] = { remaining: 0, readyAt: now + 135000 };
   return s;
 }

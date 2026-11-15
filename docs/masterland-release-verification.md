@@ -35,3 +35,7 @@ Onaylı referansın nötr boş kâğıt bölgesi tek doku olarak tahtanın altı
 Son ses eklemesini de içeren paket, Masterland-Compact-QA (iPhone 13 Pro, iOS 26.3.1, UUID 87EAC525-43A7-4F4A-8EDB-5626A5DA5F52) üzerinde 3/3 UI testini 41.540 saniyede geçti. Tam ekran sayfalar/depo, kare hücreler/yatay ilanlar ve 30 seri üretim/kapanan kapasite doğrulandı. Sonuç `/private/tmp/masterland-compact-final.xcresult`; teslim özeti compact-test-summary.json dosyasıdır. Ana simülatör de aynı son pakete güncellendi ve görsel inceleme oturumunda açık bırakıldı.
 
 GitHub hedefi: https://github.com/erditaskin/masterland, dal main. Oyuncu kayıtları veya test videoları git deposuna konmaz. İkon özgün imagegen üretimidir; kaynak ve prompt mobile/assets/icon.png ile icon-prompt.txt içindedir. Font lisansları özgün OFL metinleriyle saklanır; lisans dosyalarındaki kaynak boşlukları değiştirilmemiştir.
+
+## Güncel görsel/ses turu
+
+15 Kasım 01.14.55 fotoğrafı ve kullanıcının hücre oranı seçimi sonrasında uygulama yeniden işlendi. Güncel ölçümler, 30 saf test, 8 ana ve 4 küçük ekran UI sonucu reference-fidelity-20261115.md dosyasındadır. Önceki ekranlar tarihçedir; son canlı sürümün görsel kanıtı olarak kullanılmaz. Yeni çerçeve, art sınırı metadata’sı, gerçek ilan çeşitliliği, birleşme ipucu ve özgün ses ailesi bu turda eklendi.

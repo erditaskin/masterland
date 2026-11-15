@@ -100,3 +100,8 @@ Onaylı saf merge ve bağımsız zincir kuralları `ureticiler-ve-zincirler.md` 
 ## 14 Kasım 2026 üst ürünler ve tasarım
 
 Üst ürün level/maliyet tablosu ureticiler-ve-zincirler.md içindedir. Altın gelirleri, slot harcamaları, yeni üreticiler ve keşif XP birlikte simüle edilecektir. Kilitli birleşmede eşya koruma, uzun basmayla üretici ayrıntısı ve 6 × 9 kapasite öneridir.
+
+
+## 15 Kasım görsel turu durumu
+
+Kare hücre mi fotoğraf oranı mı konusu kapandı: kullanıcı fotoğrafın oranını seçti. Aktif uniform oran 122:88.75, kapasite 54 olarak korunur. Güncel görsel hedef ui-standard.md içindedir. Yeni gerçek ekranın bütünsel estetik kabulü, gerçek telefonda ses dinlemesi ve cihaz FPS/pil ölçümleri henüz tamamlanmış sayılmaz. Prototipteki gerçek reklam ve satın alma kapsamı değişmemiştir.

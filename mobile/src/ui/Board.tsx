@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/refs -- Refs are read by touch callbacks after render; native gestures hold stable handler references. */
 import {
   memo,
   useCallback,
@@ -17,8 +16,8 @@ import Animated, {
   type SharedValue,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { Item, Reference } from "./Art";
-import { colors } from "./theme";
+import { Item } from "./Art";
+import { BoardFrame, SkinCrop, skin } from "./Skin";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
 interface Drag {
@@ -31,15 +30,19 @@ const Piece = memo(
   function Piece({
     tile,
     index,
-    cell,
+    cellWidth,
+    cellHeight,
     selected,
+    hinted,
     drag,
     reduced,
   }: {
     tile: Tile;
     index: number;
-    cell: number;
+    cellWidth: number;
+    cellHeight: number;
     selected: boolean;
+    hinted: boolean;
     drag: Drag;
     reduced: boolean;
   }) {
@@ -53,11 +56,12 @@ const Piece = memo(
       transform: [
         {
           translateX:
-            (index % 6) * cell + (drag.id.get() === tile.id ? drag.x.get() : 0),
+            (index % 6) * cellWidth +
+            (drag.id.get() === tile.id ? drag.x.get() : 0),
         },
         {
           translateY:
-            Math.floor(index / 6) * cell +
+            Math.floor(index / 6) * cellHeight +
             (drag.id.get() === tile.id ? drag.y.get() : 0),
         },
       ],
@@ -68,27 +72,36 @@ const Piece = memo(
         style={[
           {
             position: "absolute",
-            width: cell,
-            height: cell,
+            width: cellWidth,
+            height: cellHeight,
             alignItems: "center",
             justifyContent: "center",
           },
           style,
         ]}
       >
-        {selected && (
+        {(selected || hinted) && (
           <View
             style={{
               position: "absolute",
               inset: 3,
               borderWidth: 1.8,
-              borderColor: colors.gold,
+              borderColor: "#ffe895",
               borderRadius: 5,
-              backgroundColor: "#fff2ba35",
+              backgroundColor: selected ? "#fff0ad40" : "#fff2bc2b",
+              shadowColor: "#ffd057",
+              shadowOpacity: selected ? 0.95 : 0.8,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 0 },
             }}
           />
         )}
-        <Item id={tile.item} size={cell * 0.9} />
+        <Item
+          id={tile.item}
+          size={Math.min(cellWidth, cellHeight) * 0.9}
+          width={cellWidth * 0.9}
+          height={cellHeight * 0.94}
+        />
       </Animated.View>
     );
   },
@@ -96,88 +109,59 @@ const Piece = memo(
     a.tile.id === b.tile.id &&
     a.tile.item === b.tile.item &&
     a.index === b.index &&
-    a.cell === b.cell &&
+    a.cellWidth === b.cellWidth &&
+    a.cellHeight === b.cellHeight &&
     a.selected === b.selected &&
+    a.hinted === b.hinted &&
     a.reduced === b.reduced,
 );
-export function WoodFrame({
-  width,
-  height,
+const BoardGrid = memo(function BoardGrid({
+  cellWidth,
+  cellHeight,
 }: {
-  width: number;
-  height: number;
+  cellWidth: number;
+  cellHeight: number;
 }) {
-  const c = 15;
   return (
     <View
       pointerEvents="none"
-      style={{ position: "absolute", left: 0, top: 0, width, height }}
+      style={[StyleSheet.absoluteFill, { borderRadius: 7, overflow: "hidden" }]}
     >
-      <View style={{ position: "absolute", left: c, right: c, top: 0 }}>
-        <Reference
-          x={135}
-          y={535}
-          w={650}
-          h={18}
-          width={width - 2 * c}
-          height={8}
-        />
-      </View>
-      <View style={{ position: "absolute", left: c, right: c, bottom: 0 }}>
-        <Reference
-          x={135}
-          y={1533}
-          w={650}
-          h={20}
-          width={width - 2 * c}
-          height={8}
-        />
-      </View>
-      <View style={{ position: "absolute", left: 0, top: c }}>
-        <Reference
-          x={98}
-          y={575}
-          w={18}
-          h={900}
-          width={8}
-          height={height - 2 * c}
-        />
-      </View>
-      <View style={{ position: "absolute", right: 0, top: c }}>
-        <Reference
-          x={817}
-          y={575}
-          w={18}
-          h={900}
-          width={8}
-          height={height - 2 * c}
-        />
-      </View>
-      {[
-        [98, 535, 0, 0],
-        [800, 535, width - c, 0],
-        [98, 1517, 0, height - c],
-        [800, 1517, width - c, height - c],
-      ].map(([x, y, l, t], i) => (
-        <View key={i} style={{ position: "absolute", left: l, top: t }}>
-          <Reference x={x!} y={y!} w={36} h={36} width={c} height={c} />
+      {Array.from({ length: 54 }, (_, i) => (
+        <View
+          key={i}
+          style={{
+            position: "absolute",
+            left: (i % 6) * cellWidth,
+            top: Math.floor(i / 6) * cellHeight,
+            width: cellWidth,
+            height: cellHeight,
+          }}
+        >
+          <SkinCrop rect={skin.cell} width={cellWidth} height={cellHeight} />
         </View>
       ))}
     </View>
   );
-}
+});
 export const Board = memo(function Board({
   board,
-  cell,
+  cellWidth,
+  cellHeight,
+  frameInset,
   selected,
+  hinted,
   reduced,
   onSelect,
   onMove,
   onInfo,
 }: {
   board: (Tile | null)[];
-  cell: number;
+  cellWidth: number;
+  cellHeight: number;
+  frameInset: number;
   selected: number | null;
+  hinted: number;
   reduced: boolean;
   onSelect: (i: number) => void;
   onMove: (from: number, to: number, expected: string) => Result | null;
@@ -205,8 +189,14 @@ export const Board = memo(function Board({
   const select = useCallback((i: number) => current.current.onSelect(i), []);
   const info = useCallback((i: number) => current.current.onInfo(i), []);
   const commit = useCallback(
-    (from: number, to: number, expected: string) => {
+    (from: number, to: number, expected: string, gestureEpoch: number) => {
       const result = current.current.onMove(from, to, expected);
+      // A delayed JS settlement must not clear a newer UI-thread drag.
+      if (
+        epoch.get() !== gestureEpoch ||
+        (id.get() !== expected && id.get() !== "")
+      )
+        return;
       if (result && result.kind !== "blocked") {
         id.set("");
         x.set(0);
@@ -234,12 +224,15 @@ export const Board = memo(function Board({
         cancelAnimation(y);
         x.set(0);
         y.set(0);
-        origin.set(hitCell(e.x, e.y, cell) ?? -1);
+        origin.set(hitCell(e.x, e.y, cellWidth, cellHeight) ?? -1);
       })
       .onStart(() => {
         "worklet";
-        if (origin.get() >= 0 && origin.get() < 54)
-          id.set(ids.get()[origin.get()] ?? "");
+        if (origin.get() >= 0 && origin.get() < 54) {
+          const picked = ids.get()[origin.get()] ?? "";
+          id.set(picked);
+          if (picked) scheduleOnRN(select, origin.get());
+        }
       })
       .onUpdate((e) => {
         "worklet";
@@ -252,15 +245,17 @@ export const Board = memo(function Board({
         "worklet";
         if (!id.get()) return;
         const col = Math.floor(
-            (((origin.get() % 6) + 0.5) * cell + e.translationX) / cell,
+            (((origin.get() % 6) + 0.5) * cellWidth + e.translationX) /
+              cellWidth,
           ),
           row = Math.floor(
-            ((Math.floor(origin.get() / 6) + 0.5) * cell + e.translationY) /
-              cell,
+            ((Math.floor(origin.get() / 6) + 0.5) * cellHeight +
+              e.translationY) /
+              cellHeight,
           );
         const target =
           col >= 0 && col < 6 && row >= 0 && row < 9 ? row * 6 + col : -1;
-        scheduleOnRN(commit, origin.get(), target, id.get());
+        scheduleOnRN(commit, origin.get(), target, id.get(), epoch.get());
       })
       .onFinalize((_, success) => {
         "worklet";
@@ -279,7 +274,7 @@ export const Board = memo(function Board({
       .onEnd((e, success) => {
         "worklet";
         if (success) {
-          const i = hitCell(e.x, e.y, cell);
+          const i = hitCell(e.x, e.y, cellWidth, cellHeight);
           if (i !== null) scheduleOnRN(select, i);
         }
       });
@@ -288,69 +283,58 @@ export const Board = memo(function Board({
       .maxDistance(5)
       .onStart((e) => {
         "worklet";
-        const i = hitCell(e.x, e.y, cell);
+        const i = hitCell(e.x, e.y, cellWidth, cellHeight);
         if (i !== null && ids.get()[i]) scheduleOnRN(info, i);
       });
     return Gesture.Race(pan, Gesture.Exclusive(long, tap));
-  }, [cell, commit, select, info, id, ids, x, y, epoch, origin]);
+  }, [
+    cellWidth,
+    cellHeight,
+    commit,
+    select,
+    info,
+    id,
+    ids,
+    x,
+    y,
+    epoch,
+    origin,
+  ]);
   return (
     <View
       testID="mergeBoard"
       style={{
-        width: cell * 6 + 16,
-        height: cell * 9 + 16,
-        padding: 8,
+        width: cellWidth * 6 + 2 * frameInset,
+        height: cellHeight * 9 + 2 * frameInset,
+        padding: frameInset,
         shadowColor: "#51321c",
         shadowOpacity: 0.16,
         shadowRadius: 2,
         shadowOffset: { width: 0, height: 2 },
       }}
     >
-      <WoodFrame width={cell * 6 + 16} height={cell * 9 + 16} />
+      <BoardFrame
+        width={cellWidth * 6 + 2 * frameInset}
+        height={cellHeight * 9 + 2 * frameInset}
+      />
       <View
         style={{
-          width: cell * 6,
-          height: cell * 9,
-          backgroundColor: colors.paper,
+          width: cellWidth * 6,
+          height: cellHeight * 9,
+          backgroundColor: "transparent",
         }}
       >
-        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-          <Reference
-            x={140}
-            y={930}
-            w={65}
-            h={55}
-            width={cell * 6}
-            height={cell * 9}
-          />
-          {Array.from({ length: 54 }, (_, i) => (
-            <View
-              key={i}
-              style={{
-                position: "absolute",
-                left: (i % 6) * cell,
-                top: Math.floor(i / 6) * cell,
-                width: cell,
-                height: cell,
-                backgroundColor:
-                  (Math.floor(i / 6) + (i % 6)) % 2
-                    ? "rgba(219,179,115,0.19)"
-                    : "rgba(255,245,219,0.08)",
-                borderRightWidth: StyleSheet.hairlineWidth,
-                borderBottomWidth: StyleSheet.hairlineWidth,
-                borderColor: colors.outline,
-              }}
-            />
-          ))}
-        </View>
+        <BoardGrid cellWidth={cellWidth} cellHeight={cellHeight} />
         {board.map((t, i) =>
           t ? (
             <Piece
               key={t.id}
               tile={t}
               index={i}
-              cell={cell}
+              cellWidth={cellWidth}
+              cellHeight={cellHeight}
               selected={selected === i}
+              hinted={hinted === i}
               drag={drag}
               reduced={reduced}
             />
@@ -364,16 +348,23 @@ export const Board = memo(function Board({
                 accessible
                 accessibilityRole="button"
                 accessibilityLabel={t ? product(t.item).name : "Boş hücre"}
-                accessibilityValue={{ text: selected === i ? "Seçili" : "" }}
+                accessibilityValue={{
+                  text:
+                    selected === i
+                      ? "Seçili"
+                      : hinted === i
+                        ? "Birleştirme önerisi"
+                        : "",
+                }}
                 testID={"cell-" + i}
                 onAccessibilityTap={() => onSelect(i)}
                 onAccessibilityEscape={() => onSelect(-1)}
                 style={{
                   position: "absolute",
-                  left: (i % 6) * cell,
-                  top: Math.floor(i / 6) * cell,
-                  width: cell,
-                  height: cell,
+                  left: (i % 6) * cellWidth,
+                  top: Math.floor(i / 6) * cellHeight,
+                  width: cellWidth,
+                  height: cellHeight,
                 }}
               />
             ))}

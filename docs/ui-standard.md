@@ -147,3 +147,29 @@ Prototipte yatay ilan alanını doldurmak için bir ana ilan ve beş tekrar ilan
 ## 15 Kasım 2026 — React Native geçişi ve kalite sınırı
 
 Kullanıcı React Native/Expo’ya geçilmesini açıkça onayladı. Katla Patla’nın yalnızca örnek olduğunu, kalite sınırı olmadığını belirtti. Aktif kod mobile/ altındadır; eski SwiftUI ios/ kaynakları ve oyuncu kaydı korunur. Test başarısı görsel kalite veya kullanıcı kabulü olarak sunulmaz. Font, tahta, gölge ve hareket adayları gerçek Release ekranı üzerinde incelenir. Ayrıntılar react-native-migration.md dosyasındadır.
+
+
+## 15 Kasım 2026 — yeni fotoğraf, hücre oranı ve ölçümlü RN turu
+
+Kullanıcı Screenshot 2026-11-15 at 01.14.55.png görselini yeni hedef olarak belirledi. Kare hücre ile bu fotoğraftaki oran arasındaki seçenek soruldu; kullanıcı açıkça “Bu fotoğrafın hücre oranları da birebir uygulansın” yanıtını verdi. Bu karar eski 1:1 hücre oranının yerine geçer. Yeni hedef assets/references/masterland-visual-target-v11.png içinde korunur.
+
+Kaynak görsel 838×1440; oyun alanı yaklaşık x25,y27,800×1401. Görünür 6×8 gridin iç alanı x59,y548,732×710 olarak ölçüldü. Çizimde tek tek satırlar eşit olmadığından, önceki eşit satır şartını koruyan tek tip hücre adımı 122×88.75, oran 1.374647887 olarak alınır. Oyundaki 54 slot silinmez; 6×9 kapasite ve kayıt kimlikleri korunur. Kullanıcı kapasiteyi 48’e düşürme talimatı vermedi.
+
+Tahta genişliği kaynak oranından türetilir. Tahta alt menünün üstüne bağlanır. Ekran yüksekliği farkı şehir manzarasının görünür alanına verilir; arka planın x/y ölçeği ayrı ayrı değiştirilmez. Tek arka planın uniform kamera ölçeği deniz feneri referans noktasına bağlanır ve dört kenarı kaplar. Bu, eski sabit kare tahta uyarlamasının güncel yerine geçer.
+
+Mevcut atlasların şeffaf kenarları metadata ile ölçülür. Eşya pikselleri değiştirilmez; nesne gerçek çizim sınırından, kendi oranını koruyarak hücreye sığdırılır. Üreticiye seri dokunma native UI runtime’da algılanır. Tahta seçimde büyümez. Yeni ortak çerçevenin hem merkezi hem dışı gerçek alpha saydamlığı taşır; sayfa içeriklerini örten kâğıt dolgusu yoktur.
+
+İlan kartı ve ilan panosu yazısız ayrı varlıklardır. İlanların isimleri, miktarları, altın/XP değerleri ve teslim davranışı canlı bileşenlerdir. Referanstaki örnek bakiyeler veya görev sırası normal oyuna zorlanmaz.
+
+Yeni font eşlemesi iOS Georgia/Georgia-Bold ailesidir. Önceki Alegreya/Nunito dosyaları ve lisansları arşiv olarak kalır, açılışta gereksiz yüklenmez. Bu tercih yeni görsel hedefin serif harflerine yakın uygulama seçimi olup kullanıcıdan ayrıca font adı onayı alınmış sayılmaz.
+
+Sesler özgün kısa mallet/ahşap ailesidir: arayüz 75 ms, üç uyumlu üretim varyasyonu 120 ms, merge 235 ms, ödül 400 ms, engellenen eylem 90 ms. Tek ses kanalı, 65 ms hız sınırı, sessiz mod ve uygulama arka planında durdurma uygulanır. Ses kapatma tahtayı veya ilerlemeyi sıfırlamaz.
+
+Piksel karşılaştırmasında monitör ICC profilli referans ile sRGB simülatör ekranı önce aynı sRGB uzayına çevrilir. Hücre dokusu benzerliği tüm ekranın estetik skoru olarak sunulmaz. Bütün ekran için %100 piksel özdeşliği veya kullanıcı görsel kabulü henüz iddia edilmez.
+
+
+### Son etkileşim ve çizim ayrıntıları
+
+Seçili eşyanın yanında, yalnız sonraki basamağı açık olan aynı türden bir başka eşya yumuşak altın çerçeveyle önerilir. En fazla iki vurgu çizilir; eşya veya hitbox büyümez. Sürükleme başlangıcında eşya seçilir. Eski hareketin geciken JS sonucu yeni native sürüklemeyi temizleyemez. Üretici sayaçları iki basamaklı dakika gösterir ve küçük ekranda tek satıra sığar.
+
+Ana ilan ilk sırada kalır. İlk üç görünür kartta mevcut görevler arasından farklı üretim zincirleri öne alınır. Bu yalnız sunum sırasıdır: ilan kimlikleri, gereksinimleri ve ödülleri korunur; hiçbir canlı görev silinmez veya eklenmez. İnceleme örneği meşru bir tekrar ilanı adımında başlatılır; normal kayıt değiştirilmez.

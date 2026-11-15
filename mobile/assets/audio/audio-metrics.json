@@ -1,0 +1,58 @@
+[
+  {
+    "file": "tap.wav",
+    "duration_ms": 75,
+    "peak_dbfs": -21.33,
+    "rms_dbfs": -31.49,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "produce-0.wav",
+    "duration_ms": 120,
+    "peak_dbfs": -16.11,
+    "rms_dbfs": -27.04,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "produce-1.wav",
+    "duration_ms": 120,
+    "peak_dbfs": -16.19,
+    "rms_dbfs": -27.1,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "produce-2.wav",
+    "duration_ms": 120,
+    "peak_dbfs": -16.12,
+    "rms_dbfs": -27.12,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "merge.wav",
+    "duration_ms": 235,
+    "peak_dbfs": -15.77,
+    "rms_dbfs": -26.65,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "reward.wav",
+    "duration_ms": 400,
+    "peak_dbfs": -18.01,
+    "rms_dbfs": -27.81,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  },
+  {
+    "file": "blocked.wav",
+    "duration_ms": 90,
+    "peak_dbfs": -21.8,
+    "rms_dbfs": -31.83,
+    "sample_rate": 48000,
+    "clipped_samples": 0
+  }
+]

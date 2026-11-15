@@ -13,13 +13,13 @@ export const colors = {
   outline: "rgba(110,73,38,0.12)",
 };
 export const fonts = {
-  title: "Alegreya600",
-  body: "Nunito600",
-  number: "Nunito800",
+  title: "Georgia-Bold",
+  body: "Georgia",
+  number: "Georgia-Bold",
 };
 export const motion = { press: 80, appear: 140, settle: 160, merge: 220 };
 export const art = {
-  city: require("../../assets/art/city1.png"),
+  city: require("../../assets/art/city1-v12.png"),
   approved: require("../../assets/art/products-approved.png"),
   products: require("../../assets/art/products.png"),
   icons: require("../../assets/art/icons.png"),

@@ -3,7 +3,7 @@ import { Animated, ScrollView, Switch, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ActionButton, Button, Divider, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
-import { WoodFrame } from "./Board";
+import { BoardFrame } from "./Skin";
 import {
   city,
   count,
@@ -33,7 +33,7 @@ const titles = {
   collection: "Koleksiyon",
   cities: "Şehirler",
   storage: "Depo",
-  market: "Pazar",
+  market: "Market",
   profile: "Gezgin",
   orders: "Şehir İlanları",
   producer: "Üretici",
@@ -98,11 +98,20 @@ export function Pages({
         style={{
           width: w,
           height: h,
-          backgroundColor: colors.paper,
-          padding: 10,
-          borderRadius: 9,
+          backgroundColor: "transparent",
+          padding: 16,
+          borderRadius: 18,
         }}
       >
+        <View
+          pointerEvents="none"
+          style={{
+            position: "absolute",
+            inset: 8,
+            borderRadius: 12,
+            backgroundColor: colors.paper,
+          }}
+        />
         <View
           style={{
             flexDirection: "row",
@@ -385,6 +394,7 @@ export function Pages({
                 >
                   <Label>{String(label)}</Label>
                   <Switch
+                    testID={"setting-" + kind}
                     value={Boolean(value)}
                     onValueChange={() =>
                       act({ type: kind as "sound" | "motion" })
@@ -467,7 +477,7 @@ export function Pages({
             </>
           )}
         </ScrollView>
-        <WoodFrame width={w} height={h} />
+        <BoardFrame width={w} height={h} />
       </View>
     </Animated.View>
   );

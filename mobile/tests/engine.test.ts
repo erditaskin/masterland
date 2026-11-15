@@ -1,3 +1,4 @@
+import { prioritizeOrderRail } from "../src/ui/orderRail";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -295,4 +296,37 @@ test("duplicate identities and malformed storage are rejected", () => {
   city(bad).storage = [{ id: "bad", item: "unknown" }];
   assert(!validateSave(bad));
   assert(!validateSave({ ...twice(), gold: Infinity }));
+});
+
+test("near-square reference cells keep all 54 input targets and reject row wrapping", () => {
+  for (let i = 0; i < 54; i++)
+    assert.equal(
+      hitCell(((i % 6) + 0.5) * 62, (Math.floor(i / 6) + 0.5) * 50, 62, 50),
+      i,
+    );
+  assert.equal(hitCell(372, 25, 62, 50), null);
+  assert.equal(hitCell(31, 450, 62, 50), null);
+});
+
+test("visible order variety preserves the main order and every live requirement", () => {
+  const s = visualFixture(1000),
+    before = orders(s),
+    after = prioritizeOrderRail(before);
+  assert.equal(after[0], before[0]);
+  assert.deepEqual(
+    after.map((o) => o.id).sort(),
+    before.map((o) => o.id).sort(),
+  );
+  assert.equal(
+    new Set(
+      after
+        .slice(0, 3)
+        .map((o) => product(o.requirements[0]!.item_id).producer),
+    ).size,
+    3,
+  );
+  assert.equal(
+    prioritizeOrderRail(orders(fresh(1000)))[0]?.id,
+    orders(fresh(1000))[0]?.id,
+  );
 });

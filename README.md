@@ -45,7 +45,8 @@ Normal ilerleme cihazda `@masterland/save/v2` anahtarıyla saklanır. Bozuk kay�
 - `docs/acik-konular.md`: Açık tasarım ve denge konuları.
 - `docs/isim-referanslari.md`: Sabit ID ve değiştirilebilir ad standardı.
 - `docs/ureticiler-ve-zincirler.md`: Üretici, ürün ve başlangıç ekonomi tablosu.
-- `docs/ui-standard.md`: Bütün şehirler için onaylı V10 sanat hedefi.
+- `docs/ui-standard.md`: 15 Kasım fotoğrafına göre güncel ortak görsel hedef.
+- `docs/reference-fidelity-20261115.md`: Gerçek ekran, renk uzayı ve geometri ölçümleri.
 - `docs/react-native-migration.md`: Mimari, etkileşim ve doğrulama sınırları.
 - `docs/masterland-release-verification.md`: Güncel uygulama doğrulaması.
 - `docs/degisiklik-gecmisi.md`: Önceki kararların tarihçesi.

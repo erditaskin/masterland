@@ -1,0 +1,51 @@
+{
+  "screen_pixels": [
+    1206,
+    2622
+  ],
+  "pixel_scale": 3.0,
+  "reference_pixels": [
+    838,
+    1440
+  ],
+  "reference_art_bounds": [
+    25,
+    27,
+    800,
+    1401
+  ],
+  "checks": {
+    "54_cells": true,
+    "reference_cell_proportions": true,
+    "equal_last_row": true,
+    "minimum_44_point_cell": true,
+    "board_above_navigation": true,
+    "equal_navigation_width": true
+  },
+  "cell_point_size": {
+    "width": 62.33333206176758,
+    "height": 45.33333206176758
+  },
+  "reference_cell_aspect": 1.3746478873239436,
+  "maximum_cell_ratio_error": 0.00035212319452337937,
+  "cell_texture": {
+    "sample_index": 18,
+    "crop_pixels": [
+      42,
+      1473,
+      229,
+      1609
+    ],
+    "mean_absolute_channel_error": 0.20654387802607077,
+    "psnr_db": 53.82693989645997,
+    "similarity_percent": 99.91900240077409,
+    "method": "both inputs converted to sRGB; bilinear reference ROI; 4 px edge excluded"
+  },
+  "full_frame_pixel_identity_claimed": false,
+  "limitations": [
+    "Live order values and items differ from the reference.",
+    "Reference cell proportions are user-approved; 54 inventory slots remain as 6x9 rather than deleting a row.",
+    "Generated UI-free background is an art-direction match, not an identical pixel plate.",
+    "Cell similarity is not a whole-screen aesthetic score."
+  ]
+}

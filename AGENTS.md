@@ -28,3 +28,7 @@ Yeni içerik hazırlamadan önce `docs/isim-referanslari.md` ve `data/content-re
 ## Aktif uygulama ve kalite
 
 Aktif kök `/Users/erdi/masterland`, uygulama `mobile/` altındadır. Eski SwiftUI oyun kaynakları proje dışına arşivlenmiştir. Expo tarafından üretilen `mobile/ios` düzenlenmez; native ayarlar config plugin ile tekrar üretilebilir tutulur. Gerçek Release simülatöründe görsel ve etkileşim kontrolü olmadan teslim edildiğini belirtmeyin. Test geçmesi pixel-perfect kabulü değildir.
+
+## Güncel görsel hedef
+
+15 Kasım 2026 01.14.55 fotoğrafı assets/references/masterland-visual-target-v11.png içindedir. Kullanıcı fotoğraftaki hücre oranını açıkça seçmiştir; eski 1:1 şartını yeni çalışma için uygulamayın. Uniform ölçüm 122:88.75, aktif kapasite 6×9=54 olarak korunur. Hücreleri fiziksel piksele hizalayın; son satır diğerlerinden farklı olmaz. Bütün ekran için %100 piksel özdeşliği ile tek hücre dokusu benzerliğini karıştırmayın. Son ölçümler reference-fidelity-20261115.md içindedir.

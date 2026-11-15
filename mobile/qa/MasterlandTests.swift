@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 final class MasterlandTests:XCTestCase {
     let app=XCUIApplication(bundleIdentifier:"com.erditaskin.masterland")
     override func setUpWithError() throws {
@@ -31,7 +32,8 @@ final class MasterlandTests:XCTestCase {
     }
     func testSelectionInvalidReleaseAndNextGesture(){
         app.buttons["producer1"].tap();app.buttons["producer1"].tap();cell(0).tap()
-        let frame=cell(0).frame;XCTAssertEqual(frame.width,frame.height,accuracy:0.5)
+        XCTAssertEqual(cell(1).value as? String,"Birleştirme önerisi")
+        let frame=cell(0).frame;XCTAssertEqual(frame.width/frame.height,(732.0/6)/(710.0/8),accuracy:0.015)
         cell(0).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
         XCTAssertEqual(cell(0).label,"Buğday başağı");energy("98/100");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("rn-selection-and-merge")
     }
@@ -45,7 +47,7 @@ final class MasterlandTests:XCTestCase {
     }
     func testGeometryAndScrollableOrders(){
         let first=cell(0).frame,last=cell(53).frame
-        XCTAssertEqual(first.width,first.height,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
+        XCTAssertEqual(first.width/first.height,(732.0/6)/(710.0/8),accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
         let a=app.buttons["order-quest25"].frame,b=app.buttons["order-repeat-0-0"].frame;XCTAssertEqual(a.width,b.width,accuracy:0.5)
         let end=app.buttons["order-repeat-0-4"];for _ in 0..<3 where !end.isHittable {app.scrollViews.allElementsBoundByIndex.first(where:{$0.frame.minY<=a.midY && $0.frame.maxY>=a.midY})!.swipeLeft()};XCTAssertTrue(end.isHittable);shot("rn-geometry")
     }
@@ -55,4 +57,29 @@ final class MasterlandTests:XCTestCase {
         XCUIDevice.shared.press(.home);app.activate();XCTAssertEqual(app.buttons["gold"].label,gold)
         app.terminate();app.launch();XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:20));XCTAssertEqual(app.buttons["gold"].label,gold);XCTAssertEqual(app.buttons["gems"].label,gems);XCTAssertEqual(app.buttons["profile"].label,profile);shot("rn-normal-save")
     }
+    func testVisualMeasurements() throws {
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        func rect(_ e:XCUIElement)->[String:Double] {let r=e.frame;return ["x":r.minX,"y":r.minY,"width":r.width,"height":r.height]}
+        var values:[String:Any] = ["screen":rect(app),"scale":UIScreen.main.scale]
+        for id in ["profile","stamina","gold","gems","profile-menu","info","producer1","producer5","producer8","producer6","producer7","tab-board","tab-collection","tab-cities","tab-storage","tab-market","order-quest26"] {values[id]=rect(app.buttons[id])}
+        values["cells"]=(0..<54).map {rect(cell($0))}
+        let data=try JSONSerialization.data(withJSONObject:values,options:[.prettyPrinted,.sortedKeys])
+        let attachment=XCTAttachment(data:data,uniformTypeIdentifier:"public.json");attachment.name="visual-measurements.json";attachment.lifetime = .keepAlways;add(attachment)
+        shot("masterland-v11-measured")
+        XCTAssertEqual(cell(0).frame.width,cell(53).frame.width,accuracy:0.5)
+        XCTAssertEqual(cell(0).frame.height,cell(53).frame.height,accuracy:0.5)
+        XCTAssertEqual(cell(0).frame.width/cell(0).frame.height,(732.0/6)/(710.0/8),accuracy:0.015)
+        XCTAssertGreaterThanOrEqual(cell(0).frame.width,44)
+        XCTAssertGreaterThanOrEqual(cell(0).frame.height,44)
+    }
+
+    func testSoundSettingDoesNotResetBoard(){
+        app.buttons["producer1"].tap();energy("99/100")
+        app.buttons["profile-menu"].tap();XCTAssertTrue(app.switches["setting-sound"].waitForExistence(timeout:5));app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
+        XCTAssertEqual(cell(0).label,"Buğday başağı");energy("99/100")
+        app.buttons["profile-menu"].tap();app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
+        app.buttons["producer1"].tap();energy("98/100");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("sound-settings-preserve-board")
+    }
+
 }

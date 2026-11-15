@@ -253,3 +253,10 @@ Kullanıcı React Native/Expo’ya geçilmesini açıkça onayladı. Katla Patla
 ## 15 Kasım 2026 — Masterland adı ve kök taşıma
 
 Kullanıcı oyunun adını Masterland olarak belirledi; proje kökünü /Users/erdi/masterland olarak istedi. SwiftUI oyun kodları aktif kaynaktan çıkarılıp proje dışı güvenlik arşivine ayrıldı. React Native/Expo sürümü mobile/ altında devam eder. M harfli uygulama ikonu eklendi. Yeni Masterland-QA simülatörü oluşturuldu. Kullanıcı github.com/erditaskin/masterland deposunun main dalına commit ve push işlemini açıkça yetkilendirdi. Şehir ve eşya kimlikleri değiştirilmedi; görünen uygulama adı app1_name_tr anahtarındadır. Tarihsel Ultima ve ios yolları güncel uygulama talimatı değildir.
+
+
+## 15 Kasım 2026 — yeni fotoğraf standardı
+
+Kullanıcı 01.14.55 görselini yeni hedef olarak belirledi ve soruya “Bu fotoğrafın hücre oranları da birebir uygulansın” yanıtını verdi. Eski 1:1 hücre şartı bu hedef için değişti. Eşit satırlar, 54 slot ve kayıt kimlikleri korunur. Uniform oran, fotoğrafın 732×710 iç gridinden 6×8 adım hesabıyla 122:88.75 olarak türetildi; bu ölçüm hesabı uygulama tercihidir. Aktif envanter 6×9 kalır. Güncel ayrıntılar ui-standard.md ve reference-fidelity-20261115.md içindedir.
+
+Yeni arayüz: tek kesintisiz ve uniform ölçeklenen liman/teras arka planı, saydam ortak çerçeve, yazısız parşömen ilan kartları, gerçek değerler ve native dokunma yüzeyi. Atlasların şeffaf kenarları metadata ile düzeltilir; görseller veya oyuncu kaydı değiştirilmez. Özgün kısa ses ailesi, tek kanal ve hız sınırı kullanılır. Test başarısı tüm ekran için %100 görsel eşleşme veya kullanıcı kabulü olarak sunulmaz.

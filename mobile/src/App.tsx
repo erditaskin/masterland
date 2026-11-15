@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/immutability -- Expo Audio player handles expose documented mutable native volume properties. */
 import {
   memo,
+  type ComponentRef,
   useCallback,
   useEffect,
   useMemo,
@@ -13,6 +13,8 @@ import {
   AppState,
   BackHandler,
   ImageBackground,
+  PixelRatio,
+  Image,
   Linking,
   ScrollView,
   StyleSheet,
@@ -27,12 +29,15 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
-import { useAudioPlayer, setAudioModeAsync } from "expo-audio";
+import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
+import { prioritizeOrderRail } from "./ui/orderRail";
+import { fitBackdrop } from "./ui/layout";
+import { StatusIcon } from "./ui/StatusIcon";
+import { SkinPanel, skin } from "./ui/Skin";
 import { ProducerButton } from "./ui/ProducerButton";
 import { Button, Label, ActionButton } from "./ui/Controls";
-import { Item, Reference, Sprite } from "./ui/Art";
+import { Crop, Item, Reference, Sprite } from "./ui/Art";
 import { Pages, type Page } from "./ui/Pages";
 import { art, colors, fonts } from "./ui/theme";
 import { gameStore } from "./state/store";
@@ -52,13 +57,12 @@ import {
 } from "./game/engine";
 void SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({ fade: true, duration: 180 });
-const noop = () => {};
 const navigation = [
   ["Tahta", "board"],
   ["Koleksiyon", "collection"],
   ["Şehirler", "cities"],
   ["Depo", "storage"],
-  ["Pazar", "market"],
+  ["Market", "market"],
 ] as const;
 const ProducerCard = memo(
   function ProducerCard({
@@ -121,6 +125,8 @@ const ProducerCard = memo(
             left: 3,
             right: 3,
             height: 15,
+            flexDirection: "row",
+            gap: 2,
             borderRadius: 9,
             backgroundColor: colors.navy,
             borderWidth: 0.7,
@@ -129,20 +135,35 @@ const ProducerCard = memo(
             justifyContent: "center",
           }}
         >
+          <StatusIcon
+            kind={
+              !owned
+                ? level(save) >= p.level
+                  ? "gold"
+                  : "lock"
+                : seconds > 0
+                  ? "clock"
+                  : "energy"
+            }
+          />
           <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.85}
             style={{
               fontFamily: fonts.number,
               color: colors.goldLight,
               fontSize: 10,
+              flexShrink: 1,
             }}
           >
             {!owned
               ? level(save) >= p.level
-                ? `${p.price} ●`
-                : `Sev. ${p.level}`
+                ? `${p.price}`
+                : `Lv.${p.level}`
               : seconds > 0
-                ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`
-                : "ϟ 1"}
+                ? `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
+                : "1"}
           </Text>
         </View>
       </ProducerButton>
@@ -179,6 +200,8 @@ const Navigation = memo(function Navigation({
         paddingVertical: 3,
         borderRadius: 22,
         backgroundColor: colors.navy,
+        backgroundImage:
+          "linear-gradient(180deg, #314264 0%, #1b2945 45%, #0c172e 100%)",
         borderColor: colors.gold,
         borderWidth: 1,
       }}
@@ -193,14 +216,18 @@ const Navigation = memo(function Navigation({
           }
           style={{
             flex: 1,
-            borderRadius: 17,
+            borderRadius: 12,
             backgroundColor: i === 0 ? "#d88619" : "transparent",
+            backgroundImage:
+              i === 0
+                ? "linear-gradient(180deg, #ffc347 0%, #b96512 60%, #df8f1d 100%)"
+                : undefined,
             shadowColor: i === 0 ? "#ffbd39" : "transparent",
             shadowOpacity: i === 0 ? 0.55 : 0,
             shadowRadius: 5,
             shadowOffset: { width: 0, height: 0 },
-            borderWidth: i === 0 ? 1 : 0,
-            borderColor: colors.goldLight,
+            borderWidth: 1,
+            borderColor: i === 0 ? colors.goldLight : "transparent",
           }}
         >
           <Sprite kind="icons" index={i} size={35} />
@@ -226,24 +253,8 @@ function Game() {
     [selected, setSelected] = useState<number | null>(null),
     [reduced, setReduced] = useState(false),
     [hiddenToastRevision, setHiddenToastRevision] = useState(-1);
-  const tapAudio = useAudioPlayer(require("../assets/audio/tap.wav")),
-    mergeAudio = useAudioPlayer(require("../assets/audio/merge.wav")),
-    audioSerial = useRef(0),
-    lastAudio = useRef(0);
-  const uiSound = useCallback(() => {
-    if (!gameStore.get().save.sound || Date.now() - lastAudio.current < 65)
-      return;
-    lastAudio.current = Date.now();
-    const token = ++audioSerial.current;
-    tapAudio.volume = 0.18;
-    void tapAudio
-      .seekTo(0)
-      .then(() => {
-        if (token === audioSerial.current && AppState.currentState === "active")
-          tapAudio.play();
-      })
-      .catch(noop);
-  }, [tapAudio]);
+  const playAudio = useGameAudio(save.sound);
+  const uiSound = useCallback(() => playAudio("tap"), [playAudio]);
   const open = useCallback(
       (p: Page) => {
         uiSound();
@@ -263,28 +274,28 @@ function Game() {
     gameStore.dispatch(action);
   }, []);
   useEffect(() => {
-    void Linking.getInitialURL().then((url) =>
-      gameStore.load(
-        url?.includes("review")
-          ? "review"
-          : url?.includes("qa-reset")
-            ? "qa"
-            : "normal",
-      ),
-    );
+    void Linking.getInitialURL().then((url) => {
+      const mode = url?.includes("review")
+        ? "review"
+        : url?.includes("qa-reset")
+          ? "qa"
+          : "normal";
+      setSelected(mode === "review" ? 0 : null);
+      return gameStore.load(mode);
+    });
     const sub = Linking.addEventListener("url", ({ url }) => {
       if (url.includes("review")) {
-        close();
-        setSelected(null);
+        setPage(null);
+        setSelected(0);
         void gameStore.load("review");
       } else if (url.includes("qa-reset")) {
-        close();
+        setPage(null);
         setSelected(null);
         void gameStore.load("qa");
       }
     });
     return () => sub.remove();
-  }, [close]);
+  }, []);
   useEffect(() => {
     void AccessibilityInfo.isReduceMotionEnabled().then(setReduced);
     const sub = AccessibilityInfo.addEventListener(
@@ -294,20 +305,11 @@ function Game() {
     return () => sub.remove();
   }, []);
   useEffect(() => {
-    void setAudioModeAsync({
-      playsInSilentMode: false,
-      shouldPlayInBackground: false,
-    });
     const sub = AppState.addEventListener("change", (state) => {
       if (state === "active") gameStore.dispatch({ type: "tick" });
-      else {
-        audioSerial.current++;
-        tapAudio.pause();
-        mergeAudio.pause();
-      }
     });
     return () => sub.remove();
-  }, [tapAudio, mergeAudio]);
+  }, []);
   useEffect(() => {
     const sub = BackHandler.addEventListener("hardwareBackPress", () => {
       if (page) {
@@ -343,28 +345,8 @@ function Game() {
     return () => clearTimeout(timer);
   }, [result, revision]);
   useEffect(() => {
-    if (
-      !result ||
-      !save.sound ||
-      result.kind === "none" ||
-      Date.now() - lastAudio.current < 65
-    )
-      return;
-    lastAudio.current = Date.now();
-    const token = ++audioSerial.current,
-      p =
-        result.kind === "merge" || result.kind === "reward"
-          ? mergeAudio
-          : tapAudio;
-    p.volume = result.kind === "blocked" ? 0.12 : 0.35;
-    void p
-      .seekTo(0)
-      .then(() => {
-        if (token === audioSerial.current && AppState.currentState === "active")
-          p.play();
-      })
-      .catch(noop);
-  }, [result, revision, save.sound, tapAudio, mergeAudio]);
+    if (result) playAudio(result.kind);
+  }, [result, revision, playAudio]);
   useEffect(() => {
     if (error) SplashScreen.hide();
   }, [error]);
@@ -396,16 +378,37 @@ function Game() {
   );
   const top = Math.max(insets.top - 8, 20),
     scale = width / 390,
-    boardTop = top + 224 * scale,
-    navTop = height - insets.bottom - 59;
-  const cell = Math.max(
+    sx = width / 800,
+    pixelScale = PixelRatio.get(),
+    navTop = height - insets.bottom - 59,
+    frameInset = PixelRatio.roundToNearestPixel(16 * sx),
+    baseBoardTop = top + 492 * sx;
+  const rawCellWidth = Math.max(
       24,
-      Math.min((width - 64) / 6, (navTop - 10 - boardTop - 16) / 9),
+      Math.min(
+        (777 * sx - 2 * frameInset) / 6,
+        ((navTop - 10 - baseBoardTop - 2 * frameInset) / 9) * skin.cellAspect,
+      ),
     ),
-    bw = cell * 6 + 16;
-  const cardWidth = (width - 44 - 16) / 3,
-    producerSize = 46 * scale;
-  const activeOrders = useMemo(() => orders(save), [save]);
+    cellWidth = Math.floor(rawCellWidth * pixelScale) / pixelScale,
+    cellHeight =
+      Math.round((cellWidth / skin.cellAspect) * pixelScale) / pixelScale,
+    bw = cellWidth * 6 + 2 * frameInset,
+    boardTop = navTop - 10 - (cellHeight * 9 + 2 * frameInset),
+    sceneExtra = Math.max(0, boardTop - baseBoardTop),
+    noticeWidth = 748 * sx,
+    noticeHeight = 174 * sx,
+    cardWidth = 211 * sx,
+    cardHeight = 106 * sx,
+    producerSize = 108 * sx;
+  const activeOrders = useMemo(() => prioritizeOrderRail(orders(save)), [save]);
+  const backdrop = useMemo(
+    () => fitBackdrop(width, height, top),
+    [width, height, top],
+  );
+  const producerRail = useRef<ComponentRef<typeof ScrollView>>(null),
+    railOffset = useRef(0),
+    railMax = useRef(0);
   if (!ready)
     return (
       <View
@@ -426,9 +429,19 @@ function Game() {
   const [start, next] = levelRange(save),
     progress = Math.max(0, Math.min(1, (save.xp - start) / (next - start))),
     c = city(save);
+  const chosen = selected === null ? null : c.board[selected],
+    chosenProduct = chosen ? product(chosen.item) : null;
+  const nextProduct = chosenProduct
+    ? producers[chosenProduct.producer]?.products[chosenProduct.tier]
+    : null;
+  const hinted =
+    chosen && nextProduct && c.opened.includes(nextProduct.id)
+      ? c.board.findIndex((t, i) => i !== selected && t?.item === chosen.item)
+      : -1;
   return (
     <ImageBackground
       source={art.city}
+      imageStyle={backdrop}
       resizeMode="cover"
       onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
       style={{ flex: 1 }}
@@ -468,19 +481,49 @@ function Game() {
               <View
                 style={{
                   height: 31,
-                  width: 27,
-                  backgroundColor: colors.navy,
-                  borderWidth: 1.3,
-                  borderColor: colors.gold,
-                  borderRadius: 7,
+                  width: 29,
                   zIndex: 1,
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                <Label title size={23} color={colors.goldLight}>
+                <View
+                  pointerEvents="none"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: 29,
+                    height: 31,
+                    alignItems: "center",
+                  }}
+                >
+                  <Crop
+                    source={require("../assets/art/level-shield-v11.png")}
+                    x={161}
+                    y={85}
+                    w={930}
+                    h={1050}
+                    width={(31 * 930) / 1050}
+                    height={31}
+                  />
+                </View>
+                <Text
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: 29,
+                    height: 31,
+                    lineHeight: 24,
+                    textAlign: "center",
+                    fontFamily: fonts.number,
+                    fontSize: 15,
+                    color: colors.goldLight,
+                  }}
+                >
                   {level(save)}
-                </Label>
+                </Text>
               </View>
               <View
                 style={{
@@ -499,6 +542,8 @@ function Game() {
                     width: `${progress * 100}%`,
                     height: "100%",
                     backgroundColor: "#60c8df",
+                    backgroundImage:
+                      "linear-gradient(180deg, #b5fbff 0%, #26b8ff 45%, #218cd1 100%)",
                     borderRadius: 5,
                   }}
                 />
@@ -538,6 +583,8 @@ function Game() {
                   height: 23,
                   borderRadius: 12,
                   backgroundColor: colors.navy,
+                  backgroundImage:
+                    "linear-gradient(180deg, #273d60 0%, #0c1b32 100%)",
                   borderColor: colors.gold,
                   borderWidth: 1,
                   width: "100%",
@@ -560,9 +607,28 @@ function Game() {
                 >
                   {a.value}
                 </Text>
-                <Label color={colors.gold} size={13} style={{ marginLeft: 3 }}>
-                  +
-                </Label>
+                <View
+                  style={{
+                    marginLeft: 3,
+                    width: 15,
+                    height: 15,
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    borderColor: colors.gold,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundImage:
+                      "linear-gradient(180deg, #35557f 0%, #12233c 100%)",
+                  }}
+                >
+                  <Label
+                    color={colors.goldLight}
+                    size={13}
+                    style={{ lineHeight: 15 }}
+                  >
+                    +
+                  </Label>
+                </View>
               </View>
             </Button>
           ))}
@@ -619,10 +685,11 @@ function Game() {
         <View
           style={{
             position: "absolute",
-            top: top + 69 * scale,
+            top: top + 138 * sx + sceneExtra,
             alignSelf: "center",
-            height: 26,
-            paddingHorizontal: 20,
+            height: 43 * sx,
+            width: 215 * sx,
+            alignItems: "center",
             borderRadius: 18,
             backgroundColor: colors.navy,
             borderWidth: 1.3,
@@ -630,74 +697,74 @@ function Game() {
             justifyContent: "center",
           }}
         >
-          <Label title size={21} color={colors.goldLight}>
-            ‹ {name(save.cityID)} ›
-          </Label>
+          <SkinPanel
+            rect={skin.plaque}
+            width={215 * sx}
+            height={43 * sx}
+            inset={10}
+            center={false}
+            fill="#142b42"
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 5 * scale,
+            }}
+          >
+            <Label size={6 * scale} color={colors.gold}>
+              ◆
+            </Label>
+            <Label title size={14 * scale} color={colors.goldLight}>
+              {name(save.cityID)}
+            </Label>
+            <Label size={6 * scale} color={colors.gold}>
+              ◆
+            </Label>
+          </View>
         </View>
         <View
           style={{
             position: "absolute",
-            top: top + 101 * scale,
-            left: 15,
-            right: 15,
-            height: 60 * scale,
-            paddingTop: 18 * scale,
+            top: top + 183 * sx + sceneExtra,
+            left: 25 * sx,
+            width: noticeWidth,
+            height: noticeHeight,
+            paddingTop: 51 * sx,
             borderRadius: 6,
-            backgroundColor: colors.wood,
-            borderWidth: 1.2,
-            borderColor: colors.gold,
+            backgroundColor: "transparent",
             shadowColor: "#4e301e",
             shadowOpacity: 0.15,
             shadowRadius: 2,
             shadowOffset: { width: 0, height: 1 },
           }}
         >
-          <View
+          <Image
             pointerEvents="none"
+            accessible={false}
+            source={require("../assets/art/notice-board-v11.png")}
+            resizeMode="stretch"
             style={{
               position: "absolute",
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              overflow: "hidden",
-              borderRadius: 5,
+              left: (-noticeWidth * 18) / 2136,
+              top: (-noticeHeight * 63) / 599,
+              width: (noticeWidth * 2172) / 2136,
+              height: (noticeHeight * 724) / 599,
             }}
-          >
-            <Reference
-              x={90}
-              y={252}
-              w={260}
-              h={20}
-              width={width - 30}
-              height={18 * scale}
-            />
-            <View
-              style={{ position: "absolute", left: 0, right: 0, bottom: 0 }}
-            >
-              <Reference
-                x={550}
-                y={375}
-                w={270}
-                h={10}
-                width={width - 30}
-                height={4}
-              />
-            </View>
-          </View>
+          />
           <View
             style={{
               position: "absolute",
               left: 0,
               right: 0,
               top: 0,
-              height: 18 * scale,
+              height: 47 * sx,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Label title size={15 * scale} color={colors.goldLight}>
-              ◆ İlanlar ◆
+            <Label title size={26 * sx} color={colors.goldLight}>
+              İlanlar
             </Label>
             <Button
               label="Tüm ilanlar"
@@ -719,10 +786,14 @@ function Game() {
             testID="orderRail"
             horizontal
             showsHorizontalScrollIndicator={false}
-            snapToInterval={cardWidth + 8}
+            snapToInterval={cardWidth + 19 * sx}
             decelerationRate="fast"
-            contentContainerStyle={{ gap: 8 }}
-            style={{ marginHorizontal: 6, marginBottom: 4 }}
+            contentContainerStyle={{ gap: 19 * sx }}
+            style={{
+              marginLeft: 40 * sx,
+              marginRight: 37 * sx,
+              marginBottom: 4,
+            }}
           >
             {activeOrders.map((o) => {
               const r = o.requirements[0]!;
@@ -746,17 +817,24 @@ function Game() {
                   }}
                   style={{
                     width: cardWidth,
-                    height: 37 * scale,
+                    height: cardHeight,
                     borderRadius: 5,
-                    backgroundColor: colors.paper,
-                    borderWidth: 0.7,
-                    borderColor: "#d4a45e",
-                    shadowColor: "#432411",
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1,
-                    shadowOffset: { width: 0, height: 1 },
+                    backgroundColor: "transparent",
                   }}
                 >
+                  <Image
+                    pointerEvents="none"
+                    accessible={false}
+                    source={require("../assets/art/order-card-v11.png")}
+                    resizeMode="stretch"
+                    style={{
+                      position: "absolute",
+                      left: (-cardWidth * 106) / 1557,
+                      top: (-cardHeight * 110) / 685,
+                      width: (cardWidth * 1774) / 1557,
+                      height: (cardHeight * 887) / 685,
+                    }}
+                  />
                   <View
                     style={{
                       flexDirection: "row",
@@ -769,7 +847,7 @@ function Game() {
                     <View
                       style={{ width: cardWidth * 0.42, alignItems: "center" }}
                     >
-                      <Item id={r.item_id} size={30 * scale} />
+                      <Item id={r.item_id} size={42 * scale} />
                       {o.requirements.length > 1 && (
                         <Label size={7.5} color={colors.muted}>
                           +{o.requirements.length - 1} daha
@@ -780,11 +858,11 @@ function Game() {
                       <Text
                         style={{
                           fontFamily: fonts.number,
-                          fontSize: 10,
+                          fontSize: 11 * scale,
                           color:
                             count(save, r.item_id) >= r.quantity
                               ? colors.green
-                              : colors.ink,
+                              : "#a52b22",
                         }}
                       >
                         {Math.min(count(save, r.item_id), r.quantity)}/
@@ -797,11 +875,11 @@ function Game() {
                           gap: 2,
                         }}
                       >
-                        <Sprite kind="icons" index={6} size={11} />
+                        <Sprite kind="icons" index={6} size={32 * sx} />
                         <Text
                           style={{
                             fontFamily: fonts.number,
-                            fontSize: 9.5,
+                            fontSize: 11 * scale,
                             color: colors.ink,
                           }}
                         >
@@ -810,12 +888,15 @@ function Game() {
                       </View>
                       <Text
                         style={{
-                          fontFamily: fonts.body,
-                          fontSize: 9,
-                          color: colors.blue,
+                          fontFamily: fonts.number,
+                          fontSize: 11.3 * scale,
+                          color: "#178cc4",
+                          textShadowColor: "#fff5d9",
+                          textShadowOffset: { width: 0, height: 0.5 },
+                          textShadowRadius: 0.5,
                         }}
                       >
-                        XP {o.xp}
+                        XP <Text style={{ color: colors.ink }}>{o.xp}</Text>
                       </Text>
                     </View>
                   </View>
@@ -827,27 +908,82 @@ function Game() {
         <View
           style={{
             position: "absolute",
-            top: top + 166 * scale,
-            left: 20,
-            right: 20,
-            height: 53 * scale,
-            borderRadius: 22,
+            top: top + 356 * sx + sceneExtra,
+            left: 8 * scale,
+            right: 8 * scale,
+            height: 138 * sx,
+            borderRadius: 30,
             backgroundColor: colors.navy,
+            backgroundImage:
+              "linear-gradient(180deg, #263655 0%, #10213d 55%, #1c2a46 100%)",
             borderWidth: 1,
             borderColor: colors.gold,
             justifyContent: "center",
-            paddingHorizontal: 7,
+            paddingHorizontal: 0,
           }}
         >
+          <Button
+            label="Önceki üreticiler"
+            onPress={() => {
+              uiSound();
+              producerRail.current?.scrollTo({
+                x: Math.max(0, railOffset.current - producerSize * 3),
+                animated: true,
+              });
+            }}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: 24,
+            }}
+          >
+            <Label title size={30} color={colors.goldLight}>
+              ‹
+            </Label>
+          </Button>
+          <Button
+            label="Sonraki üreticiler"
+            onPress={() => {
+              uiSound();
+              producerRail.current?.scrollTo({
+                x: Math.min(
+                  railMax.current,
+                  railOffset.current + producerSize * 3,
+                ),
+                animated: true,
+              });
+            }}
+            style={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: 24,
+            }}
+          >
+            <Label title size={30} color={colors.goldLight}>
+              ›
+            </Label>
+          </Button>
           <ScrollView
+            ref={producerRail}
             horizontal
+            onScroll={(e) => {
+              railOffset.current = e.nativeEvent.contentOffset.x;
+            }}
+            onContentSizeChange={(w) => {
+              railMax.current = Math.max(0, w - (width - 76 * scale));
+            }}
+            style={{ marginHorizontal: 30 * scale }}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
-              gap: 8,
+              gap: 8 * scale,
               flexGrow: 1,
-              justifyContent: "space-evenly",
+              justifyContent: "space-between",
               alignItems: "center",
-              paddingHorizontal: 4,
+              paddingHorizontal: 0,
             }}
           >
             {producers.map((p, i) => (
@@ -872,8 +1008,11 @@ function Game() {
         >
           <Board
             board={c.board}
-            cell={cell}
+            cellWidth={cellWidth}
+            cellHeight={cellHeight}
+            frameInset={frameInset}
             selected={selected}
+            hinted={hinted}
             reduced={reduced || save.reducedMotion}
             onSelect={select}
             onMove={move}
@@ -956,20 +1095,6 @@ function Game() {
   );
 }
 export default function App() {
-  const [loaded, error] = useFonts({
-    Alegreya600: require("../assets/fonts/Alegreya-600.ttf"),
-    Nunito600: require("../assets/fonts/Nunito-600.ttf"),
-    Nunito800: require("../assets/fonts/Nunito-800.ttf"),
-  });
-  if (error)
-    return (
-      <View style={{ flex: 1, padding: 30, justifyContent: "center" }}>
-        <Text onLayout={() => SplashScreen.hide()}>
-          Yazı tipleri yüklenemedi.
-        </Text>
-      </View>
-    );
-  if (!loaded) return null;
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>

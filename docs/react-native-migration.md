@@ -18,9 +18,9 @@ Yerel kayıt schema 2 ve `@masterland/save/v2` anahtarındadır. Yazılar sıray
 
 ## Görsel çalışma
 
-Alegreya 600 başlıklarda; Nunito 600 açıklamalarda, Nunito 800 sayılarda kullanılır. Bunlar gerçek OFL font dosyalarıdır; Türkçe harfler ve sayılar kontrol edilmiştir. Statik ağırlıkların iOS PostScript adları birbirinden ayrıdır. Kaynaklar ve lisanslar `mobile/assets/fonts`, tekrar üretim `mobile/scripts/prepare-fonts.py` içindedir.
+İlk RN turunda Alegreya 600 ve Nunito 600/800 kullanıldı. 15 Kasım 01.14.55 referansından sonra aktif iOS yüzü Georgia/Georgia-Bold olarak eşlendi; önceki OFL fontları arşivde korunur ve açılışta yüklenmez. Bunlar gerçek OFL font dosyalarıdır; Türkçe harfler ve sayılar kontrol edilmiştir. Statik ağırlıkların iOS PostScript adları birbirinden ayrıdır. Kaynaklar ve lisanslar `mobile/assets/fonts`, tekrar üretim `mobile/scripts/prepare-fonts.py` içindedir.
 
-Tahta tek bir nötr parşömen dokusu ve iki düşük opaklıklı hücre tonu kullanır. Her hücreye ayrı ekran resmi döşenmez. Hücre başına büyük bulanık gölge verilmez. Tek ahşap çerçeve ve düşük yoğunluklu tek tahta gölgesi vardır. Ürünlerin boyut ve ışık yönleri onaylı sanat varlıklarıyla korunur. Çerçevenin iç köşeleri tahtanın arkasında kalır; başka kâğıt renginden gelen köşe parçaları ürün alanının üzerine oturmaz.
+Tahta, yeni referanstan ölçülen boş parşömen hücresi dokusunu kullanır. Hücre çizimi ayrı memoize katmandır; sabit arka plan her üretimde yeniden kurulmaz. Hücre oranı 15 Kasım fotoğrafı kararına göre 122:88.75 olarak güncellenmiştir. Hücre başına büyük bulanık gölge verilmez. Merkezi ve dışı gerçek alpha saydamlığı taşıyan ortak altın/ahşap çerçeve, köşeleri esnetmeyen dilimlerle çizilir. Düşük yoğunluklu tek tahta gölgesi vardır. Ürünlerin boyut ve ışık yönleri onaylı sanat varlıklarıyla korunur. Çerçevenin iç köşeleri tahtanın arkasında kalır; başka kâğıt renginden gelen köşe parçaları ürün alanının üzerine oturmaz.
 
 Tek kesintisiz tam ekran şehir arka planı korunur. Kontroller güvenli alandadır. Gerçek resimler ile metin ve etkileşimli alanlar ayrıdır; tam ekran mockup uygulama yerine gösterilmez. Üretici geri sayımı yalnız ilgili kartta güncellenir. Değişmeyen ürün ve üretici görselleri memoize edilir. Global enerji saati sürekli bir saniyelik render döngüsü çalıştırmaz; sonraki yenileme anı beklenir.
 
