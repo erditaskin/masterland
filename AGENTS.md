@@ -32,3 +32,8 @@ Aktif kök `/Users/erdi/masterland`, uygulama `mobile/` altındadır. Eski Swift
 ## Güncel görsel hedef
 
 15 Kasım 2026 01.14.55 fotoğrafı assets/references/masterland-visual-target-v11.png içindedir. Kullanıcı fotoğraftaki hücre oranını açıkça seçmiştir; eski 1:1 şartını yeni çalışma için uygulamayın. Uniform ölçüm 122:88.75, aktif kapasite 6×9=54 olarak korunur. Hücreleri fiziksel piksele hizalayın; son satır diğerlerinden farklı olmaz. Bütün ekran için %100 piksel özdeşliği ile tek hücre dokusu benzerliğini karıştırmayın. Son ölçümler reference-fidelity-20261115.md içindedir.
+
+
+## En son görsel karar — Skara konsept turu
+
+Kullanıcı 15 Kasım 2026 akşamı hücrelerin her zaman kare olmasını açıkça istedi. Yukarıdaki fotoğraf kaynaklı 122:88.75 oranı tarihçedir; yeni hedef eşit kare hücrelerdir. 6×9 kayıt kapasitesi korunur. Üretici rafı kompakt, şehir başlığı yukarıda, tahta yanlara yakın ve uzun olacaktır. Konseptler assets/concepts/skara-v1 ve docs/skara-concept-v1.md içindedir. Bu tur uygulama kodunu değiştirmez; mevcut Release'in yeni kare standardını uyguladığı varsayılmaz.

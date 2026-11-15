@@ -202,3 +202,8 @@ Güç menüsü ana tahta üzerinde gerçek üretici koordinatına bağlanır; ü
 ## 15 Kasım 2026 — Ortak parşömen sayfa standardı
 
 Sayfa kabuğu: 12 pt dış yatay pay, 36 pt parşömen iç yatay pay, 60 pt üst ve 44 pt alt kıvrım koruması. Başlık 24 pt, kapatma 44×44 pt; içerik başlangıcı ayırıcıdan 20 pt aşağıdadır. Harita yüksekliği gerçek içerik viewportundan hesaplanır. Depo hücreleri dört sütunda eşit karelerdir.
+
+
+## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
+
+Güncel hücre hedefi eşit karedir: tek s kenarından 6s×9s iç grid hesaplanır. Son satır dahil hiçbir hücre kalan yüksekliği doldurmak için esnetilmez. Kompakt üst alan ile tahtaya yer açılır. Konseptler assets/concepts/skara-v1 içindedir; PNG oranları uygulama geometri kanıtı değildir. Önceki yatay hücre standardı artık güncel hedef değildir.

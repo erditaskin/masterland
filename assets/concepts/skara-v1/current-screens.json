@@ -1,0 +1,29 @@
+{
+  "mode": "built-in imagegen",
+  "screens": [
+    {
+      "id": "01-board-compact-v4",
+      "title": "Ana tahta"
+    },
+    {
+      "id": "02-splash",
+      "title": "Splash"
+    },
+    {
+      "id": "03-loading",
+      "title": "Loading"
+    },
+    {
+      "id": "04-producer-unlock",
+      "title": "Ürün alanı açma"
+    },
+    {
+      "id": "05-collection",
+      "title": "Koleksiyon"
+    },
+    {
+      "id": "06-city-route-long-v2",
+      "title": "Uzun şehir yolu"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "mode": "built-in imagegen",
+  "status": "concept proposal",
+  "screens": [
+    {
+      "id": "01-board-v1",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-9a4995f7-307d-40eb-a9cc-43ad7a9071ce.png"
+    },
+    {
+      "id": "02-splash",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-8f900885-a08c-4a74-a5e7-1148517ba9bb.png"
+    },
+    {
+      "id": "03-loading",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-d49110d2-1521-4276-a1b1-781cf79f9730.png"
+    },
+    {
+      "id": "04-producer-unlock",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-70e93eb2-da43-47f7-86e7-c25f1d9b0d14.png"
+    },
+    {
+      "id": "05-collection",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-71f615cc-38f0-483a-9f06-712b4bec11f3.png"
+    },
+    {
+      "id": "06-city-route",
+      "path": "/Users/erdi/.codex/generated_images/01a1da6f-6a8b-75f2-87b7-930422d18bce/exec-09393246-10b4-46af-b8aa-1375ed4a683b.png"
+    }
+  ]
+}

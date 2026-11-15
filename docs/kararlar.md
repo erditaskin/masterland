@@ -291,3 +291,8 @@ Elmas kapasite paketi bu tur prototip ayarı olarak +25 kapasite ve +25 enerji, 
 ## 15 Kasım 2026 — Ortak parşömen sayfa standardı
 
 Tüm ikincil sayfalar ortak kıvrık parşömen kabuğu, aynı başlık/kapatma konumu ve aynı iç boşluklarla açılır. Harita kâğıdın kenarlarını ve alt kıvrımını kapatmaz; kalan iç alana göre ölçülür.
+
+
+## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
+
+Kullanıcı Skara konseptleri sırasında hücrelerin her zaman kare olmasını yeniden açıkça istedi. Bu karar önceki 122:88.75 oranının yerine geçer; 6×9 kapasite korunur. Üretici rafı küçülür, şehir başlığı yukarı alınır, tahta kenarlara yaklaşır ve uzar. Şehir haritası çok sayıda başarı için uzun kaydırılabilir yol olarak tasarlanır.

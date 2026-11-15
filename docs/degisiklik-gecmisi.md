@@ -280,3 +280,8 @@ Harita sıradan görev numaraları yerine koşula bağlı özel başarı kartlar
 ## 15 Kasım 2026 — Ortak parşömen sayfa standardı
 
 Kullanıcı farklı sayfa çerçevelerini, başlık/padding tutarsızlığını ve kâğıt kenarına taşan haritayı reddetti. Altın sayfa çerçevesi kaldırıldı; bütün sayfalar tek parşömen kabuğuna alındı. Sabit harita yüksekliği gerçek kalan alan ölçümüyle değiştirildi.
+
+
+## 15 Kasım 2026 — Skara konseptleri ve kare hücre kararı
+
+Kullanıcı ekran bazında daha canlı konsept çalışmasını istedi. Splash, loading, ürün alanı açma, koleksiyon, ana tahta ve şehir yolu adayları çizildi. Diğer ekranların sanat yönünü beğendi; ana tahtada kare hücre, küçük üretici rafı ve daha geniş/uzun tahta istedi. Şehir başına çok sayıda başarıyı destekleyen uzun yol yaklaşımı eklendi. Aktif oyun kodu bu konsept turunda değiştirilmedi.
