@@ -5,6 +5,7 @@ import { ActionButton, Button, Divider, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
 import { BoardFrame } from "./Skin";
 import {
+  canDeliver,
   city,
   count,
   level,
@@ -150,6 +151,7 @@ export function Pages({
         />
         <ScrollView
           testID="pageScroll"
+          scrollEnabled={page.kind !== "cities"}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             padding: page.kind === "cities" ? 4 : 14,
@@ -311,7 +313,17 @@ export function Pages({
           )}
           {page.kind === "orders" &&
             orders(save).map((o) => (
-              <View key={o.id} style={card}>
+              <View
+                key={o.id}
+                style={[
+                  card,
+                  canDeliver(save, o) && {
+                    borderColor: "#4a9155",
+                    borderWidth: 2,
+                    backgroundColor: "#cfe4b8",
+                  },
+                ]}
+              >
                 {o.requirements.map((r) => (
                   <View
                     key={r.item_id}
@@ -337,13 +349,16 @@ export function Pages({
                   </View>
                 ))}
                 <ActionButton
-                  text={`Teslim et · ${o.gold} altın · ${o.xp} XP`}
+                  text={`${canDeliver(save, o) ? "Ver ✓" : "Eksik ürün"} · ${o.gold} altın · ${o.xp} XP`}
                   onPress={() => act({ type: "deliver", id: o.id })}
                 />
               </View>
             ))}
           {page.kind === "cities" && (
             <CityMap
+              save={save}
+              height={h - 110}
+              onOrders={() => open({ kind: "orders" })}
               currentCity={save.cityID}
               onReturn={close}
               onInteract={onInteract}
@@ -412,6 +427,13 @@ export function Pages({
                   <Label color={colors.muted}>
                     Basamak {product(t.item).tier}
                   </Label>
+                  {!producers[product(t.item).producer]!.products[
+                    product(t.item).tier
+                  ] && (
+                    <Label size={14} color={colors.muted}>
+                      Bu zincirin son ürünü. İlanlarda teslim edebilirsin.
+                    </Label>
+                  )}
                   <Divider />
                   <ActionButton
                     text="Depoya gönder"

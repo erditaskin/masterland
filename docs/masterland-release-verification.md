@@ -65,3 +65,16 @@ Masaüstü Device Hub üzerinden tıklayarak ve sürükleyerek merge elle görü
 15 Kasım 2026 şehir haritası turunda strict TypeScript ve lint geçti. Ana Masterland-QA Release simülatöründe tam ekran sayfa/depo regresyonu ve üç şehirli harita senaryosu 2/2, sıfır hatayla 34.461 saniyede geçti. İnceleme oyuncusu level 4 olmasına rağmen New Haven ve Cove kapalı kaldı; tıklamalar 2. ve 5. seviye mesajlarını gösterdi. Skara tıklaması tahtaya döndü; altın ve tahta ürünleri korundu. Gerçek ekran görsel olarak incelendi; şehir etiketleri, bağlantı yolu ve Cove kilit mesajı çerçeve içinde kaldı. Yalnız ana simülatör kullanıldı. Test özeti verification/2026-11-15/city-map-tests.json içindedir.
 
 Harita çizimi yerleşik imagegen aracıyla üretildi; mobile/assets/art/world-map-v1.png ve üretim tarifi world-map-v1-prompt.txt proje içinde korunur. İsimler, native butonlar ve kilit mesajları çizimin parçası değildir.
+
+
+## Hızlı başlangıç, hazır ilan ve bölgesel yol turu
+
+15 Kasım 2026 son kaynak üzerinde strict TypeScript ve lint temizdir. 33/33 motor/girdi/yerleşim testi geçti. İlk teslimattan sonra Değirmen'in, ikinci teslimattan sonra Fırın'ın hem level hem altın yönünden açılabildiği ayrı testle doğrulandı. Her üreticinin her üst basamak çifti, açık slot koşulunda test edildi; en üst basamakta iki kaynak korunarak açıklamalı engelleme doğrulandı. Ürün alanını satın almak keşif ödülü vermez; XP harcanmaz.
+
+Ana Masterland-QA Release simülatöründe 15/15 UI testi 206.156 saniyede sıfır hatayla geçti. Sonuç flow-review-tests.json, motor çıktısı flow-unit-tests.txt içindedir. Başarısız ilk harita turunda kısayolun hareketi bitmeden yapılan ilk dokunuşun kaydırmayı durdurmaya gittiği görüldü. Kısayol anlık konum geçişi kullanır; butonun basma animasyonu korunur. Düzeltmeden sonra tüm UI turu yeniden çalıştırıldı ve geçti.
+
+Yeni UI senaryoları: hazır ilanda iki dokunuşun tek ilanı iki kez ödememesi veya eksik ilan ekranını istemeden açmaması; ilk ödülle Değirmen satın alıp üretme; iki ayrı ücretli üst alanı açıp en üst buğday ürününe ulaşma; sağ şehir kısayollarıyla kaydırma, gelecekteki görev kilitleri, New Haven/Cove mesajları ve tahtaya kayıpsız dönüş. Normal kayıt, depo, ses, seri üretim, taşımada yanlış bırakma ve geometri testleri de aynı turdadır.
+
+Gerçek ekranlar ayrıca incelendi. Hazır üç kartta yeşil çerçeve ve Ver alanı göründü. Device Hub üzerinden New Haven kısayoluna dokunulduğunda pembe bölge ve başlık anında geldi; kapatınca aynı tahta geri döndü. Yalnız ana simülatör açıktır. Gerçek telefon ve uzun vadeli ekonomi dengesi bu testlerle tamamlandı sayılmaz; tüm olası hataların yokluğu iddia edilmez.
+
+Yeni çizim yerleşik imagegen ile üretildi: mobile/assets/art/world-map-v2.png; üretim tarifi world-map-v2-prompt.txt. Yeni şehirlerdeki kilitli düğümler oynanabilir yeni şehir içeriği değildir. Harita kaydırması aktif oyuncu şehrini değiştirmez. Mevcut kayıtların altını ve XP'si sıfırlanmaz; yeni fiyatlar gelecekteki satın alımlara uygulanır.

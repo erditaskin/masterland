@@ -1,5 +1,5 @@
 {
-  "version": 28,
+  "version": 29,
   "locales": {
     "tr": {
       "city1_name_tr": "Skara Brae",
@@ -1328,7 +1328,7 @@
       "drag_runtime": "UI thread"
     },
     "city_map": {
-      "asset": "world-map-v1.png",
+      "asset": "world-map-v2.png",
       "stops": [
         {
           "city_id": "city1",
@@ -1352,7 +1352,13 @@
           "travel_enabled": false
         }
       ],
-      "locked_click": "Show canonical city unlock level; do not navigate or spend currency."
+      "locked_click": "Show canonical city unlock level; do not navigate or spend currency.",
+      "scroll_regions": true,
+      "region_colors": [
+        "#143e3b",
+        "#743951",
+        "#17475a"
+      ]
     }
   },
   "storage": {
@@ -1612,8 +1618,8 @@
           {
             "item_id": "item27",
             "tier": 3,
-            "required_player_level": 3,
-            "gold_cost": 150,
+            "required_player_level": 2,
+            "gold_cost": 15,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1621,8 +1627,8 @@
           {
             "item_id": "item49",
             "tier": 4,
-            "required_player_level": 6,
-            "gold_cost": 400,
+            "required_player_level": 3,
+            "gold_cost": 35,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1634,7 +1640,7 @@
         "order": 2,
         "order_status": "approved",
         "required_player_level": 2,
-        "unlock_gold": 100,
+        "unlock_gold": 40,
         "economy_status": "proposal",
         "chain_item_ids": [
           "item29",
@@ -1665,8 +1671,8 @@
           {
             "item_id": "item51",
             "tier": 3,
-            "required_player_level": 4,
-            "gold_cost": 200,
+            "required_player_level": 3,
+            "gold_cost": 25,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1674,8 +1680,8 @@
           {
             "item_id": "item52",
             "tier": 4,
-            "required_player_level": 7,
-            "gold_cost": 600,
+            "required_player_level": 4,
+            "gold_cost": 50,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1686,8 +1692,8 @@
         "producer_id": "producer8",
         "order": 3,
         "order_status": "approved",
-        "required_player_level": 3,
-        "unlock_gold": 250,
+        "required_player_level": 2,
+        "unlock_gold": 60,
         "economy_status": "proposal",
         "chain_item_ids": [
           "item53",
@@ -1700,7 +1706,7 @@
           {
             "item_id": "item53",
             "tier": 1,
-            "required_player_level": 3,
+            "required_player_level": 2,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": false,
@@ -1709,7 +1715,7 @@
           {
             "item_id": "item6",
             "tier": 2,
-            "required_player_level": 3,
+            "required_player_level": 2,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": true,
@@ -1718,8 +1724,8 @@
           {
             "item_id": "item54",
             "tier": 3,
-            "required_player_level": 5,
-            "gold_cost": 300,
+            "required_player_level": 3,
+            "gold_cost": 35,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1727,8 +1733,8 @@
           {
             "item_id": "item7",
             "tier": 4,
-            "required_player_level": 8,
-            "gold_cost": 900,
+            "required_player_level": 4,
+            "gold_cost": 65,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1739,8 +1745,8 @@
         "producer_id": "producer6",
         "order": 4,
         "order_status": "approved",
-        "required_player_level": 4,
-        "unlock_gold": 500,
+        "required_player_level": 3,
+        "unlock_gold": 80,
         "economy_status": "proposal",
         "chain_item_ids": [
           "item33",
@@ -1753,7 +1759,7 @@
           {
             "item_id": "item33",
             "tier": 1,
-            "required_player_level": 4,
+            "required_player_level": 3,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": false,
@@ -1762,7 +1768,7 @@
           {
             "item_id": "item34",
             "tier": 2,
-            "required_player_level": 4,
+            "required_player_level": 3,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": true,
@@ -1771,8 +1777,8 @@
           {
             "item_id": "item35",
             "tier": 3,
-            "required_player_level": 6,
-            "gold_cost": 450,
+            "required_player_level": 4,
+            "gold_cost": 45,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1780,8 +1786,8 @@
           {
             "item_id": "item36",
             "tier": 4,
-            "required_player_level": 9,
-            "gold_cost": 1200,
+            "required_player_level": 5,
+            "gold_cost": 80,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1792,8 +1798,8 @@
         "producer_id": "producer7",
         "order": 5,
         "order_status": "approved",
-        "required_player_level": 5,
-        "unlock_gold": 800,
+        "required_player_level": 4,
+        "unlock_gold": 120,
         "economy_status": "proposal",
         "chain_item_ids": [
           "item37",
@@ -1806,7 +1812,7 @@
           {
             "item_id": "item37",
             "tier": 1,
-            "required_player_level": 5,
+            "required_player_level": 4,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": false,
@@ -1815,7 +1821,7 @@
           {
             "item_id": "item55",
             "tier": 2,
-            "required_player_level": 5,
+            "required_player_level": 4,
             "gold_cost": 0,
             "included_in_producer_purchase": true,
             "requires_previous_tier": true,
@@ -1824,8 +1830,8 @@
           {
             "item_id": "item56",
             "tier": 3,
-            "required_player_level": 7,
-            "gold_cost": 650,
+            "required_player_level": 5,
+            "gold_cost": 55,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1833,8 +1839,8 @@
           {
             "item_id": "item57",
             "tier": 4,
-            "required_player_level": 10,
-            "gold_cost": 1600,
+            "required_player_level": 6,
+            "gold_cost": 95,
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
@@ -1855,8 +1861,8 @@
             "quantity": 1
           }
         ],
-        "reward_gold": 40,
-        "reward_xp": 8,
+        "reward_gold": 60,
+        "reward_xp": 20,
         "prerequisite_ids": [],
         "grants_title_ids": []
       },
@@ -1872,8 +1878,8 @@
             "quantity": 2
           }
         ],
-        "reward_gold": 60,
-        "reward_xp": 12,
+        "reward_gold": 100,
+        "reward_xp": 25,
         "prerequisite_ids": [
           "quest25"
         ],
@@ -1991,7 +1997,8 @@
       "orders": "Kilitli ürün istenmez. Açık alt basamaklarda tekrar eden ilanlarla altın ve XP kazanımı sürer.",
       "diamond_prices": null,
       "direct_spawn_policy": "Üst ürün slotu almak doğrudan üst basamak düşme garantisi vermez; başlangıç çıktı havuzları ayrıca belirlenecektir."
-    }
+    },
+    "economy_revision": "2026-11-15 fast onboarding: first delivery affords mill; second delivery affords oven at level 2; upper tiers remain explicit purchases."
   },
   "prototype_scope": {
     "playable_city_ids": [

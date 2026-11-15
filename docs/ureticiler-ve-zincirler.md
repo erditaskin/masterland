@@ -105,3 +105,15 @@ Başlangıç bakiyesi 0 altın. Kümülatif level XP eşikleri: Level 1 için 0;
 İlk iki ürünün açılış bedeline dahil olması önceki ekonomi önerisinden korunur. Üst ürünleri açmak ilk altı görevi tamamlamak için gerekmez; oyuncu yeni üretici ile eski üreticiyi geliştirmek arasında seçim yapabilir. Kilitli üst ürün isteyen ilan gösterilmez. Açık düşük basamaklı ürünleri isteyen tekrar eden ilanlar altın ve XP sağlayarak ilerlemeyi sürdürür. Bu gelir havuzunun sayısal dengesi henüz doğrulanmamıştır. Elmas fiyatları belirlenmemiştir; altınla erişim önerilir.
 
 Kilitli ürüne birleşme denenirse iki kaynak eşya korunur. Level ve altın şartları gösterilir; ödeme onaylanmadan altın harcanmaz. Açılış, üreticinin doğrudan üst ürün çıkaracağını garanti etmez. Koleksiyonda kilitli ürün ? görünür; ayrıntıda gereken level ve fiyat okunabilir. Ödeme sonrası ürün erişimi açılır ve koleksiyonda kaydı açılır. İlk açma XP ve sürpriz elmas ihtimali kuralı korunur; ödül miktarları ve ödeme sonrası mı ilk üretimde mi alınacağı ayrıca belirlenecektir.
+
+## Güncel prototip ekonomisi — 15 Kasım hızlı başlangıç turu
+
+Bu tablo önceki yüksek maliyetli prototip tablolarının yerine geçer. XP eşikleri değişmez; ilk iki görev ödülü sırasıyla 60 altın/20 XP ve 100 altın/25 XP olur. İlk görevden sonra Değirmen, ikinci görevden sonra Fırın level ve altın yönünden alınabilir. Üst ürün alanları ayrıca satın alınır; satın alma ürünü doğrudan vermez. Yeni denge uzun vadeli ustalığı değil ilk oturum akışını hızlandırır.
+
+| Üretici | Açılma leveli | Altın | Basamak 1–4: level/altın |
+| --- | --- | --- | --- |
+| Buğday Tarlası | 1 | 0 | 1/0, 1/0, 2/15, 3/35 |
+| Değirmen | 2 | 40 | 2/0, 2/0, 3/25, 4/50 |
+| Taş Fırın | 2 | 60 | 2/0, 2/0, 3/35, 4/65 |
+| Süt Çiftliği | 3 | 80 | 3/0, 3/0, 4/45, 5/80 |
+| Meyve Bahçesi | 4 | 120 | 4/0, 4/0, 5/55, 6/95 |

@@ -330,3 +330,55 @@ test("visible order variety preserves the main order and every live requirement"
     orders(fresh(1000))[0]?.id,
   );
 });
+
+test("first delivery funds mill and second funds oven without repeat grinding", () => {
+  let s = twice();
+  s = run(s, { type: "move", from: 0, to: 1 }).state;
+  s = run(s, { type: "deliver", id: intro[0]!.id }).state;
+  assert(level(s) >= producers[1]!.level);
+  assert(s.gold >= producers[1]!.price);
+  s = run(s, { type: "buy", id: producers[1]!.id }).state;
+  for (let i = 0; i < 4; i++)
+    s = run(s, { type: "produce", id: producers[0]!.id }).state;
+  s = run(s, { type: "move", from: 0, to: 1 }).state;
+  s = run(s, { type: "move", from: 2, to: 3 }).state;
+  s = run(s, { type: "deliver", id: intro[1]!.id }).state;
+  assert(level(s) >= producers[2]!.level);
+  assert(s.gold >= producers[2]!.price);
+  assert.equal(run(s, { type: "buy", id: producers[2]!.id }).kind, "unlock");
+});
+test("every upper-tier pair merges after unlocking, with no lost items on final tier", () => {
+  for (const producer of producers)
+    for (let tier = 0; tier < producer.products.length; tier++) {
+      const s = visualFixture(now),
+        item = producer.products[tier]!;
+      city(s).owned = producers.map((p) => p.id);
+      city(s).opened = producers.flatMap((p) => p.products.map((i) => i.id));
+      city(s).board = Array(54).fill(null);
+      city(s).board[0] = { id: "a", item: item.id };
+      city(s).board[1] = { id: "b", item: item.id };
+      const r = run(s, { type: "move", from: 0, to: 1 });
+      if (tier + 1 < producer.products.length) {
+        assert.equal(r.kind, "merge");
+        assert.equal(city(r.state).board[0], null);
+        assert.equal(
+          city(r.state).board[1]?.item,
+          producer.products[tier + 1]!.id,
+        );
+      } else {
+        assert.equal(r.kind, "blocked");
+        assert.equal(count(r.state, item.id), 2);
+        assert.match(r.message, /son ürünü/);
+      }
+    }
+});
+test("ready orders precede incomplete ones without changing requirements or rewards", () => {
+  const s = twice(),
+    before = orders(s),
+    sorted = prioritizeOrderRail(before, s);
+  assert.equal(sorted[0]!.requirements[0]!.item_id, a.id);
+  assert.deepEqual(
+    sorted.map((o) => o.id).sort(),
+    before.map((o) => o.id).sort(),
+  );
+});

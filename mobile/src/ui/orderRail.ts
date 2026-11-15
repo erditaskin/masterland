@@ -1,6 +1,6 @@
-import { product, type Order } from "../game/engine";
+import { canDeliver, product, type Save, type Order } from "../game/engine";
 /** Keep the main order first; expose available production variety before duplicates. */
-export function prioritizeOrderRail(input: Order[]): Order[] {
+export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
   if (input.length < 2) return input;
   const result = [input[0]!],
     remaining = input.slice(1);
@@ -20,5 +20,10 @@ export function prioritizeOrderRail(input: Order[]): Order[] {
     seen.add(product(candidate.requirements[0]!.item_id).producer);
     remaining.splice(remaining.indexOf(candidate), 1);
   }
-  return [...result, ...remaining];
+  const ordered = [...result, ...remaining];
+  return save
+    ? ordered.sort(
+        (a, b) => Number(canDeliver(save, b)) - Number(canDeliver(save, a)),
+      )
+    : ordered;
 }

@@ -272,3 +272,9 @@ Kullanıcı, seçili eşyanın birleşebileceği diğer ürünün gösterilmesin
 ## 15 Kasım 2026 — Temalı şehir haritası
 
 Şehirler ekranı, Skara Brae, New Haven ve Cove çizimlerini birbirine bağlayan bir yol haritası olur. Skara ekin/değirmen/fırın; New Haven ileri fırıncılık/pastane; Cove balıkçılık/marangozluk temalarını taşır. Kullanıcı isteğiyle sonraki iki şehir şu anda kapalı kalır. Dokunulduğunda kanonik açılma seviyesi gösterilir: New Haven 2, Cove 5. Bu tur şehir yolculuğu eklemez veya XP/altın harcatmaz.
+
+## 15 Kasım 2026 — Hızlı başlangıç ve seri ilan teslimi
+
+Kullanıcı ilk üreticileri ve temel ürünleri hızlı açmayı, başlangıçta yüksek altın/level koşullarıyla tahtanın durmamasını istedi. İlk iki teslimat, sırasıyla Değirmen ve Taş Fırın açılışını mümkün kılacak şekilde yeniden dengelenir. Sayılar prototip ayarıdır; yeni kalıcı ekonomi onayı değildir. Hazır ilanlar öne gelir, yeşil vurgulanır ve Ver eylemi gösterir. Tek dokunuş teslim eder; hızlı çift dokunuş eski ilanı ikinci kez ödememeli veya istemeden eksik ilan sayfası açmamalıdır. Üst basamak kilitleri ve zincir sonu açıklaması sessiz kalmaz.
+
+Şehirler kaydırılabilir yol üzerinde ayrı temalar taşır: Skara lacivert/yeşil, New Haven pembe pastane, Cove turkuaz deniz/ahşap. Skara görev düğümleri mevcut gerçek ilan içeriğine bağlıdır. Sonraki iki şehir önceki karar gereği hâlâ kapalıdır; onların düğümleri kilitli önizlemedir. Sağda hızlı şehir konumları bulunur. Kaydırma görünür bölgenin temasını değiştirir, oynanan şehri veya kaydı değiştirmez.

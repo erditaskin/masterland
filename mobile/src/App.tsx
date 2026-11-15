@@ -253,6 +253,7 @@ function Game() {
     [selected, setSelected] = useState<number | null>(null),
     [reduced, setReduced] = useState(false),
     [hiddenToastRevision, setHiddenToastRevision] = useState(-1);
+  const lastOrderDeliveryAt = useRef(0);
   const playAudio = useGameAudio(save.sound);
   const uiSound = useCallback(() => playAudio("tap"), [playAudio]);
   const open = useCallback(
@@ -372,27 +373,34 @@ function Game() {
       if (city(current).board[from]?.id !== expected) return null;
       const r = gameStore.dispatch({ type: "move", from, to });
       if (r?.kind === "merge" || r?.kind === "move") setSelected(to);
-      const a = city(current).board[from], b = city(current).board[to];
+      const a = city(current).board[from],
+        b = city(current).board[to];
       if (r?.kind === "blocked" && a && b && a.item === b.item && from !== to) {
-        const p = product(a.item), producer = producers[p.producer]!;
+        const p = product(a.item),
+          producer = producers[p.producer]!;
         const next = producer.products[p.tier];
         if (next && !city(current).opened.includes(next.id)) {
           open({ kind: "producer", index: p.producer });
+        } else if (!next) {
+          open({ kind: "info", index: from });
         }
       }
       return r;
     },
     [open],
   );
-  const tapCell = useCallback((i: number) => {
-    const board = city(gameStore.get().save).board;
-    const source = selected === null ? null : board[selected];
-    if (source && selected !== i && board[i]?.item === source.item) {
-      move(selected!, i, source.id);
-    } else {
-      select(i);
-    }
-  }, [selected, move, select]);
+  const tapCell = useCallback(
+    (i: number) => {
+      const board = city(gameStore.get().save).board;
+      const source = selected === null ? null : board[selected];
+      if (source && selected !== i && board[i]?.item === source.item) {
+        move(selected!, i, source.id);
+      } else {
+        select(i);
+      }
+    },
+    [selected, move, select],
+  );
   const top = Math.max(insets.top - 8, 20),
     scale = width / 390,
     sx = width / 800,
@@ -418,7 +426,10 @@ function Game() {
     cardWidth = 211 * sx,
     cardHeight = 106 * sx,
     producerSize = 108 * sx;
-  const activeOrders = useMemo(() => prioritizeOrderRail(orders(save)), [save]);
+  const activeOrders = useMemo(
+    () => prioritizeOrderRail(orders(save), save),
+    [save],
+  );
   const backdrop = useMemo(
     () => fitBackdrop(width, height, top),
     [width, height, top],
@@ -805,6 +816,9 @@ function Game() {
           >
             {activeOrders.map((o) => {
               const r = o.requirements[0]!;
+              const ready = o.requirements.every(
+                (r) => count(save, r.item_id) >= r.quantity,
+              );
               return (
                 <Button
                   testID={"order-" + o.id}
@@ -812,16 +826,26 @@ function Game() {
                   label={
                     o.requirements
                       .map((r) => `${r.quantity} ${product(r.item_id).name}`)
-                      .join(", ") + `, ${o.gold} altın, ${o.xp} XP`
+                      .join(", ") +
+                    `, ${o.gold} altın, ${o.xp} XP${ready ? ", Hazır, Ver" : ""}`
                   }
                   onPress={() => {
+                    const current = gameStore.get().save;
+                    const live = orders(current).find(
+                      (order) => order.id === o.id,
+                    );
+                    if (!live) return;
                     if (
-                      o.requirements.every(
-                        (r) => count(save, r.item_id) >= r.quantity,
+                      live.requirements.every(
+                        (r) => count(current, r.item_id) >= r.quantity,
                       )
-                    )
-                      dispatch({ type: "deliver", id: o.id });
-                    else open({ kind: "orders" });
+                    ) {
+                      const result = dispatch({ type: "deliver", id: live.id });
+                      if (result?.kind === "reward")
+                        lastOrderDeliveryAt.current = Date.now();
+                    } else if (Date.now() - lastOrderDeliveryAt.current > 400) {
+                      open({ kind: "orders" });
+                    }
                   }}
                   style={{
                     width: cardWidth,
@@ -843,6 +867,19 @@ function Game() {
                       height: (cardHeight * 887) / 685,
                     }}
                   />
+                  {ready && (
+                    <View
+                      pointerEvents="none"
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: 6,
+                        borderWidth: 2,
+                        borderColor: "#4a9155",
+                        backgroundColor: "#8bd17338",
+                      }}
+                    />
+                  )}
                   <View
                     style={{
                       flexDirection: "row",
@@ -863,19 +900,34 @@ function Game() {
                       )}
                     </View>
                     <View style={{ flex: 1, alignItems: "center" }}>
-                      <Text
-                        style={{
-                          fontFamily: fonts.number,
-                          fontSize: 11 * scale,
-                          color:
-                            count(save, r.item_id) >= r.quantity
-                              ? colors.green
-                              : "#a52b22",
-                        }}
+                      <View
+                        style={
+                          ready
+                            ? {
+                                backgroundColor: "#377b46",
+                                borderRadius: 8,
+                                paddingHorizontal: 9,
+                                paddingVertical: 1,
+                              }
+                            : undefined
+                        }
                       >
-                        {Math.min(count(save, r.item_id), r.quantity)}/
-                        {r.quantity}
-                      </Text>
+                        <Text
+                          style={{
+                            fontFamily: fonts.number,
+                            fontSize: 11 * scale,
+                            color: ready
+                              ? "#fff4d5"
+                              : count(save, r.item_id) >= r.quantity
+                                ? colors.green
+                                : "#a52b22",
+                          }}
+                        >
+                          {ready
+                            ? "Ver ✓"
+                            : `${Math.min(count(save, r.item_id), r.quantity)}/${r.quantity}`}
+                        </Text>
+                      </View>
                       <View
                         style={{
                           flexDirection: "row",
@@ -1030,7 +1082,6 @@ function Game() {
         <View style={{ position: "absolute", top: navTop, left: 10 }}>
           <Navigation width={width} open={open} onBoard={boardTab} />
         </View>
-
       </View>
       {page && (
         <Pages
@@ -1045,35 +1096,35 @@ function Game() {
           onInteract={uiSound}
         />
       )}
-        {!!toast && (
+      {!!toast && (
+        <View
+          pointerEvents="none"
+          testID="actionFeedback"
+          accessible
+          accessibilityRole="alert"
+          accessibilityLabel={toast}
+          style={{
+            position: "absolute",
+            top: page ? top + 80 : top + 39,
+            left: 50,
+            right: 50,
+            alignItems: "center",
+          }}
+        >
           <View
-            pointerEvents="none"
-            testID="actionFeedback"
-            accessible
-            accessibilityRole="alert"
-            accessibilityLabel={toast}
             style={{
-              position: "absolute",
-              top: page ? top + 80 : top + 39,
-              left: 50,
-              right: 50,
-              alignItems: "center",
+              backgroundColor: "#fff0d6ee",
+              paddingHorizontal: 12,
+              paddingVertical: 4,
+              borderRadius: 12,
             }}
           >
-            <View
-              style={{
-                backgroundColor: "#fff0d6ee",
-                paddingHorizontal: 12,
-                paddingVertical: 4,
-                borderRadius: 12,
-              }}
-            >
-              <Label size={11} style={{ textAlign: "center" }}>
-                {toast}
-              </Label>
-            </View>
+            <Label size={11} style={{ textAlign: "center" }}>
+              {toast}
+            </Label>
           </View>
-        )}
+        </View>
+      )}
       {!!error && (
         <View
           style={{

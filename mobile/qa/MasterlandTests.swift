@@ -86,19 +86,49 @@ final class MasterlandTests:XCTestCase {
         let beforeGold=app.buttons["gold"].label
         app.buttons["tab-cities"].tap()
         XCTAssertTrue(app.buttons["map-city1"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["map-step-city1-5"].label.contains("Kilitli"))
+        app.buttons["jump-city2"].tap()
         app.buttons["map-city2"].tap()
         let second=app.descendants(matching:.any).matching(identifier:"map-lock-city2").firstMatch
         XCTAssertTrue(second.waitForExistence(timeout:3))
         XCTAssertTrue(second.label.contains("2. seviyede açılacak"))
+        app.buttons["jump-city3"].tap()
         app.buttons["map-city3"].tap()
         let third=app.descendants(matching:.any).matching(identifier:"map-lock-city3").firstMatch
         XCTAssertTrue(third.waitForExistence(timeout:3))
         XCTAssertTrue(third.label.contains("5. seviyede açılacak"))
         shot("themed-city-map-locked-cove")
+        app.buttons["jump-city1"].tap()
         app.buttons["map-city1"].tap()
         XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:5))
         XCTAssertEqual(app.buttons["gold"].label,beforeGold)
         XCTAssertEqual(cell(0).label,"Buğday başağı")
+    }
+    func testReadyOrderDoubleTapAndFastOpening(){
+        app.buttons["producer1"].tap();app.buttons["producer1"].tap();drag(0,1)
+        XCTAssertTrue(app.buttons["order-quest25"].label.contains("Hazır"))
+        app.buttons["order-quest25"].tap(withNumberOfTaps:2,numberOfTouches:1)
+        XCTAssertTrue(app.buttons["gold"].label.contains("60"))
+        XCTAssertFalse(app.buttons["closePage"].exists)
+        app.buttons["producer5"].tap();app.buttons["buyProducer"].tap();app.buttons["closePage"].tap()
+        XCTAssertTrue(app.buttons["gold"].label.contains("20"))
+        app.buttons["producer5"].tap();XCTAssertNotEqual(cell(0).label,"Boş hücre")
+        shot("ready-orders-and-fast-opening")
+    }
+    func testUpperTierChainHasExplicitUnlockAndFinalFeedback(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        cell(1).tap();cell(3).tap()
+        XCTAssertTrue(app.buttons["unlock-item27"].waitForExistence(timeout:5))
+        app.buttons["unlock-item27"].tap();app.buttons["closePage"].tap();cell(3).tap()
+        XCTAssertEqual(cell(3).label,"Tahıl çuvalı")
+        cell(2).tap();cell(17).tap();cell(4).tap()
+        XCTAssertEqual(cell(4).label,"Tahıl çuvalı")
+        cell(3).tap()
+        XCTAssertTrue(app.buttons["unlock-item49"].waitForExistence(timeout:5))
+        app.buttons["unlock-item49"].tap();app.buttons["closePage"].tap();cell(3).tap()
+        XCTAssertEqual(cell(3).label,"Buğday arabası")
+        shot("upper-tier-chain-verified")
     }
     func testRapidProducerTapsAndCooldown(){
         for _ in 0..<2 {app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1)};energy("80/100")

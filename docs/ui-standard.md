@@ -185,3 +185,9 @@ Seçili eşya tek başına vurgulanır. Birleşebilecek başka üründe otomatik
 ## Temalı şehirler sayfası
 
 Şehirler ortak tam ekran parşömen çerçevesinde gösterilir. Tek, kesintisiz çizim üç temalı yerleşimi ve bağlantı yolunu içerir. Şehir adları, roller, kilit simgeleri ve tıklama alanları çizime gömülmez; yerel arayüzde sabit city ID referanslarıyla eklenir. İlk şehir tahtaya döndürür. Diğer iki şehir, oyuncunun inceleme modundaki leveli yüksek olsa da bu aşamada kilitli kalır. Dokunulan şehrin hemen altında açılma seviyesi görünür; yeni drawer veya ekran eklenmez. Basma geri bildirimi ve kısa ses kullanılır, hareket azaltma tercihi korunur.
+
+## Hazır ilan ve temalı görev yolu
+
+Hazır ilanlar eksik ilanların önüne taşınır; kart yeşil çerçeve ve hafif renk dolgusu alır. Ver alanı kartın içindedir ve kartın tamamı teslim için tıklanabilir. Görünen ilk ikon tek başına hazır olma kararı vermez; bütün gereksinimler hem tahta hem depo üzerinden kontrol edilir. Seri teslimlerde güncel ilan kimliği doğrulanır. Teslimattan hemen sonra eksik karta denk gelen ikinci dokunuş sayfa açmaz; hazır başka ilana hızlı teslim engellenmez.
+
+Şehir haritası tek uzun çizimin üç bölgesi üzerinde dikey kayar. Görünen merkez bölge üst başlığın tema rengini belirler. Sağdaki şehir kısayolları yalnız konuma kaydırır. Skara düğümleri mevcut giriş ilanlarını açar; gelecekteki şehirlerin düğümleri kilit mesajı gösterir. Harita gezinmesi yeni şehir oynanışını açmaz.

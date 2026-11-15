@@ -265,3 +265,7 @@ Kullanıcı isteğiyle eşleşen ikinci üründeki otomatik vurgu kaldırıldı.
 ## 15 Kasım 2026 — Üç şehirli harita
 
 Düz şehir listesi, Skara Brae çiftlik ve fırınları, New Haven pastaneleri ve Cove balıkçı limanı/marangoz atölyesini bağlayan resimli yolla değiştirildi. Yeni yerel butonlar değiştirilebilir isimleri ve mevcut level eşiklerini JSON kaynağından okur. New Haven/Cove tıklamaları kilit mesajı gösterir; şehir değiştirme veya ödeme yapmaz.
+
+## 15 Kasım 2026 — Akış, ilan ve şehir bölgesi incelemesi
+
+Kullanıcının başlangıçta pahalı üreticiler ve yüksek level isteyen ekmek geri bildirimi üzerine açılış ekonomisi düşürüldü. Hazır ilanların sıralaması ve Ver görünümü eklendi; hızlı çift dokunuşun sonraki eksik kartı açması önlendi. Üst basamaklar tüm üreticiler için ayrı test kapsamına alındı ve son ürün açıklaması eklendi. Harita, belirgin lacivert/yeşil, pembe ve turkuaz/ahşap bölgelere sahip kaydırılan bir görev yolu olarak yenilendi.
