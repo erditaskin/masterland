@@ -1042,6 +1042,7 @@ function Game() {
           dispatch={dispatch}
           open={open}
           reduced={reduced || save.reducedMotion}
+          onInteract={uiSound}
         />
       )}
         {!!toast && (

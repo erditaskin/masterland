@@ -80,6 +80,26 @@ final class MasterlandTests:XCTestCase {
         XCTAssertTrue(app.buttons["gold"].label.contains("0"))
         shot("visible-blocked-purchase-feedback")
     }
+    func testThemedCityMapKeepsFutureCitiesLocked(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        let beforeGold=app.buttons["gold"].label
+        app.buttons["tab-cities"].tap()
+        XCTAssertTrue(app.buttons["map-city1"].waitForExistence(timeout:5))
+        app.buttons["map-city2"].tap()
+        let second=app.descendants(matching:.any).matching(identifier:"map-lock-city2").firstMatch
+        XCTAssertTrue(second.waitForExistence(timeout:3))
+        XCTAssertTrue(second.label.contains("2. seviyede açılacak"))
+        app.buttons["map-city3"].tap()
+        let third=app.descendants(matching:.any).matching(identifier:"map-lock-city3").firstMatch
+        XCTAssertTrue(third.waitForExistence(timeout:3))
+        XCTAssertTrue(third.label.contains("5. seviyede açılacak"))
+        shot("themed-city-map-locked-cove")
+        app.buttons["map-city1"].tap()
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.buttons["gold"].label,beforeGold)
+        XCTAssertEqual(cell(0).label,"Buğday başağı")
+    }
     func testRapidProducerTapsAndCooldown(){
         for _ in 0..<2 {app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1)};energy("80/100")
         app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1);energy("70/100")

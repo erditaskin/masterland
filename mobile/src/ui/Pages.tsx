@@ -17,6 +17,7 @@ import {
   type Result,
 } from "../game/engine";
 import { colors } from "./theme";
+import { CityMap } from "./CityMap";
 export type Page = {
   kind:
     | "collection"
@@ -50,6 +51,7 @@ export function Pages({
   dispatch,
   open,
   reduced,
+  onInteract,
 }: {
   page: Page;
   save: Save;
@@ -59,6 +61,7 @@ export function Pages({
   dispatch: (a: Action) => Result | null;
   open: (p: Page) => void;
   reduced: boolean;
+  onInteract: () => void;
 }) {
   const insets = useSafeAreaInsets(),
     opacity = useMemo(() => new Animated.Value(reduced ? 1 : 0), [reduced]);
@@ -148,7 +151,10 @@ export function Pages({
         <ScrollView
           testID="pageScroll"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 14, paddingBottom: 24 }}
+          contentContainerStyle={{
+            padding: page.kind === "cities" ? 4 : 14,
+            paddingBottom: 24,
+          }}
         >
           {page.kind === "collection" && (
             <>
@@ -336,26 +342,14 @@ export function Pages({
                 />
               </View>
             ))}
-          {page.kind === "cities" &&
-            [
-              { id: "city1", level: 1, role: "Çiftlikler ve fırınlar" },
-              { id: "city2", level: 2, role: "Pastalar ve tatlılar" },
-              { id: "city3", level: 5, role: "Balıkçılık ve marangozluk" },
-            ].map((a) => (
-              <View key={a.id} style={card}>
-                <Label title size={23}>
-                  {name(a.id)}
-                </Label>
-                <Label color={colors.muted}>{a.role}</Label>
-                <Label size={12} style={{ marginTop: 8 }}>
-                  {a.id === save.cityID
-                    ? "Buradasın"
-                    : level(save) >= a.level
-                      ? "Yolculuk hazırlanıyor"
-                      : `${a.level}. seviyede açılır`}
-                </Label>
-              </View>
-            ))}
+          {page.kind === "cities" && (
+            <CityMap
+              currentCity={save.cityID}
+              onReturn={close}
+              onInteract={onInteract}
+              reduced={reduced}
+            />
+          )}
           {page.kind === "profile" && (
             <>
               <Label title size={25}>

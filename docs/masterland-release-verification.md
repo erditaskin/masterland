@@ -59,3 +59,9 @@ Ana tur normal kayıt ve yeniden açma, görev teslimi ve üretici satın alma, 
 Masaüstü Device Hub üzerinden tıklayarak ve sürükleyerek merge elle görüldü. Ayrıca 150 altın karşılığında Tahıl çuvalı basamağı açıldı; iki Buğday demeti tıklamayla birleştirildi, altın 750'den 600'e düştü ve üst ürün tahtada oluştu. Bu işlemler geçici inceleme modunda yapıldı; normal oyuncu kaydı değiştirilmedi.
 
 İnceleme, uygulanmamış özellikleri tamamlanmış yapmaz: New Haven/Cove yolculuğu henüz oynanabilir değildir; market gerçek satın alma içermez. Fiziksel cihaz performansı/ses algısı ve bütün ekran için pixel-perfect kabulü bu test sonuçlarından çıkarılamaz. Tüm hataların bulunmuş olduğu iddia edilmez.
+
+## Temalı şehir haritası doğrulaması
+
+15 Kasım 2026 şehir haritası turunda strict TypeScript ve lint geçti. Ana Masterland-QA Release simülatöründe tam ekran sayfa/depo regresyonu ve üç şehirli harita senaryosu 2/2, sıfır hatayla 34.461 saniyede geçti. İnceleme oyuncusu level 4 olmasına rağmen New Haven ve Cove kapalı kaldı; tıklamalar 2. ve 5. seviye mesajlarını gösterdi. Skara tıklaması tahtaya döndü; altın ve tahta ürünleri korundu. Gerçek ekran görsel olarak incelendi; şehir etiketleri, bağlantı yolu ve Cove kilit mesajı çerçeve içinde kaldı. Yalnız ana simülatör kullanıldı. Test özeti verification/2026-11-15/city-map-tests.json içindedir.
+
+Harita çizimi yerleşik imagegen aracıyla üretildi; mobile/assets/art/world-map-v1.png ve üretim tarifi world-map-v1-prompt.txt proje içinde korunur. İsimler, native butonlar ve kilit mesajları çizimin parçası değildir.

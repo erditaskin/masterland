@@ -181,3 +181,7 @@ Sürükleme öncesi basılı tutmak hareketi engellemez. Ayrıntı ekranı yaln�
 ## Güncel seçim vurgusu
 
 Seçili eşya tek başına vurgulanır. Birleşebilecek başka üründe otomatik çerçeve veya öneri gösterilmez. Bu karar önceki eşleşme önerisi kuralının yerini alır.
+
+## Temalı şehirler sayfası
+
+Şehirler ortak tam ekran parşömen çerçevesinde gösterilir. Tek, kesintisiz çizim üç temalı yerleşimi ve bağlantı yolunu içerir. Şehir adları, roller, kilit simgeleri ve tıklama alanları çizime gömülmez; yerel arayüzde sabit city ID referanslarıyla eklenir. İlk şehir tahtaya döndürür. Diğer iki şehir, oyuncunun inceleme modundaki leveli yüksek olsa da bu aşamada kilitli kalır. Dokunulan şehrin hemen altında açılma seviyesi görünür; yeni drawer veya ekran eklenmez. Basma geri bildirimi ve kısa ses kullanılır, hareket azaltma tercihi korunur.

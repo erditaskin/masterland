@@ -261,3 +261,7 @@ Uygulama genelindeki incelemede, tam ekran sayfalarda işlem sonucu mesajının 
 ## 15 Kasım 2026 — Tahta öneri vurgusu
 
 Kullanıcı isteğiyle eşleşen ikinci üründeki otomatik vurgu kaldırıldı. Önceki iki ürünlü öneri standardının yerini yalnız seçili eşyanın vurgulanması aldı.
+
+## 15 Kasım 2026 — Üç şehirli harita
+
+Düz şehir listesi, Skara Brae çiftlik ve fırınları, New Haven pastaneleri ve Cove balıkçı limanı/marangoz atölyesini bağlayan resimli yolla değiştirildi. Yeni yerel butonlar değiştirilebilir isimleri ve mevcut level eşiklerini JSON kaynağından okur. New Haven/Cove tıklamaları kilit mesajı gösterir; şehir değiştirme veya ödeme yapmaz.

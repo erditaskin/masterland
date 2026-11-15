@@ -268,3 +268,7 @@ Oyuncu iki aynı eşyayı sürükleyip bırakarak veya ilkini seçip ikinciye do
 ## 15 Kasım 2026 — Eşleşme önerisi kaldırıldı
 
 Kullanıcı, seçili eşyanın birleşebileceği diğer ürünün gösterilmesini istemiyor. Yalnız seçili eşya vurgulanır; eşleşen diğer üründe görsel veya erişilebilirlik önerisi bulunmaz. Merge kuralları değişmez.
+
+## 15 Kasım 2026 — Temalı şehir haritası
+
+Şehirler ekranı, Skara Brae, New Haven ve Cove çizimlerini birbirine bağlayan bir yol haritası olur. Skara ekin/değirmen/fırın; New Haven ileri fırıncılık/pastane; Cove balıkçılık/marangozluk temalarını taşır. Kullanıcı isteğiyle sonraki iki şehir şu anda kapalı kalır. Dokunulduğunda kanonik açılma seviyesi gösterilir: New Haven 2, Cove 5. Bu tur şehir yolculuğu eklemez veya XP/altın harcatmaz.
