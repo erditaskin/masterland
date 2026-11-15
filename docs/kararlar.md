@@ -311,3 +311,8 @@ Kullanıcı un torbası ile un çuvalının birbirine fazla benzediğini belirtt
 ## 15 Kasım 2026 — Hazır ilan ürünlerinin tahta hücreleri
 
 Kullanıcı önceki uygulamayı düzeltti: yalnız ilan kartlarının değil, teslim edilebilir ilanlarda istenen ürünlerin tahtadaki hücre arka planlarının yeşil olması gerekiyor. Bütün gereksinimleri karşılanan güncel ilanların ürünleri yeşil hücrede gösterilir. Ürün teslim edildiğinde, taşındığında, merge edildiğinde veya ilan artık tamamlanabilir olmadığında durum yeniden hesaplanır. Bu gösterim seçili eşyanın merge eşini önermez; seçim çerçevesinden bağımsızdır.
+
+
+## 15 Kasım 2026 — Saydam ve süslü hazır ürün hücresi
+
+Kullanıcı tahtadaki düz yeşil zeminin yerine düşük alfa değerli, uygulamanın sanat diline uygun köşeleri şekilli bir vurgu istedi. Tahta dokusunu gösteren hafif yeşil geçiş, ince kıvrımlı köşe çizgileri ve küçük yaprak işaretleri kullanılır. Bu değişiklik yalnız tahtadaki hazır ürün hücresinin görünümüdür; hazır ilan hesabı, kartlar ve seçim davranışı değişmez.

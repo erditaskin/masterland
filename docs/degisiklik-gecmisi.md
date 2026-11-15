@@ -304,3 +304,10 @@ Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe görsel ölç�
 Önceki turda istenen değişiklik yalnız ilan kartına uygulanmıştı. Düzeltmede hazır ilanlardan türetilen ürün ID'leri BoardGrid'e bağlandı. Yeşil renk ürünün altındaki sabit hücre katmanında çizilir; eşya seçimi ve drag geometrisi değişmez. Teslimden sonra rengin kaldırıldığını kontrol eden native regresyon doğrulaması eklendi.
 
 Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe 3 native test sıfır hatayla geçti. Hazır ürün hücresinin yeşil katmanı oluşuyor; teslim edilen ürünün katmanı kalkıyor. Son ekran görüntüsünde tahta hücrelerinin renk değişimi ayrıca görsel olarak doğrulandı.
+
+
+## 15 Kasım 2026 — Hazır hücre sanat ayrıntısı
+
+Opak yeşil hücre dolgusu düşük alfa değerli yeşil geçişle değiştirildi. Dört köşeye ince kıvrım ve yaprak ayrıntısı eklendi. Ayrıntılar native View katmanlarıdır; bitmap yükü veya sürekli animasyon eklemez. Alt tahta dokusu görünür kalır.
+
+Doğrulama: TypeScript, ESLint ve Release üzerinde iki native kontrol geçti. Saydam dolgu ve kıvrımlı/yapraklı köşeler gerçek simülatör ekranında incelendi. Teslim sonrasında hücre vurgusunun kalkması doğrulandı.
