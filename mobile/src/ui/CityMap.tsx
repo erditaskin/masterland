@@ -1,9 +1,17 @@
-import { useMemo, useRef, useState, type ComponentRef } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
 import { Animated, ImageBackground, ScrollView, View } from "react-native";
 import reference from "../../../data/content-reference.json";
-import { city, intro, name, product, type Save } from "../game/engine";
+import {
+  achievementProgress,
+  achievementState,
+  achievements,
+  name,
+  type Save,
+} from "../game/engine";
 import { Button, Label } from "./Controls";
+import { AchievementIcon } from "./Achievements";
 import { StatusIcon } from "./StatusIcon";
+import { ParchmentPanel } from "./Skin";
 import { colors } from "./theme";
 
 /** One continuous route; native quest nodes and city shortcuts remain interactive. */
@@ -11,7 +19,9 @@ export function CityMap({
   currentCity,
   save,
   height,
-  onOrders,
+  onAchievement,
+  initialOffset = () => 0,
+  onOffsetChange,
   onReturn,
   onInteract,
   reduced,
@@ -19,7 +29,9 @@ export function CityMap({
   currentCity: string;
   save: Save;
   height: number;
-  onOrders: () => void;
+  onAchievement: (id: string) => void;
+  initialOffset?: () => number;
+  onOffsetChange: (y: number) => void;
   onReturn: () => void;
   onInteract: () => void;
   reduced: boolean;
@@ -33,6 +45,14 @@ export function CityMap({
   const activeRef = useRef(0),
     scroll = useRef<ComponentRef<typeof ScrollView>>(null);
   const opacity = useMemo(() => new Animated.Value(1), []);
+  const [restoreOffset] = useState(initialOffset);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() =>
+      scroll.current?.scrollTo({ y: restoreOffset, animated: false }),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [mapWidth, restoreOffset]);
+  const regionHeight = mapWidth * 1.6;
   const stops = reference.ui.city_map.stops;
   const palette = reference.ui.city_map.region_colors;
   const locale: Record<string, string> = reference.locales.tr;
@@ -50,10 +70,6 @@ export function CityMap({
   const destination = inspected
     ? reference.cities.find((c) => c.id === stops[inspected.region]!.city_id)!
     : null;
-  const chosen =
-    inspected?.region === 0 && inspected.quest !== null
-      ? intro[inspected.quest]
-      : null;
   return (
     <View
       style={{
@@ -75,7 +91,7 @@ export function CityMap({
           {name(stops[active]!.city_id)}
         </Label>
         <Label size={11} color={colors.goldLight}>
-          {locale[stops[active]!.role_key]}
+          {locale[stops[active]!.role_key]} · Özel başarılar
         </Label>
       </View>
       <ScrollView
@@ -84,6 +100,7 @@ export function CityMap({
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={32}
         onScroll={(e) => {
+          onOffsetChange(e.nativeEvent.contentOffset.y);
           const next = Math.min(
             2,
             Math.max(
@@ -91,7 +108,7 @@ export function CityMap({
               Math.floor(
                 (e.nativeEvent.contentOffset.y +
                   e.nativeEvent.layoutMeasurement.height / 2) /
-                  mapWidth,
+                  regionHeight,
               ),
             ),
           );
@@ -100,13 +117,15 @@ export function CityMap({
             setActive(next);
           }
         }}
-        onLayout={(e) => setMapWidth(e.nativeEvent.layout.width)}
+        onLayout={(e) => {
+          setMapWidth(e.nativeEvent.layout.width);
+        }}
       >
         <ImageBackground
           source={require("../../assets/art/world-map-v2.png")}
           resizeMode="cover"
           testID="cityMap"
-          style={{ width: "100%", height: mapWidth * 3 }}
+          style={{ width: "100%", height: regionHeight * 3 }}
         >
           {stops.map((stop, i) => {
             const here = stop.city_id === currentCity && stop.travel_enabled;
@@ -115,10 +134,10 @@ export function CityMap({
                 key={stop.city_id}
                 style={{
                   position: "absolute",
-                  top: i * mapWidth,
+                  top: i * regionHeight,
                   left: 0,
                   right: 0,
-                  height: mapWidth,
+                  height: regionHeight,
                 }}
               >
                 <Button
@@ -134,10 +153,22 @@ export function CityMap({
                     borderRadius: 12,
                     borderWidth: 1,
                     borderColor: colors.gold,
-                    backgroundColor: palette[i] + "ef",
+                    backgroundColor: "transparent",
                     padding: 5,
                   }}
                 >
+                  <View
+                    pointerEvents="none"
+                    style={{
+                      position: "absolute",
+                      left: -5,
+                      top: -5,
+                      width: mapWidth - 69,
+                      height: 44,
+                    }}
+                  >
+                    <ParchmentPanel width={mapWidth - 69} height={44} />
+                  </View>
                   <View
                     style={{
                       flexDirection: "row",
@@ -146,60 +177,143 @@ export function CityMap({
                     }}
                   >
                     {!here && <StatusIcon kind="lock" />}
-                    <Label title size={18} color={colors.goldLight}>
+                    <Label title size={18} color={colors.ink}>
                       {name(stop.city_id)}
                     </Label>
                   </View>
-                  <Label size={10} color={colors.goldLight}>
+                  <Label size={10} color={colors.muted}>
                     {here ? "Buradasın · Tahtaya dön" : "Kilitli şehir"}
                   </Label>
                 </Button>
-                {(i === 0 ? intro : [null, null, null]).map((q, j) => {
-                  const done = i === 0 && j < city(save).introIndex;
-                  const current = i === 0 && j === city(save).introIndex;
-                  const locked = i !== 0 || j > city(save).introIndex;
-                  const total = i === 0 ? intro.length : 3;
-                  const x = 0.3 + Math.sin(j * 1.7) * 0.18;
-                  return (
-                    <Button
-                      key={q?.id ?? j}
-                      testID={`map-step-${stop.city_id}-${j}`}
-                      label={
-                        q
-                          ? `${j + 1}. ilan, ${done ? "Tamamlandı" : locked ? "Kilitli, önceki ilanları tamamla" : q.requirements.map((r) => `${r.quantity} ${product(r.item_id).name}`).join(", ")}`
-                          : `${name(stop.city_id)}, kilitli aşama ${j + 1}`
-                      }
-                      onPress={() => inspect(i, j)}
-                      style={{
-                        position: "absolute",
-                        top: mapWidth * (0.26 + (j / total) * 0.67),
-                        left: mapWidth * x,
-                        width: 38,
-                        height: 38,
-                        borderRadius: 19,
-                        borderWidth: 2,
-                        borderColor: current ? "#fff3ab" : colors.gold,
-                        backgroundColor: done
-                          ? "#377b46"
-                          : locked
-                            ? "#425061"
-                            : "#173b48",
-                        shadowColor: "#000",
-                        shadowOpacity: 0.22,
-                        shadowRadius: 3,
-                        shadowOffset: { width: 0, height: 2 },
-                      }}
-                    >
-                      {!locked ? (
-                        <Label title size={17} color={colors.goldLight}>
-                          {done ? "✓" : j + 1}
-                        </Label>
-                      ) : (
-                        <StatusIcon kind="lock" />
-                      )}
-                    </Button>
-                  );
-                })}
+                {achievements
+                  .filter((a) => a.city_id === stop.city_id)
+                  .map((a, j, list) => {
+                    const state = achievementState(save, a),
+                      progress = Math.min(
+                        a.target,
+                        achievementProgress(save, a),
+                      );
+                    const nodeWidth = (mapWidth - 68) / 2;
+                    return (
+                      <Button
+                        key={a.id}
+                        testID={`achievement-${a.id}`}
+                        label={`${name(a.id)}, ${state === "ready" ? "Ödül hazır" : state === "claimed" ? "Alındı" : state === "locked" ? "Kilitli" : `${progress}/${a.target}`}`}
+                        onPress={() => onAchievement(a.id)}
+                        style={{
+                          position: "absolute",
+                          top:
+                            85 +
+                            (j * (regionHeight - 160)) /
+                              Math.max(1, list.length - 1),
+                          left: j % 2 === 0 ? 8 : mapWidth - 56 - nodeWidth,
+                          width: nodeWidth,
+                          height: 67,
+                          padding: 6,
+                          borderRadius: 13,
+                          borderWidth: 0,
+                          borderColor:
+                            state === "ready" ? "#fff0a3" : colors.gold,
+                          backgroundColor: "transparent",
+                          shadowColor: "#101722",
+                          shadowOpacity: 0.28,
+                          shadowRadius: 4,
+                          shadowOffset: { width: 0, height: 2 },
+                        }}
+                      >
+                        <View
+                          pointerEvents="none"
+                          style={{
+                            position: "absolute",
+                            left: -6,
+                            top: -6,
+                            width: nodeWidth,
+                            height: 67,
+                          }}
+                        >
+                          <ParchmentPanel width={nodeWidth} height={67} />
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 4,
+                          }}
+                        >
+                          <View
+                            style={{ opacity: state === "locked" ? 0.5 : 1 }}
+                          >
+                            <AchievementIcon kind={a.kind} size={34} />
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Label title size={10.5} color={colors.ink}>
+                              {name(a.id)}
+                            </Label>
+                            <Label
+                              size={9}
+                              color={
+                                state === "ready"
+                                  ? "#925715"
+                                  : state === "claimed"
+                                    ? colors.green
+                                    : colors.muted
+                              }
+                            >
+                              {state === "ready"
+                                ? "Ödül hazır"
+                                : state === "claimed"
+                                  ? "Alındı ✓"
+                                  : state === "locked"
+                                    ? "Şehir kilitli"
+                                    : `${progress} / ${a.target}`}
+                            </Label>
+                          </View>
+                        </View>
+                        {(state === "ready" || state === "claimed") && (
+                          <View
+                            pointerEvents="none"
+                            style={{
+                              position: "absolute",
+                              right: -5,
+                              bottom: -4,
+                              width: 16,
+                              height: 16,
+                              borderRadius: 8,
+                              borderWidth: 1,
+                              borderColor: "#c4815e",
+                              backgroundColor:
+                                state === "claimed" ? "#3c7051" : "#974536",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Label size={9} color="#ffe4ac">
+                              {state === "claimed" ? "✓" : "◆"}
+                            </Label>
+                          </View>
+                        )}
+                        <View
+                          style={{
+                            width: "100%",
+                            height: 3,
+                            borderRadius: 2,
+                            marginTop: 4,
+                            backgroundColor: "#c9b28a",
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: 3,
+                              borderRadius: 2,
+                              width: `${state === "locked" ? 0 : (progress / a.target) * 100}%`,
+                              backgroundColor:
+                                state === "ready" ? "#ffd260" : "#78b983",
+                            }}
+                          />
+                        </View>
+                      </Button>
+                    );
+                  })}
               </View>
             );
           })}
@@ -214,7 +328,10 @@ export function CityMap({
             onPress={() => {
               onInteract();
               setInspected(null);
-              scroll.current?.scrollTo({ y: i * mapWidth, animated: false });
+              scroll.current?.scrollTo({
+                y: i * regionHeight,
+                animated: false,
+              });
             }}
             style={{
               width: 43,
@@ -268,36 +385,8 @@ export function CityMap({
           <Label size={12}>
             {inspected.region !== 0
               ? `${destination.unlock_level}. seviyede açılacak.`
-              : chosen?.requirements
-                  .map((r) => `${r.quantity} ${product(r.item_id).name}`)
-                  .join(" + ")}
+              : "Özel başarılarını yol kenarındaki sandıklardan incele."}
           </Label>
-          {chosen && (
-            <Label size={11} color={colors.muted}>
-              {inspected.quest! < city(save).introIndex
-                ? "Tamamlandı"
-                : inspected.quest! > city(save).introIndex
-                  ? "Önceki ilanları tamamlayınca açılacak."
-                  : "Şu anki ilanın"}
-            </Label>
-          )}
-          {chosen && inspected.quest === city(save).introIndex && (
-            <Button
-              label="İlanlara git"
-              testID="map-openOrders"
-              onPress={onOrders}
-              style={{
-                minHeight: 44,
-                marginTop: 5,
-                borderRadius: 8,
-                backgroundColor: palette[0],
-              }}
-            >
-              <Label size={13} color={colors.goldLight}>
-                İlanlara git · {chosen.gold} altın · {chosen.xp} XP
-              </Label>
-            </Button>
-          )}
         </Animated.View>
       )}
     </View>

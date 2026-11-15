@@ -3,6 +3,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   advance,
+  energyCap,
+  productionPlan,
+  achievements,
+  achievementState,
   city,
   count,
   fresh,
@@ -381,4 +385,104 @@ test("ready orders precede incomplete ones without changing requirements or rewa
     sorted.map((o) => o.id).sort(),
     before.map((o) => o.id).sort(),
   );
+});
+
+test("expanded capacity retains exact regeneration interval above 100", () => {
+  const s = fresh(now);
+  s.staminaCapacity = 150;
+  s.stamina = 100;
+  s.energyAt = now;
+  assert.equal(advance(s, now + 119999).stamina, 100);
+  assert.equal(advance(s, now + 120000).stamina, 101);
+  assert.equal(advance(s, now + 240000).stamina, 102);
+  assert.equal(advance(s, now + 12000000).stamina, 150);
+  assert(validateSave({ ...s, stamina: 150 }));
+  assert(!validateSave({ ...s, stamina: 151 }));
+});
+test("all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary", () => {
+  for (const mode of [1, 2, 3, 4])
+    for (const energy of [99, 100, 101, 125]) {
+      const s = fresh(now);
+      s.staminaCapacity = 150;
+      s.stamina = energy;
+      city(s).opened = p.products.map((i) => i.id);
+      city(s).powers = { [p.id]: mode };
+      const result = run(s, { type: "produce", id: p.id }),
+        effective = energy > 100 ? mode : 1;
+      assert.equal(result.kind, "produce");
+      assert.equal(result.state.stamina, energy - 2 ** (effective - 1));
+      assert.equal(
+        city(result.state).board[0]?.item,
+        p.products[effective - 1]!.id,
+      );
+      assert.equal(productionPlan(result.state, p).selected, mode);
+    }
+});
+test("a boost crossing below 100 falls back without changing the selected power", () => {
+  const s = fresh(now);
+  s.staminaCapacity = 125;
+  s.stamina = 103;
+  city(s).opened = p.products.map((i) => i.id);
+  city(s).powers = { [p.id]: 4 };
+  const a = run(s, { type: "produce", id: p.id });
+  assert.equal(a.state.stamina, 95);
+  const b = run(a.state, { type: "produce", id: p.id });
+  assert.equal(b.state.stamina, 94);
+  assert.equal(city(b.state).board[1]?.item, p.products[0]!.id);
+  assert.equal(city(b.state).powers?.[p.id], 4);
+});
+test("locked output mode cannot be selected or silently consume energy", () => {
+  const s = fresh(now);
+  s.staminaCapacity = 125;
+  s.stamina = 120;
+  assert.equal(run(s, { type: "power", id: p.id, mode: 3 }).kind, "blocked");
+  city(s).powers = { [p.id]: 3 };
+  const r = run(s, { type: "produce", id: p.id });
+  assert.equal(r.kind, "blocked");
+  assert.equal(r.state.stamina, 120);
+});
+test("achievement reward is once-only and gives real capacity without spending XP", () => {
+  const s = fresh(now);
+  city(s).introIndex = 1;
+  s.stamina = 98;
+  const a = achievements[0]!;
+  assert.equal(achievementState(s, a), "ready");
+  const r = run(s, { type: "claim-achievement", id: a.id });
+  assert.equal(r.kind, "reward");
+  assert.equal(energyCap(r.state), 125);
+  assert.equal(r.state.stamina, 123);
+  assert.equal(r.state.xp, 5);
+  const again = run(r.state, { type: "claim-achievement", id: a.id });
+  assert.equal(again.kind, "blocked");
+  assert.equal(again.state, r.state);
+  assert.equal(
+    run(s, { type: "claim-achievement", id: achievements[6]!.id }).kind,
+    "blocked",
+  );
+});
+test("gem capacity purchase is atomic and cannot bank time spent at full capacity", () => {
+  const s = fresh(now);
+  s.gems = 10;
+  s.energyAt = now - 9999999;
+  const r = run(s, { type: "energy-capacity" });
+  assert.equal(energyCap(r.state), 125);
+  assert.equal(r.state.stamina, 125);
+  assert.equal(r.state.gems, 0);
+  assert.equal(r.state.xp, 0);
+  const spent = run(r.state, { type: "produce", id: p.id });
+  assert.equal(advance(spent.state, now + 119999).stamina, 124);
+  assert.equal(advance(spent.state, now + 120000).stamina, 125);
+  assert.equal(run(s, { type: "energy-capacity" }).state.gems, 0);
+});
+test("older schema2 records retain default capacity and power with no reset", () => {
+  const s = fresh(now);
+  delete s.staminaCapacity;
+  delete s.claimedAchievements;
+  delete city(s).powers;
+  assert(validateSave(s));
+  assert.equal(energyCap(s), 100);
+  assert.equal(productionPlan(s, p).effective, 1);
+  assert(!validateSave({ ...s, staminaCapacity: 99 }));
+  city(s).powers = { [p.id]: 5 };
+  assert(!validateSave(s));
 });

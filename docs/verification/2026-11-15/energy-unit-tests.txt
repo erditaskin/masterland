@@ -1,0 +1,254 @@
+
+> masterland@0.2.0 test
+> node --import tsx --test tests/*.test.ts
+
+TAP version 13
+# Subtest: fresh board and first two product areas
+ok 1 - fresh board and first two product areas
+  ---
+  duration_ms: 1.004667
+  type: 'test'
+  ...
+# Subtest: production spends exactly one and discovery rewards once
+ok 2 - production spends exactly one and discovery rewards once
+  ---
+  duration_ms: 0.53175
+  type: 'test'
+  ...
+# Subtest: merge consumes two equal items and creates a unique identity
+ok 3 - merge consumes two equal items and creates a unique identity
+  ---
+  duration_ms: 0.153375
+  type: 'test'
+  ...
+# Subtest: simple move preserves tile identity
+ok 4 - simple move preserves tile identity
+  ---
+  duration_ms: 0.3055
+  type: 'test'
+  ...
+# Subtest: outside board and same-cell releases preserve state
+ok 5 - outside board and same-cell releases preserve state
+  ---
+  duration_ms: 0.189166
+  type: 'test'
+  ...
+# Subtest: different item and maximum-tier merge preserve both tiles
+ok 6 - different item and maximum-tier merge preserve both tiles
+  ---
+  duration_ms: 0.153875
+  type: 'test'
+  ...
+# Subtest: locked next product preserves both ingredients
+ok 7 - locked next product preserves both ingredients
+  ---
+  duration_ms: 0.169667
+  type: 'test'
+  ...
+# Subtest: paid slot spends gold, never XP, and is not discovery
+ok 8 - paid slot spends gold, never XP, and is not discovery
+  ---
+  duration_ms: 0.068666
+  type: 'test'
+  ...
+# Subtest: producer purchase is level gated and idempotent
+ok 9 - producer purchase is level gated and idempotent
+  ---
+  duration_ms: 0.58
+  type: 'test'
+  ...
+# Subtest: full board does not spend energy
+ok 10 - full board does not spend energy
+  ---
+  duration_ms: 0.331334
+  type: 'test'
+  ...
+# Subtest: empty energy does not create an item
+ok 11 - empty energy does not create an item
+  ---
+  duration_ms: 0.132958
+  type: 'test'
+  ...
+# Subtest: producer batch and offline refill
+ok 12 - producer batch and offline refill
+  ---
+  duration_ms: 0.169792
+  type: 'test'
+  ...
+# Subtest: offline energy caps and backwards clock cannot grant energy
+ok 13 - offline energy caps and backwards clock cannot grant energy
+  ---
+  duration_ms: 0.050208
+  type: 'test'
+  ...
+# Subtest: idle full energy returns same state
+ok 14 - idle full energy returns same state
+  ---
+  duration_ms: 0.032625
+  type: 'test'
+  ...
+# Subtest: delivery settles rewards once before presentation
+ok 15 - delivery settles rewards once before presentation
+  ---
+  duration_ms: 0.193125
+  type: 'test'
+  ...
+# Subtest: delivery consumes board before storage
+ok 16 - delivery consumes board before storage
+  ---
+  duration_ms: 0.126
+  type: 'test'
+  ...
+# Subtest: manual storage and restore preserve exact identity
+ok 17 - manual storage and restore preserve exact identity
+  ---
+  duration_ms: 0.058167
+  type: 'test'
+  ...
+# Subtest: full storage cannot remove a board item
+ok 18 - full storage cannot remove a board item
+  ---
+  duration_ms: 0.061709
+  type: 'test'
+  ...
+# Subtest: storage capacity pricing scales in both currencies
+ok 19 - storage capacity pricing scales in both currencies
+  ---
+  duration_ms: 0.046
+  type: 'test'
+  ...
+# Subtest: repeat orders use only accessible unlocked content and have unique ids
+ok 20 - repeat orders use only accessible unlocked content and have unique ids
+  ---
+  duration_ms: 0.060958
+  type: 'test'
+  ...
+# Subtest: serialised save validates without losing progress
+ok 21 - serialised save validates without losing progress
+  ---
+  duration_ms: 0.201875
+  type: 'test'
+  ...
+# Subtest: Swift save migration preserves XP, items, storage, and time base
+ok 22 - Swift save migration preserves XP, items, storage, and time base
+  ---
+  duration_ms: 0.392958
+  type: 'test'
+  ...
+# Subtest: corrupt legacy save is rejected instead of reset
+ok 23 - corrupt legacy save is rejected instead of reset
+  ---
+  duration_ms: 0.126917
+  type: 'test'
+  ...
+# Subtest: all 54 stationary input cells map correctly
+ok 24 - all 54 stationary input cells map correctly
+  ---
+  duration_ms: 0.142666
+  type: 'test'
+  ...
+# Subtest: no row wrapping or off-board hit
+ok 25 - no row wrapping or off-board hit
+  ---
+  duration_ms: 0.048416
+  type: 'test'
+  ...
+# Subtest: a thousand moves and storage cycles do not duplicate or lose items
+ok 26 - a thousand moves and storage cycles do not duplicate or lose items
+  ---
+  duration_ms: 9.869166
+  type: 'test'
+  ...
+# Subtest: duplicate identities and malformed storage are rejected
+ok 27 - duplicate identities and malformed storage are rejected
+  ---
+  duration_ms: 0.2315
+  type: 'test'
+  ...
+# Subtest: near-square reference cells keep all 54 input targets and reject row wrapping
+ok 28 - near-square reference cells keep all 54 input targets and reject row wrapping
+  ---
+  duration_ms: 0.076834
+  type: 'test'
+  ...
+# Subtest: visible order variety preserves the main order and every live requirement
+ok 29 - visible order variety preserves the main order and every live requirement
+  ---
+  duration_ms: 0.4285
+  type: 'test'
+  ...
+# Subtest: first delivery funds mill and second funds oven without repeat grinding
+ok 30 - first delivery funds mill and second funds oven without repeat grinding
+  ---
+  duration_ms: 0.1365
+  type: 'test'
+  ...
+# Subtest: every upper-tier pair merges after unlocking, with no lost items on final tier
+ok 31 - every upper-tier pair merges after unlocking, with no lost items on final tier
+  ---
+  duration_ms: 0.722416
+  type: 'test'
+  ...
+# Subtest: ready orders precede incomplete ones without changing requirements or rewards
+ok 32 - ready orders precede incomplete ones without changing requirements or rewards
+  ---
+  duration_ms: 0.223625
+  type: 'test'
+  ...
+# Subtest: expanded capacity retains exact regeneration interval above 100
+ok 33 - expanded capacity retains exact regeneration interval above 100
+  ---
+  duration_ms: 0.097167
+  type: 'test'
+  ...
+# Subtest: all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary
+ok 34 - all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary
+  ---
+  duration_ms: 0.229834
+  type: 'test'
+  ...
+# Subtest: a boost crossing below 100 falls back without changing the selected power
+ok 35 - a boost crossing below 100 falls back without changing the selected power
+  ---
+  duration_ms: 0.066875
+  type: 'test'
+  ...
+# Subtest: locked output mode cannot be selected or silently consume energy
+ok 36 - locked output mode cannot be selected or silently consume energy
+  ---
+  duration_ms: 0.065084
+  type: 'test'
+  ...
+# Subtest: achievement reward is once-only and gives real capacity without spending XP
+ok 37 - achievement reward is once-only and gives real capacity without spending XP
+  ---
+  duration_ms: 0.246083
+  type: 'test'
+  ...
+# Subtest: gem capacity purchase is atomic and cannot bank time spent at full capacity
+ok 38 - gem capacity purchase is atomic and cannot bank time spent at full capacity
+  ---
+  duration_ms: 0.1575
+  type: 'test'
+  ...
+# Subtest: older schema2 records retain default capacity and power with no reset
+ok 39 - older schema2 records retain default capacity and power with no reset
+  ---
+  duration_ms: 0.138958
+  type: 'test'
+  ...
+# Subtest: continuous backdrop covers every edge without changing its aspect ratio
+ok 40 - continuous backdrop covers every edge without changing its aspect ratio
+  ---
+  duration_ms: 0.511583
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 218.767208

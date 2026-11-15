@@ -1,11 +1,15 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Animated, ScrollView, Switch, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ActionButton, Button, Divider, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
-import { BoardFrame } from "./Skin";
+import { BoardFrame, ParchmentPanel } from "./Skin";
 import {
   canDeliver,
+  energyCap,
+  energyCapacityStep,
+  energyUpgradeCost,
+  productionPlan,
   city,
   count,
   level,
@@ -18,6 +22,7 @@ import {
   type Result,
 } from "../game/engine";
 import { colors } from "./theme";
+import { AchievementDetails } from "./Achievements";
 import { CityMap } from "./CityMap";
 export type Page = {
   kind:
@@ -29,8 +34,10 @@ export type Page = {
     | "orders"
     | "producer"
     | "info"
-    | "energy";
+    | "energy"
+    | "achievement";
   index?: number;
+  id?: string;
 };
 const titles = {
   collection: "Koleksiyon",
@@ -42,6 +49,7 @@ const titles = {
   producer: "Üretici",
   info: "Eşya",
   energy: "Dayanıklılık",
+  achievement: "Özel Başarı",
 };
 export function Pages({
   page,
@@ -64,6 +72,7 @@ export function Pages({
   reduced: boolean;
   onInteract: () => void;
 }) {
+  const routeOffset = useRef(0);
   const insets = useSafeAreaInsets(),
     opacity = useMemo(() => new Animated.Value(reduced ? 1 : 0), [reduced]);
   useEffect(() => {
@@ -77,6 +86,7 @@ export function Pages({
     h = height - insets.top - insets.bottom - 12,
     c = city(save),
     p = producers[page.index ?? 0]!;
+  const parchment = page.kind === "cities" || page.kind === "achievement";
   const card = {
     padding: 14,
     marginBottom: 12,
@@ -108,21 +118,26 @@ export function Pages({
           borderRadius: 18,
         }}
       >
-        <View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            inset: 8,
-            borderRadius: 12,
-            backgroundColor: colors.paper,
-          }}
-        />
+        {parchment ? (
+          <ParchmentPanel width={w} height={h} />
+        ) : (
+          <View
+            pointerEvents="none"
+            style={{
+              position: "absolute",
+              inset: 8,
+              borderRadius: 12,
+              backgroundColor: colors.paper,
+            }}
+          />
+        )}
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
             paddingHorizontal: 12,
-            paddingVertical: 8,
+            paddingTop: parchment ? 16 : 8,
+            paddingBottom: 8,
           }}
         >
           <Label title size={27} style={{ flex: 1 }}>
@@ -131,7 +146,9 @@ export function Pages({
           <Button
             testID="closePage"
             label="Bitti"
-            onPress={close}
+            onPress={() =>
+              page.kind === "achievement" ? open({ kind: "cities" }) : close()
+            }
             style={{
               width: 44,
               height: 44,
@@ -155,7 +172,7 @@ export function Pages({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             padding: page.kind === "cities" ? 4 : 14,
-            paddingBottom: 24,
+            paddingBottom: page.kind === "cities" ? 4 : 24,
           }}
         >
           {page.kind === "collection" && (
@@ -229,6 +246,16 @@ export function Pages({
                   onPress={() => act({ type: "buy", id: p.id })}
                 />
               )}{" "}
+              {c.owned.includes(p.id) && (
+                <Label
+                  size={12}
+                  color={colors.muted}
+                  style={{ marginVertical: 12 }}
+                >
+                  Üretim gücünü değiştirmek için tahtadaki dağıtıcıya basılı
+                  tut. Şu an {productionPlan(save, p).selected}x seçili.
+                </Label>
+              )}
               {p.products.map((a) => (
                 <View
                   key={a.id}
@@ -358,11 +385,23 @@ export function Pages({
             <CityMap
               save={save}
               height={h - 110}
-              onOrders={() => open({ kind: "orders" })}
+              onAchievement={(id) => open({ kind: "achievement", id })}
+              initialOffset={() => routeOffset.current}
+              onOffsetChange={(y) => {
+                routeOffset.current = y;
+              }}
               currentCity={save.cityID}
               onReturn={close}
               onInteract={onInteract}
               reduced={reduced}
+            />
+          )}
+          {page.kind === "achievement" && page.id && (
+            <AchievementDetails
+              id={page.id}
+              save={save}
+              dispatch={dispatch}
+              onReturn={() => open({ kind: "cities" })}
             />
           )}
           {page.kind === "profile" && (
@@ -464,12 +503,23 @@ export function Pages({
             <View style={{ alignItems: "center", paddingTop: 25 }}>
               <Sprite kind="icons" index={5} size={80} />
               <Label title size={32}>
-                {save.stamina} / 100
+                {save.stamina} / {energyCap(save)}
               </Label>
               <Label style={{ marginTop: 12, textAlign: "center" }}>
-                Her üretim bir dayanıklılık kullanır.{"\n"}İki dakikada bir
-                yenilenir.
+                Her iki dakikada 1 enerji dolar. Kapasite bu hızı değiştirmez.
+                100 ve altında üretim 1x olur.
               </Label>
+              <ActionButton
+                text={`+${energyCapacityStep} kapasite ve +${energyCapacityStep} enerji · ${energyUpgradeCost(save)} elmas`}
+                testID="upgradeEnergyCapacity"
+                onPress={() => {
+                  act({ type: "energy-capacity" });
+                }}
+              />
+              <ActionButton
+                text="Başarı hediyelerine git"
+                onPress={() => open({ kind: "cities" })}
+              />
             </View>
           )}
           {page.kind === "market" && (
@@ -494,7 +544,7 @@ export function Pages({
             </>
           )}
         </ScrollView>
-        <BoardFrame width={w} height={h} />
+        {!parchment && <BoardFrame width={w} height={h} />}
       </View>
     </Animated.View>
   );

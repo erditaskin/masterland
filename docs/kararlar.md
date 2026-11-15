@@ -278,3 +278,11 @@ Kullanıcı, seçili eşyanın birleşebileceği diğer ürünün gösterilmesin
 Kullanıcı ilk üreticileri ve temel ürünleri hızlı açmayı, başlangıçta yüksek altın/level koşullarıyla tahtanın durmamasını istedi. İlk iki teslimat, sırasıyla Değirmen ve Taş Fırın açılışını mümkün kılacak şekilde yeniden dengelenir. Sayılar prototip ayarıdır; yeni kalıcı ekonomi onayı değildir. Hazır ilanlar öne gelir, yeşil vurgulanır ve Ver eylemi gösterir. Tek dokunuş teslim eder; hızlı çift dokunuş eski ilanı ikinci kez ödememeli veya istemeden eksik ilan sayfası açmamalıdır. Üst basamak kilitleri ve zincir sonu açıklaması sessiz kalmaz.
 
 Şehirler kaydırılabilir yol üzerinde ayrı temalar taşır: Skara lacivert/yeşil, New Haven pembe pastane, Cove turkuaz deniz/ahşap. Skara görev düğümleri mevcut gerçek ilan içeriğine bağlıdır. Sonraki iki şehir önceki karar gereği hâlâ kapalıdır; onların düğümleri kilitli önizlemedir. Sağda hızlı şehir konumları bulunur. Kaydırma görünür bölgenin temasını değiştirir, oynanan şehri veya kaydı değiştirmez.
+
+## 15 Kasım 2026 — Enerji kapasitesi ve üretici gücü
+
+Kapasite başlangıçta 100 olur ve artırılabilir. Elmas, oyun hediyesi ve ileride gerçek para ürünü kaynakları tasarıma dahildir. Mevcut enerji miktarı 100’den büyükse seçili üretici gücü üst basamak ürün çıkarır. 100 ve altında aynı üretici daima ilk ürünü çıkarır; seçili güç tercihi silinmez. 1x/2x/3x/4x sırasıyla zincirin birinci/ikinci/üçüncü/dördüncü ürünüdür. Kullanıcı enerji maliyetini açıkça 1/2/4/8 olarak seçti. Dolum hızı kapasite veya güçle değişmez: 120 saniyede 1 enerji. Her üretici tercihi kendi sabit ID’siyle saklanır; kapalı üst ürün alanı güçle aşılmaz.
+
+Kullanıcının son düzeltmesi: basılı tutma güç seçim modalı açmaz. Üreticiye bitişik renkli menü açar; ekrana sığmayan sağ menü içeri doğru sola yerleşir. Satır seçimi ve dış alana dokunma menüyü kapatır. Ürün alanı yükseltme sayfası ayrı kalır.
+
+Elmas kapasite paketi bu tur prototip ayarı olarak +25 kapasite ve +25 enerji, ilk alımda 10 elmas ve her 25 kapasitede +5 elmas fiyat artışı kullanır. Bu sayıların kullanıcı tarafından nihai ekonomi olarak onaylandığı iddia edilmez. Gerçek para ödeme/receipt bağlantısı henüz uygulanmaz. XP hiçbir kapasite işleminde harcanmaz.

@@ -84,6 +84,7 @@ export interface City {
   owned: string[];
   opened: string[];
   batches: Record<string, { remaining: number; readyAt: number }>;
+  powers?: Record<string, number>;
   introIndex: number;
   repeatIndex: number;
 }
@@ -93,6 +94,8 @@ export interface Save {
   gold: number;
   gems: number;
   stamina: number;
+  staminaCapacity?: number;
+  claimedAchievements?: string[];
   energyAt: number;
   discoveries: string[];
   titles: string[];
@@ -123,6 +126,8 @@ export function fresh(now: number): Save {
     gold: 0,
     gems: 0,
     stamina: 100,
+    staminaCapacity: 100,
+    claimedAchievements: [],
     energyAt: now,
     discoveries: [],
     titles: [],
@@ -180,6 +185,9 @@ export const canDeliver = (s: Save, o: Order) =>
   o.requirements.every((r) => count(s, r.item_id) >= r.quantity);
 export type Action =
   | { type: "produce"; id: string }
+  | { type: "power"; id: string; mode: number }
+  | { type: "energy-capacity" }
+  | { type: "claim-achievement"; id: string }
   | { type: "move"; from: number; to: number }
   | { type: "deliver"; id: string }
   | { type: "buy"; id: string }
@@ -213,6 +221,7 @@ function copySave(s: Save): Save {
     discoveries: [...s.discoveries],
     titles: [...s.titles],
     mastery: { ...s.mastery },
+    claimedAchievements: [...(s.claimedAchievements ?? [])],
     cities: {
       ...s.cities,
       [s.cityID]: {
@@ -221,6 +230,7 @@ function copySave(s: Save): Save {
         storage: [...c.storage],
         owned: [...c.owned],
         opened: [...c.opened],
+        powers: { ...c.powers },
         batches: Object.fromEntries(
           Object.entries(c.batches).map(([id, b]) => [id, { ...b }]),
         ),
@@ -228,15 +238,88 @@ function copySave(s: Save): Save {
     },
   };
 }
+export const energyCapacityStep = reference.energy_design.capacity_step;
+export const energyIntervalMs =
+  reference.energy_design.regeneration_seconds * 1000;
+export const productionPowerCosts = reference.energy_design.power_costs;
+export const energyCap = (s: Save) => s.staminaCapacity ?? 100;
+export const energyUpgradeCost = (s: Save) =>
+  reference.energy_design.capacity_gem_base +
+  reference.energy_design.capacity_gem_step *
+    Math.floor((energyCap(s) - 100) / reference.energy_design.capacity_step);
+export function productionPlan(s: Save, p: Producer) {
+  const selected = city(s).powers?.[p.id] ?? 1;
+  const effective = s.stamina > 100 ? selected : 1;
+  return {
+    selected,
+    effective,
+    cost: productionPowerCosts[effective - 1]!,
+    product: p.products[effective - 1]!,
+  };
+}
+export interface Achievement {
+  id: string;
+  city_id: string;
+  enabled: boolean;
+  kind: string;
+  metric: string;
+  target: number;
+  subject_id: string | null;
+  reward: {
+    capacity?: number;
+    energy?: number;
+    xp?: number;
+    gold?: number;
+    gems?: number;
+    title?: string;
+  };
+}
+export const achievements = reference.achievements as Achievement[];
+export function achievementProgress(s: Save, a: Achievement): number {
+  const c = s.cities[a.city_id];
+  if (!c) return 0;
+  switch (a.metric) {
+    case "intro":
+      return c.introIndex;
+    case "owned":
+      return c.owned.length;
+    case "discoveries":
+      return s.discoveries.filter(
+        (id) =>
+          producers[product(id).producer] &&
+          c.owned.includes(producers[product(id).producer]!.id),
+      ).length;
+    case "producer_discoveries":
+      return s.discoveries.filter(
+        (id) => producers[product(id).producer]?.id === a.subject_id,
+      ).length;
+    case "item":
+      return a.subject_id && s.discoveries.includes(a.subject_id) ? 1 : 0;
+    default:
+      return 0;
+  }
+}
+export function achievementState(s: Save, a: Achievement) {
+  if ((s.claimedAchievements ?? []).includes(a.id)) return "claimed";
+  if (!a.enabled || !s.cities[a.city_id]) return "locked";
+  return achievementProgress(s, a) >= a.target ? "ready" : "progress";
+}
+function grantEnergy(s: Save, capacity: number, energy: number, now: number) {
+  const wasFull = s.stamina >= energyCap(s);
+  s.staminaCapacity = energyCap(s) + capacity;
+  s.stamina = Math.min(energyCap(s), s.stamina + energy);
+  if (wasFull || s.stamina === energyCap(s)) s.energyAt = now;
+}
 export function advance(s: Save, now: number): Save {
   let next: Save | undefined;
   const edit = () => next ?? (next = copySave(s));
-  if (s.stamina < 100) {
-    const n = Math.max(0, Math.floor((now - s.energyAt) / 120000));
+  if (s.stamina < energyCap(s)) {
+    const n = Math.max(0, Math.floor((now - s.energyAt) / energyIntervalMs));
     if (n) {
       const a = edit();
-      a.stamina = Math.min(100, s.stamina + n);
-      a.energyAt = a.stamina === 100 ? now : s.energyAt + n * 120000;
+      a.stamina = Math.min(energyCap(s), s.stamina + n);
+      a.energyAt =
+        a.stamina === energyCap(s) ? now : s.energyAt + n * energyIntervalMs;
     }
   }
   for (const [id, b] of Object.entries(city(s).batches)) {
@@ -282,17 +365,68 @@ export function transition(
         return blocked("Üretici hazırlanıyor.");
       const i = c.board.indexOf(null);
       if (i < 0) return blocked("Tahta dolu. Birleştir veya depoya gönder.");
-      if (s.stamina <= 0) return blocked("Dayanıklılık yenileniyor.");
-      if (s.stamina === 100) s.energyAt = now;
-      s.stamina--;
-      const item = p.products[0]!.id;
+      const plan = productionPlan(s, p);
+      if (!plan.product || !c.opened.includes(plan.product.id))
+        return blocked("Güç modu için önce ürün alanını aç.");
+      if (s.stamina < plan.cost) return blocked("Dayanıklılık yenileniyor.");
+      if (s.stamina === energyCap(s)) s.energyAt = now;
+      s.stamina -= plan.cost;
+      const item = plan.product.id;
       c.board[i] = tile(s, item);
       const b = c.batches[p.id] ?? { remaining: 30, readyAt: 0 };
       b.remaining--;
       if (b.remaining === 0) b.readyAt = now + 120000;
       c.batches[p.id] = b;
       discover(item);
-      return done("produce", p.products[0]!.name, undefined, i);
+      return done("produce", plan.product.name, undefined, i);
+    }
+    case "power": {
+      const p = producers.find((p) => p.id === action.id);
+      if (
+        !p ||
+        !c.owned.includes(p.id) ||
+        !Number.isInteger(action.mode) ||
+        action.mode < 1 ||
+        action.mode > 4 ||
+        !p.products[action.mode - 1]
+      )
+        return blocked("Güç modu geçersiz.");
+      if (!c.opened.includes(p.products[action.mode - 1]!.id))
+        return blocked("Önce bu ürün alanını aç.");
+      c.powers = { ...c.powers, [p.id]: action.mode };
+      return done(
+        "tap",
+        `${action.mode}x seçildi. 100 ve altında üretim 1x olur.`,
+      );
+    }
+    case "energy-capacity": {
+      const cost = energyUpgradeCost(s);
+      if (s.gems < cost) return blocked(`${cost} elmas gerekiyor.`);
+      s.gems -= cost;
+      grantEnergy(
+        s,
+        reference.energy_design.capacity_step,
+        reference.energy_design.capacity_step,
+        now,
+      );
+      return done(
+        "unlock",
+        `Enerji kapasitesi ve enerji +${energyCapacityStep}.`,
+      );
+    }
+    case "claim-achievement": {
+      const a = achievements.find((a) => a.id === action.id);
+      if (!a || achievementState(s, a) !== "ready")
+        return blocked("Bu başarı ödülü henüz alınamaz.");
+      s.claimedAchievements = [...(s.claimedAchievements ?? []), a.id];
+      s.gold += a.reward.gold ?? 0;
+      s.gems += a.reward.gems ?? 0;
+      s.xp += a.reward.xp ?? 0;
+      if (a.reward.title)
+        s.titles = Array.from(new Set([...s.titles, a.reward.title]));
+      if (a.reward.capacity || a.reward.energy)
+        grantEnergy(s, a.reward.capacity ?? 0, a.reward.energy ?? 0, now);
+      return done("reward", `${name(a.id)}: Ödüller alındı.`);
     }
     case "move": {
       const { from, to } = action;
@@ -430,7 +564,16 @@ export function validateSave(value: unknown): value is Save {
   if (
     s.schema !== 2 ||
     ![s.xp, s.gold, s.gems, s.stamina, s.serial].every(nonNegative) ||
-    s.stamina > 100 ||
+    (s.staminaCapacity !== undefined &&
+      (!nonNegative(s.staminaCapacity) || s.staminaCapacity < 100)) ||
+    s.stamina > energyCap(s) ||
+    (s.claimedAchievements !== undefined &&
+      (!Array.isArray(s.claimedAchievements) ||
+        !s.claimedAchievements.every((id) =>
+          achievements.some((a) => a.id === id),
+        ) ||
+        new Set(s.claimedAchievements).size !==
+          s.claimedAchievements.length)) ||
     !Number.isFinite(s.energyAt) ||
     !Array.isArray(s.discoveries) ||
     !s.discoveries.every(known) ||
@@ -455,6 +598,16 @@ export function validateSave(value: unknown): value is Save {
       !nonNegative(c.storageCapacity) ||
       c.storageCapacity < 12 ||
       c.storageCapacity < c.storage.length ||
+      (c.powers !== undefined &&
+        (!c.powers ||
+          typeof c.powers !== "object" ||
+          !Object.entries(c.powers).every(
+            ([id, power]) =>
+              producers.some((p) => p.id === id) &&
+              Number.isInteger(power) &&
+              power >= 1 &&
+              power <= 4,
+          ))) ||
       !nonNegative(c.introIndex) ||
       !nonNegative(c.repeatIndex) ||
       !Array.isArray(c.owned) ||

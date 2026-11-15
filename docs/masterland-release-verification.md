@@ -78,3 +78,15 @@ Yeni UI senaryoları: hazır ilanda iki dokunuşun tek ilanı iki kez ödememesi
 Gerçek ekranlar ayrıca incelendi. Hazır üç kartta yeşil çerçeve ve Ver alanı göründü. Device Hub üzerinden New Haven kısayoluna dokunulduğunda pembe bölge ve başlık anında geldi; kapatınca aynı tahta geri döndü. Yalnız ana simülatör açıktır. Gerçek telefon ve uzun vadeli ekonomi dengesi bu testlerle tamamlandı sayılmaz; tüm olası hataların yokluğu iddia edilmez.
 
 Yeni çizim yerleşik imagegen ile üretildi: mobile/assets/art/world-map-v2.png; üretim tarifi world-map-v2-prompt.txt. Yeni şehirlerdeki kilitli düğümler oynanabilir yeni şehir içeriği değildir. Harita kaydırması aktif oyuncu şehrini değiştirmez. Mevcut kayıtların altını ve XP'si sıfırlanmaz; yeni fiyatlar gelecekteki satın alımlara uygulanır.
+
+
+## 2026-11-15 — Enerji gücü, özel başarılar ve ferman arayüzü
+
+- Motor testleri: 40/40 geçti. TypeScript ve lint kontrolleri geçti.
+- İlk enerji/başarı sürümünde genel native testler: 17/17 geçti.
+- Son dropdown ve parşömen sürümünde hedefli native testler: 7/7 geçti; 0 hata. Kayıt: `verification/2026-11-15/power-parchment-tests.json`.
+- Üreticiye basılı tutma bitişik renkli 1x–4x menüsünü açar. Modal kullanmaz; dışarı dokunma kapatır. Seçim üreticiye özeldir.
+- 100 enerji sınırı, 1/2/4/8 tüketim, kapasite yükseltmesi, tek seferlik başarı ödülü, seri üretim, sayfalar ve harita konumuna dönüş doğrulandı.
+- Harita ve başarı sayfaları kıvrık kenarlı parşömen kullanır. Son görünüm Device Hub üzerinden ayrıca incelendi.
+- Yalnızca Masterland-QA simülatörü açık bırakıldı. Normal kullanıcı kaydı sıfırlanmadı.
+- Elmas ve hediye ile kapasite artışı çalışır. Gerçek para satın alma entegrasyonu henüz yoktur. Elmas maliyetleri ve başarı ödülleri prototip denge değerleridir.

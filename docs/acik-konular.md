@@ -105,3 +105,16 @@ Onaylı saf merge ve bağımsız zincir kuralları `ureticiler-ve-zincirler.md` 
 ## 15 Kasım görsel turu durumu
 
 Kare hücre mi fotoğraf oranı mı konusu kapandı: kullanıcı fotoğrafın oranını seçti. Aktif uniform oran 122:88.75, kapasite 54 olarak korunur. Güncel görsel hedef ui-standard.md içindedir. Yeni gerçek ekranın bütünsel estetik kabulü, gerçek telefonda ses dinlemesi ve cihaz FPS/pil ölçümleri henüz tamamlanmış sayılmaz. Prototipteki gerçek reklam ve satın alma kapsamı değişmemiştir.
+
+## Enerji ve özel başarıların denge ayarları
+
+Güç modlarının 1/2/4/8 enerji maliyeti ve katı 100 üzeri koşulu kullanıcı tarafından netleştirildi. Nihai açık konular: kapasite paketi fiyat eğrisi, başarı adları/hedefleri/ödül sayıları, gerçek para SKU/fiyatları ve doğrulanmış ödeme karşılığı kapasite verme. Bu turdaki 10 elmas/+25 kapasite paketi ve aşağıdaki başarı içerikleri çalışan prototip önerisidir; kesin ekonomi kabulü değildir.
+
+| ID | Başarı | Koşul | Ödül |
+| --- | --- | --- | --- |
+| achievement1 | İlk Işık | İlk ilanını teslim et. Gezgin sandığını aç. | 25 kapasite, 25 enerji, 5 XP |
+| achievement2 | İki Tezgâh | İki farklı üretici aç. | 10 XP, 5 elmas |
+| achievement3 | Tarla Kâşifi | Tarlanın dört ürününü de keşfet. | 50 altın, Tarla Kâşifi |
+| achievement4 | Fırının Sırrı | Somun ekmeği ilk kez keşfet. | 20 XP, Fırın Dostu |
+| achievement5 | Gezginin Kesesi | On farklı ürün keşfet. | 25 enerji, 5 elmas |
+| achievement6 | Skara Hatırası | Skara’nın altı başlangıç ilanını teslim et. | 25 kapasite, 25 enerji, 30 XP, 100 altın, Skara Gezgini |

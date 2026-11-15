@@ -1,5 +1,5 @@
 {
-  "version": 29,
+  "version": 30,
   "locales": {
     "tr": {
       "city1_name_tr": "Skara Brae",
@@ -172,7 +172,34 @@
       "app1_name_tr": "Masterland",
       "city1_map_role_tr": "Ekin · Değirmen · Fırın",
       "city2_map_role_tr": "Pastane · Pastalar",
-      "city3_map_role_tr": "Balıkçılık · Marangozluk"
+      "city3_map_role_tr": "Balıkçılık · Marangozluk",
+      "title15_name_tr": "Tarla Kâşifi",
+      "title16_name_tr": "Fırın Dostu",
+      "title17_name_tr": "Skara Gezgini",
+      "achievement1_name_tr": "İlk Işık",
+      "achievement1_description_tr": "İlk ilanını teslim et. Gezgin sandığını aç.",
+      "achievement2_name_tr": "İki Tezgâh",
+      "achievement2_description_tr": "İki farklı üretici aç.",
+      "achievement3_name_tr": "Tarla Kâşifi",
+      "achievement3_description_tr": "Tarlanın dört ürününü de keşfet.",
+      "achievement4_name_tr": "Fırının Sırrı",
+      "achievement4_description_tr": "Somun ekmeği ilk kez keşfet.",
+      "achievement5_name_tr": "Gezginin Kesesi",
+      "achievement5_description_tr": "On farklı ürün keşfet.",
+      "achievement6_name_tr": "Skara Hatırası",
+      "achievement6_description_tr": "Skara’nın altı başlangıç ilanını teslim et.",
+      "achievement7_name_tr": "Pastanenin Daveti",
+      "achievement7_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement8_name_tr": "Tatlı Koleksiyon",
+      "achievement8_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement9_name_tr": "Ustanın İmzası",
+      "achievement9_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement10_name_tr": "İlk Ağ",
+      "achievement10_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement11_name_tr": "Ahşabın Dili",
+      "achievement11_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement12_name_tr": "Limanın Hatırası",
+      "achievement12_description_tr": "Şehir açıldığında koşulları belli olacak."
     }
   },
   "cities": [
@@ -2019,10 +2046,10 @@
     "economy": "approved_for_initial_playtest_not_final"
   },
   "approved_runtime_rules": {
-    "stamina_capacity": 100,
+    "stamina_capacity": "save.staminaCapacity or 100 for older saves",
     "stamina_cost": 1,
     "stamina_regeneration_seconds": 120,
-    "producer_output_tier": 1,
+    "producer_output_tier": "Selected power tier above 100 current energy; tier 1 at or below 100.",
     "producer_batch_cooldown": true,
     "order_inventory_sources": [
       "board",
@@ -2032,5 +2059,165 @@
     "storage_stack_limit": 1,
     "discovery_reward_trigger": "first_actual_acquisition",
     "per_city_board_state": true
-  }
+  },
+  "energy_design": {
+    "base_capacity": 100,
+    "boost_threshold": 100,
+    "regeneration_seconds": 120,
+    "capacity_step": 25,
+    "capacity_gem_base": 10,
+    "capacity_gem_step": 5,
+    "power_costs": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "real_money_status": "requires store receipt integration; no simulated cash purchase",
+    "capacity_upgrade_prototype": "Adds 25 maximum capacity and 25 energy; gem price is prototype tuning."
+  },
+  "achievements": [
+    {
+      "id": "achievement1",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {
+        "capacity": 25,
+        "energy": 25,
+        "xp": 5
+      }
+    },
+    {
+      "id": "achievement2",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "xp",
+      "metric": "owned",
+      "target": 2,
+      "subject_id": null,
+      "reward": {
+        "gems": 5,
+        "xp": 10
+      }
+    },
+    {
+      "id": "achievement3",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "title",
+      "metric": "producer_discoveries",
+      "target": 4,
+      "subject_id": "producer1",
+      "reward": {
+        "title": "title15",
+        "gold": 50
+      }
+    },
+    {
+      "id": "achievement4",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "title",
+      "metric": "item",
+      "target": 1,
+      "subject_id": "item6",
+      "reward": {
+        "title": "title16",
+        "xp": 20
+      }
+    },
+    {
+      "id": "achievement5",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "gift",
+      "metric": "discoveries",
+      "target": 10,
+      "subject_id": null,
+      "reward": {
+        "gems": 5,
+        "energy": 25
+      }
+    },
+    {
+      "id": "achievement6",
+      "city_id": "city1",
+      "enabled": true,
+      "kind": "energy",
+      "metric": "intro",
+      "target": 6,
+      "subject_id": null,
+      "reward": {
+        "title": "title17",
+        "capacity": 25,
+        "energy": 25,
+        "gold": 100,
+        "xp": 30
+      }
+    },
+    {
+      "id": "achievement7",
+      "city_id": "city2",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    },
+    {
+      "id": "achievement8",
+      "city_id": "city2",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    },
+    {
+      "id": "achievement9",
+      "city_id": "city2",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    },
+    {
+      "id": "achievement10",
+      "city_id": "city3",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    },
+    {
+      "id": "achievement11",
+      "city_id": "city3",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    },
+    {
+      "id": "achievement12",
+      "city_id": "city3",
+      "enabled": false,
+      "kind": "gift",
+      "metric": "intro",
+      "target": 1,
+      "subject_id": null,
+      "reward": {}
+    }
+  ]
 }

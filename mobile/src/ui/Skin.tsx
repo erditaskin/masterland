@@ -122,3 +122,22 @@ export const BoardFrame = memo(function BoardFrame({
     />
   );
 });
+
+/** Curled vellum skin for maps, achievements and small reward scrolls. */
+export const ParchmentPanel = memo(function ParchmentPanel({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
+  return (
+    <SkinPanel
+      texture={require("../../assets/art/parchment-v1.png")}
+      rect={[0, 0, 1024, 1536]}
+      width={width}
+      height={height}
+      inset={180}
+    />
+  );
+});

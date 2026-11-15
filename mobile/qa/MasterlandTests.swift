@@ -86,7 +86,7 @@ final class MasterlandTests:XCTestCase {
         let beforeGold=app.buttons["gold"].label
         app.buttons["tab-cities"].tap()
         XCTAssertTrue(app.buttons["map-city1"].waitForExistence(timeout:5))
-        XCTAssertTrue(app.buttons["map-step-city1-5"].label.contains("Kilitli"))
+        XCTAssertTrue(app.buttons["achievement-achievement6"].label.contains("1/6"))
         app.buttons["jump-city2"].tap()
         app.buttons["map-city2"].tap()
         let second=app.descendants(matching:.any).matching(identifier:"map-lock-city2").firstMatch
@@ -129,6 +129,61 @@ final class MasterlandTests:XCTestCase {
         app.buttons["unlock-item49"].tap();app.buttons["closePage"].tap();cell(3).tap()
         XCTAssertEqual(cell(3).label,"Buğday arabası")
         shot("upper-tier-chain-verified")
+    }
+    func testAchievementGiftAndPowerThreshold(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        app.buttons["tab-cities"].tap();app.buttons["achievement-achievement1"].tap()
+        XCTAssertTrue(app.buttons["claimAchievement"].waitForExistence(timeout:5))
+        app.buttons["claimAchievement"].tap(withNumberOfTaps:2,numberOfTouches:1)
+        XCTAssertFalse(app.buttons["claimAchievement"].exists)
+        shot("achievement-reward-claimed")
+        app.buttons["returnToRoute"].tap();app.buttons["map-city1"].tap();energy("111/125")
+        app.buttons["producer1"].press(forDuration:0.6)
+        XCTAssertTrue(app.otherElements["producerPowerMenu"].waitForExistence(timeout:5))
+        XCTAssertFalse(app.buttons["closePage"].exists)
+        app.buttons["powerProductDetails"].tap()
+        app.buttons["unlock-item27"].tap();app.buttons["unlock-item49"].tap();app.buttons["closePage"].tap()
+        app.buttons["producer1"].press(forDuration:0.6);app.buttons["power-4"].tap()
+        app.buttons["producer1"].tap();energy("103/125");XCTAssertEqual(cell(18).label,"Buğday arabası")
+        app.buttons["producer1"].tap();energy("95/125");XCTAssertEqual(cell(19).label,"Buğday arabası")
+        app.buttons["producer1"].tap();energy("94/125");XCTAssertEqual(cell(20).label,"Buğday başağı")
+        XCTAssertTrue(app.buttons["producer1"].label.contains("4x seçili, 1x etkin"))
+        shot("power-threshold-fallback")
+    }
+    func testGemCapacityPurchase(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:10))
+        app.buttons["stamina"].tap();app.buttons["upgradeEnergyCapacity"].tap();app.buttons["closePage"].tap()
+        energy("111/125");XCTAssertTrue(app.buttons["gems"].label.contains("2"))
+        shot("gem-energy-capacity")
+    }
+    func testAchievementRouteRestoresScrollPosition(){
+        app.buttons["tab-cities"].tap();app.buttons["jump-city3"].tap()
+        let y=app.buttons["map-city3"].frame.minY
+        app.buttons["achievement-achievement10"].tap()
+        XCTAssertTrue(app.buttons["returnToRoute"].waitForExistence(timeout:5))
+        app.buttons["returnToRoute"].tap()
+        XCTAssertTrue(app.buttons["map-city3"].waitForExistence(timeout:5))
+        let settled=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in abs(self.app.buttons["map-city3"].frame.minY-y)<1 },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:5),.completed)
+        shot("achievement-route-restored")
+    }
+    func testProducerPowerMenuIsLocalAndPerProducer(){
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:10))
+        app.buttons["stamina"].tap();app.buttons["upgradeEnergyCapacity"].tap();app.buttons["closePage"].tap()
+        app.buttons["producer6"].press(forDuration:0.6)
+        let menu=app.otherElements["producerPowerMenu"]
+        XCTAssertTrue(menu.waitForExistence(timeout:5));XCTAssertLessThan(menu.frame.width,app.frame.width*0.4)
+        XCTAssertFalse(app.buttons["closePage"].exists)
+        shot("anchored-producer-power-menu")
+        app.buttons["power-2"].tap();XCTAssertFalse(menu.exists)
+        XCTAssertTrue(app.buttons["producer1"].label.contains("1x seçili"))
+        app.buttons["producer6"].tap();energy("109/125");XCTAssertEqual(cell(18).label,"Krema")
+        app.buttons["producer6"].press(forDuration:0.6)
+        app.coordinate(withNormalizedOffset:CGVector(dx:0.02,dy:0.85)).tap()
+        XCTAssertFalse(menu.exists)
     }
     func testRapidProducerTapsAndCooldown(){
         for _ in 0..<2 {app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1)};energy("80/100")

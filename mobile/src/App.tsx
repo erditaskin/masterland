@@ -35,6 +35,7 @@ import { prioritizeOrderRail } from "./ui/orderRail";
 import { fitBackdrop } from "./ui/layout";
 import { StatusIcon } from "./ui/StatusIcon";
 import { SkinPanel, skin } from "./ui/Skin";
+import { PowerMenu, type PowerAnchor } from "./ui/PowerMenu";
 import { ProducerButton } from "./ui/ProducerButton";
 import { Button, Label, ActionButton } from "./ui/Controls";
 import { Crop, Item, Reference, Sprite } from "./ui/Art";
@@ -42,6 +43,11 @@ import { Pages, type Page } from "./ui/Pages";
 import { art, colors, fonts } from "./ui/theme";
 import { gameStore } from "./state/store";
 import {
+  achievements,
+  achievementState,
+  energyCap,
+  energyIntervalMs,
+  productionPlan,
   city,
   count,
   level,
@@ -72,7 +78,9 @@ const ProducerCard = memo(
     save,
     dispatch,
     open,
+    onPowerOpen,
   }: {
+    onPowerOpen: (anchor: PowerAnchor) => void;
     p: Producer;
     index: number;
     size: number;
@@ -80,6 +88,7 @@ const ProducerCard = memo(
     dispatch: (a: Action) => void;
     open: (p: Page) => void;
   }) {
+    const anchor = useRef<ComponentRef<typeof View>>(null);
     const c = city(save),
       owned = c.owned.includes(p.id),
       readyAt = c.batches[p.id]?.readyAt ?? 0,
@@ -90,83 +99,123 @@ const ProducerCard = memo(
       return () => clearInterval(timer);
     }, [readyAt]);
     const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000));
+    const plan = productionPlan(save, p);
     return (
-      <ProducerButton
-        testID={p.id}
-        label={`${p.name}, üretmek için dokun, geliştirmek için basılı tut`}
-        onPress={() =>
-          owned
-            ? dispatch({ type: "produce", id: p.id })
-            : open({ kind: "producer", index })
-        }
-        onLongPress={() => open({ kind: "producer", index })}
-        style={{
-          width: size,
-          height: size,
-          borderRadius: 10,
-          overflow: "hidden",
-          borderWidth: 1.2,
-          borderColor: owned ? colors.gold : colors.muted,
-        }}
+      <View
+        ref={anchor}
+        collapsable={false}
+        style={{ width: size, height: size }}
       >
-        <Reference
-          x={136 + index * 137}
-          y={397}
-          w={117}
-          h={116}
-          width={size}
-          height={size}
-        />
-        <View
-          pointerEvents="none"
+        <ProducerButton
+          testID={p.id}
+          label={`${p.name}, ${plan.selected}x seçili, ${plan.effective}x etkin, ${plan.cost} enerji, güç için basılı tut`}
+          onPress={() =>
+            owned
+              ? dispatch({ type: "produce", id: p.id })
+              : open({ kind: "producer", index })
+          }
+          onLongPress={() => {
+            if (!owned) {
+              open({ kind: "producer", index });
+              return;
+            }
+            anchor.current?.measureInWindow((x, y, width, height) =>
+              onPowerOpen({ index, x, y, width, height }),
+            );
+          }}
           style={{
-            position: "absolute",
-            bottom: 2,
-            left: 3,
-            right: 3,
-            height: 15,
-            flexDirection: "row",
-            gap: 2,
-            borderRadius: 9,
-            backgroundColor: colors.navy,
-            borderWidth: 0.7,
-            borderColor: colors.gold,
-            alignItems: "center",
-            justifyContent: "center",
+            width: size,
+            height: size,
+            borderRadius: 10,
+            overflow: "hidden",
+            borderWidth: 1.2,
+            borderColor: owned ? colors.gold : colors.muted,
           }}
         >
-          <StatusIcon
-            kind={
-              !owned
-                ? level(save) >= p.level
-                  ? "gold"
-                  : "lock"
-                : seconds > 0
-                  ? "clock"
-                  : "energy"
-            }
+          <Reference
+            x={136 + index * 137}
+            y={397}
+            w={117}
+            h={116}
+            width={size}
+            height={size}
           />
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.85}
+          {owned && (
+            <View
+              pointerEvents="none"
+              style={{
+                position: "absolute",
+                top: 3,
+                left: 3,
+                borderRadius: 6,
+                paddingHorizontal: 4,
+                backgroundColor: plan.effective > 1 ? "#a35d13" : "#153149",
+                borderWidth: 0.6,
+                borderColor: colors.gold,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: fonts.number,
+                  fontSize: 9,
+                  color: colors.goldLight,
+                }}
+              >
+                {plan.selected}x
+              </Text>
+            </View>
+          )}
+          <View
+            pointerEvents="none"
             style={{
-              fontFamily: fonts.number,
-              color: colors.goldLight,
-              fontSize: 10,
-              flexShrink: 1,
+              position: "absolute",
+              bottom: 2,
+              left: 3,
+              right: 3,
+              height: 15,
+              flexDirection: "row",
+              gap: 2,
+              borderRadius: 9,
+              backgroundColor: colors.navy,
+              borderWidth: 0.7,
+              borderColor: colors.gold,
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            {!owned
-              ? level(save) >= p.level
-                ? `${p.price}`
-                : `Lv.${p.level}`
-              : seconds > 0
-                ? `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
-                : "1"}
-          </Text>
-        </View>
-      </ProducerButton>
+            <StatusIcon
+              kind={
+                !owned
+                  ? level(save) >= p.level
+                    ? "gold"
+                    : "lock"
+                  : seconds > 0
+                    ? "clock"
+                    : "energy"
+              }
+            />
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.85}
+              style={{
+                fontFamily: fonts.number,
+                color: colors.goldLight,
+                fontSize: 10,
+                flexShrink: 1,
+              }}
+            >
+              {!owned
+                ? level(save) >= p.level
+                  ? `${p.price}`
+                  : `Lv.${p.level}`
+                : seconds > 0
+                  ? `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
+                  : String(plan.cost)}
+            </Text>
+          </View>
+        </ProducerButton>
+      </View>
     );
   },
   (a, b) =>
@@ -175,7 +224,11 @@ const ProducerCard = memo(
     a.size === b.size &&
     a.dispatch === b.dispatch &&
     a.open === b.open &&
+    a.onPowerOpen === b.onPowerOpen &&
     level(a.save) === level(b.save) &&
+    a.save.stamina > 100 === b.save.stamina > 100 &&
+    (city(a.save).powers?.[a.p.id] ?? 1) ===
+      (city(b.save).powers?.[b.p.id] ?? 1) &&
     city(a.save).owned.includes(a.p.id) ===
       city(b.save).owned.includes(b.p.id) &&
     (city(a.save).batches[a.p.id]?.readyAt ?? 0) ===
@@ -185,7 +238,9 @@ const Navigation = memo(function Navigation({
   width,
   open,
   onBoard,
+  readyCount,
 }: {
+  readyCount: number;
   width: number;
   open: (p: Page) => void;
   onBoard: () => void;
@@ -210,7 +265,11 @@ const Navigation = memo(function Navigation({
         <Button
           key={target}
           testID={"tab-" + target}
-          label={label}
+          label={
+            target === "cities" && readyCount
+              ? `${label}, ${readyCount} ödül hazır`
+              : label
+          }
           onPress={() =>
             target === "board" ? onBoard() : open({ kind: target })
           }
@@ -230,6 +289,34 @@ const Navigation = memo(function Navigation({
             borderColor: i === 0 ? colors.goldLight : "transparent",
           }}
         >
+          {target === "cities" && readyCount > 0 && (
+            <View
+              pointerEvents="none"
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 4,
+                minWidth: 14,
+                height: 14,
+                borderRadius: 7,
+                backgroundColor: "#b96716",
+                borderWidth: 1,
+                borderColor: colors.goldLight,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.goldLight,
+                  fontSize: 9,
+                  fontFamily: fonts.number,
+                }}
+              >
+                {readyCount}
+              </Text>
+            </View>
+          )}
           <Sprite kind="icons" index={i} size={35} />
           <Label
             title
@@ -251,6 +338,7 @@ function Game() {
     insets = useSafeAreaInsets();
   const [page, setPage] = useState<Page | null>(null),
     [selected, setSelected] = useState<number | null>(null),
+    [powerMenu, setPowerMenu] = useState<PowerAnchor | null>(null),
     [reduced, setReduced] = useState(false),
     [hiddenToastRevision, setHiddenToastRevision] = useState(-1);
   const lastOrderDeliveryAt = useRef(0);
@@ -259,6 +347,7 @@ function Game() {
   const open = useCallback(
       (p: Page) => {
         uiSound();
+        setPowerMenu(null);
         setPage(p);
       },
       [uiSound],
@@ -274,6 +363,13 @@ function Game() {
   const dispatch = useCallback((action: Action) => {
     return gameStore.dispatch(action);
   }, []);
+  const showPowerMenu = useCallback(
+    (anchor: PowerAnchor) => {
+      uiSound();
+      setPowerMenu(anchor);
+    },
+    [uiSound],
+  );
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
       const mode = url?.includes("review")
@@ -325,7 +421,9 @@ function Game() {
     if (!ready) return;
     const c = city(save),
       next = [
-        save.stamina < 100 ? save.energyAt + 120000 : Infinity,
+        save.stamina < energyCap(save)
+          ? save.energyAt + energyIntervalMs
+          : Infinity,
         ...Object.values(c.batches).map((b) =>
           b.readyAt > Date.now() ? b.readyAt : Infinity,
         ),
@@ -573,7 +671,7 @@ function Game() {
             [
               {
                 id: "stamina",
-                value: `${save.stamina}/100`,
+                value: `${save.stamina}/${energyCap(save)}`,
                 icon: 5,
                 width: 76,
               },
@@ -1050,6 +1148,7 @@ function Game() {
               <ProducerCard
                 key={p.id}
                 p={p}
+                onPowerOpen={showPowerMenu}
                 index={i}
                 size={producerSize}
                 save={save}
@@ -1080,9 +1179,28 @@ function Game() {
           />
         </View>
         <View style={{ position: "absolute", top: navTop, left: 10 }}>
-          <Navigation width={width} open={open} onBoard={boardTab} />
+          <Navigation
+            width={width}
+            open={open}
+            onBoard={boardTab}
+            readyCount={
+              achievements.filter((a) => achievementState(save, a) === "ready")
+                .length
+            }
+          />
         </View>
       </View>
+      {powerMenu && !page && (
+        <PowerMenu
+          anchor={powerMenu}
+          width={width}
+          height={height}
+          save={save}
+          dispatch={dispatch}
+          close={() => setPowerMenu(null)}
+          details={() => open({ kind: "producer", index: powerMenu.index })}
+        />
+      )}
       {page && (
         <Pages
           page={page}

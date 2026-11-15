@@ -191,3 +191,9 @@ Seçili eşya tek başına vurgulanır. Birleşebilecek başka üründe otomatik
 Hazır ilanlar eksik ilanların önüne taşınır; kart yeşil çerçeve ve hafif renk dolgusu alır. Ver alanı kartın içindedir ve kartın tamamı teslim için tıklanabilir. Görünen ilk ikon tek başına hazır olma kararı vermez; bütün gereksinimler hem tahta hem depo üzerinden kontrol edilir. Seri teslimlerde güncel ilan kimliği doğrulanır. Teslimattan hemen sonra eksik karta denk gelen ikinci dokunuş sayfa açmaz; hazır başka ilana hızlı teslim engellenmez.
 
 Şehir haritası tek uzun çizimin üç bölgesi üzerinde dikey kayar. Görünen merkez bölge üst başlığın tema rengini belirler. Sağdaki şehir kısayolları yalnız konuma kaydırır. Skara düğümleri mevcut giriş ilanlarını açar; gelecekteki şehirlerin düğümleri kilit mesajı gösterir. Harita gezinmesi yeni şehir oynanışını açmaz.
+
+## Özel başarı yolu ve inscribe fermanı
+
+Yol üzerindeki sıradan giriş ilanları, özel başarı kartlarıyla değiştirilir. İlanlar tahtadaki satın alma panosunda kalır. Yol kartları unvan, sandık, kapasite/enerji ve XP ödüllerini temsil eder. İlerleme sayısı ve çubuğu, Ödül hazır ve Alındı durumları renkten bağımsız metinle de gösterilir. Yeni başarı simgeleri özgün çizimdir. Şehirler ve başarı ayrıntıları kıvrık kenarlı ferman dokusu taşır; kartlarda küçük mühürler bulunur. Başarı ayrıntısı önceki tam ekran standardına uyar. Yola dönüş son kaydırma konumunu korur. Gelecek iki şehirdeki başarılar kilitli önizlemedir.
+
+Güç menüsü ana tahta üzerinde gerçek üretici koordinatına bağlanır; üst bileşende çizildiği için yatay üretici listesinin sınırında kırpılmaz. Tam ekran modal veya alt drawer kullanılmaz, arka plan karartılmaz. 1x mavi, 2x yeşil, 3x mor, 4x kehribar renktedir. Üreticinin üstünde seçili mod, alt durumunda gerçek enerji maliyeti bulunur. 100 ve altında seçili üst mod korunur ama gerçek maliyet 1 olur. Şehirler sekmesi alınabilir başarı ödülü sayısını gösterir.
