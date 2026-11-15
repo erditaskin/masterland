@@ -37,3 +37,8 @@ Aktif kök `/Users/erdi/masterland`, uygulama `mobile/` altındadır. Eski Swift
 ## En son görsel karar — Skara konsept turu
 
 Kullanıcı 15 Kasım 2026 akşamı hücrelerin her zaman kare olmasını açıkça istedi. Yukarıdaki fotoğraf kaynaklı 122:88.75 oranı tarihçedir; yeni hedef eşit kare hücrelerdir. 6×9 kayıt kapasitesi korunur. Üretici rafı kompakt, şehir başlığı yukarıda, tahta yanlara yakın ve uzun olacaktır. Konseptler assets/concepts/skara-v1 ve docs/skara-concept-v1.md içindedir. Konsept onayından sonraki native uygulama turunda kare standardı kodlanmıştır. Kanonik hedef kullanıcı tarafından tekrar belirtilen skara-concept-set-v1.zip paketidir. Güncel native ölçümler ve sınırlamalar docs/skara-native-fidelity.md içindedir.
+
+
+## Son kabuk düzeltmesi — oyma ahşap
+
+Kullanıcının 15 Kasım 2026 gece düzeltmesiyle ana ekrandaki şehir tabelası, ilan/üretici yuvaları ve alt navigasyon oyma ahşap diline geçmiştir. Tek tam ekran arka plan, tahtayı çevreleyen Skara çiftlik avlusudur; kesintisiz koyu yeşil boşluk güncel hedef değildir. Kanonik konsept yerleşim ve kare tahta referansı olarak korunur; bu son açık kullanıcı düzeltmesi kabuk malzemesinde önceliklidir. Ayrıntılar docs/ui-standard.md ve docs/kararlar.md içindedir.

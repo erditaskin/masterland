@@ -311,3 +311,10 @@ Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe 3 native test 
 Opak yeşil hücre dolgusu düşük alfa değerli yeşil geçişle değiştirildi. Dört köşeye ince kıvrım ve yaprak ayrıntısı eklendi. Ayrıntılar native View katmanlarıdır; bitmap yükü veya sürekli animasyon eklemez. Alt tahta dokusu görünür kalır.
 
 Doğrulama: TypeScript, ESLint ve Release üzerinde iki native kontrol geçti. Saydam dolgu ve kıvrımlı/yapraklı köşeler gerçek simülatör ekranında incelendi. Teslim sonrasında hücre vurgusunun kalkması doğrulandı.
+
+
+## 15 Kasım 2026 — Oyma ahşap Skara kabuğu
+
+Skara kıyı panoraması korunarak tek tam ekran çiftlik avlusu arka planı hazırlandı. Şehir tabelası ve ortak oyma ahşap tezgâh ayrı alfa assetleridir; promptları yanlarında saklanır. Ana şehir başlığı, üretici/ilan yuvaları ve beşli alt navigasyon bu malzemeye bağlandı. Native yazılar, sayılar, aktif durumlar ve etkileşimler görselden ayrı kalır. WoodTray dokuz parçalı ölçeklemeyle kenarları korur. Yeni arka plan kare hücre geometrisini etkilemez.
+
+Doğrulama: TypeScript ve ESLint geçti. Release simülatöründe kayıt/arka plan, sayfalar/depo, ilan kaydırma, üretici güç menüsü, seri üretim, hızlı ilan teslimi ve 54 hücre ölçümü dahil yedi native kontrol sıfır hatayla geçti. Görsel kontrolde alt menüde Koleksiyon satır taşması bulundu; tek satır/sığdırma düzeltmesi ve ahşap enerji rozetleri sonrası sayfa ve görsel ölçüm kontrollerinin ikisi de tekrar geçti. Son gerçek ekran görsel olarak incelendi; kare hücreler, saydam hazır ürün zemini ve ahşap kabuk birlikte doğrulandı.

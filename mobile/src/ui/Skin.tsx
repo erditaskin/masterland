@@ -207,3 +207,37 @@ export function TitlePlaque({
     </View>
   );
 }
+
+/** Shared carved oak tray; native buttons and labels stay independent of artwork. */
+export function WoodTray({ width, height }: { width: number; height: number }) {
+  return (
+    <SkinPanel
+      texture={require("../../assets/art/carved-wood-rail-v1.png")}
+      rect={[6, 138, 2160, 437]}
+      width={width}
+      height={height}
+      inset={120}
+    />
+  );
+}
+export function CityWoodSign({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
+  return (
+    <View pointerEvents="none" style={{ position: "absolute", inset: 0 }}>
+      <Crop
+        source={require("../../assets/art/carved-city-sign-v1.png")}
+        x={61}
+        y={126}
+        w={2047}
+        h={472}
+        width={width}
+        height={height}
+      />
+    </View>
+  );
+}

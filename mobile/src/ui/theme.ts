@@ -19,7 +19,7 @@ export const fonts = {
 };
 export const motion = { press: 80, appear: 140, settle: 160, merge: 220 };
 export const art = {
-  city: require("../../assets/art/canonical-board-clean-v1.png"),
+  city: require("../../assets/art/skara-surround-v2.png"),
   approved: require("../../assets/art/products-approved.png"),
   products: require("../../assets/art/products.png"),
   icons: require("../../assets/art/icons.png"),

@@ -123,3 +123,18 @@ Güç modlarının 1/2/4/8 enerji maliyeti ve katı 100 üzeri koşulu kullanıc
 ## Son durum — kanonik Skara uygulaması
 
 Yukarıdaki eski 122:88.75 oranı güncel açık konu değildir. Kullanıcı daha sonraki konsept turunda kare hücre kararını verdi; native ölçüm 54 adet 57×57 pt hücreyi doğruladı. Açık kalan görsel kabul, kanonik konsept ile native uygulamanın kullanıcı tarafından birlikte değerlendirilmesidir. Test başarısı %100 piksel özdeşliği sayılmaz. Gerçek telefonda ses, FPS ve pil ölçümü bu simülatör turunun kapsamı dışındadır.
+
+
+## Bekleyen inceleme — üreticilerde 7–12 merge basamağı
+
+Kullanıcı bütün üreticilerin en az 7, en fazla 12 basamak olmasını istedi; uygulama öncesinde liste sunulmasını kabul etti. Aşağıdaki Skara listesi öneridir, ürün adları ve sayıları henüz onaylanmadı. Mevcut ilk dört ürün korunacak, yalnız sonuna yeni ürünler eklenecektir. Sonraki kullanıcı mesajı ahşap arayüz düzeltmesine geçtiği için zincirler uygulanmadı.
+
+| Üretici | Önerilen toplam | Önerilen ek ürünler, sıralı |
+|---|---:|---|
+| producer1 — Buğday Tarlası | 7 | Hasat yığını, tahıl ambarı, büyük silo |
+| producer5 — Değirmen | 8 | Un varili, un sandığı, değirmenci tezgâhı, ustanın un stoku |
+| producer8 — Taş Fırın | 8 | Susamlı simit, örgü ekmek, şenlik ekmeği, fırıncı sofrası |
+| producer6 — Süt Çiftliği | 9 | Peynir kalıbı, peynir tekeri, yıllanmış peynir, peynir sepeti, sütçü tezgâhı |
+| producer7 — Meyve Bahçesi | 8 | Elma suyu sürahisi, kurutulmuş elma, meyve ikramı, hasat tezgâhı |
+
+20 mevcut ürüne 20 yeni ürün önerilir. Zincirin 8. basamağı yalnız ilk ürünle üretimde 128, 12. basamağı 2048 başlangıç ürünü gerektirir. Level/altın eşikleri ve ödüller bu maliyetle birlikte dengelenecek; mevcut birikimler ve sabit ID'ler korunacaktır.

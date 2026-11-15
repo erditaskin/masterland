@@ -212,3 +212,8 @@ Güncel hücre hedefi eşit karedir: tek s kenarından 6s×9s iç grid hesaplan�
 ## 15 Kasım 2026 akşamı — Kanonik Skara native standardı
 
 Önceki raster oran kayıtlarının yerine 6×9 eşit kare hücre kullanılır. Referans `skara-concept-set-v1.zip` paketidir; uygulama ve ölçüm kaydı `skara-native-fidelity.md` içindedir. Yeni onaylı konseptler ürün/koleksiyon için düz krem panel, şehir yolu için kıvrık parşömen kullanır. Ortaklık aynı kapatma konumu, okunabilir iç boşluk, tipografi, renk ve etkileşim davranışıdır. Harita illüstrasyonu kendi kâğıdının içinde kalır. Native HUD ve alt navigasyon ikincil sayfalarda görünürdür.
+
+
+## Son Skara kabuk düzeltmesi — oyma ahşap
+
+Ana ekranın üretici rafı ve alt menüsündeki turkuaz zeminler kullanıcı isteğiyle oyma ahşaba geçer. Şehir tabelası ahşaptır. İlan yuvaları aynı malzemeyi paylaşır; hazır durumda iç yüzey yeşile döner. Tek arka plan çiftlik avlusuyla tahtayı çevreler. Önceki konsept paketi yerleşim referansıdır; bu son kullanıcı düzeltmesi kabuk malzemesinin güncel kararıdır.

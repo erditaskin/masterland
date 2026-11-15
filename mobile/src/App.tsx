@@ -36,7 +36,7 @@ import { Board } from "./ui/Board";
 import { prioritizeOrderRail } from "./ui/orderRail";
 import { fitSquareBoard } from "./ui/layout";
 import { StatusIcon } from "./ui/StatusIcon";
-import { TitlePlaque } from "./ui/Skin";
+import { CityWoodSign, WoodTray } from "./ui/Skin";
 import { PowerMenu, type PowerAnchor } from "./ui/PowerMenu";
 import { ProducerButton } from "./ui/ProducerButton";
 import { Button, Label, ActionButton } from "./ui/Controls";
@@ -74,6 +74,8 @@ const navigation = [
 ] as const;
 const startupAssets = [
   art.city,
+  require("../assets/art/carved-city-sign-v1.png"),
+  require("../assets/art/carved-wood-rail-v1.png"),
   require("../assets/art/flour-packet-v1.png"),
   art.concept,
   art.approved,
@@ -150,19 +152,32 @@ const ProducerCard = memo(
             height: size,
             borderRadius: 10,
             overflow: "hidden",
-            borderWidth: 1.2,
-            borderColor: owned ? colors.gold : colors.muted,
+            backgroundColor: "#482711",
+            borderWidth: 2,
+            borderTopColor: "#43210f",
+            borderBottomColor: "#d19a56",
+            borderColor: owned ? "#a56d32" : "#72502d",
           }}
         >
-          <Crop
-            source={art.concept}
-            x={143 + index * 130.5}
-            y={400}
-            w={68}
-            h={68}
-            width={size}
-            height={size}
-          />
+          <View
+            pointerEvents="none"
+            style={{
+              position: "absolute",
+              inset: 2,
+              overflow: "hidden",
+              borderRadius: 6,
+            }}
+          >
+            <Crop
+              source={art.concept}
+              x={143 + index * 130.5}
+              y={400}
+              w={68}
+              h={68}
+              width={size - 4}
+              height={size - 4}
+            />
+          </View>
           {owned && (
             <View
               pointerEvents="none"
@@ -172,7 +187,7 @@ const ProducerCard = memo(
                 left: 3,
                 borderRadius: 6,
                 paddingHorizontal: 4,
-                backgroundColor: plan.effective > 1 ? "#a35d13" : "#153149",
+                backgroundColor: plan.effective > 1 ? "#a35d13" : "#482714",
                 borderWidth: 0.6,
                 borderColor: colors.gold,
               }}
@@ -199,7 +214,7 @@ const ProducerCard = memo(
               flexDirection: "row",
               gap: 2,
               borderRadius: 9,
-              backgroundColor: colors.navy,
+              backgroundColor: "#412512",
               borderWidth: 0.7,
               borderColor: colors.gold,
               alignItems: "center",
@@ -278,14 +293,11 @@ const Navigation = memo(function Navigation({
         flexDirection: "row",
         paddingHorizontal: 4,
         paddingVertical: 3,
-        borderRadius: 22,
-        backgroundColor: colors.navy,
-        backgroundImage:
-          "linear-gradient(180deg, #16717a 0%, #06404a 65%, #082f39 100%)",
-        borderColor: colors.gold,
-        borderWidth: 1,
+        borderRadius: 12,
+        backgroundColor: "transparent",
       }}
     >
+      <WoodTray width={width - 20} height={55} />
       {navigation.map(([label, target], i) => (
         <Button
           key={target}
@@ -300,18 +312,22 @@ const Navigation = memo(function Navigation({
           }
           style={{
             flex: 1,
-            borderRadius: 12,
-            backgroundColor: active === target ? "#137e82" : "transparent",
+            marginHorizontal: 2,
+            borderRadius: 8,
+            backgroundColor:
+              active === target ? "#a86628" : "rgba(48, 23, 10, 0.38)",
             backgroundImage:
               active === target
-                ? "linear-gradient(180deg, #329ca0 0%, #08616a 60%, #16454c 100%)"
-                : undefined,
+                ? "linear-gradient(180deg, #cf9448 0%, #925021 100%)"
+                : "linear-gradient(180deg, rgba(31, 15, 5, 0.32) 0%, rgba(108, 58, 24, 0.12) 100%)",
             shadowColor: active === target ? "#ffbd39" : "transparent",
             shadowOpacity: active === target ? 0.55 : 0,
             shadowRadius: 5,
             shadowOffset: { width: 0, height: 0 },
             borderWidth: 1,
-            borderColor: active === target ? colors.goldLight : "transparent",
+            borderColor: active === target ? "#f0ca86" : "#71401f",
+            borderTopColor: active === target ? "#f0ca86" : "#3f200d",
+            borderBottomColor: active === target ? "#e3ab63" : "#bc8044",
           }}
         >
           {target === "cities" && readyCount > 0 && (
@@ -343,14 +359,21 @@ const Navigation = memo(function Navigation({
             </View>
           )}
           <Sprite kind="icons" index={i} size={35} />
-          <Label
-            title
-            size={12}
-            color={colors.goldLight}
-            style={{ textAlign: "center", marginTop: -1 }}
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.82}
+            style={{
+              fontFamily: fonts.title,
+              fontSize: 12,
+              color: colors.goldLight,
+              textAlign: "center",
+              width: "100%",
+              marginTop: -1,
+            }}
           >
             {label}
-          </Label>
+          </Text>
         </Button>
       ))}
     </View>
@@ -858,17 +881,13 @@ function Game() {
                 position: "absolute",
                 top: top + 35 * scale,
                 alignSelf: "center",
-                height: 23 * scale,
-                width: 155 * scale,
+                height: 26 * scale,
+                width: 180 * scale,
                 alignItems: "center",
-                borderRadius: 18,
-                backgroundColor: colors.navy,
-                borderWidth: 1.3,
-                borderColor: colors.gold,
                 justifyContent: "center",
               }}
             >
-              <TitlePlaque width={155 * scale} height={23 * scale} />
+              <CityWoodSign width={180 * scale} height={26 * scale} />
               <View
                 style={{
                   flexDirection: "row",
@@ -987,26 +1006,14 @@ function Game() {
                         backgroundColor: "transparent",
                       }}
                     >
-                      <Image
-                        pointerEvents="none"
-                        accessible={false}
-                        source={require("../assets/art/order-card-v11.png")}
-                        resizeMode="stretch"
-                        style={{
-                          position: "absolute",
-                          left: (-cardWidth * 106) / 1557,
-                          top: (-cardHeight * 110) / 685,
-                          width: (cardWidth * 1774) / 1557,
-                          height: (cardHeight * 887) / 685,
-                        }}
-                      />
+                      <WoodTray width={cardWidth} height={cardHeight} />
                       {ready && (
                         <View
                           pointerEvents="none"
                           style={{
                             position: "absolute",
-                            inset: 0,
-                            borderRadius: 6,
+                            inset: 3,
+                            borderRadius: 5,
                             borderWidth: 2,
                             borderColor: "#58782d",
                             backgroundColor: "#91ad4e",
@@ -1032,7 +1039,10 @@ function Game() {
                         >
                           <Item id={r.item_id} size={42 * scale} />
                           {o.requirements.length > 1 && (
-                            <Label size={7.5} color={colors.muted}>
+                            <Label
+                              size={7.5}
+                              color={ready ? colors.ink : colors.goldLight}
+                            >
                               +{o.requirements.length - 1} daha
                             </Label>
                           )}
@@ -1057,8 +1067,8 @@ function Game() {
                                 color: ready
                                   ? "#fff4d5"
                                   : count(save, r.item_id) >= r.quantity
-                                    ? colors.green
-                                    : "#a52b22",
+                                    ? "#d9e69c"
+                                    : "#ffd0a0",
                               }}
                             >
                               {ready
@@ -1078,7 +1088,7 @@ function Game() {
                               style={{
                                 fontFamily: fonts.number,
                                 fontSize: 11 * scale,
-                                color: colors.ink,
+                                color: ready ? colors.ink : colors.goldLight,
                               }}
                             >
                               {o.gold}
@@ -1088,13 +1098,20 @@ function Game() {
                             style={{
                               fontFamily: fonts.number,
                               fontSize: 11.3 * scale,
-                              color: "#178cc4",
-                              textShadowColor: "#fff5d9",
+                              color: ready ? "#178cc4" : "#8cddf0",
+                              textShadowColor: ready ? "#fff5d9" : "#39200f",
                               textShadowOffset: { width: 0, height: 0.5 },
                               textShadowRadius: 0.5,
                             }}
                           >
-                            XP <Text style={{ color: colors.ink }}>{o.xp}</Text>
+                            XP{" "}
+                            <Text
+                              style={{
+                                color: ready ? colors.ink : colors.goldLight,
+                              }}
+                            >
+                              {o.xp}
+                            </Text>
                           </Text>
                         </View>
                       </View>
@@ -1110,16 +1127,13 @@ function Game() {
                 left: 8 * scale,
                 right: 8 * scale,
                 height: 50 * scale,
-                borderRadius: 30,
-                backgroundColor: colors.navy,
-                backgroundImage:
-                  "linear-gradient(180deg, #17636b 0%, #073a43 55%, #0b5058 100%)",
-                borderWidth: 1,
-                borderColor: colors.gold,
+                borderRadius: 12,
+                backgroundColor: "transparent",
                 justifyContent: "center",
                 paddingHorizontal: 0,
               }}
             >
+              <WoodTray width={width - 16 * scale} height={50 * scale} />
               <Button
                 label="Önceki üreticiler"
                 onPress={() => {

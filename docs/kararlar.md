@@ -316,3 +316,12 @@ Kullanıcı önceki uygulamayı düzeltti: yalnız ilan kartlarının değil, te
 ## 15 Kasım 2026 — Saydam ve süslü hazır ürün hücresi
 
 Kullanıcı tahtadaki düz yeşil zeminin yerine düşük alfa değerli, uygulamanın sanat diline uygun köşeleri şekilli bir vurgu istedi. Tahta dokusunu gösteren hafif yeşil geçiş, ince kıvrımlı köşe çizgileri ve küçük yaprak işaretleri kullanılır. Bu değişiklik yalnız tahtadaki hazır ürün hücresinin görünümüdür; hazır ilan hesabı, kartlar ve seçim davranışı değişmez.
+
+
+## 15 Kasım 2026 — Skara avlusu ve oyma ahşap arayüz
+
+Kullanıcı tahtanın çevresindeki kesintisiz koyu yeşil boşluğu reddetti. Tek parça arka plan, üstteki Skara kıyı silüetini koruyup altta tahtayı saran taşlı çiftlik avlusu, kenar çitleri, buğday demetleri, çiçek ve alçak duvarlarla güncellenir. Üst/gövde için ayrı birleşen arka planlar kullanılmaz.
+
+Şehir adı ahşap tabela üzerinde gösterilir. İlan ve üretici alanları oyma ahşap yuvalara, alt navigasyon aynı ahşap tezgâh diline geçer. Hazır ilanların yeşil durumu ve tahtadaki düşük alfa/yapraklı hazır ürün vurgusu korunur. Ana tahta kapasitesi, eşit kare hücreler, slot ölçüleri ve hit alanları değişmez. Bu yeni kullanıcı isteği önceki turkuaz üretici/menü kabuklarının yerine geçer; ikincil sayfaların onaylı parşömen tasarımını kendiliğinden değiştirmez.
+
+Üretici zincirlerini 7–12 basamağa genişletme talebi tasarım listesi aşamasındadır. Sunulan ürün adları ve zincirler henüz onaylanmadığı için bu ahşap görsel turunda içerik/economy değişikliği yapılmaz.
