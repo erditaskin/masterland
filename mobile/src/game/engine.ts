@@ -1,3 +1,4 @@
+import { contentName } from "../i18n/locale";
 import { storeKitTestEnabled, testModeEnabled } from "./testMode";
 import reference from "../../../data/content-reference.json";
 export interface Product {
@@ -50,7 +51,7 @@ const data = reference as unknown as {
   city1_opening_plan: { producers: PlanRow[]; intro_quests: QuestRow[] };
   city2_opening_plan: { producers: PlanRow[]; intro_quests: QuestRow[] };
 };
-export const name = (id: string) => data.locales.tr[id + "_name_tr"] ?? id;
+export const name = contentName;
 const plans = [data.city1_opening_plan, data.city2_opening_plan];
 export const producers: Producer[] = plans
   .flatMap((plan, cityIndex) =>
@@ -58,13 +59,17 @@ export const producers: Producer[] = plans
   )
   .map((p, i) => ({
     id: p.producer_id,
-    name: name(p.producer_id),
+    get name() {
+      return name(p.producer_id);
+    },
     cityID: p.cityID,
     level: p.required_player_level,
     price: p.unlock_gold,
     products: p.product_unlocks.map((a) => ({
       id: a.item_id,
-      name: name(a.item_id),
+      get name() {
+        return name(a.item_id);
+      },
       producer: i,
       tier: a.tier,
       level: a.required_player_level,

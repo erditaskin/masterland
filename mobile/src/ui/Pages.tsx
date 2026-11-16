@@ -1,3 +1,4 @@
+import { AccountPanel } from "./AccountPanel";
 import { OrderGuide } from "./OrderGuide";
 import { Market } from "./Market";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -456,6 +457,8 @@ export function Pages({
                     İlanlarla yolculuğunu ilerlet.
                   </Label>
                 )}
+                <Divider />
+                <AccountPanel />
                 <Divider />
                 {[
                   ["Ses", save.sound, "sound"],

@@ -1,3 +1,6 @@
+import { I18nText as Text } from "./ui/I18nText";
+import { languageStore } from "./i18n/locale";
+import { loadLanguage } from "./i18n/preferences";
 import { EnergyTimer } from "./ui/EnergyTimer";
 import { RewardCelebration } from "./ui/RewardCelebration";
 import { ProducerPortrait } from "./ui/ProducerDetails";
@@ -22,7 +25,6 @@ import {
   Linking,
   ScrollView,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
 } from "react-native";
@@ -114,6 +116,7 @@ const ProducerCard = memo(
     onPowerOpen,
   }: {
     onPowerOpen: (anchor: PowerAnchor) => void;
+    language: string;
     p: Producer;
     index: number;
     size: number;
@@ -273,6 +276,7 @@ const ProducerCard = memo(
     a.p === b.p &&
     a.index === b.index &&
     a.size === b.size &&
+    a.language === b.language &&
     a.dispatch === b.dispatch &&
     a.open === b.open &&
     a.onPowerOpen === b.onPowerOpen &&
@@ -393,6 +397,13 @@ const Navigation = memo(function Navigation({
   );
 });
 function Game() {
+  const language = useSyncExternalStore(
+    languageStore.subscribe,
+    languageStore.get,
+  );
+  useEffect(() => {
+    void loadLanguage().catch(() => undefined);
+  }, []);
   const snapshot = useSyncExternalStore(gameStore.subscribe, gameStore.get),
     { save, ready, error, result, revision, review } = snapshot;
   const { width, height } = useWindowDimensions(),
@@ -458,7 +469,8 @@ function Game() {
     };
   }, [assetAttempt]);
   useEffect(() => {
-    void Linking.getInitialURL().then((url) => {
+    void Linking.getInitialURL().then((incoming) => {
+      const url = incoming ? incoming.split(/[?#]/)[0] : null;
       const mode = testFlightBeta
         ? "normal"
         : testModeEnabled && url?.includes("milestone-review")
@@ -474,8 +486,9 @@ function Game() {
       setSelected(mode === "review" ? 0 : null);
       return gameStore.load(mode);
     });
-    const sub = Linking.addEventListener("url", ({ url }) => {
-      if (testFlightBeta) return;
+    const sub = Linking.addEventListener("url", ({ url: incoming }) => {
+      const url = incoming.split(/[?#]/)[0]!;
+      if (testFlightBeta || url.startsWith("masterland://auth/")) return;
       if (testModeEnabled && url.includes("milestone-review")) {
         setPage(null);
         setSelected(null);
@@ -1291,6 +1304,7 @@ function Game() {
                 {cityProducers(save).map((p) => (
                   <ProducerCard
                     key={p.id}
+                    language={language}
                     p={p}
                     onPowerOpen={showPowerMenu}
                     index={producers.indexOf(p)}
@@ -1311,6 +1325,7 @@ function Game() {
             >
               <Board
                 board={c.board}
+                language={language}
                 readyOrderItems={readyOrderItems}
                 partialOrderItems={partialOrderItems}
                 readyPulse={readyPulse}

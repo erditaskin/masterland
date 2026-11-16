@@ -36,7 +36,10 @@
           "enableFullScreenImage_legacy": true
         }
       ],
-      "./plugins/with-ui-tests"
+      "./plugins/with-ui-tests",
+      "expo-localization",
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "icon": "./assets/icon.png"
   }

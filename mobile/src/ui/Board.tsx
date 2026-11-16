@@ -1,3 +1,4 @@
+import { displayText } from "../i18n/display";
 import {
   memo,
   useCallback,
@@ -277,6 +278,7 @@ export const Board = memo(function Board({
   onInfo,
 }: {
   board: (Tile | null)[];
+  language?: string;
   readyOrderItems: ReadonlySet<string>;
   partialOrderItems: ReadonlySet<string>;
   readyPulse: SharedValue<number>;
@@ -474,7 +476,9 @@ export const Board = memo(function Board({
                 key={i}
                 accessible
                 accessibilityRole="button"
-                accessibilityLabel={t ? product(t.item).name : "Boş hücre"}
+                accessibilityLabel={displayText(
+                  t ? product(t.item).name : "Boş hücre",
+                )}
                 accessibilityValue={{
                   text: selected === i ? "Seçili" : "",
                 }}

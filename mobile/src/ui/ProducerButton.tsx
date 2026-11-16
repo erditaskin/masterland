@@ -1,3 +1,6 @@
+import { displayText } from "../i18n/display";
+import { languageStore } from "../i18n/locale";
+import { useSyncExternalStore } from "react";
 /* eslint-disable react-hooks/refs -- Native gesture callbacks read the latest JS handler after render, never during render. */
 import {
   useCallback,
@@ -31,6 +34,10 @@ export function ProducerButton({
   testID: string;
   style: StyleProp<ViewStyle>;
 }) {
+  const language = useSyncExternalStore(
+    languageStore.subscribe,
+    languageStore.get,
+  );
   const handlers = useRef({ onPress, onLongPress });
   useLayoutEffect(() => {
     handlers.current = { onPress, onLongPress };
@@ -74,7 +81,7 @@ export function ProducerButton({
         collapsable={false}
         accessible
         accessibilityRole="button"
-        accessibilityLabel={label}
+        accessibilityLabel={displayText(label, language)}
         testID={testID}
         onAccessibilityTap={press}
         accessibilityActions={[{ name: "longpress", label: "Geliştir" }]}

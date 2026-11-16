@@ -1,8 +1,10 @@
-import React, { useMemo } from "react";
+import { displayText } from "../i18n/display";
+import { languageStore } from "../i18n/locale";
+import { I18nText as Text } from "./I18nText";
+import React, { useMemo, useSyncExternalStore } from "react";
 import {
   Animated,
   Pressable,
-  Text,
   TextInput,
   type TextInputProps,
   type AccessibilityRole,
@@ -66,12 +68,16 @@ export function Button({
   role?: AccessibilityRole;
   checked?: boolean;
 }) {
+  const language = useSyncExternalStore(
+    languageStore.subscribe,
+    languageStore.get,
+  );
   const opacity = useMemo(() => new Animated.Value(1), []);
   return (
     <Pressable
       testID={testID}
       accessibilityRole={role}
-      accessibilityLabel={label}
+      accessibilityLabel={displayText(label, language)}
       accessibilityState={{ selected, disabled, checked }}
       disabled={disabled}
       onPress={onPress}

@@ -19,6 +19,36 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testOfflineAccountPanelAndContentLanguage() {
+        let gold=app.buttons["gold"].label, xp=app.buttons["profile"].label, frame=cell(0).frame
+        app.buttons["profile-menu"].tap()
+        let panel=app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch
+        XCTAssertTrue(panel.waitForExistence(timeout:5))
+        XCTAssertFalse(app.buttons["signInGoogle"].exists)
+        XCTAssertFalse(app.buttons["signInFacebook"].exists)
+        XCTAssertTrue(app.staticTexts["Cihazda kayıtlı"].exists)
+        let english=app.buttons["language-en"]
+        if !english.isHittable {app.scrollViews.firstMatch.swipeUp()}
+        english.tap()
+        XCTAssertTrue(app.staticTexts["Protect your progress"].waitForExistence(timeout:5))
+        shot("account-offline-english-preview")
+        app.buttons["closePage"].tap()
+        XCTAssertTrue(app.buttons["producer1"].label.contains("Wheat Field"))
+        XCTAssertEqual(app.buttons["gold"].label,gold);XCTAssertEqual(app.buttons["profile"].label.components(separatedBy:CharacterSet.decimalDigits.inverted).filter {!$0.isEmpty},xp.components(separatedBy:CharacterSet.decimalDigits.inverted).filter {!$0.isEmpty})
+        XCTAssertEqual(cell(0).frame,frame)
+        shot("english-board")
+        for tab in ["collection","cities","market"] {
+            app.buttons["tab-"+tab].tap()
+            XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+            shot("english-"+tab)
+            app.buttons["closePage"].tap()
+        }
+        app.buttons["profile-menu"].tap()
+        if !app.buttons["language-tr"].isHittable {app.scrollViews.firstMatch.swipeUp()}
+        app.buttons["language-tr"].tap();app.buttons["closePage"].tap()
+        XCTAssertTrue(app.buttons["producer1"].label.contains("Buğday Tarlası"))
+        shot("account-language-restored")
+    }
     func testDebugLevelButtonAddsOneLevelPerPress() {
         XCTAssertTrue(app.buttons["profile"].label.contains("Seviye 1,"))
         app.buttons["testLevelUp"].tap()
