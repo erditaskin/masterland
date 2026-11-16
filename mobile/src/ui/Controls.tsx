@@ -342,18 +342,25 @@ export function AppCloseButton({
       label="Bitti"
       testID={testID}
       onPress={onPress}
-      style={{
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        backgroundColor: "#f5d69799",
-        borderColor: parchment.edge,
-        borderWidth: 1,
-      }}
+      style={{ width: 44, height: 44 }}
     >
-      <Label size={28} color={parchment.ink}>
-        ×
-      </Label>
+      <View
+        pointerEvents="none"
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: 16,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f5d69799",
+          borderColor: parchment.edge,
+          borderWidth: 1,
+        }}
+      >
+        <Label size={23} color={parchment.ink} style={{ lineHeight: 27 }}>
+          ×
+        </Label>
+      </View>
     </Button>
   );
 }

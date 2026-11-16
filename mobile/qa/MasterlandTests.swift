@@ -19,6 +19,34 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testReadyIconPulseAndMapAlignment() {
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        let icon=app.descendants(matching:.any).matching(identifier:"ready-icon-cell-3").firstMatch
+        XCTAssertTrue(icon.waitForExistence(timeout:5))
+        let cellFrame=cell(3).frame
+        var widths:[CGFloat]=[]
+        for _ in 0..<12 {widths.append(icon.frame.width)}
+        XCTAssertGreaterThan(widths.max()!-widths.min()!,0.2)
+        XCTAssertLessThanOrEqual(widths.max()!/widths.min()!,1.055)
+        XCTAssertEqual(cellFrame,cell(3).frame)
+        shot("ready-icon-pulse")
+        app.buttons["profile-menu"].tap()
+        app.descendants(matching:.any).matching(identifier:"setting-motion").firstMatch.tap()
+        app.buttons["closePage"].tap()
+        var still:[CGFloat]=[]
+        for _ in 0..<5 {still.append(icon.frame.width)}
+        XCTAssertLessThan(still.max()!-still.min()!,0.2)
+        app.buttons["tab-cities"].tap()
+        let viewport=app.descendants(matching:.any).matching(identifier:"cityMapViewport").firstMatch
+        XCTAssertTrue(viewport.waitForExistence(timeout:5))
+        XCTAssertEqual(app.buttons["travelCity"].frame.minX,viewport.frame.minX,accuracy:1)
+        XCTAssertEqual(app.buttons["travelCity"].frame.maxX,viewport.frame.maxX,accuracy:1)
+        XCTAssertGreaterThanOrEqual(app.buttons["closePage"].frame.width,44)
+        shot("map-aligned-return-and-close")
+        app.buttons["closePage"].tap();app.buttons["tab-collection"].tap()
+        shot("smaller-collection-icons")
+    }
     func testDebugWalletAndParchmentControls() {
         let first=cell(0).frame
         XCTAssertTrue(app.buttons["testGoldAdd"].exists);XCTAssertTrue(app.buttons["testGemsAdd"].exists)

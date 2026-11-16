@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import Animated, {
   cancelAnimation,
   useAnimatedStyle,
@@ -9,7 +9,7 @@ import Animated, {
   type SharedValue,
 } from "react-native-reanimated";
 
-/** One UI-thread clock serves every ready cell and order; only opacity animates. */
+/** One UI-thread clock serves ready backgrounds and the subtle icon scale. */
 export function useReadyPulse(enabled: boolean, reduced: boolean) {
   const pulse = useSharedValue(0);
   useEffect(() => {
@@ -60,5 +60,43 @@ export function ReadyGlow({
         style,
       ]}
     />
+  );
+}
+
+/** Animate artwork only; cell geometry, selection frame and input targets never scale. */
+export function ReadyIcon({
+  pulse,
+  active,
+  children,
+  dragID,
+  tileID,
+  testID,
+}: {
+  pulse: SharedValue<number>;
+  active: boolean;
+  children: ReactNode;
+  dragID?: SharedValue<string>;
+  tileID?: string;
+  testID?: string;
+}) {
+  const style = useAnimatedStyle(() => ({
+    transform: [
+      {
+        scale:
+          active && (!dragID || dragID.get() !== tileID)
+            ? 1 + 0.05 * pulse.get()
+            : 1,
+      },
+    ],
+  }));
+  return (
+    <Animated.View
+      pointerEvents="none"
+      testID={testID}
+      collapsable={false}
+      style={style}
+    >
+      {children}
+    </Animated.View>
   );
 }

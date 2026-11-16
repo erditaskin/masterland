@@ -17,7 +17,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
 import { Item, Crop } from "./Art";
-import { ReadyGlow } from "./ReadyGlow";
+import { ReadyGlow, ReadyIcon } from "./ReadyGlow";
 import { BoardFrame } from "./Skin";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
@@ -36,6 +36,8 @@ const Piece = memo(
     selected,
     drag,
     reduced,
+    ready,
+    readyPulse,
   }: {
     tile: Tile;
     index: number;
@@ -44,6 +46,8 @@ const Piece = memo(
     selected: boolean;
     drag: Drag;
     reduced: boolean;
+    ready: boolean;
+    readyPulse: SharedValue<number>;
   }) {
     const opacity = useSharedValue(reduced ? 1 : 0);
     useEffect(() => {
@@ -95,12 +99,20 @@ const Piece = memo(
             }}
           />
         )}
-        <Item
-          id={tile.item}
-          size={Math.min(cellWidth, cellHeight) * 0.9}
-          width={cellWidth * 0.9}
-          height={cellHeight * 0.94}
-        />
+        <ReadyIcon
+          pulse={readyPulse}
+          testID={`ready-icon-cell-${index}`}
+          active={ready && !reduced}
+          dragID={drag.id}
+          tileID={tile.id}
+        >
+          <Item
+            id={tile.item}
+            size={Math.min(cellWidth, cellHeight) * 0.9}
+            width={cellWidth * 0.9}
+            height={cellHeight * 0.94}
+          />
+        </ReadyIcon>
       </Animated.View>
     );
   },
@@ -111,7 +123,9 @@ const Piece = memo(
     a.cellWidth === b.cellWidth &&
     a.cellHeight === b.cellHeight &&
     a.selected === b.selected &&
-    a.reduced === b.reduced,
+    a.reduced === b.reduced &&
+    a.ready === b.ready &&
+    a.readyPulse === b.readyPulse,
 );
 const BoardGrid = memo(function BoardGrid({
   board,
@@ -448,6 +462,8 @@ export const Board = memo(function Board({
               selected={selected === i}
               drag={drag}
               reduced={reduced}
+              ready={readyOrderItems.has(t.item)}
+              readyPulse={readyPulse}
             />
           ) : null,
         )}

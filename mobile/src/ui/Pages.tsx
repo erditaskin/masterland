@@ -275,7 +275,7 @@ export function Pages({
                           }}
                         >
                           {save.discoveries.includes(a.id) ? (
-                            <Item id={a.id} size={52} />
+                            <Item id={a.id} size={44} />
                           ) : (
                             <Label title size={38} color={colors.muted}>
                               ?

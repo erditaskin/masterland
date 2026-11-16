@@ -370,3 +370,12 @@ Kullanıcı test moduna her dokunuşta mevcut bakiyeye 10.000 altın ve 100 elma
 HUD kaynak sayaçları eşit genişlik/yükseklik, ortak ikon alanı, sayı fontu ve artı ölçüleri kullanır. Uzun bakiyeler tek satırda sığdırılır.
 
 Parşömen kontrolleri ortak `parchment` tokenlarıyla `AppButton`, `AppCheckbox`, `AppInput`, `AppChoice`, `AppCloseButton` ve `AppProgress` bileşenlerinden türer. Eski `ActionButton` aynı `AppButton` bileşenine yönlenir. Harita alt eylemi ve ödül işaretleri, sayfa eylemleri, üretici seçimleri, ilerleme çizgileri ve profil ayarları bu ortak aileyi kullanır. Profilde native switch yerine erişilebilir checkbox semantiği, mürekkep rengi ve hafif eğimli elyazısı işaret kullanılır. `AppInput` ortak giriş standardıdır; bu tur gereksiz yeni giriş alanı eklenmez.
+
+
+## 16 Kasım 2026 — Hazır ikon nabzı ve harita hizası
+
+Kullanıcı tamamlanabilir ürün ikonlarının glow ile birlikte yüzde 5 büyüyüp küçülmesini istedi. Ortak ReadyIcon yalnız görsele 1,00–1,05 ölçeği uygular; tahta hücreleri, seçim çerçevesi ve hit alanları ölçeklenmez. Hem tahtadaki tam hazır ürünler hem hazır ilan ikonları aynı mevcut UI-thread pulse değerini kullanır. Kısmi hazırlar bu nabzı almaz. Sürüklenen ürün normal ölçüye döner; hareketi azalt ayarında ölçek 1'de kalır. Ek zamanlayıcı eklenmemiştir.
+
+Harita alt eyleminin sol ve sağ kenarları haritanın görünür iç alanıyla aynı hizadadır. Ortak kapatma kontrolünün görseli 44 yerine 32 birimdir; 44×44 dokunma alanı korunur. Koleksiyon ürün ikonları 52 yerine 44 birime indirilmiştir.
+
+Doğrulama: TypeScript, ESLint, 53 motor testi ve iki hedefli Release simülatör kontrolü geçti. Native ikon genişliğinin zaman içinde değiştiği, oranının 1,055 sınırını aşmadığı, hücre çerçevesinin sabit kaldığı ve azaltılmış harekette ölçeğin durduğu ölçüldü. Harita eyleminin iki kenarı viewport ile bir birim toleransta eşleşti. Merge/kilitli basamak etkileşimi geçti. Son harita ve koleksiyon görüntüleri incelendi. Bu tur fiziksel cihaz veya TestFlight güncellemesi yapılmadı.

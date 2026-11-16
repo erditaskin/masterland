@@ -37,7 +37,7 @@ import { LaunchScreen } from "./ui/LaunchScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
-import { ReadyGlow, useReadyPulse } from "./ui/ReadyGlow";
+import { ReadyGlow, ReadyIcon, useReadyPulse } from "./ui/ReadyGlow";
 import { orderItemHighlights, prioritizeOrderRail } from "./ui/orderRail";
 import { fitSquareBoard } from "./ui/layout";
 import { StatusIcon } from "./ui/StatusIcon";
@@ -1107,12 +1107,15 @@ function Game() {
                               key={requirement.item_id}
                               style={{ alignItems: "center" }}
                             >
-                              <Item
-                                id={requirement.item_id}
-                                size={
-                                  (o.requirements.length > 1 ? 34 : 32) * scale
-                                }
-                              />
+                              <ReadyIcon pulse={readyPulse} active={ready}>
+                                <Item
+                                  id={requirement.item_id}
+                                  size={
+                                    (o.requirements.length > 1 ? 34 : 32) *
+                                    scale
+                                  }
+                                />
+                              </ReadyIcon>
                               <Label
                                 size={8 * scale}
                                 color={ready ? colors.ink : colors.goldLight}

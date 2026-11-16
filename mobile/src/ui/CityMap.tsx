@@ -228,6 +228,7 @@ export function CityMap({
         </Label>
       </Button>
       <View
+        testID="cityMapViewport"
         style={{
           flex: 1,
           marginLeft: 7,
@@ -334,7 +335,7 @@ export function CityMap({
         text={travelText}
         onPress={travel}
         tone={here || visited ? "primary" : "secondary"}
-        style={{ marginTop: 5, marginHorizontal: 18 }}
+        style={{ marginTop: 5, marginLeft: 7, marginRight: 60 }}
       />
       <View style={{ position: "absolute", right: 0, top: 32, gap: 8 }}>
         {stops.map((stop, i) => (
