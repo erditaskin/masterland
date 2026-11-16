@@ -1,15 +1,20 @@
+import { deletionStore } from "../account/deletion";
 import { AccountDeletionPanel } from "./AccountDeletionPanel";
 import { AdPrivacyControl } from "./EnergyAdPanel";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import * as Apple from "expo-apple-authentication";
-import { accountStore } from "../account/auth";
+import { accountStore, type LoginProvider } from "../account/auth";
 import { accountConfig } from "../account/client";
 import { languageStore, accountText as tx } from "../i18n/locale";
 import { setLanguage } from "../i18n/preferences";
 import { AppButton, AppChoice, Divider, Label } from "./Controls";
 
-export function AccountPanel() {
+export function AccountPanel({ onClose }: { onClose: () => void }) {
+  const deletion = useSyncExternalStore(
+    deletionStore.subscribe,
+    deletionStore.get,
+  );
   const account = useSyncExternalStore(
     accountStore.subscribe,
     accountStore.get,
@@ -18,6 +23,7 @@ export function AccountPanel() {
     languageStore.subscribe,
     languageStore.get,
   );
+  const [signingIn, setSigningIn] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [languageError, setLanguageError] = useState(false);
   useEffect(() => {
@@ -26,10 +32,38 @@ export function AccountPanel() {
       .then(setAppleAvailable)
       .catch(() => setAppleAvailable(false));
   }, []);
+  const name =
+    account.user?.user_metadata.full_name ?? account.user?.user_metadata.name;
+  const providers = account.user?.identities
+    ?.map(
+      (identity) =>
+        (
+          ({
+            apple: "Apple",
+            google: "Google",
+            facebook: "Facebook",
+          }) as Record<string, string>
+        )[identity.provider] ?? identity.provider,
+    )
+    .join(", ");
+  const signIn = async (provider: LoginProvider) => {
+    setSigningIn(true);
+    if (await accountStore.signIn(provider)) onClose();
+    else setSigningIn(false);
+  };
+  if (signingIn) {
+    return (
+      <View testID="accountSigningIn" style={{ marginTop: 14 }}>
+        <Label>{tx("Giriş yapılıyor…", "Signing in…")}</Label>
+      </View>
+    );
+  }
   return (
     <View testID="accountPanel" style={{ marginTop: 14 }}>
       <Label title size={18}>
-        {tx("İlerlemeni koru", "Protect your progress")}
+        {account.user
+          ? tx("Hesabın", "Your account")
+          : tx("Giriş yap", "Sign in")}
       </Label>
       <Label style={{ marginTop: 6 }}>
         {tx("Cihazda kayıtlı", "Saved on this device")}
@@ -50,35 +84,57 @@ export function AccountPanel() {
       ) : (
         <>
           {account.user && (
-            <Label>{tx("Hesap bağlı", "Account connected")}</Label>
+            <View testID="signedInAccount">
+              <Label title>{tx("Oturum açık", "Signed in")}</Label>
+              {typeof name === "string" && name.trim() ? (
+                <Label>{name}</Label>
+              ) : null}
+              {account.user.email ? <Label>{account.user.email}</Label> : null}
+              <Label>
+                {tx("Giriş yöntemi", "Sign-in method")}: {providers}
+              </Label>
+            </View>
           )}
-          {appleAvailable && (
-            <Apple.AppleAuthenticationButton
-              buttonType={Apple.AppleAuthenticationButtonType.CONTINUE}
-              buttonStyle={Apple.AppleAuthenticationButtonStyle.BLACK}
-              cornerRadius={8}
-              style={{ height: 44, width: "100%", marginVertical: 5 }}
-              onPress={() => {
-                if (!account.busy) void accountStore.signIn("apple");
-              }}
-            />
+          {account.ready && !account.user && (
+            <>
+              {appleAvailable && (
+                <Apple.AppleAuthenticationButton
+                  buttonType={Apple.AppleAuthenticationButtonType.CONTINUE}
+                  buttonStyle={Apple.AppleAuthenticationButtonStyle.BLACK}
+                  cornerRadius={8}
+                  style={{ height: 44, width: "100%", marginVertical: 5 }}
+                  onPress={() => {
+                    if (!account.busy && !deletion.hasJournal)
+                      void signIn("apple");
+                  }}
+                />
+              )}
+              <AppButton
+                testID="signInGoogle"
+                text={tx("Google ile devam et", "Continue with Google")}
+                disabled={
+                  account.busy ||
+                  deletion.hasJournal ||
+                  !accountConfig.googleIOSClientID ||
+                  !accountConfig.googleWebClientID
+                }
+                onPress={() => void signIn("google")}
+              />
+              <AppButton
+                testID="signInFacebook"
+                text={tx("Facebook ile devam et", "Continue with Facebook")}
+                disabled={
+                  account.busy ||
+                  deletion.hasJournal ||
+                  !accountConfig.facebookEnabled
+                }
+                onPress={() => void signIn("facebook")}
+              />
+            </>
           )}
-          <AppButton
-            testID="signInGoogle"
-            text={tx("Google ile devam et", "Continue with Google")}
-            disabled={
-              account.busy ||
-              !accountConfig.googleIOSClientID ||
-              !accountConfig.googleWebClientID
-            }
-            onPress={() => void accountStore.signIn("google")}
-          />
-          <AppButton
-            testID="signInFacebook"
-            text={tx("Facebook ile devam et", "Continue with Facebook")}
-            disabled={account.busy || !accountConfig.facebookEnabled}
-            onPress={() => void accountStore.signIn("facebook")}
-          />
+          {!account.ready && (
+            <Label>{tx("Oturum kontrol ediliyor…", "Checking session…")}</Label>
+          )}
           {account.busy && <Label>{tx("Bağlanıyor…", "Connecting…")}</Label>}
           {account.error && (
             <Label>
@@ -93,11 +149,27 @@ export function AccountPanel() {
               testID="accountSignOut"
               tone="secondary"
               text={tx("Hesaptan çık", "Sign out")}
-              disabled={account.busy}
-              onPress={() => void accountStore.signOut()}
+              disabled={account.busy || deletion.hasJournal}
+              onPress={() => {
+                void accountStore.signOut();
+              }}
             />
           )}
         </>
+      )}
+      <AppButton
+        testID="closeAccount"
+        tone="secondary"
+        text={tx("Kapat", "Close")}
+        onPress={onClose}
+      />
+      {!account.user && (
+        <Label size={12}>
+          {tx(
+            "Giriş yapmadan oyuna devam edebilirsin. İlerlemen bu cihazda korunur.",
+            "You can keep playing without signing in. Your progress stays on this device.",
+          )}
+        </Label>
       )}
       <AccountDeletionPanel />
       <AdPrivacyControl />

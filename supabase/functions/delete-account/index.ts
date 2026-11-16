@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { revokeAppleAuthorization } from "../_shared/appleRevocation.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.119.0";
 const response = (status: number, body: unknown) =>
@@ -12,26 +13,47 @@ const response = (status: number, body: unknown) =>
 Deno.serve(async (request) => {
   if (request.method !== "POST")
     return response(405, { error: "method_not_allowed" });
-  if (Deno.env.get("ACCOUNT_DELETION_ENABLED") !== "true")
-    return response(503, { error: "not_enabled" });
-  const authorization = request.headers.get("Authorization");
-  if (!authorization?.startsWith("Bearer "))
-    return response(401, { error: "unauthorized" });
   const url = Deno.env.get("SUPABASE_URL")!;
   const admin = createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
-  const caller = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
-    global: { headers: { Authorization: authorization } },
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
   try {
+    const body = await request.json();
+    if (
+      body.action !== "status" &&
+      Deno.env.get("ACCOUNT_DELETION_ENABLED") !== "true"
+    )
+      return response(503, { error: "not_enabled" });
+    if (
+      typeof body.receipt !== "string" ||
+      !/^[0-9a-f]{64}$/.test(body.receipt)
+    )
+      return response(400, { error: "receipt_required" });
+    const receiptHash = createHash("sha256").update(body.receipt).digest("hex");
+    if (body.action === "status") {
+      if (!/^[0-9a-f-]{36}$/i.test(body.request_id ?? ""))
+        return response(400, { error: "invalid_request" });
+      const { data, error } = await admin.rpc("read_account_deletion_receipt", {
+        request_id: body.request_id,
+        receipt_hash: receiptHash,
+      });
+      if (error) return response(503, { error: "status_unavailable" });
+      return data
+        ? response(200, data)
+        : response(404, { error: "receipt_not_found" });
+    }
+    const authorization = request.headers.get("Authorization");
+    if (!authorization?.startsWith("Bearer "))
+      return response(401, { error: "unauthorized" });
+    const caller = createClient(url, Deno.env.get("SUPABASE_ANON_KEY")!, {
+      global: { headers: { Authorization: authorization } },
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
     const {
       data: { user },
       error: authError,
     } = await admin.auth.getUser(authorization.slice(7));
     if (authError || !user) return response(401, { error: "unauthorized" });
-    const body = await request.json();
     if (
       body.confirmation !== "DELETE" ||
       !/^[0-9a-f-]{36}$/i.test(body.request_id ?? "")
@@ -48,23 +70,26 @@ Deno.serve(async (request) => {
       return response(409, { error: "apple_reauthentication_required" });
     }
     const { data: id, error: requestError } = await caller.rpc(
-      "request_account_deletion",
-      { request_id: body.request_id, confirmation: body.confirmation },
+      "request_account_deletion_with_receipt",
+      {
+        request_id: body.request_id,
+        confirmation: body.confirmation,
+        receipt_hash: receiptHash,
+      },
     );
     if (requestError)
       return response(409, {
         error: "recent_sign_in_or_pending_request_required",
       });
     // Admin operations never run in the mobile client. No request can target another UUID.
-    const { error: processingError } = await admin
-      .from("account_deletion_requests")
-      .update({ status: "processing" })
-      .eq("id", id)
-      .eq("user_id", user.id);
-    if (processingError)
-      return response(503, {
+    const { data: claimed, error: processingError } = await admin.rpc(
+      "claim_account_deletion",
+      { request_id: id },
+    );
+    if (processingError || !claimed)
+      return response(202, {
         request_id: id,
-        status: "requested",
+        status: "processing",
         auth_deleted: false,
       });
     if (appleIdentity) {

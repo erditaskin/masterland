@@ -1,3 +1,8 @@
+import * as Crypto from "expo-crypto";
+import {
+  recordCloudAdoption,
+  resumeCloudAdoption,
+} from "../account/cloudLocal";
 import { resolveSaveNamespace } from "./saveNamespace";
 import {
   eraseDeletedAccountProgress,
@@ -74,6 +79,10 @@ async function writePending() {
   }
 }
 async function removeLegacyImports() {
+  const cloudArtifacts = (await AsyncStorage.getAllKeys()).filter((key) =>
+    key.startsWith("@masterland/cloud-"),
+  );
+  if (cloudArtifacts.length) await AsyncStorage.multiRemove(cloudArtifacts);
   for (const file of ["migration-v2.json", "legacy-save.json"]) {
     await FS.deleteAsync(FS.documentDirectory + file, { idempotent: true });
   }
@@ -102,6 +111,7 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
         AsyncStorage,
         removeLegacyImports,
       );
+      await resumeCloudAdoption(AsyncStorage, KEY, Crypto.randomUUID);
       const stored = await AsyncStorage.getItem(KEY);
       if (stored) {
         const parsed: unknown = JSON.parse(stored);
@@ -182,6 +192,31 @@ export const gameStore = {
       void persist();
     }
     return result;
+  },
+  adoptCloudSave: async (ownerID: string, revision: number, payload: Save) => {
+    if (!snapshot.ready || snapshot.review)
+      throw Error("Local save is not ready");
+    const previous = snapshot.save;
+    publish({ ...snapshot, ready: false, result: null });
+    try {
+      await persist();
+      await recordCloudAdoption(AsyncStorage, KEY, {
+        ownerID,
+        revision,
+        payload,
+        previous,
+      });
+      await load("normal");
+      if (!snapshot.ready) throw Error("Cloud choice recovery pending");
+    } catch {
+      publish({
+        ...snapshot,
+        ready: false,
+        error:
+          "Seçtiğin kayıt hazırlanamadı. Önceki kayıt korunuyor; tekrar dene.",
+      });
+      throw Error("Cloud choice recovery pending");
+    }
   },
   resetAfterAccountDeletion: async (requestID: string) => {
     ++loadEpoch;

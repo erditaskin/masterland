@@ -1,5 +1,7 @@
 # ultima sade şehir planı
 
+> Güncel şehir adları ve konseptleri — 16 Kasım 2026: [Masterland şehir isimleri ve konseptleri](sehir-isimleri-ve-konseptleri.md) bu konuda öncelikli onaylı tasarım referansıdır. Aşağıdaki eski adlar ve tema taslakları tarihsel bağlam veya henüz güncellenmemiş uygulama değerleri olabilir. Kod ve kanonik ad sözlüğü bu belge kaydıyla değiştirilmemiştir.
+
 14 Kasım 2026. Aktif çalışma listesi, geniş araştırma kataloğunun yerine aşağıdaki 15 ana yer adayıdır. Tema eşleştirmeleri kullanıcı incelemesine sunulan taslaktır. İlk üç bölüm kesinleşmiştir: Skara Brae, New Haven, Cove. Minoc dördüncü sıra için öneridir. Diğer yerlerin sırası belirlenmemiştir.
 
 ## Ana yerler

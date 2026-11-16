@@ -400,3 +400,8 @@ Supabase, AdMob ve Meta projeleri henüz hazır değildir; kurulum plana dahil e
 Kullanıcı hesapları başka bir oturumdaki ajanla tarayıcıdan kurarken bu ajan uygulama kodunu hazırlayacak. Dış hesap ajanının kapsamı `account-setup-agent-handover.md` içindedir; uygulama kodunu değiştirmez ve yalnız `account-setup-status.md` raporunu güncelleyebilir.
 
 İlk kod adımı: doğrulanmış mevcut normal kayıt bulut geçişinden önce `@masterland/pre-cloud-backup/v1` anahtarına bir kez, ham haliyle yedeklenir. Önceki yedek yeni ilerlemeyle ezilmez; QA/görsel fixture bu yola girmez. Yedek alınamaması hata olarak görünür; bu yerel önlem bulut kaydı değildir. 56 birim testi ve Release simülatöründe normal kaydın arka plan/yeniden açılış kontrolü geçti. Simülatör AsyncStorage manifestinde hem normal kayıt hem yedek anahtarı doğrulandı. Harici hesap kurulumu ve bulut entegrasyonu henüz tamamlanmadı.
+
+
+## 16 Kasım 2026 — Şehir adları ve konseptlerinin onayı
+
+Kullanıcı Türkçe ve İngilizce şehir adlarını ve konseptlerini kesinleştirdi; bundan sonraki çalışmalar için referans olarak kaydedilmesini istedi. Tek güncel eşleştirme tablosu [Masterland şehir isimleri ve konseptleri](sehir-isimleri-ve-konseptleri.md) belgesindedir. Rünyaka rün ve tılsım odaklıdır; önceki bahçecilik odağı tarihçedir. Yeraltı fiziksel olarak yeraltındadır. Karayonca çiftçilik ve hayvancılık temasını korur; suçluluk yalnız atmosferdir. İlk üç şehir sırası ve sabit kimlikler korunur; Minoc dördüncü sıra önerisidir. Diğer adayların kapsamı ve sırası kesinleşmemiştir. Kod, kanonik ad sözlüğü ve yerelleştirme dosyaları değiştirilmemiştir. Çakışma araştırması henüz yapılmamıştır.

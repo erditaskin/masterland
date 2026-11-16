@@ -3,11 +3,16 @@ import { View } from "react-native";
 import { accountStore, type LoginProvider } from "../account/auth";
 import {
   accountDeletionEnabled,
+  deletionStore,
   deleteCurrentAccount,
 } from "../account/deletion";
 import { accountText as tx, languageStore } from "../i18n/locale";
 import { AppButton, AppCheckbox, Divider, Label } from "./Controls";
 export function AccountDeletionPanel() {
+  const deletion = useSyncExternalStore(
+    deletionStore.subscribe,
+    deletionStore.get,
+  );
   const account = useSyncExternalStore(
     accountStore.subscribe,
     accountStore.get,
@@ -18,9 +23,26 @@ export function AccountDeletionPanel() {
     [verified, setVerified] = useState<string | null>(null),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
-  if (!accountDeletionEnabled || !account.user) return null;
+  if ((!accountDeletionEnabled && !deletion.hasJournal) || !account.user)
+    return null;
   return (
     <View>
+      {deletion.hasJournal && (
+        <>
+          <Label>
+            {tx(
+              "Silme talebin kayıtlı. Sonucu kontrol edebilir veya aşağıdan yeniden giriş yaparak tekrar deneyebilirsin.",
+              "Your deletion request is saved. Check its status or sign in again below to retry.",
+            )}
+          </Label>
+          <AppButton
+            text={tx("Talep durumunu kontrol et", "Check request status")}
+            onPress={() => {
+              void deletionStore.recover();
+            }}
+          />
+        </>
+      )}
       <Divider />
       <AppButton
         testID="openAccountDeletion"
@@ -77,7 +99,11 @@ export function AccountDeletionPanel() {
             testID="confirmAccountDeletion"
             tone="muted"
             disabled={
-              !confirmed || verified !== account.user.id || busy || account.busy
+              !accountDeletionEnabled ||
+              !confirmed ||
+              verified !== account.user.id ||
+              busy ||
+              account.busy
             }
             text={tx("Kalıcı olarak sil", "Permanently delete")}
             onPress={() => {
@@ -96,14 +122,15 @@ export function AccountDeletionPanel() {
                         ),
                   ),
                 )
-                .catch(() =>
+                .catch(() => {
+                  setVerified(null);
                   setMessage(
                     tx(
-                      "Silme tamamlanmadı. Tekrar deneyebilirsin.",
-                      "Deletion has not completed. You can retry.",
+                      "Silme sonucu henüz doğrulanmadı. Yeniden giriş yapıp tekrar deneyebilirsin.",
+                      "Deletion is not confirmed yet. Sign in again to retry.",
                     ),
-                  ),
-                )
+                  );
+                })
                 .finally(() => setBusy(false));
             }}
           />

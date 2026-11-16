@@ -13,6 +13,7 @@ export async function fetchCloudSave(userID: string) {
   return data === null ? null : readCloudRow(data, userID);
 }
 export async function writeCloudSave(
+  ownerID: string,
   save: Save,
   expectedRevision: number,
   requestID: string,
@@ -30,12 +31,19 @@ export async function writeCloudSave(
     )
   )
     throw Error("Invalid cloud snapshot");
-  const { data, error } = await accountClient.rpc("write_game_save", {
-    expected_revision: expectedRevision,
-    request_id: requestID,
-    save_payload: save,
-    save_schema_version: 1,
-  });
+  const session = await accountClient.auth.getSession();
+  if (session.error || session.data.session?.user.id !== ownerID)
+    throw Error("Cloud account changed");
+  // Pin the owner's token: an account switch while the request is waiting must not write into the next account.
+  const accessToken = session.data.session.access_token;
+  const { data, error } = await accountClient
+    .rpc("write_game_save", {
+      expected_revision: expectedRevision,
+      request_id: requestID,
+      save_payload: save,
+      save_schema_version: 1,
+    })
+    .setHeader("Authorization", `Bearer ${accessToken}`);
   if (error) throw error;
   return readWriteResult(data);
 }

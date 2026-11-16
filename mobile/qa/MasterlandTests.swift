@@ -19,6 +19,17 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testDeletionRecoveryKeepsRetryInsideParchment() {
+        app.open(URL(string:"masterland://deletion-recovery-review")!)
+        let panel=app.descendants(matching:.any).matching(identifier:"deletionRecovery").firstMatch
+        XCTAssertTrue(panel.waitForExistence(timeout:10))
+        let retry=app.buttons["retryDeletionRecovery"]
+        XCTAssertTrue(retry.isHittable)
+        XCTAssertTrue(panel.frame.contains(retry.frame))
+        shot("deletion-offline-recovery-parchment")
+        app.open(URL(string:"masterland://qa-reset")!)
+        XCTAssertFalse(panel.exists)
+    }
     func testControlledAcceptanceHasNoCheatsAndOnlyPreviewAds() {
         for id in ["testEnergyFill","testGoldAdd","testGemsAdd","testLevelUp"] { XCTAssertFalse(app.buttons[id].exists) }
         app.buttons["stamina"].tap()
@@ -67,9 +78,10 @@ final class MasterlandTests:XCTestCase {
         let english=app.buttons["language-en"]
         if !english.isHittable {app.scrollViews.firstMatch.swipeUp()}
         english.tap()
-        XCTAssertTrue(app.staticTexts["Protect your progress"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.staticTexts["Sign in"].waitForExistence(timeout:5))
         shot("account-offline-english-preview")
-        app.buttons["closePage"].tap()
+        app.buttons["closeAccount"].tap()
+        XCTAssertFalse(panel.exists)
         XCTAssertTrue(app.buttons["producer1"].label.contains("Wheat Field"))
         XCTAssertEqual(app.buttons["gold"].label,gold);XCTAssertEqual(app.buttons["profile"].label.components(separatedBy:CharacterSet.decimalDigits.inverted).filter {!$0.isEmpty},xp.components(separatedBy:CharacterSet.decimalDigits.inverted).filter {!$0.isEmpty})
         XCTAssertEqual(cell(0).frame,frame)

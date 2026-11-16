@@ -19,9 +19,9 @@ do $$begin
   if (select count(*) from public.game_saves)<>0 then raise exception 'Cross-user save leak'; end if;
 end $$;
 set request.jwt.claim.sub='00000000-0000-4000-8000-000000000001';
-select public.request_account_deletion('00000000-0000-4000-8000-000000000021','DELETE');
+select public.request_account_deletion_with_receipt('00000000-0000-4000-8000-000000000021','DELETE',repeat('a',64));
 -- Double-submit returns the existing request, rather than creating another.
-select public.request_account_deletion('00000000-0000-4000-8000-000000000022','DELETE');
+select public.request_account_deletion_with_receipt('00000000-0000-4000-8000-000000000022','DELETE',repeat('a',64));
 do $$begin
   if (select count(*) from public.account_deletion_requests)<>1 then raise exception 'Duplicate request'; end if;
   if (select count(*) from public.game_saves)<>0 then raise exception 'Deleting user can read save'; end if;
@@ -61,7 +61,7 @@ update auth.users set last_sign_in_at=now()-interval '1 hour' where id='00000000
 set role authenticated;
 do $$begin
   begin
-    perform public.request_account_deletion('00000000-0000-4000-8000-000000000023','DELETE');
+    perform public.request_account_deletion_with_receipt('00000000-0000-4000-8000-000000000023','DELETE',repeat('a',64));
     raise exception 'Stale sign-in accepted';
   exception when insufficient_privilege then null; end;
 end $$;

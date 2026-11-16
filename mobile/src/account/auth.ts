@@ -77,17 +77,17 @@ export const accountStore = {
       if (error) throw error;
       const expectedID = reauthenticate ? data.session?.user.id : null;
       let appleCode: string | null = null;
+      let appleName: string | null = null;
       if (reauthenticate) deletionProof = null;
       if (reauthenticate && !expectedID)
         throw Error("No account to reauthenticate");
-      const linking = Boolean(data.session) && !reauthenticate;
-      if (
-        !reauthenticate &&
-        data.session?.user.identities?.some(
-          (identity) => identity.provider === provider,
-        )
-      )
-        return;
+      if (data.session && !reauthenticate) {
+        const existing = await accountClient.auth.getUser();
+        if (existing.error || !existing.data.user)
+          throw Error("Session verification failed");
+        publish({ ready: true, user: existing.data.user, error: null });
+        return true;
+      }
       if (provider === "facebook") {
         const credentials = {
           provider,
@@ -99,9 +99,7 @@ export const accountStore = {
               : {}),
           },
         } as const;
-        const response = linking
-          ? await accountClient.auth.linkIdentity(credentials)
-          : await accountClient.auth.signInWithOAuth(credentials);
+        const response = await accountClient.auth.signInWithOAuth(credentials);
         if (response.error || !response.data.url)
           throw response.error ?? Error("Missing OAuth URL");
         const result = await Browser.openAuthSessionAsync(
@@ -128,6 +126,9 @@ export const accountStore = {
             ],
             nonce: hashed,
           });
+          appleName = result.fullName
+            ? Apple.formatFullName(result.fullName).trim() || null
+            : null;
           token = result.identityToken;
           appleCode = result.authorizationCode;
         } else {
@@ -150,14 +151,25 @@ export const accountStore = {
         }
         if (!token) throw Error("Missing identity token");
         const credentials = { provider, token, nonce };
-        const response = linking
-          ? await accountClient.auth.linkIdentity(credentials)
-          : await accountClient.auth.signInWithIdToken(credentials);
+        const response =
+          await accountClient.auth.signInWithIdToken(credentials);
         if (response.error) throw response.error;
+        // Apple supplies the name separately from the ID token, only on initial authorization.
+        if (appleName && !reauthenticate) {
+          const profile = await accountClient.auth
+            .updateUser({
+              data: { full_name: appleName },
+            })
+            .catch(() => null);
+          if (profile && !profile.error && profile.data.user)
+            publish({ user: profile.data.user });
+        }
       }
+      const verified = await accountClient.auth.getUser();
+      if (verified.error || !verified.data.user)
+        throw Error("Session verification failed");
       if (expectedID) {
-        const verified = await accountClient.auth.getUser();
-        if (verified.error || verified.data.user?.id !== expectedID) {
+        if (verified.data.user.id !== expectedID) {
           await accountClient.auth.signOut({ scope: "local" });
           throw Error("Reauthentication account mismatch");
         }
@@ -167,8 +179,9 @@ export const accountStore = {
             code: appleCode,
             at: Date.now(),
           };
-        return true;
       }
+      publish({ ready: true, user: verified.data.user, error: null });
+      return true;
     } catch (error) {
       const code =
         error && typeof error === "object" && "code" in error
@@ -182,10 +195,12 @@ export const accountStore = {
   },
   signOut: async () => {
     if (!accountClient || snapshot.busy) return;
-    publish({ busy: true });
+    publish({ busy: true, error: null });
     try {
       const { error } = await accountClient.auth.signOut({ scope: "local" });
       if (error) throw error;
+      deletionProof = null;
+      publish({ user: null, error: null });
     } catch {
       publish({ error: "session-failed" });
     } finally {

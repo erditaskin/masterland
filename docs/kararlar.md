@@ -395,3 +395,22 @@ Kullanıcı Supabase ile Apple, Google ve Facebook hızlı girişlerini, mevcut 
 Kullanıcının sorulara yanıtıyla çevrimdışı merge ve görev oynanışı onaylandı. Bulut eşitleme ve reklam internet gerektirir. İlk reklam yalnız isteğe bağlı enerji ödülüdür: her başarılı ödülde +15 enerji, günde en fazla 4 ödül. Hatırlatmalar arasında en az 30 dakika ve oturumda en fazla 2 hatırlatma başlangıç ayarı olarak onaylandı. Hatırlatma görmek/kapamak günlük ödül hakkını tüketmez; reklam kendiliğinden başlamaz. Mediation ve başka reklam alanları ilk kapsamda değildir.
 
 Supabase, AdMob ve Meta projeleri henüz hazır değildir; kurulum plana dahil edildi. Ayrıntılı aşamalar, veri çakışması, güvenlik kapsamı, kayıt aktarımı, fiziksel testler ve yayın koşulları `hesap-bulut-reklam-plani-20261116.md` içindedir. Bu kayıt bir uygulama planıdır; entegrasyonların kurulduğu veya test edildiği anlamına gelmez.
+
+
+## 16 Kasım 2026 — Giriş ve hesapsız devam akışı
+
+Kullanıcı profil ekranında başka bir giriş yöntemi bağlama seçeneğini kaldırmıştır. Başarılı sağlayıcı girişi, sunucu kullanıcı doğrulamasından sonra oyun tahtasına döner. Profil yeniden açıldığında açık oturum ve mevcut hesap bilgileri gösterilir. Hesaptan çıkış, oyun kaydını silmeden giriş seçeneklerine döner. Kullanıcı “Kapat” ile giriş yapmadan yerel oyuna devam edebilir; bunun için Supabase anonim hesabı oluşturulmaz. Önceki hesap bağlama arayüzü kararı bu açık düzeltmeyle değişmiştir.
+
+Başarılı giriş sırasında “Oturum açık” hesap özeti bir ara sayfa olarak gösterilmez. Sağlayıcı onayı ve sunucu doğrulaması sürerken yalnız giriş yükleniyor durumu gösterilir; başarıda doğrudan oyun ana ekranına dönülür. Hesap özeti yalnız kullanıcı profili yeniden açtığında görünür.
+
+
+## 16 Kasım 2026 — Şehir adları ve konseptlerinin onayı
+
+Kullanıcı Türkçe ve İngilizce şehir adlarını ve konseptlerini kesinleştirdi; bundan sonraki çalışmalar için referans olarak kaydedilmesini istedi. Tek güncel eşleştirme tablosu [Masterland şehir isimleri ve konseptleri](sehir-isimleri-ve-konseptleri.md) belgesindedir. Rünyaka rün ve tılsım odaklıdır; önceki bahçecilik odağı tarihçedir. Yeraltı fiziksel olarak yeraltındadır. Karayonca çiftçilik ve hayvancılık temasını korur; suçluluk yalnız atmosferdir. İlk üç şehir sırası ve sabit kimlikler korunur; Minoc dördüncü sıra önerisidir. Diğer adayların kapsamı ve sırası kesinleşmemiştir. Kod, kanonik ad sözlüğü ve yerelleştirme dosyaları değiştirilmemiştir. Çakışma araştırması henüz yapılmamıştır.
+
+
+## 16 Kasım 2026 — Erdi'nin telefonuna test düğmeli build
+
+Kullanıcı ileri seviyeleri hızlı incelemek için kendi iPhone'una, TestFlight'a yüklenmeden mevcut kaynaklardan test düğmeli bir build kurulmasını istedi. Mevcut dört kontrol kullanılır: enerjiyi 100'e tamamlama, +10.000 altın, +100 elmas ve +1 seviye. Canlı backend ve hesap silme kapalıdır; test kredileri production'a yazılmaz. TestFlight kanal bayrağı yalnız mevcut satın alma kapatma ve Google test envanteri korumalarını kullanmak içindir; App Store Connect'e yükleme yapılmaz. Normal yerel test kaydı kullanılır; ayrı controlled-testflight kaydı silinmez. Bu talep, genel TestFlight dağıtımında test düğmelerinin açılması kararı değildir.
+
+İmzalı Release build iPhone 13 Pro'ya uygulama kaldırılmadan kuruldu ve açıldı. Önceki yerel test kaydı seviye 8'de yüklendi; tahtası korundu. Altın/elmas artışı ve seviye 8'den 9'a geçiş telefonda gözlemlendi. Release simülatöründe testDebugLevelButtonAddsOneLevelPerPress ve testDebugWalletAndParchmentControls geçti; dört düğmenin görünümü incelendi. Telefonda son gözlem: seviye 9, enerji 110, altın 14.898, elmas 206. Kaynak oyun koduna yeni test mekanizması eklenmedi; build ortam bayrakları kullanıldı.

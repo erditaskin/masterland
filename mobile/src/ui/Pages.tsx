@@ -459,7 +459,7 @@ export function Pages({
                   </Label>
                 )}
                 <Divider />
-                <AccountPanel />
+                <AccountPanel onClose={close} />
                 <Divider />
                 {[
                   ["Ses", save.sound, "sound"],

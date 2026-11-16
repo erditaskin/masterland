@@ -1,3 +1,5 @@
+import { DeletionRecovery } from "./ui/DeletionRecovery";
+import { deletionStore } from "./account/deletion";
 import { energyAds } from "./ads/service";
 import { I18nText as Text } from "./ui/I18nText";
 import { languageStore } from "./i18n/locale";
@@ -398,6 +400,7 @@ const Navigation = memo(function Navigation({
   );
 });
 function Game() {
+  const [deletionPreview, setDeletionPreview] = useState(false);
   const language = useSyncExternalStore(
     languageStore.subscribe,
     languageStore.get,
@@ -408,7 +411,10 @@ function Game() {
   const snapshot = useSyncExternalStore(gameStore.subscribe, gameStore.get),
     { save, ready, error, result, revision, review } = snapshot;
   useEffect(() => {
-    if (ready && !review) void energyAds.start();
+    if (ready && !review) {
+      void energyAds.start();
+      void deletionStore.recover();
+    }
   }, [ready, review]);
   const { width, height } = useWindowDimensions(),
     insets = useSafeAreaInsets();
@@ -475,6 +481,11 @@ function Game() {
   useEffect(() => {
     void Linking.getInitialURL().then((incoming) => {
       const url = incoming ? incoming.split(/[?#]/)[0] : null;
+      setDeletionPreview(
+        testModeEnabled &&
+          !testFlightBeta &&
+          Boolean(url?.includes("deletion-recovery-review")),
+      );
       const mode = testFlightBeta
         ? "normal"
         : testModeEnabled && url?.includes("milestone-review")
@@ -493,6 +504,9 @@ function Game() {
     const sub = Linking.addEventListener("url", ({ url: incoming }) => {
       const url = incoming.split(/[?#]/)[0]!;
       if (testFlightBeta || url.startsWith("masterland://auth/")) return;
+      setDeletionPreview(
+        testModeEnabled && url.includes("deletion-recovery-review"),
+      );
       if (testModeEnabled && url.includes("milestone-review")) {
         setPage(null);
         setSelected(null);
@@ -520,7 +534,11 @@ function Game() {
   }, []);
   useEffect(() => {
     const sub = AppState.addEventListener("change", (state) => {
-      if (state === "active") gameStore.dispatch({ type: "tick" });
+      if (state === "active") {
+        gameStore.dispatch({ type: "tick" });
+        if (gameStore.get().ready && !gameStore.get().review)
+          void deletionStore.recover();
+      }
     });
     return () => sub.remove();
   }, []);
@@ -1510,6 +1528,7 @@ function Game() {
           reduced={reduced || save.reducedMotion}
         />
       )}
+      <DeletionRecovery preview={deletionPreview} />
       {review && (
         <Text
           pointerEvents="none"
