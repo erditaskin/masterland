@@ -1,7 +1,9 @@
+import { testModeEnabled } from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FS from "expo-file-system/legacy";
 import {
   advance,
+  migrateCurrentSave,
   fresh,
   transition,
   validateSave,
@@ -32,12 +34,20 @@ const listeners = new Set<() => void>();
 let pending: string | null = null,
   writing = false,
   loadEpoch = 0;
-let activeMode: "normal" | "review" | "qa" = "normal";
+let activeMode: "normal" | "review" | "qa" | "milestone" = "normal";
 function publish(value: Snapshot) {
   snapshot = value;
   listeners.forEach((f) => f());
 }
-async function persist() {
+let activeWrite: Promise<void> | null = null;
+function persist(): Promise<void> {
+  if (activeWrite) return activeWrite;
+  activeWrite = writePending().finally(() => {
+    activeWrite = null;
+  });
+  return activeWrite;
+}
+async function writePending() {
   if (writing) return;
   writing = true;
   try {
@@ -52,19 +62,29 @@ async function persist() {
     writing = false;
   }
 }
-async function load(mode: "normal" | "review" | "qa" = "normal") {
+async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
   const token = ++loadEpoch;
   activeMode = mode;
   try {
     let save: Save;
     if (mode !== "normal") {
-      save = mode === "review" ? visualFixture(Date.now()) : fresh(Date.now());
+      if (mode === "milestone" && !testModeEnabled)
+        throw Error("Test modu kapalı.");
+      save =
+        mode === "review" || mode === "milestone"
+          ? visualFixture(Date.now())
+          : fresh(Date.now());
+      if (mode === "milestone") {
+        save.xp = 2000;
+        save.gold = 8000;
+        save.stamina = 90;
+      }
     } else {
       const stored = await AsyncStorage.getItem(KEY);
       if (stored) {
         const parsed: unknown = JSON.parse(stored);
         if (!validateSave(parsed)) throw Error("Kayıt doğrulanamadı.");
-        save = advance(parsed, Date.now());
+        save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
       } else {
         const v2Path = FS.documentDirectory + "migration-v2.json";
         const imported = await FS.getInfoAsync(v2Path);
@@ -74,7 +94,7 @@ async function load(mode: "normal" | "review" | "qa" = "normal") {
           );
           if (!validateSave(parsed))
             throw Error("Aktarılan kayıt doğrulanamadı.");
-          save = advance(parsed, Date.now());
+          save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
         } else {
           const path = FS.documentDirectory + "legacy-save.json";
           const exists = await FS.getInfoAsync(path);
@@ -133,6 +153,11 @@ export const gameStore = {
       void persist();
     }
     return result;
+  },
+  flush: async () => {
+    await persist();
+    if (pending !== null) await persist();
+    if (snapshot.error) throw Error(snapshot.error);
   },
   retry: () => {
     if (!snapshot.ready) void load(activeMode);

@@ -332,3 +332,16 @@ Kullanıcı tahtanın çevresindeki kesintisiz koyu yeşil boşluğu reddetti. T
 Skara'nın onaylı kenar ölçüleri korunur; geniş toprak avlusu yerine canlı yeşil köy bahçesi kullanılır. Ahşap arayüz kalır. Üretici rafı altı kutuya yer bırakır; yeni üretici eklenmez. Oklar yalnız o yönde taşma varsa çıkar. Alt menü içerikleri kütüğün iç sınırlarına oturur. Harita ayracı görüntülenen şehri takip eder: Skara yeşil, New Haven pembe, Cove mavi aktif görünür. Bu harita odağı kilitli şehre seyahat etmez.
 
 Çok ürünlü siparişin bir şartı tamamlanmışsa ilgili ürün hücreleri koyu yeşildir. Bütün sipariş hazırsa canlı açık yeşil çerçeve ve çok hafif glow vardır. Mevcut yapraklı/düşük alfa tasarımı korunur. Aynı ürün başka hazır siparişte isteniyorsa tam hazır önceliklidir. İlan kartları da bu ayrımı gösterir. Glow tek UI-thread SharedValue kullanır; yalnız opaklık 3,6 saniyede döner. Hareketi azalt tercihinde ve hazır ürün kalmadığında animasyon durur.
+
+
+## 16 Kasım 2026 — Onaylanan ekonomi ve şehir kapsamı
+
+Enerji ödüllerle sınırsız birikir; pasif yenilenme yalnız 100'e kadar sürer. Kalıcı kapasite artırımı kaldırılır. XP harcanmaz. Şehir erişimi için level ve tek seferlik altın koşulu birlikte kullanılacaktır; mevcut level eşikleri ekonomi hesabıyla yeniden belirlenecektir.
+
+Her şehrin ayrı tahtası, deposu ve üreticileri vardır. Enerji, altın, elmas ve genel XP ortaktır. Her üreticinin zinciri tasarım sırasında 7–12 basamak arasında belirlenir; oyuncu oturumunda rastgele değişmez. New Haven bu çalışmada pembe pastane temasıyla oynanabilir hale getirilecektir.
+
+Keşif ödülü, ürün ilk kez elde edildiğinde bir kez verilir. Alan satın almak keşif değildir. Keşif kutlaması kısa ve otomatik kapanır; level ve özel başarı kutlamaları dokunarak kapanır. Ödüller sıralanır ve tekrar ödenmez. Normal ilan teslimleri seri kalır.
+
+Ücretsiz, süreleri iyi takip eden oyuncunun ilk şehirden geçişi yaklaşık bir gün hedeflenir. Sonraki şehir geçişleri giderek uzar; kullanıcı 3, 5, 7, 9, 11 gün örüntüsünü örnek vermiştir. Kesin XP/altın eşikleri simülasyonla seçilir; bu rakamlar henüz ölçülmüş sonuç değildir.
+
+Market bu aşamada StoreKit test ortamıdır; canlı satış sonraki aşamadır. Test sürümünde sağ altta küçük enerji doldurma düğmesi bulunur: enerji 100'ün altındaysa 100'e tamamlar, üstündeyse azaltmaz. Production derlemesinde hem düğme hem test eylemi kapalıdır.

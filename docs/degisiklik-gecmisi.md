@@ -332,3 +332,8 @@ TypeScript ve ESLint geçti; 42 birim testi sıfır hatayla geçti. Release sim�
 Kullanıcı telefonu bağlıyken kurulum istedi. Mevcut Apple geliştirme ekibiyle imzalı Release, iPhone 13 Pro / iOS 27.2 üzerine devicectl ile kuruldu. İlk başlatma ekran kilidi nedeniyle engellendi; kullanıcı kilidi açıp uygulamayı başlattı. Device Hub üzerinden gerçek telefonda iki kez üretim (enerji 100'den 98'e), iki dokunuşla merge, ilk ilan teslimi (+60 altın, +20 XP, seviye 2), sürükleyerek merge, koleksiyon ve şehir haritası gözlemlendi. New Haven odağında pembe aktif ayraç ve Skara'nın pasif ayraç durumu doğrulandı. Normal kayıt sıfırlanmadı; inceleme fixture'ı telefonda açılmadı. Test sırasında oluşan normal oyun ilerlemesi korundu.
 
 Bu fiziksel kontrol bir temel akış denemesidir; kapsamlı cihaz FPS/pil/termal ölçümü veya bütün native otomasyon paketinin fiziksel cihazda çalıştırılması değildir. Kurulu uygulama Release ve Metro'dan bağımsızdır. Yerel derleme: /private/tmp/masterland-device-derived/Build/Products/Release-iphoneos/Masterland.app. Kanıt günlükleri /private/tmp/masterland-device-release.log ve /private/tmp/masterland-device-install.log içindedir.
+
+
+## 16 Kasım 2026 — Enerji, ekonomi ve oynanabilir New Haven
+
+Yeni enerji kuralı, şehir bazlı kayıt ve seyahat, 7–12 basamaklı içerik, ödül kuyruğu/kutlamalar, üretim rehberi, HUD/glow ve StoreKit test marketi uygulandı. 51 motor testi ve son toplu Release simülatör turunda 10 native kontrol geçti. İmzalı Release telefona kuruldu ve başlatıldı. İlk turlardaki hatalar, simülatör sürümü ve kapsam sınırları docs/milestone-verification-20261116.md içinde açıklanmıştır.

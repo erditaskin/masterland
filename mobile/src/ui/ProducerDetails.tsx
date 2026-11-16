@@ -1,3 +1,4 @@
+import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { useState } from "react";
 import { Image, View } from "react-native";
 import { Crop, Item } from "./Art";
@@ -20,6 +21,22 @@ export function ProducerPortrait({
   index: number;
   size: number;
 }) {
+  if (index >= 5) {
+    const b = havenBounds[36 + index - 5]!;
+    return (
+      <View style={{ width: size, height: size, overflow: "hidden" }}>
+        <Crop
+          source={require("../../assets/art/haven-items-v1.png")}
+          x={b[0]!}
+          y={b[1]!}
+          w={b[2]!}
+          h={b[3]!}
+          width={size}
+          height={size}
+        />
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -80,7 +97,7 @@ export function ProducerDetails({
           <ProducerPortrait index={index} size={125} />
         )}
       </View>
-      <View style={{ flexDirection: "row", gap: 5 }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
         {p.products.map((item) => (
           <Button
             key={item.id}
@@ -90,7 +107,7 @@ export function ProducerDetails({
             }
             onPress={() => setSelected(item.id)}
             style={{
-              flex: 1,
+              width: "23%",
               height: 72,
               borderWidth: item.id === selected ? 2 : 1,
               borderColor: item.id === selected ? "#dca62e" : colors.outline,

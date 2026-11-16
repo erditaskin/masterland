@@ -1,0 +1,58 @@
+{
+  "identifier": "6E530CCB-7337-40C3-821F-61CD091DB01A",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "gems30",
+      "localizations": [
+        {
+          "description": "Masterland yerel StoreKit test paketi. Gerçek ödeme alınmaz.",
+          "displayName": "30 elmas",
+          "locale": "tr_TR"
+        },
+        {
+          "description": "Local StoreKit testing only.",
+          "displayName": "30 elmas",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.erditaskin.masterland.gems30",
+      "referenceName": "30 elmas",
+      "type": "Consumable"
+    },
+    {
+      "displayPrice": "1.99",
+      "familyShareable": false,
+      "internalID": "gold2500",
+      "localizations": [
+        {
+          "description": "Masterland yerel StoreKit test paketi. Gerçek ödeme alınmaz.",
+          "displayName": "2.500 altın",
+          "locale": "tr_TR"
+        },
+        {
+          "description": "Local StoreKit testing only.",
+          "displayName": "2.500 altın",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.erditaskin.masterland.gold2500",
+      "referenceName": "2.500 altın",
+      "type": "Consumable"
+    }
+  ],
+  "settings": {
+    "_askToBuyEnabled": false,
+    "_failTransactionsEnabled": false,
+    "_locale": "tr_TR",
+    "_storefront": "TUR",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

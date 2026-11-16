@@ -47,3 +47,10 @@ Kullanıcının 15 Kasım 2026 gece düzeltmesiyle ana ekrandaki şehir tabelas�
 ## 16 Kasım son düzeltmesi
 
 Skara zemin teması canlı yeşil köydür; geniş toprak avlusu reddedilmiştir. Ahşap kabuk ve kare tahta korunur. Raf altı kutuya uygundur, yön okları taşmaya bağlıdır. Alt menü kütüğün içine oturur. Sağ şehir ayracı kaydırılan bölgeyi takip eder. Kısmi hazır koyu yeşil, tam hazır açık yeşil çerçeve ve çok hafif ortak glow ile belirtilir.
+
+
+## 16 Kasım 2026 — Enerji ve iki şehirli ekonomi
+
+Artırılabilir enerji kapasitesi kaldırılmıştır. Pasif dolum yalnız 100'e kadar çalışır; ödül/satın alma enerjisi 100 üzerinde birikir. Eski kapasite kararları tarihçedir. Normal kayıt ve bakiyeler korunur. Şehirlerin tahtası, deposu, üreticileri ayrıdır; cüzdan ve genel XP ortaktır. Skara zincirleri 7/8/9/10/12, New Haven 7/8/9/10 basamaktır. New Haven seviye 12 ve tek seferlik 6.000 altınla oynanabilir; Cove hâlâ önizlemedir. Ayrıntılar docs/economy-20261116.md içindedir.
+
+Keşif ödülleri ilk elde edişte bir kez ödenir. Kalıcı ödül kuyruğu yalnız sunum içindir; bildirimi kapatmak yeniden ödeme yapmaz. Eksik ilana dokunma o ilana özel görsel üretim rehberini açar. StoreKit yalnız Xcode test ortamında açıktır; production işlemlerine ödeme yapılmaz. EXPO_PUBLIC_TEST_MODE varsayılan olarak kapalıdır; test enerji düğmesi ve test kredi eylemi aynı sınırla korunur. Gerçek para satışını backend doğrulaması olmadan açmayın.

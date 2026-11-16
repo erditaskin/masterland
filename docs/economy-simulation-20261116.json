@@ -1,0 +1,179 @@
+{
+  "policy": "continuous optimal low-tier farming; real city travel at level12/6000gold; no gems or ads; 300ms actions; 120s refill; no optional producer spending",
+  "points": {
+    "2": {
+      "hours": 0,
+      "xp": 22,
+      "gold": 75,
+      "energySpent": 2
+    },
+    "3": {
+      "hours": 0,
+      "xp": 62,
+      "gold": 245,
+      "energySpent": 11
+    },
+    "4": {
+      "hours": 0.04,
+      "xp": 122,
+      "gold": 545,
+      "energySpent": 31
+    },
+    "5": {
+      "hours": 0.04,
+      "xp": 200,
+      "gold": 961,
+      "energySpent": 57
+    },
+    "6": {
+      "hours": 0.12,
+      "xp": 320,
+      "gold": 1981,
+      "energySpent": 117
+    },
+    "7": {
+      "hours": 1.24,
+      "xp": 480,
+      "gold": 3421,
+      "energySpent": 197
+    },
+    "8": {
+      "hours": 3.71,
+      "xp": 684,
+      "gold": 5089,
+      "energySpent": 281
+    },
+    "9": {
+      "hours": 6.57,
+      "xp": 924,
+      "gold": 7105,
+      "energySpent": 377
+    },
+    "10": {
+      "hours": 9.51,
+      "xp": 1202,
+      "gold": 9327,
+      "energySpent": 475
+    },
+    "11": {
+      "hours": 14.54,
+      "xp": 1601,
+      "gold": 13473,
+      "energySpent": 646
+    },
+    "12": {
+      "hours": 19.91,
+      "xp": 2000,
+      "gold": 17748,
+      "energySpent": 817
+    },
+    "13": {
+      "hours": 27.07,
+      "xp": 2400,
+      "gold": 16766,
+      "energySpent": 1042
+    },
+    "14": {
+      "hours": 33.84,
+      "xp": 2805,
+      "gold": 21602,
+      "energySpent": 1255
+    },
+    "15": {
+      "hours": 39.71,
+      "xp": 3206,
+      "gold": 25967,
+      "energySpent": 1441
+    },
+    "16": {
+      "hours": 44.04,
+      "xp": 3606,
+      "gold": 29606,
+      "energySpent": 1591
+    },
+    "17": {
+      "hours": 48.71,
+      "xp": 4006,
+      "gold": 33356,
+      "energySpent": 1741
+    },
+    "18": {
+      "hours": 53.37,
+      "xp": 4406,
+      "gold": 37256,
+      "energySpent": 1891
+    },
+    "19": {
+      "hours": 58.04,
+      "xp": 4806,
+      "gold": 41270,
+      "energySpent": 2041
+    },
+    "20": {
+      "hours": 62.71,
+      "xp": 5206,
+      "gold": 45320,
+      "energySpent": 2191
+    },
+    "21": {
+      "hours": 66.44,
+      "xp": 5602,
+      "gold": 48884,
+      "energySpent": 2323
+    },
+    "22": {
+      "hours": 70.61,
+      "xp": 6007,
+      "gold": 52529,
+      "energySpent": 2458
+    },
+    "23": {
+      "hours": 74.67,
+      "xp": 6403,
+      "gold": 56093,
+      "energySpent": 2590
+    },
+    "24": {
+      "hours": 78.84,
+      "xp": 6808,
+      "gold": 59738,
+      "energySpent": 2725
+    },
+    "25": {
+      "hours": 82.91,
+      "xp": 7204,
+      "gold": 63302,
+      "energySpent": 2857
+    },
+    "26": {
+      "hours": 86.64,
+      "xp": 7600,
+      "gold": 66866,
+      "energySpent": 2989
+    },
+    "27": {
+      "hours": 90.81,
+      "xp": 8005,
+      "gold": 70511,
+      "energySpent": 3124
+    },
+    "28": {
+      "hours": 94.87,
+      "xp": 8401,
+      "gold": 74075,
+      "energySpent": 3256
+    },
+    "29": {
+      "hours": 99.04,
+      "xp": 8806,
+      "gold": 77720,
+      "energySpent": 3391
+    },
+    "30": {
+      "hours": 103.11,
+      "xp": 9202,
+      "gold": 81284,
+      "energySpent": 3523
+    }
+  }
+}

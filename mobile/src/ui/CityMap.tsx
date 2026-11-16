@@ -9,6 +9,8 @@ import {
 import tabBounds from "../../assets/art/city-tabs-v4-bounds.json";
 import reference from "../../../data/content-reference.json";
 import {
+  cityRule,
+  level,
   achievementProgress,
   achievementState,
   achievements,
@@ -154,6 +156,7 @@ export function CityMap({
   initialOffset = () => 0,
   onOffsetChange,
   onReturn,
+  onTravel,
   onInteract,
 }: {
   currentCity: string;
@@ -164,10 +167,16 @@ export function CityMap({
   initialOffset?: () => number;
   onOffsetChange: (y: number) => void;
   onReturn: () => void;
+  onTravel: (id: string) => void;
   onInteract: () => void;
   reduced: boolean;
 }) {
-  const [active, setActive] = useState(0),
+  const [active, setActive] = useState(
+      Math.max(
+        0,
+        reference.ui.city_map.stops.findIndex((s) => s.city_id === currentCity),
+      ),
+    ),
     [inspected, setInspected] = useState<number | null>(null);
   const [offset] = useState(initialOffset);
   const scroll = useRef<ComponentRef<typeof FlatList<Chunk>>>(null);
@@ -185,10 +194,18 @@ export function CityMap({
   const tileHeight = (plotWidth * 1230) / 675;
   useEffect(() => {
     const frame = requestAnimationFrame(() =>
-      scroll.current?.scrollToOffset({ offset, animated: false }),
+      scroll.current?.scrollToOffset({
+        offset:
+          offset ||
+          Math.max(
+            0,
+            chunks.findIndex((c) => stops[c.region]?.city_id === currentCity),
+          ) * tileHeight,
+        animated: false,
+      }),
     );
     return () => cancelAnimationFrame(frame);
-  }, [offset, tileHeight]);
+  }, [offset, tileHeight, chunks, stops, currentCity]);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     onOffsetChange(e.nativeEvent.contentOffset.y);
     const index = Math.min(
@@ -202,6 +219,23 @@ export function CityMap({
   };
   const activeStop = stops[active]!,
     here = activeStop.city_id === currentCity && activeStop.travel_enabled;
+  const rule = cityRule(activeStop.city_id)!;
+  const visited = !!save.cities[activeStop.city_id];
+  const travelText = here
+    ? "Tahtaya dön"
+    : visited
+      ? "Bu şehre geç"
+      : !rule.enabled
+        ? `Seviye ${rule.level} · Yakında`
+        : level(save) < rule.level
+          ? `Seviye ${rule.level} · ${rule.gold} altın`
+          : `${rule.gold} altınla şehri aç`;
+  const travel = () => {
+    onInteract();
+    if (here) onReturn();
+    else if (rule.enabled) onTravel(rule.id);
+    else setInspected(active);
+  };
   return (
     <View style={{ width, height, overflow: "hidden" }}>
       <Button
@@ -325,13 +359,24 @@ export function CityMap({
           }}
         />
       </View>
-      <Label
-        title
-        size={12}
-        style={{ textAlign: "center", height: 25, paddingTop: 5 }}
+      <Button
+        testID="travelCity"
+        label={travelText}
+        onPress={travel}
+        style={{
+          height: 36,
+          marginTop: 4,
+          marginHorizontal: 18,
+          borderRadius: 16,
+          backgroundColor: here || visited ? "#3f7827" : "#9e6225",
+          borderWidth: 1,
+          borderColor: "#e9c175",
+        }}
       >
-        Yol devam ediyor ↓
-      </Label>
+        <Label title size={12} color="#fff0c7">
+          {travelText}
+        </Label>
+      </Button>
       <View style={{ position: "absolute", right: 0, top: 32, gap: 8 }}>
         {stops.map((stop, i) => (
           <Button

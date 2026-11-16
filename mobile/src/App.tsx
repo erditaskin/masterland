@@ -1,3 +1,7 @@
+import { EnergyTimer } from "./ui/EnergyTimer";
+import { RewardCelebration } from "./ui/RewardCelebration";
+import { ProducerPortrait } from "./ui/ProducerDetails";
+import { testModeEnabled } from "./game/testMode";
 import {
   memo,
   type ComponentRef,
@@ -58,6 +62,7 @@ import {
   name,
   orders,
   producers,
+  cityProducers,
   product,
   type Action,
   type Producer,
@@ -75,6 +80,9 @@ const navigation = [
 ] as const;
 const startupAssets = [
   art.city,
+  require("../assets/art/haven-surround-v1.png"),
+  require("../assets/art/skara-items-v2.png"),
+  require("../assets/art/haven-items-v1.png"),
   require("../assets/art/carved-city-sign-v1.png"),
   require("../assets/art/carved-wood-rail-v1.png"),
   require("../assets/art/flour-packet-v1.png"),
@@ -169,15 +177,19 @@ const ProducerCard = memo(
               borderRadius: 6,
             }}
           >
-            <Crop
-              source={art.concept}
-              x={143 + index * 130.5}
-              y={400}
-              w={68}
-              h={68}
-              width={size - 4}
-              height={size - 4}
-            />
+            {index >= 5 ? (
+              <ProducerPortrait index={index} size={size - 4} />
+            ) : (
+              <Crop
+                source={art.concept}
+                x={143 + index * 130.5}
+                y={400}
+                w={68}
+                h={68}
+                width={size - 4}
+                height={size - 4}
+              />
+            )}
           </View>
           {owned && (
             <View
@@ -414,6 +426,10 @@ function Game() {
       setPage(null);
       setSelected(null);
     }, [uiSound]);
+  const dismissReward = useCallback(() => {
+    const notice = gameStore.get().save.rewardQueue?.[0];
+    if (notice) gameStore.dispatch({ type: "dismiss-reward", id: notice.id });
+  }, []);
   const dispatch = useCallback((action: Action) => {
     return gameStore.dispatch(action);
   }, []);
@@ -443,17 +459,24 @@ function Game() {
   }, [assetAttempt]);
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
-      const mode = url?.includes("review")
-        ? "review"
-        : url?.includes("qa-reset")
-          ? "qa"
-          : "normal";
+      const mode =
+        testModeEnabled && url?.includes("milestone-review")
+          ? "milestone"
+          : url?.includes("review")
+            ? "review"
+            : url?.includes("qa-reset")
+              ? "qa"
+              : "normal";
       setLaunchPreview(Boolean(url?.includes("loading-review")));
       setSelected(mode === "review" ? 0 : null);
       return gameStore.load(mode);
     });
     const sub = Linking.addEventListener("url", ({ url }) => {
-      if (url.includes("review")) {
+      if (testModeEnabled && url.includes("milestone-review")) {
+        setPage(null);
+        setSelected(null);
+        void gameStore.load("milestone");
+      } else if (url.includes("review")) {
         setLaunchPreview(url.includes("loading-review"));
         setPage(null);
         setSelected(0);
@@ -600,7 +623,7 @@ function Game() {
     [activeOrders, save],
   );
   const readyPulse = useReadyPulse(
-    readyOrderItems.size > 0,
+    !page && readyOrderItems.size > 0,
     reduced || save.reducedMotion,
   );
   const producerRail = useRef<ComponentRef<typeof ScrollView>>(null),
@@ -654,7 +677,11 @@ function Game() {
     c = city(save);
   return (
     <ImageBackground
-      source={art.city}
+      source={
+        save.cityID === "city2"
+          ? require("../assets/art/haven-surround-v1.png")
+          : art.city
+      }
       resizeMode="cover"
       onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
       style={{ flex: 1 }}
@@ -677,7 +704,7 @@ function Game() {
             testID="profile"
             label={`Seviye ${level(save)}, profil`}
             onPress={() => open({ kind: "profile" })}
-            style={{ width: 76 * scale, height: 34 }}
+            style={{ width: 56 * scale, height: 34 }}
           >
             <View
               style={{
@@ -723,7 +750,7 @@ function Game() {
                     left: 0,
                     width: 29,
                     height: 31,
-                    lineHeight: 24,
+                    lineHeight: 31,
                     textAlign: "center",
                     fontFamily: fonts.number,
                     fontSize: 15,
@@ -762,17 +789,17 @@ function Game() {
             [
               {
                 id: "stamina",
-                value: `${save.stamina}/${energyCap(save)}`,
+                value: String(save.stamina),
                 icon: 5,
-                width: 76,
+                width: 92,
               },
               {
                 id: "gold",
                 value: save.gold.toLocaleString("tr-TR"),
                 icon: 6,
-                width: 67,
+                width: 104,
               },
-              { id: "gems", value: String(save.gems), icon: 7, width: 56 },
+              { id: "gems", value: String(save.gems), icon: 7, width: 82 },
             ] as const
           ).map((a) => (
             <Button
@@ -788,7 +815,7 @@ function Game() {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  height: 23,
+                  height: 28,
                   borderRadius: 12,
                   backgroundColor: colors.navy,
                   backgroundImage:
@@ -800,7 +827,7 @@ function Game() {
                 }}
               >
                 <View style={{ marginLeft: -5, marginRight: 1 }}>
-                  <Sprite kind="icons" index={a.icon} size={29} />
+                  <Sprite kind="icons" index={a.icon} size={34} />
                 </View>
                 <Text
                   numberOfLines={1}
@@ -808,7 +835,8 @@ function Game() {
                   style={{
                     fontFamily: fonts.number,
                     color: colors.goldLight,
-                    fontSize: 12,
+                    fontSize: 16,
+                    fontVariant: ["tabular-nums"],
                     flex: 1,
                     textAlign: "center",
                   }}
@@ -838,6 +866,13 @@ function Game() {
                   </Label>
                 </View>
               </View>
+              {a.id === "stamina" && (
+                <View
+                  style={{ position: "absolute", top: 34, left: 0, right: 0 }}
+                >
+                  <EnergyTimer save={save} />
+                </View>
+              )}
             </Button>
           ))}
           <Button
@@ -845,6 +880,9 @@ function Game() {
             label="Profil"
             onPress={() => open({ kind: "profile" })}
             style={{
+              position: "absolute",
+              right: 34,
+              top: 39,
               width: 29,
               height: 29,
               borderRadius: 15,
@@ -877,6 +915,9 @@ function Game() {
             label="Eşya bilgisi"
             onPress={() => open({ kind: "info", index: selected ?? undefined })}
             style={{
+              position: "absolute",
+              right: 0,
+              top: 39,
               width: 29,
               height: 29,
               borderRadius: 15,
@@ -922,10 +963,10 @@ function Game() {
               onPress={() => open({ kind: "orders" })}
               style={{
                 position: "absolute",
-                top: top + 25 * scale,
-                right: 10,
+                top: top + 35 * scale,
+                left: 10,
                 width: 44,
-                height: 44,
+                height: 26 * scale,
               }}
             >
               <Label title size={9} color={colors.goldLight}>
@@ -1017,7 +1058,7 @@ function Game() {
                           Date.now() - lastOrderDeliveryAt.current >
                           400
                         ) {
-                          open({ kind: "orders" });
+                          open({ kind: "order-guide", id: live.id });
                         }
                       }}
                       style={{
@@ -1237,12 +1278,12 @@ function Game() {
                   paddingHorizontal: 8 * scale,
                 }}
               >
-                {producers.map((p, i) => (
+                {cityProducers(save).map((p) => (
                   <ProducerCard
                     key={p.id}
                     p={p}
                     onPowerOpen={showPowerMenu}
-                    index={i}
+                    index={producers.indexOf(p)}
                     size={producerSize}
                     save={save}
                     dispatch={dispatch}
@@ -1366,6 +1407,32 @@ function Game() {
           <Label>{error}</Label>
           <ActionButton text="Tekrar dene" onPress={gameStore.retry} />
         </View>
+      )}
+      {testModeEnabled && !page && (
+        <View style={{ position: "absolute", right: 10, bottom: 2 }}>
+          <Button
+            testID="testEnergyFill"
+            label="Test: enerjiyi 100’e tamamla"
+            onPress={() => dispatch({ type: "test-energy-fill" })}
+            style={{
+              paddingHorizontal: 8,
+              height: 20,
+              borderRadius: 8,
+              backgroundColor: "#3c542cdd",
+            }}
+          >
+            <Label size={9} color="#ffefc9">
+              TEST · Enerjiyi doldur
+            </Label>
+          </Button>
+        </View>
+      )}
+      {!!save.rewardQueue?.[0] && (
+        <RewardCelebration
+          notice={save.rewardQueue[0]}
+          dismiss={dismissReward}
+          reduced={reduced || save.reducedMotion}
+        />
       )}
       {review && (
         <Text

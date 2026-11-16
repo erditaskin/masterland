@@ -56,3 +56,10 @@ Eski `ios/` yolları ve Ultima adı geçen tarihsel raporlar geçmiş SwiftUI s�
 ## Güncel Skara uygulama doğrulaması
 
 Kanonik konsept paketi, native kare tahta, loading ve şehir yolu uygulamasının ölçümleri ve kabul sınırı `docs/skara-native-fidelity.md` içindedir. Eski görsel turlar güncel kare hücre kararının yerine geçmez.
+
+
+### Enerji ve New Haven prototipi — 16 Kasım 2026
+
+Pasif enerji yenilenmesi 100'de durur; hediye enerjisi sınırsız birikebilir. New Haven seviye 12 ve tek seferlik 6.000 altınla açılır. Şehirlerin kayıtları ayrıdır. Güncel içerik tablosu `docs/producer-tiers-20261116.md`, ekonomi hesabı `docs/economy-20261116.md`, test kanıtları `docs/milestone-verification-20261116.md` içindedir.
+
+Test enerji düğmesi ve yerel StoreKit kredileri yalnız `EXPO_PUBLIC_TEST_MODE=true` ile açılır. `npm run ios:test` test sürümünü; `npm run ios:production` test özelliği kapalı sürümü üretir. Gerçek para satışı açık değildir. Yerel StoreKit kataloğu `mobile/qa/Masterland.storekit`, test şeması `MasterlandQA` kullanılır. iOS 26.3 CLI StoreKit testi SKInternalErrorDomain Code=3 verebildiğinden son başarılı satın alma testi iOS 18.6 simülatöründe çalıştırılmıştır.

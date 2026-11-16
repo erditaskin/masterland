@@ -19,8 +19,8 @@ export function useReadyPulse(enabled: boolean, reduced: boolean) {
       pulse.set(
         withRepeat(
           withSequence(
-            withTiming(1, { duration: 1800 }),
-            withTiming(0, { duration: 1800 }),
+            withTiming(1, { duration: 550 }),
+            withTiming(0, { duration: 1850 }),
           ),
           -1,
           false,
@@ -40,7 +40,7 @@ export function ReadyGlow({
   radius?: number;
 }) {
   const style = useAnimatedStyle(() => ({
-    opacity: 0.18 + pulse.get() * 0.16,
+    opacity: 0.25 + pulse.get() * 0.5,
   }));
   return (
     <Animated.View
@@ -50,11 +50,11 @@ export function ReadyGlow({
           position: "absolute",
           inset,
           borderRadius: radius,
-          borderWidth: 1.5,
+          borderWidth: 2,
           borderColor: "#bfff8e",
           shadowColor: "#9bdd65",
-          shadowOpacity: 0.16,
-          shadowRadius: 2,
+          shadowOpacity: 0.28,
+          shadowRadius: 3,
           shadowOffset: { width: 0, height: 0 },
         },
         style,

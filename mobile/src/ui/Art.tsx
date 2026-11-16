@@ -1,3 +1,6 @@
+import reference from "../../../data/content-reference.json";
+import skaraBounds from "../../assets/art/skara-items-v2-bounds.json";
+import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { memo } from "react";
 import { Image, View, type ImageSourcePropType } from "react-native";
 import { art } from "./theme";
@@ -82,6 +85,40 @@ export const Item = memo(function Item({
   width?: number;
   height?: number;
 }) {
+  const custom = (
+    reference.item_art as Record<string, { sheet: string; index: number }>
+  )[id];
+  if (custom) {
+    const rect = (custom.sheet === "skara" ? skaraBounds : havenBounds)[
+      custom.index
+    ]!;
+    const side = Math.min(width, height);
+    return (
+      <View
+        pointerEvents="none"
+        style={{
+          width,
+          height,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Crop
+          source={
+            custom.sheet === "skara"
+              ? require("../../assets/art/skara-items-v2.png")
+              : require("../../assets/art/haven-items-v1.png")
+          }
+          x={rect[0]!}
+          y={rect[1]!}
+          w={rect[2]!}
+          h={rect[3]!}
+          width={side}
+          height={side}
+        />
+      </View>
+    );
+  }
   const p = product(id),
     approved = p.producer < 4 && p.tier <= 2;
   const kind = approved ? "approved" : "products";

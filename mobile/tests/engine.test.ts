@@ -154,7 +154,7 @@ test("delivery settles rewards once before presentation", () => {
   const q = intro[0]!;
   const delivered = run(s, { type: "deliver", id: q.id });
   assert.equal(delivered.kind, "reward");
-  assert.equal(delivered.state.gold, q.gold);
+  assert.equal(delivered.state.gold, s.gold + q.gold);
   assert.equal(count(delivered.state, b.id), 0);
   assert.equal(
     run(delivered.state, { type: "deliver", id: q.id }).state,
@@ -208,7 +208,7 @@ test("serialised save validates without losing progress", () => {
   const s = twice();
   assert(validateSave(JSON.parse(JSON.stringify(s))));
   assert(!validateSave({ schema: 2 }));
-  assert(!validateSave({ ...s, stamina: 101 }));
+  assert(validateSave({ ...s, stamina: 101 }));
 });
 test("Swift save migration preserves XP, items, storage, and time base", () => {
   const s = decodeLegacy(
@@ -387,17 +387,17 @@ test("ready orders precede incomplete ones without changing requirements or rewa
   );
 });
 
-test("expanded capacity retains exact regeneration interval above 100", () => {
+test("legacy capacity never raises passive refill above 100", () => {
   const s = fresh(now);
   s.staminaCapacity = 150;
   s.stamina = 100;
   s.energyAt = now;
   assert.equal(advance(s, now + 119999).stamina, 100);
-  assert.equal(advance(s, now + 120000).stamina, 101);
-  assert.equal(advance(s, now + 240000).stamina, 102);
-  assert.equal(advance(s, now + 12000000).stamina, 150);
+  assert.equal(advance(s, now + 120000).stamina, 100);
+  assert.equal(advance(s, now + 240000).stamina, 100);
+  assert.equal(advance(s, now + 12000000).stamina, 100);
   assert(validateSave({ ...s, stamina: 150 }));
-  assert(!validateSave({ ...s, stamina: 151 }));
+  assert(validateSave({ ...s, stamina: 151 }));
 });
 test("all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary", () => {
   for (const mode of [1, 2, 3, 4])
@@ -441,7 +441,7 @@ test("locked output mode cannot be selected or silently consume energy", () => {
   assert.equal(r.kind, "blocked");
   assert.equal(r.state.stamina, 120);
 });
-test("achievement reward is once-only and gives real capacity without spending XP", () => {
+test("achievement reward is once-only and adds uncapped energy without capacity", () => {
   const s = fresh(now);
   city(s).introIndex = 1;
   s.stamina = 98;
@@ -449,7 +449,7 @@ test("achievement reward is once-only and gives real capacity without spending X
   assert.equal(achievementState(s, a), "ready");
   const r = run(s, { type: "claim-achievement", id: a.id });
   assert.equal(r.kind, "reward");
-  assert.equal(energyCap(r.state), 125);
+  assert.equal(energyCap(r.state), 100);
   assert.equal(r.state.stamina, 123);
   assert.equal(r.state.xp, 5);
   const again = run(r.state, { type: "claim-achievement", id: a.id });
@@ -460,18 +460,18 @@ test("achievement reward is once-only and gives real capacity without spending X
     "blocked",
   );
 });
-test("gem capacity purchase is atomic and cannot bank time spent at full capacity", () => {
+test("gem energy purchase is atomic and cannot regenerate purchased overflow", () => {
   const s = fresh(now);
-  s.gems = 10;
+  s.gems = 3;
   s.energyAt = now - 9999999;
   const r = run(s, { type: "energy-capacity" });
-  assert.equal(energyCap(r.state), 125);
+  assert.equal(energyCap(r.state), 100);
   assert.equal(r.state.stamina, 125);
   assert.equal(r.state.gems, 0);
   assert.equal(r.state.xp, 0);
   const spent = run(r.state, { type: "produce", id: p.id });
   assert.equal(advance(spent.state, now + 119999).stamina, 124);
-  assert.equal(advance(spent.state, now + 120000).stamina, 125);
+  assert.equal(advance(spent.state, now + 120000).stamina, 124);
   assert.equal(run(s, { type: "energy-capacity" }).state.gems, 0);
 });
 test("older schema2 records retain default capacity and power with no reset", () => {

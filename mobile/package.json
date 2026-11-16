@@ -8,7 +8,10 @@
     "ios": "expo run:ios --port 8084",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "node --import tsx --test tests/*.test.ts",
+    "start:test": "EXPO_PUBLIC_TEST_MODE=true expo start --port 8084",
+    "ios:test": "EXPO_PUBLIC_TEST_MODE=true expo run:ios --configuration Release --port 8084",
+    "ios:production": "EXPO_PUBLIC_TEST_MODE=false expo run:ios --configuration Release --port 8084"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
@@ -19,6 +22,7 @@
     "expo-file-system": "~58.0.13",
     "expo-font": "~58.0.12",
     "expo-haptics": "~58.0.8",
+    "expo-iap": "^6.5.0",
     "expo-linking": "~58.0.17",
     "expo-router": "~58.0.31",
     "expo-splash-screen": "~58.0.14",

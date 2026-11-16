@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "locales": {
     "tr": {
       "city1_name_tr": "Skara Brae",
@@ -199,7 +199,77 @@
       "achievement11_name_tr": "Ahşabın Dili",
       "achievement11_description_tr": "Şehir açıldığında koşulları belli olacak.",
       "achievement12_name_tr": "Limanın Hatırası",
-      "achievement12_description_tr": "Şehir açıldığında koşulları belli olacak."
+      "achievement12_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "item100_name_tr": "Küçük saman yığını",
+      "item101_name_tr": "Bağlı saman balyaları",
+      "item102_name_tr": "Tahıl silosu",
+      "item103_name_tr": "Un eleği",
+      "item104_name_tr": "El değirmeni",
+      "item105_name_tr": "Un fıçısı",
+      "item106_name_tr": "Değirmen taşı",
+      "item107_name_tr": "Örgü ekmek",
+      "item108_name_tr": "Baget",
+      "item109_name_tr": "Otlu focaccia",
+      "item110_name_tr": "Köy ekmeği tabağı",
+      "item111_name_tr": "Hasat çelengi",
+      "item112_name_tr": "Yoğurt",
+      "item113_name_tr": "Kaymak çömleği",
+      "item114_name_tr": "Lor peyniri",
+      "item115_name_tr": "Küflü peynir",
+      "item116_name_tr": "Otlu peynir",
+      "item117_name_tr": "Peynir ustasının tabağı",
+      "item118_name_tr": "Elma suyu",
+      "item119_name_tr": "Kurutulmuş elma",
+      "item120_name_tr": "Şekerli elma",
+      "item121_name_tr": "Elma kompostosu",
+      "item122_name_tr": "Bereket sepeti",
+      "item123_name_tr": "Bahçecinin kupası",
+      "item124_name_tr": "Elma şırası",
+      "item125_name_tr": "Altın elma tacı",
+      "producer10_name_tr": "Kurabiye Fırını",
+      "item126_name_tr": "Vanilyalı bisküvi",
+      "item127_name_tr": "Tereyağlı kurabiye",
+      "item128_name_tr": "Çikolatalı kurabiye",
+      "item129_name_tr": "Duble çikolata yığını",
+      "item130_name_tr": "Kurabiye kutusu",
+      "item131_name_tr": "Ustanın kurabiye seçkisi",
+      "item132_name_tr": "Kurabiye kulesi",
+      "producer11_name_tr": "Tart Tezgâhı",
+      "item133_name_tr": "Tart tabanı",
+      "item134_name_tr": "Limonlu tart",
+      "item135_name_tr": "Elmalı tart",
+      "item136_name_tr": "Çilekli tart",
+      "item137_name_tr": "Yaban mersinli tart",
+      "item138_name_tr": "Çikolatalı tart",
+      "item139_name_tr": "Vişneli turta",
+      "item140_name_tr": "Tart ziyafeti",
+      "producer12_name_tr": "Pasta Atölyesi",
+      "item141_name_tr": "Pandispanya",
+      "item142_name_tr": "Çift pandispanya",
+      "item143_name_tr": "Kremalı pasta",
+      "item144_name_tr": "Pembe pasta",
+      "item145_name_tr": "Çilekli doğum günü pastası",
+      "item146_name_tr": "İki katlı çiçekli pasta",
+      "item147_name_tr": "Düğün pastası",
+      "item148_name_tr": "Kraliyet pastası",
+      "item149_name_tr": "Gül pastası kulesi",
+      "producer13_name_tr": "Çikolata Dükkânı",
+      "item150_name_tr": "Kakao çekirdeği",
+      "item151_name_tr": "Kakao tozu",
+      "item152_name_tr": "Bitter çikolata",
+      "item153_name_tr": "Sütlü çikolata",
+      "item154_name_tr": "Trüf",
+      "item155_name_tr": "Trüf kutusu",
+      "item156_name_tr": "Pralin tabağı",
+      "item157_name_tr": "Çikolata hediye sepeti",
+      "item158_name_tr": "Çikolata şelalesi",
+      "item159_name_tr": "Çikolata ustasının kupası",
+      "quest100_name_tr": "Tatlı bir merhaba",
+      "quest101_name_tr": "Kurabiye sepeti",
+      "quest102_name_tr": "Tart daveti",
+      "quest103_name_tr": "Pastacının imzası",
+      "quest104_name_tr": "Meyveli mola",
+      "quest105_name_tr": "Çikolata zamanı"
     }
   },
   "cities": [
@@ -222,7 +292,7 @@
       "name_key": "city2_name_tr",
       "theme": "İleri Baker içeriği, bakery ve pastalar",
       "status": "Onaylı",
-      "unlock_level": 2,
+      "unlock_level": 12,
       "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
       "profession_ids": [
         "profession2"
@@ -234,7 +304,7 @@
       "name_key": "city3_name_tr",
       "theme": "Balıkçılık ve marangozluk (carpentry); odunculuk giriş zinciri",
       "status": "Onaylı",
-      "unlock_level": 5,
+      "unlock_level": 28,
       "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
       "profession_ids": [
         "profession3",
@@ -1369,7 +1439,7 @@
           "role_key": "city2_map_role_tr",
           "left": 0.35,
           "top": 0.5,
-          "travel_enabled": false
+          "travel_enabled": true
         },
         {
           "city_id": "city3",
@@ -1628,9 +1698,12 @@
           "item1",
           "item2",
           "item27",
-          "item49"
+          "item49",
+          "item100",
+          "item101",
+          "item102"
         ],
-        "chain_status": "review_draft_preserved_from_previous_table",
+        "chain_status": "implemented_7_to_12",
         "product_unlocks": [
           {
             "item_id": "item1",
@@ -1667,6 +1740,27 @@
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
+          },
+          {
+            "item_id": "item100",
+            "tier": 5,
+            "required_player_level": 4,
+            "gold_cost": 80,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item101",
+            "tier": 6,
+            "required_player_level": 5,
+            "gold_cost": 160,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item102",
+            "tier": 7,
+            "required_player_level": 6,
+            "gold_cost": 320,
+            "status": "prototype_balanced"
           }
         ]
       },
@@ -1681,9 +1775,13 @@
           "item29",
           "item50",
           "item51",
-          "item52"
+          "item52",
+          "item103",
+          "item104",
+          "item105",
+          "item106"
         ],
-        "chain_status": "review_draft_preserved_from_previous_table",
+        "chain_status": "implemented_7_to_12",
         "product_unlocks": [
           {
             "item_id": "item29",
@@ -1720,6 +1818,34 @@
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
+          },
+          {
+            "item_id": "item103",
+            "tier": 5,
+            "required_player_level": 4,
+            "gold_cost": 80,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item104",
+            "tier": 6,
+            "required_player_level": 5,
+            "gold_cost": 160,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item105",
+            "tier": 7,
+            "required_player_level": 6,
+            "gold_cost": 320,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item106",
+            "tier": 8,
+            "required_player_level": 7,
+            "gold_cost": 640,
+            "status": "prototype_balanced"
           }
         ]
       },
@@ -1734,9 +1860,14 @@
           "item53",
           "item6",
           "item54",
-          "item7"
+          "item7",
+          "item107",
+          "item108",
+          "item109",
+          "item110",
+          "item111"
         ],
-        "chain_status": "review_draft_preserved_from_previous_table",
+        "chain_status": "implemented_7_to_12",
         "product_unlocks": [
           {
             "item_id": "item53",
@@ -1773,6 +1904,41 @@
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
+          },
+          {
+            "item_id": "item107",
+            "tier": 5,
+            "required_player_level": 4,
+            "gold_cost": 80,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item108",
+            "tier": 6,
+            "required_player_level": 5,
+            "gold_cost": 160,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item109",
+            "tier": 7,
+            "required_player_level": 6,
+            "gold_cost": 320,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item110",
+            "tier": 8,
+            "required_player_level": 7,
+            "gold_cost": 640,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item111",
+            "tier": 9,
+            "required_player_level": 8,
+            "gold_cost": 1280,
+            "status": "prototype_balanced"
           }
         ]
       },
@@ -1787,9 +1953,15 @@
           "item33",
           "item34",
           "item35",
-          "item36"
+          "item36",
+          "item112",
+          "item113",
+          "item114",
+          "item115",
+          "item116",
+          "item117"
         ],
-        "chain_status": "review_draft_preserved_from_previous_table",
+        "chain_status": "implemented_7_to_12",
         "product_unlocks": [
           {
             "item_id": "item33",
@@ -1826,6 +1998,48 @@
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
+          },
+          {
+            "item_id": "item112",
+            "tier": 5,
+            "required_player_level": 4,
+            "gold_cost": 80,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item113",
+            "tier": 6,
+            "required_player_level": 5,
+            "gold_cost": 160,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item114",
+            "tier": 7,
+            "required_player_level": 6,
+            "gold_cost": 320,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item115",
+            "tier": 8,
+            "required_player_level": 7,
+            "gold_cost": 640,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item116",
+            "tier": 9,
+            "required_player_level": 8,
+            "gold_cost": 1280,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item117",
+            "tier": 10,
+            "required_player_level": 9,
+            "gold_cost": 2560,
+            "status": "prototype_balanced"
           }
         ]
       },
@@ -1840,9 +2054,17 @@
           "item37",
           "item55",
           "item56",
-          "item57"
+          "item57",
+          "item118",
+          "item119",
+          "item120",
+          "item121",
+          "item122",
+          "item123",
+          "item124",
+          "item125"
         ],
-        "chain_status": "review_draft_preserved_from_previous_table",
+        "chain_status": "implemented_7_to_12",
         "product_unlocks": [
           {
             "item_id": "item37",
@@ -1879,6 +2101,62 @@
             "included_in_producer_purchase": false,
             "requires_previous_tier": true,
             "status": "proposal"
+          },
+          {
+            "item_id": "item118",
+            "tier": 5,
+            "required_player_level": 4,
+            "gold_cost": 80,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item119",
+            "tier": 6,
+            "required_player_level": 5,
+            "gold_cost": 160,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item120",
+            "tier": 7,
+            "required_player_level": 6,
+            "gold_cost": 320,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item121",
+            "tier": 8,
+            "required_player_level": 7,
+            "gold_cost": 640,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item122",
+            "tier": 9,
+            "required_player_level": 8,
+            "gold_cost": 1280,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item123",
+            "tier": 10,
+            "required_player_level": 9,
+            "gold_cost": 2560,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item124",
+            "tier": 11,
+            "required_player_level": 10,
+            "gold_cost": 5120,
+            "status": "prototype_balanced"
+          },
+          {
+            "item_id": "item125",
+            "tier": 12,
+            "required_player_level": 11,
+            "gold_cost": 10240,
+            "status": "prototype_balanced"
           }
         ]
       }
@@ -2073,8 +2351,8 @@
     "boost_threshold": 100,
     "regeneration_seconds": 120,
     "capacity_step": 25,
-    "capacity_gem_base": 10,
-    "capacity_gem_step": 5,
+    "capacity_gem_base": 3,
+    "capacity_gem_step": 0,
     "power_costs": [
       1,
       2,
@@ -2082,7 +2360,8 @@
       8
     ],
     "real_money_status": "requires store receipt integration; no simulated cash purchase",
-    "capacity_upgrade_prototype": "Adds 25 maximum capacity and 25 energy; gem price is prototype tuning."
+    "capacity_upgrade_prototype": "Adds 25 maximum capacity and 25 energy; gem price is prototype tuning.",
+    "passive_limit": 100
   },
   "achievements": [
     {
@@ -2094,9 +2373,12 @@
       "target": 1,
       "subject_id": null,
       "reward": {
-        "capacity": 25,
         "energy": 25,
         "xp": 5
+      },
+      "celebration": {
+        "message": "Yolculuğun başladı. Yeni keşifler için bir enerji hediyesi!",
+        "ornament": "gift"
       }
     },
     {
@@ -2123,6 +2405,10 @@
       "reward": {
         "title": "title15",
         "gold": 50
+      },
+      "celebration": {
+        "message": "Tarlanın ürünlerini tanımaya başladın. Bu unvan senin.",
+        "ornament": "title"
       }
     },
     {
@@ -2161,7 +2447,6 @@
       "subject_id": null,
       "reward": {
         "title": "title17",
-        "capacity": 25,
         "energy": 25,
         "gold": 100,
         "xp": 30
@@ -2170,32 +2455,41 @@
     {
       "id": "achievement7",
       "city_id": "city2",
-      "enabled": false,
+      "enabled": true,
       "kind": "gift",
       "metric": "intro",
       "target": 1,
       "subject_id": null,
-      "reward": {}
+      "reward": {
+        "gold": 100,
+        "energy": 20
+      }
     },
     {
       "id": "achievement8",
       "city_id": "city2",
-      "enabled": false,
-      "kind": "gift",
-      "metric": "intro",
-      "target": 1,
+      "enabled": true,
+      "kind": "energy",
+      "metric": "discoveries",
+      "target": 8,
       "subject_id": null,
-      "reward": {}
+      "reward": {
+        "gems": 3,
+        "energy": 25
+      }
     },
     {
       "id": "achievement9",
       "city_id": "city2",
-      "enabled": false,
-      "kind": "gift",
-      "metric": "intro",
-      "target": 1,
+      "enabled": true,
+      "kind": "title",
+      "metric": "owned",
+      "target": 4,
       "subject_id": null,
-      "reward": {}
+      "reward": {
+        "gold": 300,
+        "xp": 40
+      }
     },
     {
       "id": "achievement10",
@@ -2226,6 +2520,620 @@
       "target": 1,
       "subject_id": null,
       "reward": {}
+    }
+  ],
+  "city2_opening_plan": {
+    "producers": [
+      {
+        "producer_id": "producer10",
+        "required_player_level": 12,
+        "unlock_gold": 0,
+        "product_unlocks": [
+          {
+            "item_id": "item126",
+            "tier": 1,
+            "required_player_level": 12,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item127",
+            "tier": 2,
+            "required_player_level": 12,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item128",
+            "tier": 3,
+            "required_player_level": 13,
+            "gold_cost": 35
+          },
+          {
+            "item_id": "item129",
+            "tier": 4,
+            "required_player_level": 14,
+            "gold_cost": 70
+          },
+          {
+            "item_id": "item130",
+            "tier": 5,
+            "required_player_level": 15,
+            "gold_cost": 140
+          },
+          {
+            "item_id": "item131",
+            "tier": 6,
+            "required_player_level": 16,
+            "gold_cost": 280
+          },
+          {
+            "item_id": "item132",
+            "tier": 7,
+            "required_player_level": 17,
+            "gold_cost": 560
+          }
+        ],
+        "chain_item_ids": [
+          "item126",
+          "item127",
+          "item128",
+          "item129",
+          "item130",
+          "item131",
+          "item132"
+        ]
+      },
+      {
+        "producer_id": "producer11",
+        "required_player_level": 13,
+        "unlock_gold": 180,
+        "product_unlocks": [
+          {
+            "item_id": "item133",
+            "tier": 1,
+            "required_player_level": 13,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item134",
+            "tier": 2,
+            "required_player_level": 13,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item135",
+            "tier": 3,
+            "required_player_level": 13,
+            "gold_cost": 35
+          },
+          {
+            "item_id": "item136",
+            "tier": 4,
+            "required_player_level": 14,
+            "gold_cost": 70
+          },
+          {
+            "item_id": "item137",
+            "tier": 5,
+            "required_player_level": 15,
+            "gold_cost": 140
+          },
+          {
+            "item_id": "item138",
+            "tier": 6,
+            "required_player_level": 16,
+            "gold_cost": 280
+          },
+          {
+            "item_id": "item139",
+            "tier": 7,
+            "required_player_level": 17,
+            "gold_cost": 560
+          },
+          {
+            "item_id": "item140",
+            "tier": 8,
+            "required_player_level": 18,
+            "gold_cost": 1120
+          }
+        ],
+        "chain_item_ids": [
+          "item133",
+          "item134",
+          "item135",
+          "item136",
+          "item137",
+          "item138",
+          "item139",
+          "item140"
+        ]
+      },
+      {
+        "producer_id": "producer12",
+        "required_player_level": 14,
+        "unlock_gold": 350,
+        "product_unlocks": [
+          {
+            "item_id": "item141",
+            "tier": 1,
+            "required_player_level": 14,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item142",
+            "tier": 2,
+            "required_player_level": 14,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item143",
+            "tier": 3,
+            "required_player_level": 14,
+            "gold_cost": 35
+          },
+          {
+            "item_id": "item144",
+            "tier": 4,
+            "required_player_level": 14,
+            "gold_cost": 70
+          },
+          {
+            "item_id": "item145",
+            "tier": 5,
+            "required_player_level": 15,
+            "gold_cost": 140
+          },
+          {
+            "item_id": "item146",
+            "tier": 6,
+            "required_player_level": 16,
+            "gold_cost": 280
+          },
+          {
+            "item_id": "item147",
+            "tier": 7,
+            "required_player_level": 17,
+            "gold_cost": 560
+          },
+          {
+            "item_id": "item148",
+            "tier": 8,
+            "required_player_level": 18,
+            "gold_cost": 1120
+          },
+          {
+            "item_id": "item149",
+            "tier": 9,
+            "required_player_level": 19,
+            "gold_cost": 2240
+          }
+        ],
+        "chain_item_ids": [
+          "item141",
+          "item142",
+          "item143",
+          "item144",
+          "item145",
+          "item146",
+          "item147",
+          "item148",
+          "item149"
+        ]
+      },
+      {
+        "producer_id": "producer13",
+        "required_player_level": 15,
+        "unlock_gold": 600,
+        "product_unlocks": [
+          {
+            "item_id": "item150",
+            "tier": 1,
+            "required_player_level": 15,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item151",
+            "tier": 2,
+            "required_player_level": 15,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item152",
+            "tier": 3,
+            "required_player_level": 15,
+            "gold_cost": 35
+          },
+          {
+            "item_id": "item153",
+            "tier": 4,
+            "required_player_level": 15,
+            "gold_cost": 70
+          },
+          {
+            "item_id": "item154",
+            "tier": 5,
+            "required_player_level": 15,
+            "gold_cost": 140
+          },
+          {
+            "item_id": "item155",
+            "tier": 6,
+            "required_player_level": 16,
+            "gold_cost": 280
+          },
+          {
+            "item_id": "item156",
+            "tier": 7,
+            "required_player_level": 17,
+            "gold_cost": 560
+          },
+          {
+            "item_id": "item157",
+            "tier": 8,
+            "required_player_level": 18,
+            "gold_cost": 1120
+          },
+          {
+            "item_id": "item158",
+            "tier": 9,
+            "required_player_level": 19,
+            "gold_cost": 2240
+          },
+          {
+            "item_id": "item159",
+            "tier": 10,
+            "required_player_level": 20,
+            "gold_cost": 4480
+          }
+        ],
+        "chain_item_ids": [
+          "item150",
+          "item151",
+          "item152",
+          "item153",
+          "item154",
+          "item155",
+          "item156",
+          "item157",
+          "item158",
+          "item159"
+        ]
+      }
+    ],
+    "intro_quests": [
+      {
+        "id": "quest100",
+        "requirements": [
+          {
+            "item_id": "item127",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 80,
+        "reward_xp": 15,
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest101",
+        "requirements": [
+          {
+            "item_id": "item127",
+            "quantity": 2
+          }
+        ],
+        "reward_gold": 105,
+        "reward_xp": 18,
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest102",
+        "requirements": [
+          {
+            "item_id": "item134",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 130,
+        "reward_xp": 21,
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest103",
+        "requirements": [
+          {
+            "item_id": "item142",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 155,
+        "reward_xp": 24,
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest104",
+        "requirements": [
+          {
+            "item_id": "item135",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 180,
+        "reward_xp": 27,
+        "grants_title_ids": []
+      },
+      {
+        "id": "quest105",
+        "requirements": [
+          {
+            "item_id": "item151",
+            "quantity": 1
+          }
+        ],
+        "reward_gold": 205,
+        "reward_xp": 30,
+        "grants_title_ids": []
+      }
+    ]
+  },
+  "item_art": {
+    "item100": {
+      "sheet": "skara",
+      "index": 0
+    },
+    "item101": {
+      "sheet": "skara",
+      "index": 1
+    },
+    "item102": {
+      "sheet": "skara",
+      "index": 2
+    },
+    "item103": {
+      "sheet": "skara",
+      "index": 6
+    },
+    "item104": {
+      "sheet": "skara",
+      "index": 7
+    },
+    "item105": {
+      "sheet": "skara",
+      "index": 8
+    },
+    "item106": {
+      "sheet": "skara",
+      "index": 9
+    },
+    "item107": {
+      "sheet": "skara",
+      "index": 12
+    },
+    "item108": {
+      "sheet": "skara",
+      "index": 13
+    },
+    "item109": {
+      "sheet": "skara",
+      "index": 14
+    },
+    "item110": {
+      "sheet": "skara",
+      "index": 15
+    },
+    "item111": {
+      "sheet": "skara",
+      "index": 16
+    },
+    "item112": {
+      "sheet": "skara",
+      "index": 18
+    },
+    "item113": {
+      "sheet": "skara",
+      "index": 19
+    },
+    "item114": {
+      "sheet": "skara",
+      "index": 20
+    },
+    "item115": {
+      "sheet": "skara",
+      "index": 21
+    },
+    "item116": {
+      "sheet": "skara",
+      "index": 22
+    },
+    "item117": {
+      "sheet": "skara",
+      "index": 23
+    },
+    "item118": {
+      "sheet": "skara",
+      "index": 24
+    },
+    "item119": {
+      "sheet": "skara",
+      "index": 25
+    },
+    "item120": {
+      "sheet": "skara",
+      "index": 26
+    },
+    "item121": {
+      "sheet": "skara",
+      "index": 27
+    },
+    "item122": {
+      "sheet": "skara",
+      "index": 28
+    },
+    "item123": {
+      "sheet": "skara",
+      "index": 29
+    },
+    "item124": {
+      "sheet": "haven",
+      "index": 34
+    },
+    "item125": {
+      "sheet": "haven",
+      "index": 35
+    },
+    "item126": {
+      "sheet": "haven",
+      "index": 0
+    },
+    "item127": {
+      "sheet": "haven",
+      "index": 1
+    },
+    "item128": {
+      "sheet": "haven",
+      "index": 2
+    },
+    "item129": {
+      "sheet": "haven",
+      "index": 3
+    },
+    "item130": {
+      "sheet": "haven",
+      "index": 4
+    },
+    "item131": {
+      "sheet": "haven",
+      "index": 5
+    },
+    "item132": {
+      "sheet": "haven",
+      "index": 6
+    },
+    "item133": {
+      "sheet": "haven",
+      "index": 7
+    },
+    "item134": {
+      "sheet": "haven",
+      "index": 8
+    },
+    "item135": {
+      "sheet": "haven",
+      "index": 9
+    },
+    "item136": {
+      "sheet": "haven",
+      "index": 10
+    },
+    "item137": {
+      "sheet": "haven",
+      "index": 11
+    },
+    "item138": {
+      "sheet": "haven",
+      "index": 12
+    },
+    "item139": {
+      "sheet": "haven",
+      "index": 13
+    },
+    "item140": {
+      "sheet": "haven",
+      "index": 14
+    },
+    "item141": {
+      "sheet": "haven",
+      "index": 15
+    },
+    "item142": {
+      "sheet": "haven",
+      "index": 16
+    },
+    "item143": {
+      "sheet": "haven",
+      "index": 17
+    },
+    "item144": {
+      "sheet": "haven",
+      "index": 18
+    },
+    "item145": {
+      "sheet": "haven",
+      "index": 19
+    },
+    "item146": {
+      "sheet": "haven",
+      "index": 20
+    },
+    "item147": {
+      "sheet": "haven",
+      "index": 21
+    },
+    "item148": {
+      "sheet": "haven",
+      "index": 22
+    },
+    "item149": {
+      "sheet": "haven",
+      "index": 23
+    },
+    "item150": {
+      "sheet": "haven",
+      "index": 24
+    },
+    "item151": {
+      "sheet": "haven",
+      "index": 25
+    },
+    "item152": {
+      "sheet": "haven",
+      "index": 26
+    },
+    "item153": {
+      "sheet": "haven",
+      "index": 27
+    },
+    "item154": {
+      "sheet": "haven",
+      "index": 28
+    },
+    "item155": {
+      "sheet": "haven",
+      "index": 29
+    },
+    "item156": {
+      "sheet": "haven",
+      "index": 30
+    },
+    "item157": {
+      "sheet": "haven",
+      "index": 31
+    },
+    "item158": {
+      "sheet": "haven",
+      "index": 32
+    },
+    "item159": {
+      "sheet": "haven",
+      "index": 33
+    }
+  },
+  "city_economy": [
+    {
+      "id": "city1",
+      "level": 1,
+      "gold": 0,
+      "enabled": true
+    },
+    {
+      "id": "city2",
+      "level": 12,
+      "gold": 6000,
+      "enabled": true
+    },
+    {
+      "id": "city3",
+      "level": 28,
+      "gold": 18000,
+      "enabled": false
     }
   ]
 }

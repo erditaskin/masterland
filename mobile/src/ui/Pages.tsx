@@ -1,3 +1,5 @@
+import { OrderGuide } from "./OrderGuide";
+import { Market } from "./Market";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Animated, ScrollView, Switch, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -6,7 +8,6 @@ import { Item, Sprite } from "./Art";
 import { PagePaper, TitlePlaque } from "./Skin";
 import {
   canDeliver,
-  energyCap,
   energyCapacityStep,
   energyUpgradeCost,
   city,
@@ -15,6 +16,7 @@ import {
   name,
   orders,
   producers,
+  cityProducers,
   product,
   type Action,
   type Save,
@@ -32,6 +34,7 @@ export type Page = {
     | "market"
     | "profile"
     | "orders"
+    | "order-guide"
     | "producer"
     | "info"
     | "energy"
@@ -46,6 +49,7 @@ const titles = {
   market: "Market",
   profile: "Gezgin",
   orders: "Şehir İlanları",
+  "order-guide": "Üretim Rehberi",
   producer: "Üretici",
   info: "Eşya",
   energy: "Dayanıklılık",
@@ -206,19 +210,25 @@ export function Pages({
                   </Label>
                   <Label size={12} color={colors.green}>
                     {
-                      producers
+                      cityProducers(save)
                         .flatMap((producer) => producer.products)
                         .filter((item) => save.discoveries.includes(item.id))
                         .length
                     }{" "}
-                    / {producers.flatMap((p) => p.products).length} keşif
+                    / {cityProducers(save).flatMap((p) => p.products).length}{" "}
+                    keşif
                   </Label>
                 </View>
-                {producers.map((producer, i) => (
+                {cityProducers(save).map((producer) => (
                   <View key={producer.id} style={card}>
                     <Button
                       label={producer.name + " ürün alanları"}
-                      onPress={() => open({ kind: "producer", index: i })}
+                      onPress={() =>
+                        open({
+                          kind: "producer",
+                          index: producers.indexOf(producer),
+                        })
+                      }
                       style={{ height: 44, marginBottom: 8 }}
                     >
                       <View
@@ -229,7 +239,10 @@ export function Pages({
                           gap: 10,
                         }}
                       >
-                        <ProducerPortrait index={i} size={38} />
+                        <ProducerPortrait
+                          index={producers.indexOf(producer)}
+                          size={38}
+                        />
                         <Label title size={18} style={{ flex: 1 }}>
                           {producer.name}
                         </Label>
@@ -238,7 +251,9 @@ export function Pages({
                         </Label>
                       </View>
                     </Button>
-                    <View style={{ flexDirection: "row" }}>
+                    <View
+                      style={{ flexDirection: "row", flexWrap: "wrap", gap: 4 }}
+                    >
                       {producer.products.map((a) => (
                         <Button
                           key={a.id}
@@ -247,9 +262,14 @@ export function Pages({
                               ? a.name
                               : "Keşfedilmedi"
                           }
-                          onPress={() => open({ kind: "producer", index: i })}
+                          onPress={() =>
+                            open({
+                              kind: "producer",
+                              index: producers.indexOf(producer),
+                            })
+                          }
                           style={{
-                            flex: 1,
+                            width: "22%",
                             minHeight: 78,
                             marginHorizontal: 2,
                             borderRadius: 12,
@@ -285,6 +305,9 @@ export function Pages({
                   </View>
                 ))}
               </>
+            )}
+            {page.kind === "order-guide" && page.id && (
+              <OrderGuide key={page.id} id={page.id} save={save} />
             )}
             {page.kind === "producer" && (
               <ProducerDetails
@@ -397,6 +420,10 @@ export function Pages({
                 initialOffset={() => routeOffset.current}
                 onOffsetChange={(y) => {
                   routeOffset.current = y;
+                }}
+                onTravel={(id) => {
+                  const result = dispatch({ type: "travel", id });
+                  if (result?.kind === "tap") close();
                 }}
                 currentCity={save.cityID}
                 onReturn={close}
@@ -514,14 +541,15 @@ export function Pages({
               <View style={{ alignItems: "center", paddingTop: 25 }}>
                 <Sprite kind="icons" index={5} size={80} />
                 <Label title size={32}>
-                  {save.stamina} / {energyCap(save)}
+                  {save.stamina}
                 </Label>
                 <Label style={{ marginTop: 12, textAlign: "center" }}>
-                  Her iki dakikada 1 enerji dolar. Kapasite bu hızı değiştirmez.
-                  100 ve altında üretim 1x olur.
+                  Her iki dakikada 1 enerji, yalnızca 100’e kadar dolar. Ödül
+                  enerjisi 100’ün üzerine eklenir. 100 ve altında üretim 1x
+                  olur.
                 </Label>
                 <ActionButton
-                  text={`+${energyCapacityStep} kapasite ve +${energyCapacityStep} enerji · ${energyUpgradeCost(save)} elmas`}
+                  text={`+${energyCapacityStep} enerji · ${energyUpgradeCost(save)} elmas`}
                   testID="upgradeEnergyCapacity"
                   onPress={() => {
                     act({ type: "energy-capacity" });
@@ -534,27 +562,7 @@ export function Pages({
               </View>
             )}
             {page.kind === "market" && (
-              <>
-                <Label title size={24}>
-                  Gezginin Kesesi
-                </Label>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 12,
-                    marginVertical: 14,
-                  }}
-                >
-                  <Sprite kind="icons" index={6} size={42} />
-                  <Label size={19}>{save.gold}</Label>
-                  <Sprite kind="icons" index={7} size={42} />
-                  <Label size={19}>{save.gems}</Label>
-                </View>
-                <Label color={colors.muted}>
-                  Yeni tezgâhlar yakında burada.
-                </Label>
-              </>
+              <Market save={save} dispatch={dispatch} />
             )}
           </ScrollView>
         </View>
