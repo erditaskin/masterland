@@ -1,0 +1,9 @@
+project_id = "masterland"
+
+[functions.admob-ssv]
+# Google authenticates with its ECDSA callback signature, never a Supabase JWT.
+verify_jwt = false
+
+[functions.delete-account]
+# The handler validates the bearer token with Auth getUser before any admin operation.
+verify_jwt = false

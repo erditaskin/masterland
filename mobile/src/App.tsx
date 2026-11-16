@@ -1,3 +1,4 @@
+import { energyAds } from "./ads/service";
 import { I18nText as Text } from "./ui/I18nText";
 import { languageStore } from "./i18n/locale";
 import { loadLanguage } from "./i18n/preferences";
@@ -406,6 +407,9 @@ function Game() {
   }, []);
   const snapshot = useSyncExternalStore(gameStore.subscribe, gameStore.get),
     { save, ready, error, result, revision, review } = snapshot;
+  useEffect(() => {
+    if (ready && !review) void energyAds.start();
+  }, [ready, review]);
   const { width, height } = useWindowDimensions(),
     insets = useSafeAreaInsets();
   const [page, setPage] = useState<Page | null>(null),

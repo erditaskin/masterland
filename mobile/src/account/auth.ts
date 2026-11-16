@@ -29,6 +29,15 @@ const publish = (change: Partial<AccountSnapshot>) => {
 };
 let starting: Promise<void> | null = null;
 let googleConfigured = false;
+let deletionProof: { userID: string; code: string; at: number } | null = null;
+export function consumeAppleDeletionProof(userID: string) {
+  const proof = deletionProof;
+  deletionProof = null;
+  return proof?.userID === userID && Date.now() - proof.at < 240000
+    ? proof.code
+    : null;
+}
+
 Browser.maybeCompleteAuthSession();
 export const accountStore = {
   get: () => snapshot,
@@ -59,15 +68,21 @@ export const accountStore = {
     })();
     return starting;
   },
-  signIn: async (provider: LoginProvider) => {
+  signIn: async (provider: LoginProvider, reauthenticate = false) => {
     if (!accountClient || snapshot.busy) return;
     if (provider === "facebook" && !accountConfig.facebookEnabled) return;
     publish({ busy: true, error: null });
     try {
       const { data, error } = await accountClient.auth.getSession();
       if (error) throw error;
-      const linking = Boolean(data.session);
+      const expectedID = reauthenticate ? data.session?.user.id : null;
+      let appleCode: string | null = null;
+      if (reauthenticate) deletionProof = null;
+      if (reauthenticate && !expectedID)
+        throw Error("No account to reauthenticate");
+      const linking = Boolean(data.session) && !reauthenticate;
       if (
+        !reauthenticate &&
         data.session?.user.identities?.some(
           (identity) => identity.provider === provider,
         )
@@ -76,7 +91,13 @@ export const accountStore = {
       if (provider === "facebook") {
         const credentials = {
           provider,
-          options: { redirectTo: authRedirect, skipBrowserRedirect: true },
+          options: {
+            redirectTo: authRedirect,
+            skipBrowserRedirect: true,
+            ...(reauthenticate
+              ? { queryParams: { auth_type: "reauthenticate" } }
+              : {}),
+          },
         } as const;
         const response = linking
           ? await accountClient.auth.linkIdentity(credentials)
@@ -108,6 +129,7 @@ export const accountStore = {
             nonce: hashed,
           });
           token = result.identityToken;
+          appleCode = result.authorizationCode;
         } else {
           if (
             !accountConfig.googleIOSClientID ||
@@ -121,6 +143,7 @@ export const accountStore = {
             });
             googleConfigured = true;
           }
+          if (reauthenticate) await GoogleSignin.signOut();
           const result = await GoogleSignin.signIn();
           if (!isSuccessResponse(result)) return;
           token = result.data.idToken;
@@ -131,6 +154,20 @@ export const accountStore = {
           ? await accountClient.auth.linkIdentity(credentials)
           : await accountClient.auth.signInWithIdToken(credentials);
         if (response.error) throw response.error;
+      }
+      if (expectedID) {
+        const verified = await accountClient.auth.getUser();
+        if (verified.error || verified.data.user?.id !== expectedID) {
+          await accountClient.auth.signOut({ scope: "local" });
+          throw Error("Reauthentication account mismatch");
+        }
+        if (appleCode)
+          deletionProof = {
+            userID: expectedID,
+            code: appleCode,
+            at: Date.now(),
+          };
+        return true;
       }
     } catch (error) {
       const code =

@@ -1,3 +1,5 @@
+import { AccountDeletionPanel } from "./AccountDeletionPanel";
+import { AdPrivacyControl } from "./EnergyAdPanel";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import * as Apple from "expo-apple-authentication";
@@ -97,6 +99,8 @@ export function AccountPanel() {
           )}
         </>
       )}
+      <AccountDeletionPanel />
+      <AdPrivacyControl />
       <Divider />
       <Label title size={18}>
         {tx("Dil · EN önizleme", "Language · EN preview")}

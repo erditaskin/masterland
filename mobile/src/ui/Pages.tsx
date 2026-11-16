@@ -1,3 +1,4 @@
+import { EnergyAdPanel } from "./EnergyAdPanel";
 import { AccountPanel } from "./AccountPanel";
 import { OrderGuide } from "./OrderGuide";
 import { Market } from "./Market";
@@ -540,6 +541,7 @@ export function Pages({
                     act({ type: "energy-capacity" });
                   }}
                 />
+                <EnergyAdPanel save={save} />
                 <ActionButton
                   text="Başarı hediyelerine git"
                   onPress={() => open({ kind: "cities" })}

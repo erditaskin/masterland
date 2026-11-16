@@ -135,6 +135,7 @@ export interface City {
 }
 export interface Save {
   schema: 2;
+  testOnly?: boolean;
   xp: number;
   gold: number;
   gems: number;
@@ -152,6 +153,7 @@ export interface Save {
   serial: number;
   rewardQueue?: RewardNotice[];
   transactions?: string[];
+  testAdRewards?: { day: string; receipts: string[] };
 }
 export const city = (s: Save) => s.cities[s.cityID]!;
 const thresholds = [0, 20, 60, 120, 200, 320, 480, 680, 920, 1200];
@@ -169,6 +171,7 @@ export const levelRange = (s: Save) => {
 export function fresh(now: number): Save {
   return {
     schema: 2,
+    ...(testModeEnabled ? { testOnly: true } : {}),
     xp: 0,
     gold: 0,
     gems: 0,
@@ -253,6 +256,7 @@ export type Action =
   | { type: "produce"; id: string }
   | { type: "power"; id: string; mode: number }
   | { type: "energy-capacity" }
+  | { type: "test-ad-reward"; receipt: string }
   | { type: "test-energy-fill" }
   | { type: "test-gold-add" }
   | { type: "test-gems-add" }
@@ -449,6 +453,7 @@ function grantEnergy(s: Save, _capacity: number, energy: number, now: number) {
 }
 export function migrateCurrentSave(s: Save, now: number): Save {
   const out = copySave(s);
+  if (testModeEnabled) out.testOnly = true;
   delete out.staminaCapacity;
   if (out.stamina >= 100) out.energyAt = now;
   return out;
@@ -598,6 +603,20 @@ export function transition(
         xp: 0,
       });
       return done("reward", "StoreKit test paketi alındı.");
+    }
+    case "test-ad-reward": {
+      if (!testModeEnabled) return blocked("Test modu kapalı.");
+      if (!/^[0-9a-f-]{36}$/i.test(action.receipt))
+        return blocked("Geçersiz test ödülü.");
+      const day = new Date(now).toISOString().slice(0, 10);
+      const receipts =
+        s.testAdRewards?.day === day ? s.testAdRewards.receipts : [];
+      if (receipts.includes(action.receipt)) return done("none", "");
+      if (receipts.length >= 4)
+        return blocked("Bugünkü reklam ödüllerin tamamlandı.");
+      s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
+      grantEnergy(s, 0, 15, now);
+      return done("reward", "Test reklamı: +15 enerji kazandın.");
     }
     case "test-energy-fill": {
       if (!testModeEnabled) return blocked("Test modu kapalı.");
@@ -845,6 +864,17 @@ export function validateSave(value: unknown): value is Save {
     typeof (t as Tile).id === "string" &&
     known((t as Tile).item);
   if (
+    (s.testAdRewards !== undefined &&
+      (!s.testAdRewards ||
+        !/^\d{4}-\d{2}-\d{2}$/.test(s.testAdRewards.day) ||
+        !Array.isArray(s.testAdRewards.receipts) ||
+        s.testAdRewards.receipts.length > 4 ||
+        !s.testAdRewards.receipts.every(
+          (id) => typeof id === "string" && /^[0-9a-f-]{36}$/i.test(id),
+        ) ||
+        new Set(s.testAdRewards.receipts).size !==
+          s.testAdRewards.receipts.length)) ||
+    (s.testOnly !== undefined && typeof s.testOnly !== "boolean") ||
     s.schema !== 2 ||
     ![s.xp, s.gold, s.gems, s.stamina, s.serial].every(nonNegative) ||
     (s.staminaCapacity !== undefined &&

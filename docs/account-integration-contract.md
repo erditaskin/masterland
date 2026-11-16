@@ -33,3 +33,11 @@ Test modu açık bir uygulama production Supabase'e bağlanamaz. Kullanıcının
 Bu şema istemcideki tüm oyun ekonomisini sunucu tarafından doğrulamaz. Satın alma/reklam cüzdan otoritesi için ek doğrulama gereklidir. Migration gerçek Postgres üzerinde henüz çalıştırılmadı. Yerel kayıt bu repository'ye otomatik bağlanmamıştır; kayıt seçimi/çakışma ekranı tamamlanmadan canlı yazma başlamaz.
 
 Hesap silme Edge Function'ı, anonim hesap akışı, bulut otomatik eşitleme ve gerçek reklam henüz tamamlanmamıştır. Bu noktada hesap paneli açıkça “Cihazda kayıtlı / Bulut eşitleme henüz etkin değil” gösterir. Giriş yapılması yedeklendi anlamına gelmez.
+
+## 16 November rewarded/deletion additions
+
+- `EXPO_PUBLIC_ADS_ENABLED=false` defaults closed. Local/TestFlight rewarded uses Google test inventory only. Production rewards remain hard-disabled until SSV reconciliation passes.
+- `EXPO_PUBLIC_ACCOUNT_DELETION_ENABLED=false` defaults closed. Server `ACCOUNT_DELETION_ENABLED` is a separate gate.
+- Apple account deletion additionally requires server-only `APPLE_CLIENT_SECRET` for native Bundle ID `com.erditaskin.masterland`. Do not put the secret or a private key in mobile config.
+- Prepared functions: `admob-ssv` (Google signature authentication), `delete-account` (explicit Auth getUser authentication). They are not deployed, and no callback URL is advertised as live.
+- Implementation/acceptance details: `docs/rewarded-energy-and-account-deletion-20261116.md`.

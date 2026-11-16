@@ -1,3 +1,7 @@
+import {
+  eraseDeletedAccountProgress,
+  resumeDeletionReset,
+} from "./accountDeletion";
 import { preservePreCloudSave } from "./localBackup";
 import { testModeEnabled, testFlightBeta } from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -63,6 +67,11 @@ async function writePending() {
     writing = false;
   }
 }
+async function removeLegacyImports() {
+  for (const file of ["migration-v2.json", "legacy-save.json"]) {
+    await FS.deleteAsync(FS.documentDirectory + file, { idempotent: true });
+  }
+}
 async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
   // TestFlight sessions always use the tester's persistent normal save.
   if (testFlightBeta) mode = "normal";
@@ -83,6 +92,10 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
         save.stamina = 90;
       }
     } else {
+      const reset = await resumeDeletionReset(
+        AsyncStorage,
+        removeLegacyImports,
+      );
       const stored = await AsyncStorage.getItem(KEY);
       if (stored) {
         const parsed: unknown = JSON.parse(stored);
@@ -91,7 +104,9 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
         save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
       } else {
         const v2Path = FS.documentDirectory + "migration-v2.json";
-        const imported = await FS.getInfoAsync(v2Path);
+        const imported = reset
+          ? { exists: false }
+          : await FS.getInfoAsync(v2Path);
         if (imported.exists) {
           const parsed: unknown = JSON.parse(
             await FS.readAsStringAsync(v2Path),
@@ -101,7 +116,9 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
           save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
         } else {
           const path = FS.documentDirectory + "legacy-save.json";
-          const exists = await FS.getInfoAsync(path);
+          const exists = reset
+            ? { exists: false }
+            : await FS.getInfoAsync(path);
           save = exists.exists
             ? decodeLegacy(
                 JSON.parse(await FS.readAsStringAsync(path)),
@@ -157,6 +174,49 @@ export const gameStore = {
       void persist();
     }
     return result;
+  },
+  resetAfterAccountDeletion: async (requestID: string) => {
+    ++loadEpoch;
+    pending = null;
+    publish({ ...snapshot, ready: false, result: null });
+    try {
+      await persist();
+      await eraseDeletedAccountProgress(
+        AsyncStorage,
+        requestID,
+        removeLegacyImports,
+      );
+      await load("normal");
+      if (snapshot.ready) {
+        const save = {
+          ...snapshot.save,
+          rewardQueue: [
+            {
+              id: "deletion-" + requestID,
+              kind: "achievement" as const,
+              title: "Hesabın silindi",
+              message:
+                "Bulut hesabın ve bu telefondaki ilerlemen silindi. Yeni bir misafir oyununa başladın.",
+              gold: 0,
+              gems: 0,
+              energy: 0,
+              xp: 0,
+            },
+          ],
+        };
+        publish({ ...snapshot, save });
+        pending = JSON.stringify(save);
+        await persist();
+      }
+    } catch {
+      publish({
+        ...snapshot,
+        ready: false,
+        error:
+          "Hesabın silindi. Yerel sıfırlamayı tamamlamak için tekrar dene.",
+      });
+      throw Error("Local reset pending");
+    }
   },
   flush: async () => {
     await persist();

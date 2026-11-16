@@ -19,6 +19,33 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testRewardedTestInventoryLoadsOnlyOnExplicitEnergyAction() {
+        app.buttons["stamina"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"energyAdPanel").firstMatch.waitForExistence(timeout:5))
+        let watch=app.buttons["watchEnergyAd"]
+        XCTAssertTrue(watch.isHittable)
+        watch.tap()
+        let loaded=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in watch.label.contains("İzle") && watch.isEnabled },object:nil)
+        let outcome=XCTWaiter.wait(for:[loaded],timeout:60)
+        if outcome != .completed { shot("rewarded-load-failure"); print(app.debugDescription) }
+        XCTAssertEqual(outcome,.completed)
+        shot("rewarded-test-inventory-ready")
+        watch.tap()
+        sleep(3)
+        shot("rewarded-test-inventory-presented")
+        sleep(32)
+        let endCardClose=app.buttons["Close"].firstMatch
+        let videoClose=app.buttons["Close Advertisement"].firstMatch
+        if endCardClose.waitForExistence(timeout:5) && endCardClose.isHittable { endCardClose.tap() }
+        else if videoClose.isEnabled { videoClose.tap(); if endCardClose.waitForExistence(timeout:5) && endCardClose.isHittable { endCardClose.tap() } }
+        shot("rewarded-after-dismiss")
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:10))
+        app.buttons["closePage"].tap()
+        let reward=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].exists && self.app.buttons["stamina"].label.contains("115") },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[reward],timeout:10),.completed)
+        shot("rewarded-earned-fifteen-energy")
+        app.terminate()
+    }
     func testOfflineAccountPanelAndContentLanguage() {
         let gold=app.buttons["gold"].label, xp=app.buttons["profile"].label, frame=cell(0).frame
         app.buttons["profile-menu"].tap()

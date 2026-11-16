@@ -21,6 +21,7 @@ export async function writeCloudSave(
   if (!accountClient) throw Error("Cloud is not configured");
   if (
     source !== "normal" ||
+    save.testOnly === true ||
     !validateSave(save) ||
     !Number.isSafeInteger(expectedRevision) ||
     expectedRevision < 0 ||
