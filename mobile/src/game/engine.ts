@@ -249,6 +249,8 @@ export type Action =
   | { type: "power"; id: string; mode: number }
   | { type: "energy-capacity" }
   | { type: "test-energy-fill" }
+  | { type: "test-gold-add" }
+  | { type: "test-gems-add" }
   | { type: "travel"; id: string }
   | { type: "dismiss-reward"; id: string }
   | { type: "exchange"; id: string }
@@ -596,6 +598,18 @@ export function transition(
       s.stamina = Math.max(100, s.stamina);
       s.energyAt = now;
       return done("tap", "Test: enerji 100’e tamamlandı.");
+    }
+    case "test-gold-add":
+    case "test-gems-add": {
+      if (!testModeEnabled) return blocked("Test modu kapalı.");
+      if (action.type === "test-gold-add") s.gold += 10000;
+      else s.gems += 100;
+      return done(
+        "tap",
+        action.type === "test-gold-add"
+          ? "Test: 10.000 altın eklendi."
+          : "Test: 100 elmas eklendi.",
+      );
     }
     case "produce": {
       const p = producers.find((p) => p.id === action.id);

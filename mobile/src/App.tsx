@@ -617,10 +617,18 @@ function Game() {
     noticeHeight = 58 * scale,
     cardWidth = (noticeWidth - 24 * scale) / 3,
     cardHeight = 48 * scale,
-    producerSize = 48 * scale;
+    producerSize = 52 * scale;
   const activeOrders = useMemo(
     () => prioritizeOrderRail(orders(save), save),
     [save],
+  );
+  const orderWidths = activeOrders.map(
+    (o) => cardWidth * (1 + 0.45 * (o.requirements.length - 1)),
+  );
+  const orderOffsets = orderWidths.map((_, index) =>
+    orderWidths
+      .slice(0, index)
+      .reduce((offset, w) => offset + w + 6 * scale, 0),
   );
   const { ready: readyOrderItems, partial: partialOrderItems } = useMemo(
     () => orderItemHighlights(activeOrders, save),
@@ -795,15 +803,13 @@ function Game() {
                 id: "stamina",
                 value: String(save.stamina),
                 icon: 5,
-                width: 92,
               },
               {
                 id: "gold",
                 value: save.gold.toLocaleString("tr-TR"),
                 icon: 6,
-                width: 104,
               },
-              { id: "gems", value: String(save.gems), icon: 7, width: 82 },
+              { id: "gems", value: String(save.gems), icon: 7 },
             ] as const
           ).map((a) => (
             <Button
@@ -813,33 +819,37 @@ function Game() {
               onPress={() =>
                 open({ kind: a.id === "stamina" ? "energy" : "market" })
               }
-              style={{ width: a.width * scale, height: 32 }}
+              style={{ flex: 1, height: 34 * scale }}
             >
               <View
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  height: 28,
-                  borderRadius: 12,
+                  height: 30 * scale,
+                  borderRadius: 12 * scale,
                   backgroundColor: colors.navy,
                   backgroundImage:
                     "linear-gradient(180deg, #273d60 0%, #0c1b32 100%)",
                   borderColor: colors.gold,
                   borderWidth: 1,
                   width: "100%",
-                  paddingRight: 4,
+                  paddingRight: 4 * scale,
                 }}
               >
-                <View style={{ marginLeft: -5, marginRight: 1 }}>
-                  <Sprite kind="icons" index={a.icon} size={34} />
+                <View style={{ width: 28 * scale, alignItems: "center" }}>
+                  <Sprite kind="icons" index={a.icon} size={30 * scale} />
                 </View>
                 <Text
                   numberOfLines={1}
                   adjustsFontSizeToFit
+                  minimumFontScale={0.65}
+                  maxFontSizeMultiplier={1}
                   style={{
                     fontFamily: fonts.number,
                     color: colors.goldLight,
-                    fontSize: 16,
+                    fontSize: 15 * scale,
+                    lineHeight: 20 * scale,
+                    includeFontPadding: false,
                     fontVariant: ["tabular-nums"],
                     flex: 1,
                     textAlign: "center",
@@ -850,9 +860,9 @@ function Game() {
                 <View
                   style={{
                     marginLeft: 3,
-                    width: 15,
-                    height: 15,
-                    borderRadius: 8,
+                    width: 16 * scale,
+                    height: 16 * scale,
+                    borderRadius: 8 * scale,
                     borderWidth: 1,
                     borderColor: colors.gold,
                     alignItems: "center",
@@ -863,8 +873,8 @@ function Game() {
                 >
                   <Label
                     color={colors.goldLight}
-                    size={13}
-                    style={{ lineHeight: 15 }}
+                    size={12 * scale}
+                    style={{ lineHeight: 16 * scale, textAlign: "center" }}
                   >
                     +
                   </Label>
@@ -991,7 +1001,7 @@ function Game() {
                 testID="orderRail"
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                snapToInterval={cardWidth + 6 * scale}
+                snapToOffsets={orderOffsets}
                 decelerationRate="fast"
                 contentContainerStyle={{ gap: 6 * scale }}
                 style={{
@@ -1000,7 +1010,8 @@ function Game() {
                   marginBottom: 4,
                 }}
               >
-                {activeOrders.map((o) => {
+                {activeOrders.map((o, orderIndex) => {
+                  const currentCardWidth = orderWidths[orderIndex]!;
                   const ready = o.requirements.every(
                     (r) => count(save, r.item_id) >= r.quantity,
                   );
@@ -1046,13 +1057,13 @@ function Game() {
                         }
                       }}
                       style={{
-                        width: cardWidth,
+                        width: currentCardWidth,
                         height: cardHeight,
                         borderRadius: 5,
                         backgroundColor: "transparent",
                       }}
                     >
-                      <WoodTray width={cardWidth} height={cardHeight} />
+                      <WoodTray width={currentCardWidth} height={cardHeight} />
                       {(ready || partial) && (
                         <View
                           pointerEvents="none"
@@ -1084,7 +1095,7 @@ function Game() {
                         <View
                           style={{
                             width:
-                              cardWidth *
+                              currentCardWidth *
                               (o.requirements.length > 1 ? 0.58 : 0.42),
                             flexDirection: "row",
                             justifyContent: "center",
@@ -1099,7 +1110,7 @@ function Game() {
                               <Item
                                 id={requirement.item_id}
                                 size={
-                                  (o.requirements.length > 1 ? 26 : 32) * scale
+                                  (o.requirements.length > 1 ? 34 : 32) * scale
                                 }
                               />
                               <Label
@@ -1186,14 +1197,14 @@ function Game() {
                 top: top + 122 * scale,
                 left: 8 * scale,
                 right: 8 * scale,
-                height: 50 * scale,
+                height: 54 * scale,
                 borderRadius: 12,
                 backgroundColor: "transparent",
                 justifyContent: "center",
                 paddingHorizontal: 0,
               }}
             >
-              <WoodTray width={width - 16 * scale} height={50 * scale} />
+              <WoodTray width={width - 16 * scale} height={54 * scale} />
               {producerEdges.left && (
                 <Button
                   testID="producerRailPrev"
@@ -1403,22 +1414,60 @@ function Game() {
         </View>
       )}
       {testModeEnabled && !page && (
-        <View style={{ position: "absolute", right: 10, bottom: 2 }}>
-          <Button
-            testID="testEnergyFill"
-            label="Test: enerjiyi 100’e tamamla"
-            onPress={() => dispatch({ type: "test-energy-fill" })}
-            style={{
-              paddingHorizontal: 8,
-              height: 20,
-              borderRadius: 8,
-              backgroundColor: "#3c542cdd",
-            }}
-          >
-            <Label size={9} color="#ffefc9">
-              TEST · Enerjiyi doldur
-            </Label>
-          </Button>
+        <View
+          style={{
+            position: "absolute",
+            left: 10,
+            right: 10,
+            bottom: 3,
+            flexDirection: "row",
+            gap: 5,
+          }}
+        >
+          {[
+            {
+              id: "testEnergyFill",
+              label: "Test: enerjiyi 100’e tamamla",
+              text: "TEST · Enerji 100",
+              type: "test-energy-fill",
+            },
+            {
+              id: "testGoldAdd",
+              label: "Test: 10.000 altın ekle",
+              text: "+10.000 altın",
+              type: "test-gold-add",
+            },
+            {
+              id: "testGemsAdd",
+              label: "Test: 100 elmas ekle",
+              text: "+100 elmas",
+              type: "test-gems-add",
+            },
+          ].map((control) => (
+            <Button
+              key={control.id}
+              testID={control.id}
+              label={control.label}
+              onPress={() =>
+                dispatch({
+                  type: control.type as
+                    "test-energy-fill" | "test-gold-add" | "test-gems-add",
+                })
+              }
+              style={{
+                flex: 1,
+                height: 25,
+                borderRadius: 5,
+                borderWidth: 1,
+                borderColor: "#bda26b",
+                backgroundColor: "#3c542cee",
+              }}
+            >
+              <Label size={9} color="#ffefc9">
+                {control.text}
+              </Label>
+            </Button>
+          ))}
         </View>
       )}
       {!!save.rewardQueue?.[0] && (

@@ -64,3 +64,8 @@ Keşif ödülleri ilk elde edişte bir kez ödenir. Kalıcı ödül kuyruğu yal
 ## 16 Kasım — Dış beta ve rastgele üretim güncellemesi
 
 Arkadaşlar dış grubu ve bir testçi eklenmiştir. 0.2.0 (2) Apple beta incelemesinde Waiting for Review durumundadır; önceki dış test grubu yok ifadeleri tarihçedir. Sonraki yerel değişikliklerde üretim rastgele boş hücreye yapılır, yer varsa dolu hücre komşularından kaçınır. Çok ürünlü ilanlarda bütün ürün ikonları ve adetleri gösterilir. Tahta geometrisi korunur. Son kapsam `docs/random-production-verification-20261116.md` içindedir.
+
+
+## Güncel parşömen kontrolleri
+
+Parşömen içindeki yeni kontrolleri `mobile/src/ui/Controls.tsx` içindeki AppButton/AppCheckbox/AppInput/AppChoice/AppCloseButton/AppProgress ve `theme.ts` parchment tokenlarıyla kurun. Yeni bir native Switch veya farklı renkte kopya eylem butonu eklemeyin. İki ürünlü ilanlar artık daha geniştir; sabit üç eşit kart kararı tarihçedir. Test altın/elmas düğmeleri yalnız test modu içindir, XP veya gerçek satın alma kaydı üretmez.

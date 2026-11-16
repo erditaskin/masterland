@@ -11,7 +11,7 @@ import {
   type Save,
 } from "../game/engine";
 import { Crop } from "./Art";
-import { ActionButton, Label } from "./Controls";
+import { ActionButton, AppProgress, Label } from "./Controls";
 import { colors } from "./theme";
 export function AchievementIcon({
   kind,
@@ -103,24 +103,8 @@ export function AchievementDetails({
                 ? "Ödülün hazır"
                 : "Devam ediyor"}
           </Label>
-          <View
-            style={{
-              height: 9,
-              width: "100%",
-              backgroundColor: "#d9c29c",
-              borderRadius: 5,
-              marginVertical: 12,
-              overflow: "hidden",
-            }}
-          >
-            <View
-              style={{
-                height: 9,
-                width: `${(progress / a.target) * 100}%`,
-                backgroundColor: colors.green,
-                borderRadius: 5,
-              }}
-            />
+          <View style={{ marginVertical: 12, width: "100%" }}>
+            <AppProgress value={progress} total={a.target} />
           </View>
           <View
             style={{

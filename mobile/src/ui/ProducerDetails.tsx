@@ -2,7 +2,7 @@ import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { useState } from "react";
 import { Image, View } from "react-native";
 import { Crop, Item } from "./Art";
-import { ActionButton, Button, Label } from "./Controls";
+import { ActionButton, AppChoice, Label } from "./Controls";
 import { colors, art } from "./theme";
 import {
   city,
@@ -99,8 +99,9 @@ export function ProducerDetails({
       </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
         {p.products.map((item) => (
-          <Button
+          <AppChoice
             key={item.id}
+            selected={item.id === selected}
             testID={"product-slot-" + item.id}
             label={
               item.name + (c.opened.includes(item.id) ? ", Açık" : ", Kilitli")
@@ -109,10 +110,6 @@ export function ProducerDetails({
             style={{
               width: "23%",
               height: 72,
-              borderWidth: item.id === selected ? 2 : 1,
-              borderColor: item.id === selected ? "#dca62e" : colors.outline,
-              borderRadius: 14,
-              backgroundColor: item.id === selected ? "#ffe9ad" : "#ecd5a8",
             }}
           >
             <View style={{ opacity: c.opened.includes(item.id) ? 1 : 0.45 }}>
@@ -124,7 +121,7 @@ export function ProducerDetails({
             >
               {c.opened.includes(item.id) ? "✓" : "Kilitli"}
             </Label>
-          </Button>
+          </AppChoice>
         ))}
       </View>
       <Label title size={24} style={{ textAlign: "center", marginTop: 6 }}>

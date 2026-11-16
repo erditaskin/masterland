@@ -19,6 +19,33 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testDebugWalletAndParchmentControls() {
+        let first=cell(0).frame
+        XCTAssertTrue(app.buttons["testGoldAdd"].exists);XCTAssertTrue(app.buttons["testGemsAdd"].exists)
+        app.buttons["testGoldAdd"].tap();app.buttons["testGoldAdd"].tap()
+        XCTAssertEqual(app.buttons["gold"].label,"20.000")
+        app.buttons["testGemsAdd"].tap();app.buttons["testGemsAdd"].tap()
+        XCTAssertEqual(app.buttons["gems"].label,"200")
+        let counters=["stamina","gold","gems"].map {app.buttons[$0].frame}
+        for counter in counters {
+            XCTAssertEqual(counter.height,counters[0].height,accuracy:0.5)
+            XCTAssertEqual(counter.width,counters[0].width,accuracy:0.5)
+            XCTAssertEqual(counter.midY,counters[0].midY,accuracy:0.5)
+        }
+        XCTAssertGreaterThanOrEqual(app.buttons["producer1"].frame.width,52)
+        XCTAssertEqual(first,cell(0).frame)
+        shot("debug-wallet-aligned-hud")
+        app.buttons["profile-menu"].tap()
+        let check=app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch
+        XCTAssertTrue(check.waitForExistence(timeout:5));let previous=check.value as? String
+        check.tap();XCTAssertNotEqual(check.value as? String,previous)
+        app.descendants(matching:.any).matching(identifier:"setting-motion").firstMatch.tap()
+        shot("parchment-profile-checkboxes")
+        app.buttons["closePage"].tap()
+        app.buttons["tab-cities"].tap();app.buttons["jump-city2"].tap()
+        XCTAssertGreaterThanOrEqual(app.buttons["travelCity"].frame.height,44)
+        shot("parchment-haven-travel")
+    }
     func testScatteredProductionAndCompactControls() {
         let initial = cell(0).frame
         for _ in 0..<8 {app.buttons["producer1"].tap()}
@@ -49,7 +76,20 @@ final class MasterlandTests:XCTestCase {
         for _ in 0..<2 {
             app.coordinate(withNormalizedOffset:CGVector(dx:0.85,dy:orderY)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0.15,dy:orderY)))
         }
-        XCTAssertTrue(app.buttons["order-quest28"].isHittable)
+        let multi=app.buttons["order-quest28"]
+        for _ in 0..<3 {
+            let delta=multi.frame.minX - 10
+            if abs(delta) < 5 {break}
+            let movement=min(0.65,abs(delta)/app.frame.width)
+            let start=delta > 0 ? 0.85 : 0.15
+            let end=delta > 0 ? start-movement : start+movement
+            app.coordinate(withNormalizedOffset:CGVector(dx:start,dy:orderY)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:end,dy:orderY)))
+        }
+        XCTAssertTrue(multi.isHittable)
+        XCTAssertGreaterThanOrEqual(multi.frame.minX,0)
+        XCTAssertLessThanOrEqual(multi.frame.maxX,app.frame.width)
+        let single=app.buttons.matching(NSPredicate(format:"identifier BEGINSWITH 'order-city1-repeat'" )).allElementsBoundByIndex.first(where: {$0.isHittable})!
+        XCTAssertGreaterThan(app.buttons["order-quest28"].frame.width,single.frame.width*1.4)
         shot("multi-product-order-controls")
         for i in 0..<54 {XCTAssertEqual(cell(i).frame.width,cell(i).frame.height,accuracy:0.5)}
         XCTAssertLessThan(app.buttons["profile-menu"].frame.maxY,app.buttons["order-quest28"].frame.minY)
@@ -341,9 +381,9 @@ final class MasterlandTests:XCTestCase {
 
     func testSoundSettingDoesNotResetBoard(){
         app.buttons["producer1"].tap();energy("99")
-        app.buttons["profile-menu"].tap();XCTAssertTrue(app.switches["setting-sound"].waitForExistence(timeout:5));app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
+        app.buttons["profile-menu"].tap();XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.waitForExistence(timeout:5));app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.tap();app.buttons["closePage"].tap()
         XCTAssertEqual(cells(named:"Buğday başağı").count,1);energy("99")
-        app.buttons["profile-menu"].tap();app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
+        app.buttons["profile-menu"].tap();app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.tap();app.buttons["closePage"].tap()
         app.buttons["producer1"].tap();energy("98");mergePair("Buğday başağı");XCTAssertEqual(cells(named:"Buğday demeti").count,1);shot("sound-settings-preserve-board")
     }
 

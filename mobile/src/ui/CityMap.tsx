@@ -18,7 +18,13 @@ import {
   type Achievement,
   type Save,
 } from "../game/engine";
-import { Button, Label } from "./Controls";
+import {
+  AppButton,
+  AppButtonStamp,
+  AppProgress,
+  Button,
+  Label,
+} from "./Controls";
 import { RouteIcon } from "./Achievements";
 import { Crop } from "./Art";
 import { routeSections } from "./layout";
@@ -90,23 +96,7 @@ function RoutePin({
           {name(a.id)}
         </Label>
         {state === "ready" ? (
-          <View
-            style={{
-              paddingHorizontal: 9,
-              height: 24,
-              justifyContent: "center",
-              borderRadius: 13,
-              backgroundColor: "#57980e",
-              borderWidth: 1,
-              borderColor: "#e7c06d",
-              backgroundImage:
-                "linear-gradient(180deg, #8bc42b 0%, #438607 100%)",
-            }}
-          >
-            <Label title size={12} color="#fff7dc">
-              Ödülü al
-            </Label>
-          </View>
+          <AppButtonStamp text="Ödülü al" />
         ) : state === "claimed" ? (
           <Label title size={21} color={colors.green}>
             ✓
@@ -116,31 +106,11 @@ function RoutePin({
             Şehir kilitli
           </Label>
         ) : (
-          <View
-            style={{
-              height: 17,
-              width: "100%",
-              borderRadius: 9,
-              borderWidth: 1,
-              borderColor: "#b28d51",
-              backgroundColor: "#d9bd8a",
-              overflow: "hidden",
-            }}
-          >
-            <View
-              style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: ((progress / a.target) * 100 + "%") as `${number}%`,
-                backgroundColor: "#78ad26",
-              }}
-            />
-            <Label title size={11} style={{ textAlign: "center" }}>
-              {progress}/{a.target}
-            </Label>
-          </View>
+          <AppProgress
+            value={progress}
+            total={a.target}
+            label={`${progress}/${a.target}`}
+          />
         )}
       </View>
     </Button>
@@ -359,24 +329,13 @@ export function CityMap({
           }}
         />
       </View>
-      <Button
+      <AppButton
         testID="travelCity"
-        label={travelText}
+        text={travelText}
         onPress={travel}
-        style={{
-          height: 36,
-          marginTop: 4,
-          marginHorizontal: 18,
-          borderRadius: 16,
-          backgroundColor: here || visited ? "#3f7827" : "#9e6225",
-          borderWidth: 1,
-          borderColor: "#e9c175",
-        }}
-      >
-        <Label title size={12} color="#fff0c7">
-          {travelText}
-        </Label>
-      </Button>
+        tone={here || visited ? "primary" : "secondary"}
+        style={{ marginTop: 5, marginHorizontal: 18 }}
+      />
       <View style={{ position: "absolute", right: 0, top: 32, gap: 8 }}>
         {stops.map((stop, i) => (
           <Button

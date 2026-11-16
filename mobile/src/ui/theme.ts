@@ -26,3 +26,17 @@ export const art = {
   concept: require("../../assets/art/skara-ui-chrome-v1.png"),
   reference: require("../../assets/art/reference.png"),
 };
+
+/** Shared ink and paper tokens for every control inside parchment pages. */
+export const parchment = {
+  ink: "#593a24",
+  greenInk: "#315b31",
+  mutedInk: "#92754c",
+  edge: "#bc8b46",
+  paper: "#ffe8b5",
+  selected: "#f6d38d",
+  gradient: "linear-gradient(180deg, #fff1cd 0%, #f5d697 100%)",
+  radius: 9,
+  controlHeight: 44,
+  fontSize: 14,
+};

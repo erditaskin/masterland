@@ -359,3 +359,14 @@ Kullanıcı üretimin sıradaki boş hücreye değil rastgele boş konuma yapıl
 İlan kartları aynı genişlikte kalır; birden fazla ürün istendiğinde her ürünün ikonu ve karşılanan/gereken adedi birlikte görünür. Tümü düğmesi sol üstte ahşap kontrol olarak sabittir. Profil düğmesi ilan alanıyla çakışmayacak şekilde yukarı alınır; üst bilgi düğmesi kaldırılır. Üreticiler yüzde 9 büyür; tahta ölçüleri ve hit alanları değişmez.
 
 TestFlight dış grubu Arkadaşlar oluşturulmuştur. 0.2.0 (2) sürümü Apple beta incelemesine gönderilmiş ve Waiting for Review durumu doğrulanmıştır. Bir dış testçi gruba eklenmiştir; önceki testçi yok notları tarihçedir.
+
+
+## 16 Kasım 2026 — Test cüzdanı, değişken ilan genişliği ve parşömen kontrolleri
+
+Kullanıcı test moduna her dokunuşta mevcut bakiyeye 10.000 altın ve 100 elmas ekleyen ayrı düğmeler istedi. Üç test düğmesi aynı alt sıradadır. Hem UI hem motor katmanı `EXPO_PUBLIC_TEST_MODE` ile korunur. Production eylemleri reddeder; gerçek satın alma ve XP işlemi değildir. TestFlight'taki mevcut build değiştirilmemiştir.
+
+İki ve daha fazla ürünlü ilanlar ürün sayısıyla genişler: iki ürünlü kart tek ürünlü kartın 1,45 katıdır. Her ürünün ikonu ve karşılanan/gereken adedi görünür. Sabit kart genişliği kararı bu yeni kullanıcı düzeltmesiyle değişmiştir. Kaydırma ve snap konumları gerçek kart genişliklerinden hesaplanır. Üreticiler 52 ölçekli birime çıkarılır; raf 54 birimdir. Ana tahta, alt navigasyon ve hücre geometrisi korunur.
+
+HUD kaynak sayaçları eşit genişlik/yükseklik, ortak ikon alanı, sayı fontu ve artı ölçüleri kullanır. Uzun bakiyeler tek satırda sığdırılır.
+
+Parşömen kontrolleri ortak `parchment` tokenlarıyla `AppButton`, `AppCheckbox`, `AppInput`, `AppChoice`, `AppCloseButton` ve `AppProgress` bileşenlerinden türer. Eski `ActionButton` aynı `AppButton` bileşenine yönlenir. Harita alt eylemi ve ödül işaretleri, sayfa eylemleri, üretici seçimleri, ilerleme çizgileri ve profil ayarları bu ortak aileyi kullanır. Profilde native switch yerine erişilebilir checkbox semantiği, mürekkep rengi ve hafif eğimli elyazısı işaret kullanılır. `AppInput` ortak giriş standardıdır; bu tur gereksiz yeni giriş alanı eklenmez.

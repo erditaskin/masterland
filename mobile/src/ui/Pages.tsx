@@ -1,9 +1,16 @@
 import { OrderGuide } from "./OrderGuide";
 import { Market } from "./Market";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Animated, ScrollView, Switch, View } from "react-native";
+import { Animated, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ActionButton, Button, Divider, Label } from "./Controls";
+import {
+  ActionButton,
+  AppCheckbox,
+  AppCloseButton,
+  Button,
+  Divider,
+  Label,
+} from "./Controls";
 import { Item, Sprite } from "./Art";
 import { PagePaper, TitlePlaque } from "./Skin";
 import {
@@ -152,25 +159,12 @@ export function Pages({
           >
             {page.kind === "producer" ? p.name : titles[page.kind]}
           </Label>
-          <Button
+          <AppCloseButton
             testID="closePage"
-            label="Bitti"
             onPress={() =>
               page.kind === "achievement" ? open({ kind: "cities" }) : close()
             }
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 22,
-              backgroundColor: "#b76c14",
-              borderWidth: 1,
-              borderColor: colors.goldLight,
-            }}
-          >
-            <Label size={23} color={colors.goldLight}>
-              ×
-            </Label>
-          </Button>
+          />
         </View>
         <View
           style={{
@@ -467,25 +461,13 @@ export function Pages({
                   ["Ses", save.sound, "sound"],
                   ["Hareketi azalt", save.reducedMotion, "motion"],
                 ].map(([label, value, kind]) => (
-                  <View
+                  <AppCheckbox
                     key={String(kind)}
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      minHeight: 50,
-                    }}
-                  >
-                    <Label>{String(label)}</Label>
-                    <Switch
-                      testID={"setting-" + kind}
-                      value={Boolean(value)}
-                      onValueChange={() => {
-                        act({ type: kind as "sound" | "motion" });
-                      }}
-                      trackColor={{ true: colors.green }}
-                    />
-                  </View>
+                    testID={"setting-" + kind}
+                    label={String(label)}
+                    checked={Boolean(value)}
+                    onChange={() => act({ type: kind as "sound" | "motion" })}
+                  />
                 ))}
               </>
             )}
