@@ -1,3 +1,4 @@
+import { CONTROLLED_SAVE_KEY } from "./saveNamespace";
 import { PRE_CLOUD_BACKUP_KEY } from "./localBackup";
 export const DELETION_RESET_KEY = "@masterland/account-deletion-reset/v1";
 export const GAME_SAVE_KEY = "@masterland/save/v2";
@@ -19,6 +20,7 @@ export async function eraseDeletedAccountProgress(
     JSON.stringify({ requestID, pending: true }),
   );
   await storage.removeItem(GAME_SAVE_KEY);
+  await storage.removeItem(CONTROLLED_SAVE_KEY);
   await storage.removeItem(PRE_CLOUD_BACKUP_KEY);
   await removeImports();
   await storage.setItem(

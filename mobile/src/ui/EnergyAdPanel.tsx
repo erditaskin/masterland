@@ -1,3 +1,4 @@
+import { testModeEnabled } from "../game/testMode";
 import { useEffect, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { energyAds } from "../ads/service";
@@ -8,8 +9,11 @@ export function EnergyAdPanel({ save }: { save: Save }) {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
   const day = new Date().toISOString().slice(0, 10);
-  const used =
-    save.testAdRewards?.day === day ? save.testAdRewards.receipts.length : 0;
+  const used = !testModeEnabled
+    ? 0
+    : save.testAdRewards?.day === day
+      ? save.testAdRewards.receipts.length
+      : 0;
   useEffect(() => {
     if (ad.canRequestAds && !ad.consentBusy && used < 4) void energyAds.load();
   }, [ad.canRequestAds, ad.consentBusy, used]);
@@ -23,10 +27,14 @@ export function EnergyAdPanel({ save }: { save: Save }) {
       </Label>
       <Label size={12}>
         {tx(
-          "İsteğe bağlı reklamı tamamla, +15 enerji al.",
-          "Complete an optional ad for +15 energy.",
+          testModeEnabled
+            ? "İsteğe bağlı reklamı tamamla, +15 enerji al."
+            : "Test reklamı önizlemesi. Bakiye ve günlük hak değişmez.",
+          testModeEnabled
+            ? "Complete an optional ad for +15 energy."
+            : "Test ad preview. Balance and daily allowance remain unchanged.",
         )}{" "}
-        {used}/4
+        {testModeEnabled ? `${used}/4` : ""}
       </Label>
       {ad.error && (
         <Label size={12}>
@@ -50,7 +58,9 @@ export function EnergyAdPanel({ save }: { save: Save }) {
           used >= 4
             ? tx("Bugünkü hediyeler tamamlandı", "Today's gifts are complete")
             : ad.phase === "ready"
-              ? tx("İzle · +15 enerji", "Watch · +15 energy")
+              ? testModeEnabled
+                ? tx("İzle · +15 enerji", "Watch · +15 energy")
+                : tx("Test reklamını izle", "Preview test ad")
               : tx("Reklamı hazırla", "Prepare ad")
         }
         onPress={() => {

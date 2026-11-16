@@ -21,11 +21,7 @@ type Snapshot = {
   error: "consent" | "offline" | "ad" | null;
 };
 let snapshot: Snapshot = {
-  enabled:
-    adsConfig.enabled &&
-    adsConfig.testAds &&
-    testModeEnabled &&
-    Platform.OS === "ios",
+  enabled: adsConfig.enabled && adsConfig.testAds && Platform.OS === "ios",
   phase: "idle",
   consentBusy: false,
   canRequestAds: false,
@@ -52,8 +48,10 @@ const controller = new EnergyAdController(
     publish({ phase, ...(phase === "error" ? { error: "ad" as const } : {}) }),
   async (receipt) => {
     // This path is deliberately test-only. Live callbacks must use the server ledger.
-    if (!snapshot.enabled || !adsConfig.testAds || !testModeEnabled)
+    if (!snapshot.enabled || !adsConfig.testAds)
       throw Error("Live rewards disabled");
+    // Controlled acceptance can preview test creatives without modifying a live-account balance.
+    if (!testModeEnabled) return;
     const result = gameStore.dispatch({ type: "test-ad-reward", receipt });
     if (!result || result.kind === "blocked")
       throw Error("Test reward rejected");
@@ -170,7 +168,8 @@ export const energyAds = {
     }
     const day = new Date().toISOString().slice(0, 10);
     const rewards = gameStore.get().save.testAdRewards;
-    if (rewards?.day === day && rewards.receipts.length >= 4) return false;
+    if (testModeEnabled && rewards?.day === day && rewards.receipts.length >= 4)
+      return false;
     return controller.show();
   },
 };

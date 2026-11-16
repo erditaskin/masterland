@@ -1,3 +1,4 @@
+import { resolveSaveNamespace } from "./saveNamespace";
 import {
   eraseDeletedAccountProgress,
   resumeDeletionReset,
@@ -18,7 +19,12 @@ import {
   type Save,
 } from "../game/engine";
 import { decodeLegacy } from "../game/migrate";
-const KEY = "@masterland/save/v2";
+const namespace = resolveSaveNamespace({
+  channel: process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
+  testMode: process.env.EXPO_PUBLIC_TEST_MODE,
+  controlled: process.env.EXPO_PUBLIC_CONTROLLED_ACCEPTANCE,
+});
+const KEY = namespace.key;
 export interface Snapshot {
   save: Save;
   ready: boolean;
@@ -104,9 +110,10 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
         save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
       } else {
         const v2Path = FS.documentDirectory + "migration-v2.json";
-        const imported = reset
-          ? { exists: false }
-          : await FS.getInfoAsync(v2Path);
+        const imported =
+          reset || namespace.controlled
+            ? { exists: false }
+            : await FS.getInfoAsync(v2Path);
         if (imported.exists) {
           const parsed: unknown = JSON.parse(
             await FS.readAsStringAsync(v2Path),
@@ -116,9 +123,10 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
           save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
         } else {
           const path = FS.documentDirectory + "legacy-save.json";
-          const exists = reset
-            ? { exists: false }
-            : await FS.getInfoAsync(path);
+          const exists =
+            reset || namespace.controlled
+              ? { exists: false }
+              : await FS.getInfoAsync(path);
           save = exists.exists
             ? decodeLegacy(
                 JSON.parse(await FS.readAsStringAsync(path)),

@@ -19,6 +19,16 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testControlledAcceptanceHasNoCheatsAndOnlyPreviewAds() {
+        for id in ["testEnergyFill","testGoldAdd","testGemsAdd","testLevelUp"] { XCTAssertFalse(app.buttons[id].exists) }
+        app.buttons["stamina"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"energyAdPanel").firstMatch.waitForExistence(timeout:5))
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Bakiye ve günlük hak değişmez")).firstMatch.exists)
+        shot("controlled-testflight-test-ad-preview")
+        app.buttons["closePage"].tap()
+        XCTAssertTrue(app.buttons["stamina"].exists)
+        shot("controlled-testflight-no-cheats")
+    }
     func testRewardedTestInventoryLoadsOnlyOnExplicitEnergyAction() {
         app.buttons["stamina"].tap()
         XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"energyAdPanel").firstMatch.waitForExistence(timeout:5))

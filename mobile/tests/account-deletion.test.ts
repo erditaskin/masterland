@@ -1,3 +1,4 @@
+import { CONTROLLED_SAVE_KEY } from "../src/state/saveNamespace";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -10,6 +11,7 @@ import { PRE_CLOUD_BACKUP_KEY } from "../src/state/localBackup";
 function storage() {
   const values = new Map<string, string>([
     [GAME_SAVE_KEY, "old-save"],
+    [CONTROLLED_SAVE_KEY, "controlled-save"],
     [PRE_CLOUD_BACKUP_KEY, "old-backup"],
     ["language", "en"],
   ]);
@@ -35,6 +37,7 @@ test("confirmed account deletion erases save and backup but preserves unrelated 
     assert.equal(JSON.parse(s.values.get(DELETION_RESET_KEY)!).pending, true);
   });
   assert.equal(s.values.has(GAME_SAVE_KEY), false);
+  assert.equal(s.values.has(CONTROLLED_SAVE_KEY), false);
   assert.equal(s.values.has(PRE_CLOUD_BACKUP_KEY), false);
   assert.equal(s.values.get("language"), "en");
   assert.equal(imports, 1);
