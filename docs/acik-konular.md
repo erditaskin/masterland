@@ -1,5 +1,7 @@
 # ultima açık konular
 
+> Güncel not — 16 Kasım 2026: Aşağıdaki 14–15 Kasım kayıtları tarihçedir. Enerji, şehir başına ayrı kayıtlar, keşif ödülleri, 7–12 basamaklı zincirler ve oynanabilir New Haven artık uygulanmıştır. Artırılabilir enerji kapasitesi kaldırılmıştır. Güncel kapsam ve kalan sınırlar `requirements-audit-20261116.md` ile `milestone-verification-20261116.md` dosyalarındadır. Canlı satış, daha ileri şehir içerikleri ve fiziksel kabul testleri hâlâ ayrıdır.
+
 Son güncelleme: 14 Kasım 2026. Buradaki öneriler onaylanmış karar değildir.
 
 ## Öncelikli çalışma
