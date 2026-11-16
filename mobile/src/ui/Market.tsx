@@ -8,7 +8,7 @@ import {
   type Action,
   type Result,
 } from "../game/engine";
-import { testModeEnabled } from "../game/testMode";
+import { storeKitTestEnabled, testFlightBeta } from "../game/testMode";
 import { gameStore } from "../state/store";
 import { ActionButton, Label } from "./Controls";
 import { Sprite } from "./Art";
@@ -193,10 +193,14 @@ export function Market({
           />
         </View>
       ))}
-      {testModeEnabled ? (
+      {storeKitTestEnabled ? (
         <TestStore />
       ) : (
-        <Label size={12}>Gerçek para paketleri yakında.</Label>
+        <Label size={12}>
+          {testFlightBeta
+            ? "Bu betada gerçek para ile satın alma kapalıdır. Altın ve elmasla oyun içi paketleri deneyebilirsin."
+            : "Gerçek para paketleri yakında."}
+        </Label>
       )}
     </View>
   );

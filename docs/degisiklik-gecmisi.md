@@ -337,3 +337,8 @@ Bu fiziksel kontrol bir temel akış denemesidir; kapsamlı cihaz FPS/pil/termal
 ## 16 Kasım 2026 — Enerji, ekonomi ve oynanabilir New Haven
 
 Yeni enerji kuralı, şehir bazlı kayıt ve seyahat, 7–12 basamaklı içerik, ödül kuyruğu/kutlamalar, üretim rehberi, HUD/glow ve StoreKit test marketi uygulandı. 51 motor testi ve son toplu Release simülatör turunda 10 native kontrol geçti. İmzalı Release telefona kuruldu ve başlatıldı. İlk turlardaki hatalar, simülatör sürümü ve kapsam sınırları docs/milestone-verification-20261116.md içinde açıklanmıştır.
+
+
+## 16 Kasım 2026 — İlk TestFlight betası
+
+Satın alma kapalı/enerji test düğmesi açık ayrı TestFlight kanalı uygulandı. 52 motor testi ve hedefli beta Release kontrolü geçti. Masterland 0.2.0 (2) App Store Connect’e yüklendi ve Ready to Submit durumu tarayıcıdan doğrulandı. Kullanıcı davet yöntemini sonra belirteceği için testçi veya public link oluşturulmadı.

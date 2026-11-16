@@ -1,4 +1,4 @@
-import { testModeEnabled } from "./testMode";
+import { storeKitTestEnabled, testModeEnabled } from "./testMode";
 import reference from "../../../data/content-reference.json";
 export interface Product {
   id: string;
@@ -549,7 +549,7 @@ export function transition(
       return done("reward", offer.title + " alındı.");
     }
     case "storekit-credit": {
-      if (!testModeEnabled) return blocked("Canlı satış henüz açık değil.");
+      if (!storeKitTestEnabled) return blocked("Bu sürümde satın alma kapalı.");
       const offer = storeProducts.find((p) => p.sku === action.sku);
       if (
         !offer ||

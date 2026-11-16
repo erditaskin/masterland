@@ -1,2 +1,5 @@
-// Release builds must opt in explicitly; production defaults to disabled.
+// Build-time switches are inlined by Expo. Production defaults remain closed.
 export const testModeEnabled = process.env.EXPO_PUBLIC_TEST_MODE === "true";
+export const testFlightBeta =
+  process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL === "testflight";
+export const storeKitTestEnabled = testModeEnabled && !testFlightBeta;

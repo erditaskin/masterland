@@ -1,7 +1,7 @@
 import { EnergyTimer } from "./ui/EnergyTimer";
 import { RewardCelebration } from "./ui/RewardCelebration";
 import { ProducerPortrait } from "./ui/ProducerDetails";
-import { testModeEnabled } from "./game/testMode";
+import { testModeEnabled, testFlightBeta } from "./game/testMode";
 import {
   memo,
   type ComponentRef,
@@ -459,19 +459,23 @@ function Game() {
   }, [assetAttempt]);
   useEffect(() => {
     void Linking.getInitialURL().then((url) => {
-      const mode =
-        testModeEnabled && url?.includes("milestone-review")
+      const mode = testFlightBeta
+        ? "normal"
+        : testModeEnabled && url?.includes("milestone-review")
           ? "milestone"
           : url?.includes("review")
             ? "review"
             : url?.includes("qa-reset")
               ? "qa"
               : "normal";
-      setLaunchPreview(Boolean(url?.includes("loading-review")));
+      setLaunchPreview(
+        !testFlightBeta && Boolean(url?.includes("loading-review")),
+      );
       setSelected(mode === "review" ? 0 : null);
       return gameStore.load(mode);
     });
     const sub = Linking.addEventListener("url", ({ url }) => {
+      if (testFlightBeta) return;
       if (testModeEnabled && url.includes("milestone-review")) {
         setPage(null);
         setSelected(null);

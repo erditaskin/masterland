@@ -13,7 +13,8 @@
         "ITSAppUsesNonExemptEncryption": false,
         "UIStatusBarHidden": true
       },
-      "appleTeamId": "F3F723W4SF"
+      "appleTeamId": "F3F723W4SF",
+      "buildNumber": "2"
     },
     "plugins": [
       "expo-asset",

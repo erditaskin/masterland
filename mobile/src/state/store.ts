@@ -1,4 +1,4 @@
-import { testModeEnabled } from "../game/testMode";
+import { testModeEnabled, testFlightBeta } from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FS from "expo-file-system/legacy";
 import {
@@ -63,6 +63,8 @@ async function writePending() {
   }
 }
 async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
+  // TestFlight sessions always use the tester's persistent normal save.
+  if (testFlightBeta) mode = "normal";
   const token = ++loadEpoch;
   activeMode = mode;
   try {

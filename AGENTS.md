@@ -54,3 +54,8 @@ Skara zemin teması canlı yeşil köydür; geniş toprak avlusu reddedilmiştir
 Artırılabilir enerji kapasitesi kaldırılmıştır. Pasif dolum yalnız 100'e kadar çalışır; ödül/satın alma enerjisi 100 üzerinde birikir. Eski kapasite kararları tarihçedir. Normal kayıt ve bakiyeler korunur. Şehirlerin tahtası, deposu, üreticileri ayrıdır; cüzdan ve genel XP ortaktır. Skara zincirleri 7/8/9/10/12, New Haven 7/8/9/10 basamaktır. New Haven seviye 12 ve tek seferlik 6.000 altınla oynanabilir; Cove hâlâ önizlemedir. Ayrıntılar docs/economy-20261116.md içindedir.
 
 Keşif ödülleri ilk elde edişte bir kez ödenir. Kalıcı ödül kuyruğu yalnız sunum içindir; bildirimi kapatmak yeniden ödeme yapmaz. Eksik ilana dokunma o ilana özel görsel üretim rehberini açar. StoreKit yalnız Xcode test ortamında açıktır; production işlemlerine ödeme yapılmaz. EXPO_PUBLIC_TEST_MODE varsayılan olarak kapalıdır; test enerji düğmesi ve test kredi eylemi aynı sınırla korunur. Gerçek para satışını backend doğrulaması olmadan açmayın.
+
+
+## TestFlight kanalı
+
+İlk beta 0.2.0 (2), App Store Connect uygulama ID 6835346739 altında yüklenmiştir. TestFlight kanalında EXPO_PUBLIC_DISTRIBUTION_CHANNEL=testflight ve EXPO_PUBLIC_TEST_MODE=true kullanılır. Enerji düğmesi açıktır; StoreKit arayüzü ve kredi eylemi kapalıdır; QA fixture bağlantıları beta kaydını değiştiremez. Yerel StoreKit QA kanalı ayrıdır. Davet yöntemi kullanıcı tarafından sonraya bırakılmıştır; henüz testçi/public link veya dış beta incelemesi yoktur. Native arşiv ve simülatör derlemelerini aynı Pods dizininde eşzamanlı çalıştırmayın. Dağıtım bilgisi docs/testflight-beta-verification-20261116.md içindedir.

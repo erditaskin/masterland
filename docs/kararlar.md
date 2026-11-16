@@ -345,3 +345,8 @@ Keşif ödülü, ürün ilk kez elde edildiğinde bir kez verilir. Alan satın a
 Ücretsiz, süreleri iyi takip eden oyuncunun ilk şehirden geçişi yaklaşık bir gün hedeflenir. Sonraki şehir geçişleri giderek uzar; kullanıcı 3, 5, 7, 9, 11 gün örüntüsünü örnek vermiştir. Kesin XP/altın eşikleri simülasyonla seçilir; bu rakamlar henüz ölçülmüş sonuç değildir.
 
 Market bu aşamada StoreKit test ortamıdır; canlı satış sonraki aşamadır. Test sürümünde sağ altta küçük enerji doldurma düğmesi bulunur: enerji 100'ün altındaysa 100'e tamamlar, üstündeyse azaltmaz. Production derlemesinde hem düğme hem test eylemi kapalıdır.
+
+
+## 16 Kasım 2026 — TestFlight oynanış betası
+
+Kullanıcı arkadaş testi için TestFlight hazırlığını onayladı. Bu kanalda gerçek para satın almaları kapalı, test enerji doldurma düğmesi açıktır. Yerel StoreKit testi ayrı kanalda kalır; beta kredi eylemini motor katmanında reddeder. QA fixture bağlantıları beta kaydını değiştirmez. Uygulama kaydı Masterland adı ve com.erditaskin.masterland kimliğiyle oluşturulmuştur. Kullanıcı davet yöntemini daha sonra belirtecektir; bu aşamada arkadaş daveti veya public link açılmaz.

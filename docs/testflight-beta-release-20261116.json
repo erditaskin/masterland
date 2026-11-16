@@ -1,0 +1,22 @@
+{
+  "app": "Masterland",
+  "appStoreConnectID": "6835346739",
+  "bundleIdentifier": "com.erditaskin.masterland",
+  "version": "0.2.0",
+  "buildNumber": "2",
+  "channel": "testflight",
+  "testEnergyButton": true,
+  "realMoneyPurchases": false,
+  "qaFixtureLinks": false,
+  "upload": "succeeded",
+  "processing": "completed",
+  "observedTestFlightStatus": "Ready to Submit",
+  "externalReviewSubmitted": false,
+  "testersInvited": false,
+  "publicLinkEnabled": false,
+  "testFlightURL": "https://appstoreconnect.apple.com/teams/cbcc3501-be9e-4a5f-b194-1ef0e35c7e40/apps/6835346739/testflight",
+  "testFlightBuildID": "3fce16fa-69fd-43ca-9467-ada21e3c0a9b",
+  "unitTestsPassed": 52,
+  "targetedBetaReleaseUITestsPassed": 1,
+  "archive": "/private/tmp/masterland-testflight-0.2.0-2.xcarchive"
+}

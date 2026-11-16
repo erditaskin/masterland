@@ -17,9 +17,39 @@ test("test build refills without reducing overflow and credits each StoreKit tra
     process.execPath,
     ["--import", "tsx", "--input-type=module", "-e", script],
     {
-      env: { ...process.env, EXPO_PUBLIC_TEST_MODE: "true" },
+      env: {
+        ...process.env,
+        EXPO_PUBLIC_TEST_MODE: "true",
+        EXPO_PUBLIC_DISTRIBUTION_CHANNEL: "local",
+      },
       encoding: "utf8",
     },
   );
   assert.match(output, /verified/);
+});
+
+test("TestFlight retains energy refill but rejects every StoreKit credit", () => {
+  const script = `
+    import assert from 'node:assert/strict';
+    import { fresh,transition } from './src/game/engine.ts';
+    import { storeKitTestEnabled,testFlightBeta } from './src/game/testMode.ts';
+    assert.equal(testFlightBeta,true);assert.equal(storeKitTestEnabled,false);
+    const now=1700000000000;const s=fresh(now);s.stamina=7;
+    const refill=transition(s,{type:'test-energy-fill'},now);assert.equal(refill.state.stamina,100);
+    const credit=transition(refill.state,{type:'storekit-credit',sku:'com.erditaskin.masterland.gems30',transaction:'testflight-forged'},now);
+    assert.equal(credit.kind,'blocked');assert.equal(credit.state.gems,0);assert.equal(credit.state.gold,0);assert.equal(credit.state.transactions.length,0);
+    console.log('beta-verified');`;
+  const output = execFileSync(
+    process.execPath,
+    ["--import", "tsx", "--input-type=module", "-e", script],
+    {
+      env: {
+        ...process.env,
+        EXPO_PUBLIC_TEST_MODE: "true",
+        EXPO_PUBLIC_DISTRIBUTION_CHANNEL: "testflight",
+      },
+      encoding: "utf8",
+    },
+  );
+  assert.match(output, /beta-verified/);
 });

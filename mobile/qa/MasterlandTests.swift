@@ -380,4 +380,18 @@ final class MasterlandTests:XCTestCase {
         app.buttons["dismissReward"].tap();XCTAssertFalse(app.buttons["claimAchievement"].exists)
     }
 
+    func testTestFlightBetaPurchasePolicy() {
+        XCTAssertTrue(app.buttons["testEnergyFill"].exists)
+        let before=app.buttons["profile"].label
+        app.open(URL(string:"masterland://milestone-review")!)
+        XCTAssertEqual(app.buttons["profile"].label,before)
+        app.buttons["testEnergyFill"].tap();energy("100")
+        app.buttons["tab-market"].tap()
+        let scroll=app.scrollViews.firstMatch;scroll.swipeUp();scroll.swipeUp()
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gems30"].exists)
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gold2500"].exists)
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS 'Bu betada gerçek para'")).firstMatch.exists)
+        shot("testflight-beta-purchases-disabled")
+    }
+
 }

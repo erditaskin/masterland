@@ -10,8 +10,9 @@
     "lint": "expo lint",
     "test": "node --import tsx --test tests/*.test.ts",
     "start:test": "EXPO_PUBLIC_TEST_MODE=true expo start --port 8084",
-    "ios:test": "EXPO_PUBLIC_TEST_MODE=true expo run:ios --configuration Release --port 8084",
-    "ios:production": "EXPO_PUBLIC_TEST_MODE=false expo run:ios --configuration Release --port 8084"
+    "ios:test": "EXPO_PUBLIC_DISTRIBUTION_CHANNEL=local EXPO_PUBLIC_TEST_MODE=true expo run:ios --configuration Release --port 8084",
+    "ios:production": "EXPO_PUBLIC_DISTRIBUTION_CHANNEL=production EXPO_PUBLIC_TEST_MODE=false expo run:ios --configuration Release --port 8084",
+    "ios:beta": "EXPO_PUBLIC_DISTRIBUTION_CHANNEL=testflight EXPO_PUBLIC_TEST_MODE=true expo run:ios --configuration Release --port 8084"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "2.2.0",
