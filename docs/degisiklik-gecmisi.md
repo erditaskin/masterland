@@ -374,3 +374,13 @@ Kullanıcı tamamlanabilir ürün ikonlarının glow ile birlikte yüzde 5 büy�
 Harita alt eyleminin sol ve sağ kenarları haritanın görünür iç alanıyla aynı hizadadır. Ortak kapatma kontrolünün görseli 44 yerine 32 birimdir; 44×44 dokunma alanı korunur. Koleksiyon ürün ikonları 52 yerine 44 birime indirilmiştir.
 
 Doğrulama: TypeScript, ESLint, 53 motor testi ve iki hedefli Release simülatör kontrolü geçti. Native ikon genişliğinin zaman içinde değiştiği, oranının 1,055 sınırını aşmadığı, hücre çerçevesinin sabit kaldığı ve azaltılmış harekette ölçeğin durduğu ölçüldü. Harita eyleminin iki kenarı viewport ile bir birim toleransta eşleşti. Merge/kilitli basamak etkileşimi geçti. Son harita ve koleksiyon görüntüleri incelendi. Bu tur fiziksel cihaz veya TestFlight güncellemesi yapılmadı.
+
+
+## 16 Kasım 2026 — Test seviye düğmesi ve sıkı ilan yerleşimi
+
+Alt test sırasına +1 seviye düğmesi eklendi. Her eylem XP'yi mevcut seviyenin sonraki eşiğine taşır; genel seviye hesabı değiştirilmez. Normal seviye enerji ödülü ve kutlama kuyruğu aynı yoldan işler. UI ve motor yalnız test modunda izin verir; production'da XP değişmez.
+
+Kullanıcı çok ürünlü ilandaki büyük boşluğu reddetti. Sabit yüzde 45 genişleme yerine her ek ürün kart genişliğine 32 ölçekli birim ekler. İkon grubunun alanı ürün sayısı, 34 birim ikon ve 4 birim aralığa göre hesaplanır; ödül alanına gereksiz boşluk bırakılmaz. Üçüncü ürün de aynı kuralla alan açar. Ana tahta ve üretici boyutları değişmez.
+
+
+Doğrulama: TypeScript, ESLint ve 53 motor testi geçti. Test seviyesinin art arda 15 eşiği doğru geçtiği ve production reddi doğrulandı. Release simülatöründe iki hedefli kontrol geçti: iki dokunuşla 1→2→3 ilerleme/dört test düğmesinin erişimi ve sıkı çok ürünlü ilan/rastgele üretim/merge. Son ekranlar görsel olarak incelendi. Yeni sürüm TestFlight’a veya telefona yüklenmedi.

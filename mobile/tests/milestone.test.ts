@@ -136,11 +136,16 @@ test("production builds block test refill and StoreKit credit at domain boundary
   const s = fresh(now);
   s.stamina = 4;
   assert.equal(run(s, { type: "test-energy-fill" }).kind, "blocked");
-  for (const type of ["test-gold-add", "test-gems-add"] as const) {
+  for (const type of [
+    "test-gold-add",
+    "test-gems-add",
+    "test-level-up",
+  ] as const) {
     const result = run(s, { type });
     assert.equal(result.kind, "blocked");
     assert.equal(result.state.gold, s.gold);
     assert.equal(result.state.gems, s.gems);
+    assert.equal(result.state.xp, s.xp);
   }
   assert.equal(
     run(s, {

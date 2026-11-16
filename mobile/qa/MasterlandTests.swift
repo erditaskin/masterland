@@ -19,6 +19,20 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testDebugLevelButtonAddsOneLevelPerPress() {
+        XCTAssertTrue(app.buttons["profile"].label.contains("Seviye 1,"))
+        app.buttons["testLevelUp"].tap()
+        XCTAssertTrue(app.buttons["profile"].label.contains("Seviye 2,"))
+        XCTAssertTrue(app.buttons["dismissReward"].waitForExistence(timeout:5))
+        app.buttons["dismissReward"].tap()
+        app.buttons["testLevelUp"].tap()
+        XCTAssertTrue(app.buttons["profile"].label.contains("Seviye 3,"))
+        app.buttons["dismissReward"].tap()
+        let buttons=["testEnergyFill","testGoldAdd","testGemsAdd","testLevelUp"].map {app.buttons[$0]}
+        for button in buttons {XCTAssertTrue(button.isHittable)}
+        for i in 0..<3 {XCTAssertLessThanOrEqual(buttons[i].frame.maxX,buttons[i+1].frame.minX)}
+        shot("four-debug-buttons-level-three")
+    }
     func testReadyIconPulseAndMapAlignment() {
         app.open(URL(string:"masterland://review")!)
         XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
@@ -117,7 +131,7 @@ final class MasterlandTests:XCTestCase {
         XCTAssertGreaterThanOrEqual(multi.frame.minX,0)
         XCTAssertLessThanOrEqual(multi.frame.maxX,app.frame.width)
         let single=app.buttons.matching(NSPredicate(format:"identifier BEGINSWITH 'order-city1-repeat'" )).allElementsBoundByIndex.first(where: {$0.isHittable})!
-        XCTAssertGreaterThan(app.buttons["order-quest28"].frame.width,single.frame.width*1.4)
+        XCTAssertGreaterThan(app.buttons["order-quest28"].frame.width,single.frame.width*1.2)
         shot("multi-product-order-controls")
         for i in 0..<54 {XCTAssertEqual(cell(i).frame.width,cell(i).frame.height,accuracy:0.5)}
         XCTAssertLessThan(app.buttons["profile-menu"].frame.maxY,app.buttons["order-quest28"].frame.minY)

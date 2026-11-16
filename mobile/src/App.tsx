@@ -623,7 +623,7 @@ function Game() {
     [save],
   );
   const orderWidths = activeOrders.map(
-    (o) => cardWidth * (1 + 0.45 * (o.requirements.length - 1)),
+    (o) => cardWidth + 32 * scale * (o.requirements.length - 1),
   );
   const orderOffsets = orderWidths.map((_, index) =>
     orderWidths
@@ -1095,11 +1095,13 @@ function Game() {
                         <View
                           style={{
                             width:
-                              currentCardWidth *
-                              (o.requirements.length > 1 ? 0.58 : 0.42),
+                              o.requirements.length > 1
+                                ? (o.requirements.length * 34 + 8) * scale
+                                : currentCardWidth * 0.42,
                             flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center",
+                            gap: 4 * scale,
                           }}
                         >
                           {o.requirements.map((requirement) => (
@@ -1446,6 +1448,12 @@ function Game() {
               text: "+100 elmas",
               type: "test-gems-add",
             },
+            {
+              id: "testLevelUp",
+              label: "Test: bir seviye atla",
+              text: "+1 seviye",
+              type: "test-level-up",
+            },
           ].map((control) => (
             <Button
               key={control.id}
@@ -1454,7 +1462,10 @@ function Game() {
               onPress={() =>
                 dispatch({
                   type: control.type as
-                    "test-energy-fill" | "test-gold-add" | "test-gems-add",
+                    | "test-energy-fill"
+                    | "test-gold-add"
+                    | "test-gems-add"
+                    | "test-level-up",
                 })
               }
               style={{

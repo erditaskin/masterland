@@ -251,6 +251,7 @@ export type Action =
   | { type: "test-energy-fill" }
   | { type: "test-gold-add" }
   | { type: "test-gems-add" }
+  | { type: "test-level-up" }
   | { type: "travel"; id: string }
   | { type: "dismiss-reward"; id: string }
   | { type: "exchange"; id: string }
@@ -598,6 +599,11 @@ export function transition(
       s.stamina = Math.max(100, s.stamina);
       s.energyAt = now;
       return done("tap", "Test: enerji 100’e tamamlandı.");
+    }
+    case "test-level-up": {
+      if (!testModeEnabled) return blocked("Test modu kapalı.");
+      s.xp = levelRange(s)[1];
+      return done("tap", `Test: seviye ${level(s)}.`);
     }
     case "test-gold-add":
     case "test-gems-add": {
