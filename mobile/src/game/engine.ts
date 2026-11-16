@@ -463,6 +463,26 @@ export function advance(s: Save, now: number): Save {
   }
   return next ?? s;
 }
+/** Prefer scattered empty cells; a crowded board still accepts production. */
+export function productionCell(
+  board: City["board"],
+  random = Math.random,
+): number {
+  const empty = board.flatMap((tile, i) => (tile ? [] : [i]));
+  const spaced = empty.filter(
+    (i) =>
+      ![
+        i - 6,
+        i + 6,
+        ...(i % 6 ? [i - 1] : []),
+        ...(i % 6 < 5 ? [i + 1] : []),
+      ].some((n) => n >= 0 && n < board.length && board[n] !== null),
+  );
+  const candidates = spaced.length ? spaced : empty;
+  return candidates.length
+    ? candidates[Math.floor(random() * candidates.length)]!
+    : -1;
+}
 export function transition(
   original: Save,
   action: Action,
@@ -583,7 +603,7 @@ export function transition(
         return blocked("Önce bu üreticiyi aç.");
       if ((c.batches[p.id]?.readyAt ?? 0) > now)
         return blocked("Üretici hazırlanıyor.");
-      const i = c.board.indexOf(null);
+      const i = productionCell(c.board);
       if (i < 0) return blocked("Tahta dolu. Birleştir veya depoya gönder.");
       const plan = productionPlan(s, p);
       if (!plan.product || !c.opened.includes(plan.product.id))

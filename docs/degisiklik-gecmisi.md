@@ -342,3 +342,15 @@ Yeni enerji kuralı, şehir bazlı kayıt ve seyahat, 7–12 basamaklı içerik,
 ## 16 Kasım 2026 — İlk TestFlight betası
 
 Satın alma kapalı/enerji test düğmesi açık ayrı TestFlight kanalı uygulandı. 52 motor testi ve hedefli beta Release kontrolü geçti. Masterland 0.2.0 (2) App Store Connect’e yüklendi ve Ready to Submit durumu tarayıcıdan doğrulandı. Kullanıcı davet yöntemini sonra belirteceği için testçi veya public link oluşturulmadı.
+
+
+## 16 Kasım 2026 — Rastgele üretim ve kompakt kontroller
+
+Kullanıcı üretimin sıradaki boş hücreye değil rastgele boş konuma yapılmasını istedi. Boşluk varsa dolu hücrelere dört yönden komşu olmayan konumlar tercih edilir; böyle konum kalmazsa herhangi bir boş hücre kullanılır. Tahta doluysa enerji harcanmaz. Mevcut ürünler taşınmaz.
+
+İlan kartları aynı genişlikte kalır; birden fazla ürün istendiğinde her ürünün ikonu ve karşılanan/gereken adedi birlikte görünür. Tümü düğmesi sol üstte ahşap kontrol olarak sabittir. Profil düğmesi ilan alanıyla çakışmayacak şekilde yukarı alınır; üst bilgi düğmesi kaldırılır. Üreticiler yüzde 9 büyür; tahta ölçüleri ve hit alanları değişmez.
+
+TestFlight dış grubu Arkadaşlar oluşturulmuştur. 0.2.0 (2) sürümü Apple beta incelemesine gönderilmiş ve Waiting for Review durumu doğrulanmıştır. Bir dış testçi gruba eklenmiştir; önceki testçi yok notları tarihçedir.
+
+
+Doğrulama: TypeScript, ESLint, 53 motor testi ve beş hedefli Release simülatör kontrolü geçti. Başarısız ara görsel test ve kapsam sınırları `random-production-verification-20261116.md` içinde korunmuştur.

@@ -350,3 +350,12 @@ Market bu aşamada StoreKit test ortamıdır; canlı satış sonraki aşamadır.
 ## 16 Kasım 2026 — TestFlight oynanış betası
 
 Kullanıcı arkadaş testi için TestFlight hazırlığını onayladı. Bu kanalda gerçek para satın almaları kapalı, test enerji doldurma düğmesi açıktır. Yerel StoreKit testi ayrı kanalda kalır; beta kredi eylemini motor katmanında reddeder. QA fixture bağlantıları beta kaydını değiştirmez. Uygulama kaydı Masterland adı ve com.erditaskin.masterland kimliğiyle oluşturulmuştur. Kullanıcı davet yöntemini daha sonra belirtecektir; bu aşamada arkadaş daveti veya public link açılmaz.
+
+
+## 16 Kasım 2026 — Rastgele üretim ve kompakt kontroller
+
+Kullanıcı üretimin sıradaki boş hücreye değil rastgele boş konuma yapılmasını istedi. Boşluk varsa dolu hücrelere dört yönden komşu olmayan konumlar tercih edilir; böyle konum kalmazsa herhangi bir boş hücre kullanılır. Tahta doluysa enerji harcanmaz. Mevcut ürünler taşınmaz.
+
+İlan kartları aynı genişlikte kalır; birden fazla ürün istendiğinde her ürünün ikonu ve karşılanan/gereken adedi birlikte görünür. Tümü düğmesi sol üstte ahşap kontrol olarak sabittir. Profil düğmesi ilan alanıyla çakışmayacak şekilde yukarı alınır; üst bilgi düğmesi kaldırılır. Üreticiler yüzde 9 büyür; tahta ölçüleri ve hit alanları değişmez.
+
+TestFlight dış grubu Arkadaşlar oluşturulmuştur. 0.2.0 (2) sürümü Apple beta incelemesine gönderilmiş ve Waiting for Review durumu doğrulanmıştır. Bir dış testçi gruba eklenmiştir; önceki testçi yok notları tarihçedir.

@@ -98,7 +98,7 @@ test("city access is level plus once-only fee; boards and storage survive round 
   assert.equal(city(back).storage[0]?.id, "stored");
   const again = run(back, { type: "travel", id: "city2" }).state;
   assert.equal(again.gold, back.gold);
-  assert(city(again).board[0]);
+  assert.deepEqual(city(again).board, city(created).board);
   assert(validateSave(again));
   assert.equal(run(again, { type: "buy", id: "producer5" }).kind, "blocked");
 });

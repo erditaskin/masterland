@@ -11,19 +11,59 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:10),.completed)
     }
     func cell(_ i:Int)->XCUIElement {app.descendants(matching:.any).matching(identifier:"cell-\(i)").firstMatch}
+    func cells(named name:String)->[Int] {(0..<54).filter {cell($0).label == name}}
+    func mergePair(_ name:String) {
+        let pair=cells(named:name);XCTAssertGreaterThanOrEqual(pair.count,2)
+        guard pair.count>=2 else {return};drag(pair[0],pair[1])
+    }
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testScatteredProductionAndCompactControls() {
+        let initial = cell(0).frame
+        for _ in 0..<8 {app.buttons["producer1"].tap()}
+        energy("92")
+        let positions=(0..<54).filter {cell($0).label == "Buğday başağı"}
+        XCTAssertEqual(positions.count,8)
+        for i in positions {
+            if i % 6 < 5 {XCTAssertFalse(positions.contains(i+1))}
+            XCTAssertFalse(positions.contains(i+6))
+        }
+        cell(positions[0]).tap();cell(positions[1]).tap()
+        XCTAssertEqual(cell(positions[1]).label,"Buğday demeti")
+        XCTAssertFalse(app.buttons["info"].exists)
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(initial.width,cell(0).frame.width,accuracy:0.5)
+        XCTAssertGreaterThanOrEqual(app.buttons["producer1"].frame.width,48)
+        shot("scattered-production-controls")
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        app.buttons["order-quest26"].tap()
+        XCTAssertTrue(app.buttons["order-quest27"].waitForExistence(timeout:5))
+        app.buttons["order-quest27"].tap()
+        XCTAssertTrue(app.buttons["order-quest28"].waitForExistence(timeout:5))
+        for _ in 0..<8 { if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()} }
+        let orderY=app.buttons.matching(NSPredicate(format:"identifier BEGINSWITH 'order-'" )).allElementsBoundByIndex.first(where: {$0.isHittable})!.frame.midY / app.frame.height
+        for _ in 0..<2 {
+            app.coordinate(withNormalizedOffset:CGVector(dx:0.85,dy:orderY)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0.15,dy:orderY)))
+        }
+        XCTAssertTrue(app.buttons["order-quest28"].isHittable)
+        shot("multi-product-order-controls")
+        for i in 0..<54 {XCTAssertEqual(cell(i).frame.width,cell(i).frame.height,accuracy:0.5)}
+        XCTAssertLessThan(app.buttons["profile-menu"].frame.maxY,app.buttons["order-quest28"].frame.minY)
+    }
     func testMergeJourneyAndProducerPurchase(){
         energy("100");app.buttons["producer1"].tap();app.buttons["producer1"].tap();energy("98")
-        XCTAssertEqual(cell(0).label,"Buğday başağı");let size=cell(0).frame.size
-        cell(0).tap();XCTAssertEqual(cell(0).frame.width,size.width,accuracy:0.5)
-        drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti")
+        let pieces=cells(named:"Buğday başağı"), size=cell(pieces[0]).frame.size
+        cell(pieces[0]).tap();XCTAssertEqual(cell(pieces[0]).frame.width,size.width,accuracy:0.5)
+        drag(pieces[0],pieces[1]);XCTAssertEqual(cell(pieces[1]).label,"Buğday demeti")
         app.buttons["order-quest25"].tap();XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:5))
-        for _ in 0..<4 {app.buttons["producer1"].tap()};drag(0,1);drag(2,3)
+        for _ in 0..<4 {app.buttons["producer1"].tap()};mergePair("Buğday başağı");mergePair("Buğday başağı")
         app.buttons["order-quest26"].tap();XCTAssertTrue(app.buttons["order-quest27"].waitForExistence(timeout:5))
         app.buttons["producer5"].tap();XCTAssertTrue(app.buttons["buyProducer"].waitForExistence(timeout:5));app.buttons["buyProducer"].tap();app.buttons["closePage"].tap()
-        app.buttons["producer5"].tap();app.buttons["producer5"].tap();drag(0,1)
+        app.buttons["producer5"].tap();app.buttons["producer5"].tap();mergePair("Küçük un torbası")
         app.buttons["order-quest27"].tap();XCTAssertTrue(app.buttons["order-quest28"].waitForExistence(timeout:5));shot("rn-first-journey")
     }
     func testHeldSelectedItemCanStillMerge(){
@@ -111,16 +151,17 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(cell(0).label,"Buğday başağı")
     }
     func testReadyOrderDoubleTapAndFastOpening(){
-        app.buttons["producer1"].tap();app.buttons["producer1"].tap();drag(0,1)
+        app.buttons["producer1"].tap();app.buttons["producer1"].tap();mergePair("Buğday başağı")
+        let readyIndex=cells(named:"Buğday demeti")[0]
         XCTAssertTrue(app.buttons["order-quest25"].label.contains("Hazır"))
-        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"ready-order-cell-1").firstMatch.exists)
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"ready-order-cell-\(readyIndex)").firstMatch.exists)
         app.buttons["order-quest25"].tap(withNumberOfTaps:2,numberOfTouches:1)
         XCTAssertTrue(app.buttons["gold"].label.contains("60"))
-        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"ready-order-cell-1").firstMatch.exists)
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"ready-order-cell-\(readyIndex)").firstMatch.exists)
         XCTAssertFalse(app.buttons["closePage"].exists)
         app.buttons["producer5"].tap();app.buttons["buyProducer"].tap();app.buttons["closePage"].tap()
         XCTAssertTrue(app.buttons["gold"].label.contains("20"))
-        app.buttons["producer5"].tap();XCTAssertNotEqual(cell(0).label,"Boş hücre")
+        app.buttons["producer5"].tap();XCTAssertEqual(cells(named:"Küçük un torbası").count,1)
         shot("ready-orders-and-fast-opening")
     }
     func testUpperTierChainHasExplicitUnlockAndFinalFeedback(){
@@ -153,9 +194,9 @@ final class MasterlandTests:XCTestCase {
         app.buttons["powerProductDetails"].tap()
         app.buttons["unlock-item27"].tap();app.buttons["unlock-item49"].tap();app.buttons["closePage"].tap()
         app.buttons["producer1"].press(forDuration:0.6);app.buttons["power-4"].tap()
-        app.buttons["producer1"].tap();energy("103");XCTAssertEqual(cell(18).label,"Buğday arabası")
-        app.buttons["producer1"].tap();energy("95");XCTAssertEqual(cell(19).label,"Buğday arabası")
-        app.buttons["producer1"].tap();energy("94");XCTAssertEqual(cell(20).label,"Buğday başağı")
+        app.buttons["producer1"].tap();energy("103");XCTAssertEqual(cells(named:"Buğday arabası").count,1)
+        app.buttons["producer1"].tap();energy("95");XCTAssertEqual(cells(named:"Buğday arabası").count,2)
+        app.buttons["producer1"].tap();energy("94");XCTAssertEqual(cells(named:"Buğday başağı").count,5)
         XCTAssertTrue(app.buttons["producer1"].label.contains("4x seçili, 1x etkin"))
         shot("power-threshold-fallback")
     }
@@ -188,7 +229,7 @@ final class MasterlandTests:XCTestCase {
         shot("anchored-producer-power-menu")
         app.buttons["power-2"].tap();XCTAssertFalse(menu.exists)
         XCTAssertTrue(app.buttons["producer1"].label.contains("1x seçili"))
-        app.buttons["producer6"].tap();energy("109");XCTAssertEqual(cell(18).label,"Krema")
+        app.buttons["producer6"].tap();energy("109");XCTAssertEqual(cells(named:"Krema").count,3)
         app.buttons["producer6"].press(forDuration:0.6)
         app.coordinate(withNormalizedOffset:CGVector(dx:0.02,dy:0.85)).tap()
         XCTAssertFalse(menu.exists)
@@ -196,23 +237,25 @@ final class MasterlandTests:XCTestCase {
     func testRapidProducerTapsAndCooldown(){
         for _ in 0..<2 {app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1)};energy("80")
         app.buttons["producer1"].tap(withNumberOfTaps:10,numberOfTouches:1);energy("70")
-        app.buttons["producer1"].tap();energy("70");XCTAssertEqual(cell(29).label,"Buğday başağı");XCTAssertEqual(cell(30).label,"Boş hücre");shot("rn-rapid-input")
+        app.buttons["producer1"].tap();energy("70");XCTAssertEqual(cells(named:"Buğday başağı").count,30);XCTAssertEqual(cells(named:"Boş hücre").count,24);shot("rn-rapid-input")
     }
     func testSelectionInvalidReleaseAndNextGesture(){
-        app.buttons["producer1"].tap();app.buttons["producer1"].tap();cell(0).tap()
-        XCTAssertEqual(cell(0).value as? String,"Seçili")
-        XCTAssertEqual(cell(1).value as? String,"")
-        let frame=cell(0).frame;XCTAssertEqual(frame.width/frame.height,1.0,accuracy:0.015)
-        cell(0).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
-        XCTAssertEqual(cell(0).label,"Buğday başağı");energy("98");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("rn-selection-and-merge")
+        app.buttons["producer1"].tap();app.buttons["producer1"].tap()
+        let pair=cells(named:"Buğday başağı"), first=pair[0], second=pair[1]
+        cell(first).tap()
+        XCTAssertEqual(cell(first).value as? String,"Seçili")
+        XCTAssertEqual(cell(second).value as? String,"")
+        let frame=cell(first).frame;XCTAssertEqual(frame.width/frame.height,1.0,accuracy:0.015)
+        cell(first).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
+        XCTAssertEqual(cell(first).label,"Buğday başağı");energy("98");drag(first,second);XCTAssertEqual(cell(second).label,"Buğday demeti");shot("rn-selection-and-merge")
     }
     func testFullScreenPagesAndStorage(){
-        app.buttons["producer1"].tap();cell(0).press(forDuration:0.6)
-        XCTAssertTrue(app.buttons["storeSelected"].waitForExistence(timeout:5));app.buttons["storeSelected"].tap();XCTAssertEqual(cell(0).label,"Boş hücre")
+        app.buttons["producer1"].tap();let index=cells(named:"Buğday başağı")[0];cell(index).press(forDuration:0.6)
+        XCTAssertTrue(app.buttons["storeSelected"].waitForExistence(timeout:5));app.buttons["storeSelected"].tap();XCTAssertEqual(cell(index).label,"Boş hücre")
         for tab in ["collection","cities","storage","market"] {
             app.buttons["tab-"+tab].tap();XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5));XCTAssertLessThan(app.buttons["closePage"].frame.midY,app.frame.height*0.2);XCTAssertGreaterThan(app.scrollViews.firstMatch.frame.height,app.frame.height*0.6);shot("rn-"+tab);app.buttons["closePage"].tap()
         }
-        app.buttons["tab-storage"].tap();app.buttons["storage-0"].tap();app.buttons["closePage"].tap();XCTAssertEqual(cell(0).label,"Buğday başağı")
+        app.buttons["tab-storage"].tap();app.buttons["storage-0"].tap();app.buttons["closePage"].tap();XCTAssertEqual(cells(named:"Buğday başağı").count,1)
     }
     func testUnifiedParchmentPageGeometry(){
         app.open(URL(string:"masterland://review")!)
@@ -299,9 +342,9 @@ final class MasterlandTests:XCTestCase {
     func testSoundSettingDoesNotResetBoard(){
         app.buttons["producer1"].tap();energy("99")
         app.buttons["profile-menu"].tap();XCTAssertTrue(app.switches["setting-sound"].waitForExistence(timeout:5));app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
-        XCTAssertEqual(cell(0).label,"Buğday başağı");energy("99")
+        XCTAssertEqual(cells(named:"Buğday başağı").count,1);energy("99")
         app.buttons["profile-menu"].tap();app.switches["setting-sound"].tap();app.buttons["closePage"].tap()
-        app.buttons["producer1"].tap();energy("98");drag(0,1);XCTAssertEqual(cell(1).label,"Buğday demeti");shot("sound-settings-preserve-board")
+        app.buttons["producer1"].tap();energy("98");mergePair("Buğday başağı");XCTAssertEqual(cells(named:"Buğday demeti").count,1);shot("sound-settings-preserve-board")
     }
 
     func milestone() {
@@ -331,13 +374,13 @@ final class MasterlandTests:XCTestCase {
         app.buttons["travelCity"].tap()
         XCTAssertTrue(app.buttons["producer10"].waitForExistence(timeout:5))
         XCTAssertTrue(app.buttons["gold"].label.contains("2.000"))
-        app.buttons["producer10"].tap(); XCTAssertEqual(cell(0).label,"Vanilyalı bisküvi")
+        app.buttons["producer10"].tap(); XCTAssertEqual(cells(named:"Vanilyalı bisküvi").count,1)
         shot("milestone-haven-board")
         app.buttons["tab-collection"].tap();shot("milestone-haven-collection");app.buttons["closePage"].tap()
         app.buttons["tab-cities"].tap();app.buttons["jump-city1"].tap();app.buttons["travelCity"].tap()
         XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:5));XCTAssertEqual(cell(0).label,"Buğday başağı")
         app.buttons["tab-cities"].tap();app.buttons["jump-city2"].tap();app.buttons["travelCity"].tap()
-        XCTAssertEqual(cell(0).label,"Vanilyalı bisküvi")
+        XCTAssertEqual(cells(named:"Vanilyalı bisküvi").count,1)
         XCTAssertTrue(app.buttons["gold"].label.contains("2.005"))
     }
     func testMilestoneCelebrationAndCollection() {

@@ -617,7 +617,7 @@ function Game() {
     noticeHeight = 58 * scale,
     cardWidth = (noticeWidth - 24 * scale) / 3,
     cardHeight = 48 * scale,
-    producerSize = 44 * scale;
+    producerSize = 48 * scale;
   const activeOrders = useMemo(
     () => prioritizeOrderRail(orders(save), save),
     [save],
@@ -879,62 +879,42 @@ function Game() {
               )}
             </Button>
           ))}
-          <Button
-            testID="profile-menu"
-            label="Profil"
-            onPress={() => open({ kind: "profile" })}
-            style={{
-              position: "absolute",
-              right: 34,
-              top: 39,
-              width: 29,
-              height: 29,
-              borderRadius: 15,
-              backgroundColor: colors.navy,
-              borderWidth: 1,
-              borderColor: colors.gold,
-            }}
-          >
-            <View
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: 4,
-                backgroundColor: colors.goldLight,
-                marginBottom: 2,
-              }}
-            />
-            <View
-              style={{
-                width: 14,
-                height: 7,
-                borderTopLeftRadius: 7,
-                borderTopRightRadius: 7,
-                backgroundColor: colors.goldLight,
-              }}
-            />
-          </Button>
-          <Button
-            testID="info"
-            label="Eşya bilgisi"
-            onPress={() => open({ kind: "info", index: selected ?? undefined })}
-            style={{
-              position: "absolute",
-              right: 0,
-              top: 39,
-              width: 29,
-              height: 29,
-              borderRadius: 15,
-              backgroundColor: colors.navy,
-              borderWidth: 1,
-              borderColor: colors.gold,
-            }}
-          >
-            <Label title size={23} color={colors.goldLight}>
-              i
-            </Label>
-          </Button>
         </View>
+        <Button
+          testID="profile-menu"
+          label="Profil"
+          onPress={() => open({ kind: "profile" })}
+          style={{
+            position: "absolute",
+            right: 12,
+            top: top + 32 * scale,
+            width: 29,
+            height: 29,
+            borderRadius: 15,
+            backgroundColor: colors.navy,
+            borderWidth: 1,
+            borderColor: colors.gold,
+          }}
+        >
+          <View
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: 4,
+              backgroundColor: colors.goldLight,
+              marginBottom: 2,
+            }}
+          />
+          <View
+            style={{
+              width: 14,
+              height: 7,
+              borderTopLeftRadius: 7,
+              borderTopRightRadius: 7,
+              backgroundColor: colors.goldLight,
+            }}
+          />
+        </Button>
         {!page && (
           <>
             <View
@@ -973,7 +953,8 @@ function Game() {
                 height: 26 * scale,
               }}
             >
-              <Label title size={9} color={colors.goldLight}>
+              <WoodTray width={44} height={26 * scale} />
+              <Label title size={9 * scale} color={colors.goldLight}>
                 Tümü ›
               </Label>
             </Button>
@@ -1020,7 +1001,6 @@ function Game() {
                 }}
               >
                 {activeOrders.map((o) => {
-                  const r = o.requirements[0]!;
                   const ready = o.requirements.every(
                     (r) => count(save, r.item_id) >= r.quantity,
                   );
@@ -1103,49 +1083,59 @@ function Game() {
                       >
                         <View
                           style={{
-                            width: cardWidth * 0.42,
+                            width:
+                              cardWidth *
+                              (o.requirements.length > 1 ? 0.58 : 0.42),
+                            flexDirection: "row",
+                            justifyContent: "center",
                             alignItems: "center",
                           }}
                         >
-                          <Item id={r.item_id} size={42 * scale} />
-                          {o.requirements.length > 1 && (
-                            <Label
-                              size={7.5}
-                              color={ready ? colors.ink : colors.goldLight}
+                          {o.requirements.map((requirement) => (
+                            <View
+                              key={requirement.item_id}
+                              style={{ alignItems: "center" }}
                             >
-                              +{o.requirements.length - 1} daha
-                            </Label>
-                          )}
+                              <Item
+                                id={requirement.item_id}
+                                size={
+                                  (o.requirements.length > 1 ? 26 : 32) * scale
+                                }
+                              />
+                              <Label
+                                size={8 * scale}
+                                color={ready ? colors.ink : colors.goldLight}
+                              >
+                                {Math.min(
+                                  count(save, requirement.item_id),
+                                  requirement.quantity,
+                                )}
+                                /{requirement.quantity}
+                              </Label>
+                            </View>
+                          ))}
                         </View>
                         <View style={{ flex: 1, alignItems: "center" }}>
-                          <View
-                            style={
-                              ready
-                                ? {
-                                    backgroundColor: "#377b46",
-                                    borderRadius: 8,
-                                    paddingHorizontal: 9,
-                                    paddingVertical: 1,
-                                  }
-                                : undefined
-                            }
-                          >
-                            <Text
+                          {ready && (
+                            <View
                               style={{
-                                fontFamily: fonts.number,
-                                fontSize: 11 * scale,
-                                color: ready
-                                  ? "#fff4d5"
-                                  : count(save, r.item_id) >= r.quantity
-                                    ? "#d9e69c"
-                                    : "#ffd0a0",
+                                backgroundColor: "#377b46",
+                                borderRadius: 8,
+                                paddingHorizontal: 7,
+                                paddingVertical: 1,
                               }}
                             >
-                              {ready
-                                ? "Ver ✓"
-                                : `${Math.min(count(save, r.item_id), r.quantity)}/${r.quantity}`}
-                            </Text>
-                          </View>
+                              <Text
+                                style={{
+                                  fontFamily: fonts.number,
+                                  fontSize: 11 * scale,
+                                  color: "#fff4d5",
+                                }}
+                              >
+                                Ver ✓
+                              </Text>
+                            </View>
+                          )}
                           <View
                             style={{
                               flexDirection: "row",
@@ -1275,11 +1265,11 @@ function Game() {
                 style={{ marginHorizontal: 24 * scale }}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                  gap: 8 * scale,
+                  gap: 5 * scale,
                   flexGrow: 1,
                   justifyContent: "center",
                   alignItems: "center",
-                  paddingHorizontal: 8 * scale,
+                  paddingHorizontal: 4 * scale,
                 }}
               >
                 {cityProducers(save).map((p) => (

@@ -59,3 +59,8 @@ Keşif ödülleri ilk elde edişte bir kez ödenir. Kalıcı ödül kuyruğu yal
 ## TestFlight kanalı
 
 İlk beta 0.2.0 (2), App Store Connect uygulama ID 6835346739 altında yüklenmiştir. TestFlight kanalında EXPO_PUBLIC_DISTRIBUTION_CHANNEL=testflight ve EXPO_PUBLIC_TEST_MODE=true kullanılır. Enerji düğmesi açıktır; StoreKit arayüzü ve kredi eylemi kapalıdır; QA fixture bağlantıları beta kaydını değiştiremez. Yerel StoreKit QA kanalı ayrıdır. Davet yöntemi kullanıcı tarafından sonraya bırakılmıştır; henüz testçi/public link veya dış beta incelemesi yoktur. Native arşiv ve simülatör derlemelerini aynı Pods dizininde eşzamanlı çalıştırmayın. Dağıtım bilgisi docs/testflight-beta-verification-20261116.md içindedir.
+
+
+## 16 Kasım — Dış beta ve rastgele üretim güncellemesi
+
+Arkadaşlar dış grubu ve bir testçi eklenmiştir. 0.2.0 (2) Apple beta incelemesinde Waiting for Review durumundadır; önceki dış test grubu yok ifadeleri tarihçedir. Sonraki yerel değişikliklerde üretim rastgele boş hücreye yapılır, yer varsa dolu hücre komşularından kaçınır. Çok ürünlü ilanlarda bütün ürün ikonları ve adetleri gösterilir. Tahta geometrisi korunur. Son kapsam `docs/random-production-verification-20261116.md` içindedir.

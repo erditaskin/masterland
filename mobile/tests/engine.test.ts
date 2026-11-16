@@ -2,6 +2,7 @@ import { orderItemHighlights, prioritizeOrderRail } from "../src/ui/orderRail";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  productionCell,
   advance,
   energyCap,
   productionPlan,
@@ -32,7 +33,11 @@ const run = (s: Save, action: Action, time = now) =>
 function twice() {
   let s = fresh(now);
   s = run(s, { type: "produce", id: p.id }).state;
-  return run(s, { type: "produce", id: p.id }).state;
+  s = run(s, { type: "produce", id: p.id }).state;
+  // Merge/storage cases use a deliberate adjacent fixture, independently of spawn placement.
+  const tiles = city(s).board.filter((t) => t !== null);
+  city(s).board = [...tiles, ...Array(54 - tiles.length).fill(null)];
+  return s;
 }
 test("fresh board and first two product areas", () => {
   const s = fresh(now);
@@ -83,9 +88,12 @@ test("locked next product preserves both ingredients", () => {
   s = run(s, { type: "move", from: 0, to: 1 }).state;
   s = run(s, { type: "produce", id: p.id }).state;
   s = run(s, { type: "produce", id: p.id }).state;
-  s = run(s, { type: "move", from: 0, to: 2 }).state;
+  const pieces = city(s).board.flatMap((tile, i) =>
+    tile?.item === a.id ? [i] : [],
+  );
+  s = run(s, { type: "move", from: pieces[0]!, to: pieces[1]! }).state;
   assert.equal(count(s, b.id), 2);
-  const r = run(s, { type: "move", from: 1, to: 2 });
+  const r = run(s, { type: "move", from: 1, to: pieces[1]! });
   assert.equal(r.kind, "blocked");
   assert.equal(count(r.state, b.id), 2);
 });
@@ -344,8 +352,9 @@ test("first delivery funds mill and second funds oven without repeat grinding", 
   s = run(s, { type: "buy", id: producers[1]!.id }).state;
   for (let i = 0; i < 4; i++)
     s = run(s, { type: "produce", id: producers[0]!.id }).state;
-  s = run(s, { type: "move", from: 0, to: 1 }).state;
-  s = run(s, { type: "move", from: 2, to: 3 }).state;
+  const positions = city(s).board.flatMap((tile, i) => (tile ? [i] : []));
+  s = run(s, { type: "move", from: positions[0]!, to: positions[1]! }).state;
+  s = run(s, { type: "move", from: positions[2]!, to: positions[3]! }).state;
   s = run(s, { type: "deliver", id: intro[1]!.id }).state;
   assert(level(s) >= producers[2]!.level);
   assert(s.gold >= producers[2]!.price);
@@ -412,7 +421,7 @@ test("all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary",
       assert.equal(result.kind, "produce");
       assert.equal(result.state.stamina, energy - 2 ** (effective - 1));
       assert.equal(
-        city(result.state).board[0]?.item,
+        city(result.state).board.find((tile) => tile !== null)?.item,
         p.products[effective - 1]!.id,
       );
       assert.equal(productionPlan(result.state, p).selected, mode);
@@ -428,7 +437,7 @@ test("a boost crossing below 100 falls back without changing the selected power"
   assert.equal(a.state.stamina, 95);
   const b = run(a.state, { type: "produce", id: p.id });
   assert.equal(b.state.stamina, 94);
-  assert.equal(city(b.state).board[1]?.item, p.products[0]!.id);
+  assert.equal(count(b.state, p.products[0]!.id), 1);
   assert.equal(city(b.state).powers?.[p.id], 4);
 });
 test("locked output mode cannot be selected or silently consume energy", () => {
@@ -522,4 +531,35 @@ test("order cell highlights distinguish partial, ready and removed requirements"
   city(save).board.fill(null);
   result = orderItemHighlights([order], save);
   assert.equal(result.ready.size + result.partial.size, 0);
+});
+
+test("production chooses scattered random cells without row wrapping and fills crowded boards", () => {
+  const s = fresh(now),
+    board = city(s).board;
+  assert.equal(
+    productionCell(board, () => 0),
+    0,
+  );
+  assert.equal(
+    productionCell(board, () => 0.999),
+    53,
+  );
+  board[5] = { id: "edge", item: a.id };
+  const picks = Array.from({ length: 1000 }, (_, i) =>
+    productionCell(board, () => i / 1000),
+  );
+  assert(!picks.includes(4));
+  assert(!picks.includes(11));
+  assert(picks.includes(6)); // Next row is not the previous row's right neighbour.
+  for (let i = 0; i < 54; i++) board[i] = { id: String(i), item: a.id };
+  board[12] = null;
+  assert.equal(productionCell(board), 12);
+  const produced = run(s, { type: "produce", id: p.id });
+  assert.equal(produced.kind, "produce");
+  assert(city(produced.state).board[12]);
+  assert.equal(productionCell(city(produced.state).board), -1);
+  assert.equal(
+    run(produced.state, { type: "produce", id: p.id }).kind,
+    "blocked",
+  );
 });
