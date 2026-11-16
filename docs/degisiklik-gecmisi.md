@@ -405,3 +405,7 @@ Kullanıcı hesapları başka bir oturumdaki ajanla tarayıcıdan kurarken bu aj
 ## 16 Kasım 2026 — Şehir adları ve konseptlerinin onayı
 
 Kullanıcı Türkçe ve İngilizce şehir adlarını ve konseptlerini kesinleştirdi; bundan sonraki çalışmalar için referans olarak kaydedilmesini istedi. Tek güncel eşleştirme tablosu [Masterland şehir isimleri ve konseptleri](sehir-isimleri-ve-konseptleri.md) belgesindedir. Rünyaka rün ve tılsım odaklıdır; önceki bahçecilik odağı tarihçedir. Yeraltı fiziksel olarak yeraltındadır. Karayonca çiftçilik ve hayvancılık temasını korur; suçluluk yalnız atmosferdir. İlk üç şehir sırası ve sabit kimlikler korunur; Minoc dördüncü sıra önerisidir. Diğer adayların kapsamı ve sırası kesinleşmemiştir. Kod, kanonik ad sözlüğü ve yerelleştirme dosyaları değiştirilmemiştir. Çakışma araştırması henüz yapılmamıştır.
+
+## 17 Kasım 2026 — Giriş, onaylı şehir adları ve ahşap şehir panosu
+
+Diğer oturumun Apple auth değişiklikleri main üzerinde korunmuştur. İlk üç şehir adı TR/EN olarak uygulandı; sabit ID'ler korunur. imagegen ile mevcut tahta çevre ölçülerine uygun üç tematik tam ekran arka plan ve ahşap başarı panosu üretildi. Giriş sağlayıcı düğmeleri ortak boyuta alındı. Şehir seçimi küçük kartlarla, başarılar bağımsız iki sütunlu listeyle yenilendi; gelecekteki şehirler Yakında olarak listelendi. 97 birim testi, TypeScript, lint ve üç hedefli Release simülatör senaryosu geçti. Ekonomi/cooldown/idle istekleri sıraya kaydedildi, bu görsel değişikliğe karıştırılmadı.

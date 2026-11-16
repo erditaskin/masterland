@@ -1,3 +1,4 @@
+import { cityScenes } from "./ui/cityScenes";
 import { DeletionRecovery } from "./ui/DeletionRecovery";
 import { deletionStore } from "./account/deletion";
 import { energyAds } from "./ads/service";
@@ -85,7 +86,8 @@ const navigation = [
 ] as const;
 const startupAssets = [
   art.city,
-  require("../assets/art/haven-surround-v1.png"),
+  cityScenes.city2!.source,
+  cityScenes.city3!.source,
   require("../assets/art/skara-items-v2.png"),
   require("../assets/art/haven-items-v1.png"),
   require("../assets/art/carved-city-sign-v1.png"),
@@ -724,11 +726,7 @@ function Game() {
     c = city(save);
   return (
     <ImageBackground
-      source={
-        save.cityID === "city2"
-          ? require("../assets/art/haven-surround-v1.png")
-          : art.city
-      }
+      source={cityScenes[save.cityID]?.source ?? art.city}
       resizeMode="cover"
       onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
       style={{ flex: 1 }}

@@ -19,6 +19,34 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testCityCatalogAndAuthRefreshPreserveBoard() {
+        let board=cell(0).frame, gold=app.buttons["gold"].label
+        app.buttons["tab-cities"].tap()
+        XCTAssertTrue(app.buttons["jump-city1"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["jump-city1"].isSelected)
+        XCTAssertTrue(app.buttons["jump-city1"].label.contains("Bahçeyaka"))
+        app.buttons["jump-city2"].tap()
+        XCTAssertTrue(app.buttons["jump-city2"].isSelected)
+        XCTAssertFalse(app.buttons["jump-city1"].isSelected)
+        shot("city-catalog-ballica")
+        app.buttons["jump-city3"].tap()
+        XCTAssertTrue(app.buttons["jump-city3"].isSelected)
+        XCTAssertFalse(app.buttons["travelCity"].isEnabled)
+        shot("city-catalog-yalikoru")
+        app.buttons["jump-city1"].tap()
+        shot("city-catalog-bahceyaka")
+        app.buttons["travelCity"].tap()
+        XCTAssertEqual(cell(0).frame,board)
+        XCTAssertEqual(app.buttons["gold"].label,gold)
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch.waitForExistence(timeout:5))
+        XCTAssertEqual(app.buttons["signInGoogle"].frame.width,app.buttons["signInFacebook"].frame.width,accuracy:1)
+        XCTAssertGreaterThan(app.buttons["signInGoogle"].frame.width,250)
+        shot("auth-page-refreshed")
+        app.buttons["closeAccount"].tap()
+        XCTAssertEqual(cell(0).frame,board)
+        shot("bahceyaka-board-refresh")
+    }
     func testDeletionRecoveryKeepsRetryInsideParchment() {
         app.open(URL(string:"masterland://deletion-recovery-review")!)
         let panel=app.descendants(matching:.any).matching(identifier:"deletionRecovery").firstMatch
@@ -72,8 +100,8 @@ final class MasterlandTests:XCTestCase {
         app.buttons["profile-menu"].tap()
         let panel=app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch
         XCTAssertTrue(panel.waitForExistence(timeout:5))
-        XCTAssertFalse(app.buttons["signInGoogle"].exists)
-        XCTAssertFalse(app.buttons["signInFacebook"].exists)
+        XCTAssertTrue(app.buttons["signInGoogle"].exists);XCTAssertFalse(app.buttons["signInGoogle"].isEnabled)
+        XCTAssertTrue(app.buttons["signInFacebook"].exists);XCTAssertFalse(app.buttons["signInFacebook"].isEnabled)
         XCTAssertTrue(app.staticTexts["Cihazda kayıtlı"].exists)
         let english=app.buttons["language-en"]
         if !english.isHittable {app.scrollViews.firstMatch.swipeUp()}

@@ -437,6 +437,8 @@ export function Pages({
             )}
             {page.kind === "profile" && (
               <>
+                <AccountPanel onClose={close} />
+                <Divider />
                 <Label title size={25}>
                   Seviye {level(save)}
                 </Label>
@@ -459,7 +461,6 @@ export function Pages({
                   </Label>
                 )}
                 <Divider />
-                <AccountPanel onClose={close} />
                 <Divider />
                 {[
                   ["Ses", save.sound, "sound"],

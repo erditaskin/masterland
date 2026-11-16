@@ -1,12 +1,5 @@
-import { useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
-import {
-  FlatList,
-  Image,
-  View,
-  type NativeScrollEvent,
-  type NativeSyntheticEvent,
-} from "react-native";
-import tabBounds from "../../assets/art/city-tabs-v4-bounds.json";
+import { useMemo, useState } from "react";
+import { FlatList, Image, View } from "react-native";
 import reference from "../../../data/content-reference.json";
 import {
   cityRule,
@@ -27,19 +20,9 @@ import {
 } from "./Controls";
 import { RouteIcon } from "./Achievements";
 import { Crop } from "./Art";
-import { routeSections } from "./layout";
 import { colors } from "./theme";
-const maps = [
-  require("../../assets/art/skara-route-v2.png"),
-  require("../../assets/art/haven-route-v2.png"),
-  require("../../assets/art/cove-route-v2.png"),
-];
-type Chunk = {
-  id: string;
-  region: number;
-  first: boolean;
-  nodes: typeof achievements;
-};
+import { accountText as tx, languageStore } from "../i18n/locale";
+import { cityScenes, upcomingCities } from "./cityScenes";
 function RoutePin({
   a,
   save,
@@ -116,15 +99,13 @@ function RoutePin({
     </Button>
   );
 }
-/** Reusable full-height city tiles and virtualized achievement sections keep the route readable. */
+/** City selection is explicit; scrolling achievements never changes the selected city. */
 export function CityMap({
   currentCity,
   save,
   width,
   height,
   onAchievement,
-  initialOffset = () => 0,
-  onOffsetChange,
   onReturn,
   onTravel,
   onInteract,
@@ -141,291 +122,182 @@ export function CityMap({
   onInteract: () => void;
   reduced: boolean;
 }) {
-  const [active, setActive] = useState(
-      Math.max(
-        0,
-        reference.ui.city_map.stops.findIndex((s) => s.city_id === currentCity),
-      ),
-    ),
-    [inspected, setInspected] = useState<number | null>(null);
-  const [offset] = useState(initialOffset);
-  const scroll = useRef<ComponentRef<typeof FlatList<Chunk>>>(null);
+  const [active, setActive] = useState(currentCity);
   const stops = reference.ui.city_map.stops;
-  const chunks = useMemo(() => {
-    const order = reference.ui.city_map.achievement_order;
-    const ordered = [...achievements].sort((a, b) => {
-      const ai = order.indexOf(a.id),
-        bi = order.indexOf(b.id);
-      return (ai < 0 ? 999 : ai) - (bi < 0 ? 999 : bi);
-    });
-    return routeSections(stops, ordered);
-  }, [stops]);
-  const plotWidth = width - 67;
-  const tileHeight = (plotWidth * 1230) / 675;
-  useEffect(() => {
-    const frame = requestAnimationFrame(() =>
-      scroll.current?.scrollToOffset({
-        offset:
-          offset ||
-          Math.max(
-            0,
-            chunks.findIndex((c) => stops[c.region]?.city_id === currentCity),
-          ) * tileHeight,
-        animated: false,
-      }),
-    );
-    return () => cancelAnimationFrame(frame);
-  }, [offset, tileHeight, chunks, stops, currentCity]);
-  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    onOffsetChange(e.nativeEvent.contentOffset.y);
-    const index = Math.min(
-      chunks.length - 1,
-      Math.max(
-        0,
-        Math.floor((e.nativeEvent.contentOffset.y + 50) / tileHeight),
-      ),
-    );
-    setActive(chunks[index]!.region);
-  };
-  const activeStop = stops[active]!,
-    here = activeStop.city_id === currentCity && activeStop.travel_enabled;
-  const rule = cityRule(activeStop.city_id)!;
-  const visited = !!save.cities[activeStop.city_id];
-  const travelText = here
-    ? "Tahtaya dön"
+  const nodes = useMemo(
+    () => achievements.filter((a) => a.city_id === active),
+    [active],
+  );
+  const rule = cityRule(active)!;
+  const here = active === currentCity;
+  const visited = !!save.cities[active];
+  const text = here
+    ? tx("Tahtaya dön", "Back to board")
     : visited
-      ? "Bu şehre geç"
+      ? tx("Bu şehre geç", "Travel here")
       : !rule.enabled
-        ? `Seviye ${rule.level} · Yakında`
+        ? tx("Yakında", "Coming soon")
         : level(save) < rule.level
-          ? `Seviye ${rule.level} · ${rule.gold} altın`
-          : `${rule.gold} altınla şehri aç`;
-  const travel = () => {
-    onInteract();
-    if (here) onReturn();
-    else if (rule.enabled) onTravel(rule.id);
-    else setInspected(active);
-  };
+          ? tx(
+              `Seviye ${rule.level} · ${rule.gold} altın`,
+              `Level ${rule.level} · ${rule.gold} gold`,
+            )
+          : tx(`${rule.gold} altınla şehri aç`, `Unlock for ${rule.gold} gold`);
   return (
-    <View style={{ width, height, overflow: "hidden" }}>
-      <Button
-        testID={"map-" + activeStop.city_id}
-        label={
-          name(activeStop.city_id) +
-          (here
-            ? ", Buradasın, tahtaya dön"
-            : ", Kilitli, açılma seviyesini göster")
-        }
-        onPress={() => {
-          onInteract();
-          if (here) onReturn();
-          else setInspected(active);
-        }}
-        style={{ height: 22, marginBottom: 4 }}
-      >
-        <Label title size={13} color={colors.ink}>
-          {name(activeStop.city_id)} · Özel Başarılar
-        </Label>
-      </Button>
+    <View style={{ width, height, paddingHorizontal: 7, gap: 8 }}>
+      <View style={{ flexDirection: "row", gap: 6 }}>
+        {stops.map((stop) => {
+          const scene = cityScenes[stop.city_id]!;
+          const selected = active === stop.city_id;
+          return (
+            <Button
+              key={stop.city_id}
+              testID={"jump-" + stop.city_id}
+              label={name(stop.city_id)}
+              selected={selected}
+              onPress={() => {
+                onInteract();
+                setActive(stop.city_id);
+              }}
+              style={{ flex: 1, height: 85 }}
+            >
+              <View
+                pointerEvents="none"
+                style={{
+                  flex: 1,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  borderWidth: selected ? 2 : 1,
+                  borderColor: selected ? "#e8b650" : "#ab8258",
+                  backgroundColor: scene.color,
+                }}
+              >
+                <Crop
+                  source={scene.source}
+                  x={0}
+                  y={0}
+                  w={875}
+                  h={300}
+                  width={(width - 30) / 3}
+                  height={52}
+                />
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Label title size={11} color="#fff1cd">
+                    {name(stop.city_id)}
+                  </Label>
+                </View>
+              </View>
+            </Button>
+          );
+        })}
+      </View>
       <View
         testID="cityMapViewport"
         style={{
           flex: 1,
-          marginLeft: 7,
-          marginRight: 60,
-          borderRadius: 14,
+          borderRadius: 13,
           overflow: "hidden",
+          backgroundColor: "#58321e",
         }}
       >
+        <Image
+          source={require("../../assets/art/city-achievement-wood-v1.png")}
+          resizeMode="cover"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            opacity: 0.85,
+          }}
+        />
         <FlatList
-          ref={scroll}
-          data={chunks}
-          keyExtractor={(item) => item.id}
+          key={active}
           testID="cityRouteScroll"
-          onScroll={onScroll}
-          scrollEventThrottle={32}
-          initialNumToRender={3}
-          maxToRenderPerBatch={3}
-          windowSize={5}
-          showsVerticalScrollIndicator={true}
-          indicatorStyle="white"
-          getItemLayout={(_, i) => ({
-            length: tileHeight,
-            offset: i * tileHeight,
-            index: i,
-          })}
-          renderItem={({ item }) => {
-            const nodeWidth = plotWidth * 0.44;
-            return (
-              <View style={{ height: tileHeight, overflow: "hidden" }}>
-                {item.region === 0 ? (
-                  <Crop
-                    source={require("../../assets/art/canonical-map-clean-v1.png")}
-                    x={31}
-                    y={320}
-                    w={675}
-                    h={1230}
-                    width={plotWidth}
-                    height={tileHeight}
-                  />
-                ) : (
-                  <Image
-                    pointerEvents="none"
-                    source={maps[item.region]}
-                    resizeMode="cover"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: plotWidth,
-                      height: tileHeight,
-                    }}
-                  />
-                )}
-                {item.nodes.map((a, j) => (
-                  <View
-                    key={a.id}
-                    style={{
-                      position: "absolute",
-                      top: ([17, 330, 580, 860][j]! * plotWidth) / 675,
-                      left: Math.min(
-                        plotWidth - nodeWidth - 2,
-                        ([87, 374, 137, 400][j]! * plotWidth) / 675,
-                      ),
-                    }}
-                  >
-                    <RoutePin
-                      a={a}
-                      save={save}
-                      width={nodeWidth}
-                      press={() => onAchievement(a.id)}
-                    />
-                  </View>
-                ))}
-              </View>
-            );
-          }}
-        />
-        <View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: 7,
-            backgroundImage:
-              "linear-gradient(90deg, #f9e8c8 0%, #f9e8c800 100%)",
-          }}
-        />
-        <View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: 7,
-            backgroundImage:
-              "linear-gradient(270deg, #f9e8c8 0%, #f9e8c800 100%)",
-          }}
-        />
-      </View>
-      <AppButton
-        testID="travelCity"
-        text={travelText}
-        onPress={travel}
-        tone={here || visited ? "primary" : "secondary"}
-        style={{ marginTop: 5, marginLeft: 7, marginRight: 60 }}
-      />
-      <View style={{ position: "absolute", right: 0, top: 32, gap: 8 }}>
-        {stops.map((stop, i) => (
-          <Button
-            key={stop.city_id}
-            testID={"jump-" + stop.city_id}
-            label={name(stop.city_id) + " konumuna git"}
-            selected={active === i}
-            onPress={() => {
-              onInteract();
-              setInspected(null);
-              const index = chunks.findIndex((c) => c.region === i);
-              scroll.current?.scrollToOffset({
-                offset: index * tileHeight,
-                animated: false,
-              });
-              setActive(i);
-            }}
-            style={{
-              width: 42,
-              height: 66,
-            }}
-          >
-            <View
-              pointerEvents="none"
-              style={{ position: "absolute", inset: 0 }}
-            >
-              <Crop
-                source={require("../../assets/art/city-tabs-v4.png")}
-                x={tabBounds[i + (active === i ? 3 : 0)]![0]!}
-                y={tabBounds[i + (active === i ? 3 : 0)]![1]!}
-                w={tabBounds[i + (active === i ? 3 : 0)]![2]!}
-                h={tabBounds[i + (active === i ? 3 : 0)]![3]!}
-                width={42}
-                height={66}
-              />
+          data={nodes}
+          numColumns={2}
+          keyExtractor={(a) => a.id}
+          showsVerticalScrollIndicator
+          contentContainerStyle={{ padding: 10 }}
+          columnWrapperStyle={{ justifyContent: "space-between" }}
+          ListHeaderComponent={
+            <View style={{ marginBottom: 12 }}>
+              <Label title size={19} color="#ffe7ad">
+                {name(active)}
+              </Label>
+              <Label size={12} color="#f4d8ad">
+                {tx("Özel başarılar", "Special achievements")}
+              </Label>
             </View>
-            <Label
-              title
-              size={10}
-              color={active === i ? colors.paper : colors.ink}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 10,
-                textAlign: "center",
-              }}
-            >
-              {i === 1
-                ? name(stop.city_id).split(" ").at(-1)
-                : name(stop.city_id).split(" ")[0]}
-            </Label>
-          </Button>
-        ))}
-      </View>
-      {inspected !== null && (
-        <View
-          testID={"map-lock-" + stops[inspected]!.city_id}
-          accessible
-          accessibilityRole="alert"
-          accessibilityLabel={
-            name(stops[inspected]!.city_id) +
-            ": " +
-            reference.cities.find((c) => c.id === stops[inspected]!.city_id)!
-              .unlock_level +
-            ". seviyede açılacak."
           }
-          style={{
-            position: "absolute",
-            bottom: 8,
-            left: 8,
-            right: 8,
-            padding: 12,
-            backgroundColor: colors.paper,
-            borderWidth: 1,
-            borderColor: colors.gold,
-            borderRadius: 12,
-          }}
-        >
-          <Label title>{name(stops[inspected]!.city_id)}</Label>
+          renderItem={({ item }) => (
+            <RoutePin
+              a={item}
+              save={save}
+              width={(width - 44) / 2}
+              press={() => {
+                onInteract();
+                onAchievement(item.id);
+              }}
+            />
+          )}
+          ListFooterComponent={
+            <View style={{ marginTop: 16, gap: 9 }}>
+              <Label title size={16} color="#ffe7ad">
+                {tx("Yeni ufuklar · Yakında", "New horizons · Coming soon")}
+              </Label>
+              {upcomingCities.map((c) => (
+                <View
+                  key={c.reference}
+                  style={{
+                    padding: 10,
+                    borderRadius: 8,
+                    backgroundColor: "#fff0cc12",
+                    borderWidth: 1,
+                    borderColor: "#d5ac6444",
+                  }}
+                >
+                  <Label title color="#f8dda0">
+                    {languageStore.get() === "tr" ? c.tr : c.en}
+                  </Label>
+                  <Label size={11} color="#e7c9a0">
+                    {tx("Yakında", "Coming soon")}
+                  </Label>
+                </View>
+              ))}
+            </View>
+          }
+        />
+      </View>
+      {!rule.enabled && (
+        <View testID={"map-lock-" + active}>
           <Label size={12}>
-            {
-              reference.cities.find((c) => c.id === stops[inspected]!.city_id)!
-                .unlock_level
-            }
-            . seviyede açılacak.
+            {tx("Bu şehir yakında açılacak.", "This city is coming soon.")}
           </Label>
         </View>
       )}
+      {rule.enabled && !visited && !here && (
+        <View testID={"map-lock-" + active}>
+          <Label size={12}>{text}</Label>
+        </View>
+      )}
+      <AppButton
+        testID="travelCity"
+        text={text}
+        disabled={!rule.enabled}
+        onPress={() => {
+          onInteract();
+          if (here) onReturn();
+          else onTravel(active);
+        }}
+        style={{ marginBottom: 4 }}
+      />
     </View>
   );
 }

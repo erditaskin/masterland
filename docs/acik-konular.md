@@ -145,3 +145,20 @@ Kullanıcı bütün üreticilerin en az 7, en fazla 12 basamak olmasını istedi
 ## 16 Kasım 2026 — Hesap ve reklam güncel planı
 
 Supabase, Apple/Google/Facebook, çevrimdışı oyun ve ilk enerji reklamı parametreleri artık kullanıcı tarafından onaylanmıştır. Kurulacak hesaplar ve henüz uygulanmamış entegrasyonlar `hesap-bulut-reklam-plani-20261116.md` içindedir. Sonraya bırakılan açık işler: canlı para satışı ve cüzdan otoritesi, yeni reklam alanları/mediation, gerçek kullanıcı verisiyle reklam ve ekonomi optimizasyonu. Eski sayfalardaki günlük reklam ayarları belirsiz notları bu son karardan önceye aittir.
+
+## 16 Kasım 2026 — Giriş/şehir tasarımından sonraki oynanış sırası
+
+Kullanıcının yeni talepleri:
+
+1. Sipariş tekrarı azaltılacak. Seviye 1'den itibaren seviyeye uygun ürün çeşitliliği artacak. Seviye 3'ten itibaren farklı üreticilerden iki ve üç farklı ürün isteyen siparişler olacak. Ulaşılamayan/kilitli ürünler siparişe konmayacak.
+2. Üretici kutuları biraz büyütülecek; gereken alan tahtanın yüksekliğinden küçük bir pay alınarak sağlanabilecek. Eşit kare hücreler ve bütün satırların tutarlılığı korunacak.
+3. Üreticiler çok erken beklemeye giriyor. Üretim serisini kesmeden daha uzun kullanım sağlayacak dolum/bekleme dengesi incelenecek. Bekleme elmas veya isteğe bağlı reklamla aşılabilecek. Kesin süre ve fiyatlar henüz belirlenmedi.
+4. Enerji reklamına dokununca ikinci bir “reklamı izle” adımı açılmayacak; izin/uygunluk tamamlandıysa doğrudan reklam başlayacak. Ödül yalnız doğrulanmış tamamlanmada verilecek. Kullanıcı bu aşamada enerji yenileme yolunun reklam olmasını istedi. Çalışma varsayımı: manuel enerji satın alma kapalı, mevcut pasif 100'e dolum korunuyor; pasif dolumu kaldırma kararı verilmedi.
+5. Her merge sonrasında ürün adı ortadaki küçük bildirim alanına yazılmayacak. Keşif ve ödül bildirimleri bu istekten ayrıdır.
+6. Üretici bekleme durumu okunur olacak. Bekleyen kutuya dokunulduğunda kalan süreyi ve kullanılabilir reklam/elmas eylemlerini gösteren uygulama temalı açıklama açılacak; sessiz/tepkisiz görünmeyecek. Belirgin ama hafif bekleme rozeti değerlendirilecek; kesin görsel animasyon henüz seçilmedi.
+
+Bu sıra kaydı uygulandı veya test edildi anlamına gelmez. Aktif giriş/şehir tasarım turundan sonra ele alınacaktır.
+
+### Son ekonomi düzeltmesi için netleştirilecekler
+
+Enerji paketi 3 elmas için kaç enerji verecek? Reklam ödülü önceki +15 değerinde mi kalacak? Cooldown geçişinde elmas fiyatı ve üretici başına kullanım serisi ölçülerek belirlenmelidir. Ürünler artık altınla basamak açmadığından sipariş/keşif XP eğrisi ve ücretsiz şehir erişim süresi yeniden simüle edilmelidir. Yeni şehirlerin 24/33 eşikleri kesin, city4/city5 adaylarının kesin sırası henüz ayrıca doğrulanmadı. Kullanıcının isteğiyle bu konular aktif görsel turunu kesmeden sıraya alındı.
