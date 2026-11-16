@@ -393,3 +393,10 @@ Kullanıcı Supabase ile Apple, Google ve Facebook hızlı girişlerini, mevcut 
 Kullanıcının sorulara yanıtıyla çevrimdışı merge ve görev oynanışı onaylandı. Bulut eşitleme ve reklam internet gerektirir. İlk reklam yalnız isteğe bağlı enerji ödülüdür: her başarılı ödülde +15 enerji, günde en fazla 4 ödül. Hatırlatmalar arasında en az 30 dakika ve oturumda en fazla 2 hatırlatma başlangıç ayarı olarak onaylandı. Hatırlatma görmek/kapamak günlük ödül hakkını tüketmez; reklam kendiliğinden başlamaz. Mediation ve başka reklam alanları ilk kapsamda değildir.
 
 Supabase, AdMob ve Meta projeleri henüz hazır değildir; kurulum plana dahil edildi. Ayrıntılı aşamalar, veri çakışması, güvenlik kapsamı, kayıt aktarımı, fiziksel testler ve yayın koşulları `hesap-bulut-reklam-plani-20261116.md` içindedir. Bu kayıt bir uygulama planıdır; entegrasyonların kurulduğu veya test edildiği anlamına gelmez.
+
+
+## 16 Kasım 2026 — Hesap kurulum handoverı ve ilk yerel hazırlık
+
+Kullanıcı hesapları başka bir oturumdaki ajanla tarayıcıdan kurarken bu ajan uygulama kodunu hazırlayacak. Dış hesap ajanının kapsamı `account-setup-agent-handover.md` içindedir; uygulama kodunu değiştirmez ve yalnız `account-setup-status.md` raporunu güncelleyebilir.
+
+İlk kod adımı: doğrulanmış mevcut normal kayıt bulut geçişinden önce `@masterland/pre-cloud-backup/v1` anahtarına bir kez, ham haliyle yedeklenir. Önceki yedek yeni ilerlemeyle ezilmez; QA/görsel fixture bu yola girmez. Yedek alınamaması hata olarak görünür; bu yerel önlem bulut kaydı değildir. 56 birim testi ve Release simülatöründe normal kaydın arka plan/yeniden açılış kontrolü geçti. Simülatör AsyncStorage manifestinde hem normal kayıt hem yedek anahtarı doğrulandı. Harici hesap kurulumu ve bulut entegrasyonu henüz tamamlanmadı.

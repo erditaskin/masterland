@@ -1,3 +1,4 @@
+import { preservePreCloudSave } from "./localBackup";
 import { testModeEnabled, testFlightBeta } from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FS from "expo-file-system/legacy";
@@ -86,6 +87,7 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
       if (stored) {
         const parsed: unknown = JSON.parse(stored);
         if (!validateSave(parsed)) throw Error("Kayıt doğrulanamadı.");
+        await preservePreCloudSave(AsyncStorage, stored);
         save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
       } else {
         const v2Path = FS.documentDirectory + "migration-v2.json";
