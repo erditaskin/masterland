@@ -384,3 +384,12 @@ Kullanıcı çok ürünlü ilandaki büyük boşluğu reddetti. Sabit yüzde 45 
 
 
 Doğrulama: TypeScript, ESLint ve 53 motor testi geçti. Test seviyesinin art arda 15 eşiği doğru geçtiği ve production reddi doğrulandı. Release simülatöründe iki hedefli kontrol geçti: iki dokunuşla 1→2→3 ilerleme/dört test düğmesinin erişimi ve sıkı çok ürünlü ilan/rastgele üretim/merge. Son ekranlar görsel olarak incelendi. Yeni sürüm TestFlight’a veya telefona yüklenmedi.
+
+
+## 16 Kasım 2026 — Supabase hesapları ve ilk reklam kapsamı
+
+Kullanıcı Supabase ile Apple, Google ve Facebook hızlı girişlerini, mevcut ilerlemeyi koruyarak hesap bağlamayı ve bulut kaydı planlamayı onayladı. Ayrı sunucu işletilmeyecek; gerekli sunucu işlemleri Supabase Edge Functions ile yürütülecek. Türkçe ve İngilizce arayüzle TR ve global hedef korunur. Satın almalar bu tur açılmaz.
+
+Kullanıcının sorulara yanıtıyla çevrimdışı merge ve görev oynanışı onaylandı. Bulut eşitleme ve reklam internet gerektirir. İlk reklam yalnız isteğe bağlı enerji ödülüdür: her başarılı ödülde +15 enerji, günde en fazla 4 ödül. Hatırlatmalar arasında en az 30 dakika ve oturumda en fazla 2 hatırlatma başlangıç ayarı olarak onaylandı. Hatırlatma görmek/kapamak günlük ödül hakkını tüketmez; reklam kendiliğinden başlamaz. Mediation ve başka reklam alanları ilk kapsamda değildir.
+
+Supabase, AdMob ve Meta projeleri henüz hazır değildir; kurulum plana dahil edildi. Ayrıntılı aşamalar, veri çakışması, güvenlik kapsamı, kayıt aktarımı, fiziksel testler ve yayın koşulları `hesap-bulut-reklam-plani-20261116.md` içindedir. Bu kayıt bir uygulama planıdır; entegrasyonların kurulduğu veya test edildiği anlamına gelmez.

@@ -140,3 +140,8 @@ Kullanıcı bütün üreticilerin en az 7, en fazla 12 basamak olmasını istedi
 | producer7 — Meyve Bahçesi | 8 | Elma suyu sürahisi, kurutulmuş elma, meyve ikramı, hasat tezgâhı |
 
 20 mevcut ürüne 20 yeni ürün önerilir. Zincirin 8. basamağı yalnız ilk ürünle üretimde 128, 12. basamağı 2048 başlangıç ürünü gerektirir. Level/altın eşikleri ve ödüller bu maliyetle birlikte dengelenecek; mevcut birikimler ve sabit ID'ler korunacaktır.
+
+
+## 16 Kasım 2026 — Hesap ve reklam güncel planı
+
+Supabase, Apple/Google/Facebook, çevrimdışı oyun ve ilk enerji reklamı parametreleri artık kullanıcı tarafından onaylanmıştır. Kurulacak hesaplar ve henüz uygulanmamış entegrasyonlar `hesap-bulut-reklam-plani-20261116.md` içindedir. Sonraya bırakılan açık işler: canlı para satışı ve cüzdan otoritesi, yeni reklam alanları/mediation, gerçek kullanıcı verisiyle reklam ve ekonomi optimizasyonu. Eski sayfalardaki günlük reklam ayarları belirsiz notları bu son karardan önceye aittir.
