@@ -1,5 +1,11 @@
 # ultima tasarım kararları
 
+## 17 Kasım 2026 — VPS geçişinin başlaması
+
+Kullanıcı handover kapsamının uygulanmasını istedi. Başka ajan çalışmıyor. E-posta servisi ve e-posta doğrulaması ilk kapsamda olmayacak; giriş Apple, Google ve Facebook üzerinden yapılacak. Canlı satın alma aşamasında e-posta ihtiyacı yeniden değerlendirilecek. DNS kayıtlarını kullanıcı yönetecek. Alan adının yetkili DNS'i Cloudflare'dır; GoDaddy kayıt operatörüdür. Cloudflare Free kullanılacaktır.
+
+Mevcut mobil depo, Git geçmişi ve tüm takipli dosyaları korunarak `/Users/erdi/masterland/masterland-mobile` altına taşındı. Expo kökü `masterland-mobile/mobile` olarak korunur. Dış çalışma alanı artık Git deposu değildir. API/web için uzak depo adresi verilmeden remote oluşturulmaz.
+
 Son güncelleme: 14 Kasım 2026. Bu dosya kullanıcının belirlediği veya açıkça onayladığı kararları içerir.
 
 ## Proje ve dünya

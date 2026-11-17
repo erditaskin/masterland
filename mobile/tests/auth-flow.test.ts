@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import ts from "typescript";
+import { createHash } from "node:crypto";
 
 // Run the real auth store with native/provider boundaries replaced; no device credentials enter tests.
 function setup(existingSession = false) {
@@ -17,7 +18,7 @@ function setup(existingSession = false) {
   let lastProvider: string | null = null;
   let oauthRequest: any = null;
   let tokenCalls = 0;
-  let callback = "masterland://auth/callback?code=test-code";
+  let callback = "masterland://auth/callback?code=test-code&state=test-state";
   let guests = 0;
   const auth = {
     onAuthStateChange() {},
@@ -71,7 +72,8 @@ function setup(existingSession = false) {
     "expo-crypto": {
       randomUUID: () => "nonce",
       CryptoDigestAlgorithm: { SHA256: "sha256" },
-      digestStringAsync: async () => "hashed",
+      digestStringAsync: async (_algorithm: string, text: string) =>
+        createHash("sha256").update(text).digest("hex"),
     },
     "expo-web-browser": {
       maybeCompleteAuthSession() {},
@@ -79,7 +81,22 @@ function setup(existingSession = false) {
         cancelled ? { type: "cancel" } : { type: "success", url: callback },
     },
     "./client": {
-      accountClient: { auth },
+      accountClient: {
+        subscribe() {},
+        getSession: async () => session,
+        getUser: async () => (await auth.getUser()).data.user,
+        createGuest: auth.signInAnonymously,
+        signInApple: async () => auth.signInWithIdToken({ provider: "apple" }),
+        request: async (path: string, options: { body: unknown }) => {
+          if (path === "/v1/auth/apple/challenge")
+            return { id: "challenge", nonce: "nonce" };
+          oauthRequest = options.body;
+          return { url: "https://example.com/oauth", state: "test-state" };
+        },
+        exchangeOAuth: async ({ code }: { code: string }) =>
+          auth.exchangeCodeForSession(code),
+        signOut: auth.signOut,
+      },
       accountConfig: {
         googleIOSClientID: "ios-client",
         googleWebClientID: "web-client",
@@ -88,12 +105,13 @@ function setup(existingSession = false) {
       authRedirect: "masterland://auth/callback",
     },
     "./oauthReturn": {
-      oauthCode: (url: string, expected: string) => {
+      oauthCode: (url: string, expected: string, expectedState: string) => {
         const parsed = new URL(url);
         if (
           parsed.origin !== new URL(expected).origin ||
           parsed.pathname !== new URL(expected).pathname ||
-          !parsed.searchParams.get("code")
+          !parsed.searchParams.get("code") ||
+          parsed.searchParams.get("state") !== expectedState
         )
           throw Error("Invalid callback");
         return parsed.searchParams.get("code");
@@ -207,11 +225,8 @@ for (const provider of ["google", "facebook"] as const) {
     assert.equal(await store.signIn(provider), true);
     assert.equal(tokenCalls(), 0);
     assert.equal(oauthRequest().provider, provider);
-    assert.equal(
-      oauthRequest().options.redirectTo,
-      "masterland://auth/callback",
-    );
-    assert.equal(oauthRequest().options.skipBrowserRedirect, true);
+    assert.match(oauthRequest().code_challenge, /^[A-Za-z0-9_-]{43}$/);
+    assert.equal(oauthRequest().reauthenticate, false);
   });
   test(`${provider} rejects an unrelated callback before code exchange`, async () => {
     const { store, invalidCallback, lastProvider } = setup();

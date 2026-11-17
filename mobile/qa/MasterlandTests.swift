@@ -556,7 +556,7 @@ final class MasterlandTests:XCTestCase {
         XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
         func rect(_ e:XCUIElement)->[String:Double] {let r=e.frame;return ["x":r.minX,"y":r.minY,"width":r.width,"height":r.height]}
         var values:[String:Any] = ["screen":rect(app),"scale":UIScreen.main.scale]
-        for id in ["profile","stamina","gold","gems","profile-menu","info","producer1","producer5","producer8","producer6","producer7","tab-board","tab-collection","tab-cities","tab-storage","tab-market","order-quest26"] {values[id]=rect(app.buttons[id])}
+        for id in ["profile","stamina","gold","gems","profile-menu","producer1","producer5","producer8","producer6","producer7","tab-board","tab-collection","tab-cities","tab-storage","tab-market","order-quest26"] {values[id]=rect(app.buttons[id])}
         let cellFrames=(0..<54).map {cell($0).frame}
         values["cells"]=cellFrames.map { ["x":$0.minX,"y":$0.minY,"width":$0.width,"height":$0.height] }
         let data=try JSONSerialization.data(withJSONObject:values,options:[.prettyPrinted,.sortedKeys])

@@ -3,6 +3,7 @@ import * as Crypto from "expo-crypto";
 import * as SecureStore from "expo-secure-store";
 import { accountClient, accountConfig } from "./client";
 import { createSecureSessionStorage } from "./secureStorage";
+import { AccountAPIError } from "./sessionClient";
 import { gameStore } from "../state/store";
 import { resolveSaveNamespace } from "../state/saveNamespace";
 import {
@@ -36,29 +37,22 @@ async function readJournal() {
   return raw ? readDeletionJournal(raw) : null;
 }
 async function status(journal: DeletionJournal) {
-  const result = await fetch(
-    `${accountConfig.url}/functions/v1/delete-account`,
-    {
+  if (!accountClient) throw Error("Account unavailable");
+  try {
+    const result = await accountClient.request("/v1/account/deletion/status", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: accountConfig.key,
-      },
-      body: JSON.stringify({
-        action: "status",
-        request_id: journal.requestID,
-        receipt: journal.receipt,
-      }),
-      signal: AbortSignal.timeout(15000),
-    },
-  );
-  if (result.status === 404) return null;
-  if (!result.ok) throw Error("Deletion status unavailable");
-  return readDeletionReceipt(await result.json(), journal.requestID);
+      anonymous: true,
+      body: { request_id: journal.requestID, receipt: journal.receipt },
+    });
+    return readDeletionReceipt(result, journal.requestID);
+  } catch (error) {
+    if (error instanceof AccountAPIError && error.status === 404) return null;
+    throw error;
+  }
 }
 async function finish(requestID: string) {
   try {
-    await accountClient?.auth.signOut({ scope: "local" });
+    await accountClient?.clearLocal();
   } finally {
     // Drain the old owner's network work before erasing its local queues and backups.
     const { cloudSync } = await import("./cloudSync");
@@ -111,13 +105,12 @@ export async function deleteCurrentAccount(confirmed: boolean) {
     throw Error("Deletion unavailable");
   const client = accountClient;
   active = (async () => {
-    const session = await client.auth.getUser();
-    if (session.error || !session.data.user) throw Error("Sign-in required");
+    const user = await client.getUser();
+    if (!user) throw Error("Sign-in required");
     let journal = await readJournal();
     if (
       journal &&
-      (journal.userID !== session.data.user.id ||
-        journal.namespace !== namespace)
+      (journal.userID !== user.id || journal.namespace !== namespace)
     )
       throw Error("Another deletion is pending");
     if (!journal) {
@@ -127,24 +120,29 @@ export async function deleteCurrentAccount(confirmed: boolean) {
         receipt: Array.from(random, (byte) =>
           byte.toString(16).padStart(2, "0"),
         ).join(""),
-        userID: session.data.user.id,
+        userID: user.id,
         namespace,
       };
       await storage.setItem(journalKey, JSON.stringify(journal));
     }
     publish({ phase: "checking", hasJournal: true });
     try {
-      const { data, error } = await client.functions.invoke("delete-account", {
+      const data = await client.request("/v1/account/deletion", {
+        method: "POST",
+        ownerID: user.id,
         body: {
           request_id: journal.requestID,
           receipt: journal.receipt,
           confirmation: "DELETE",
-          apple_authorization_code: consumeAppleDeletionProof(
-            session.data.user.id,
-          ),
+          apple_authorization_code: consumeAppleDeletionProof(user.id),
         },
       });
-      if (!error && data?.auth_deleted) {
+      if (
+        data &&
+        typeof data === "object" &&
+        "auth_deleted" in data &&
+        data.auth_deleted === true
+      ) {
         readDeletionReceipt(data, journal.requestID);
         await finish(journal.requestID);
         await storage.removeItem(journalKey);

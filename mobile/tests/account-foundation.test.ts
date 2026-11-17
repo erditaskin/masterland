@@ -10,8 +10,7 @@ import reference from "../../data/content-reference.json";
 const settings = {
   enabled: "true",
   environment: "test",
-  url: "https://example.supabase.co",
-  key: "sb_publishable_example",
+  url: "https://api-test.masterland.app",
 };
 
 test("backend defaults to offline and test builds cannot contact production", () => {
@@ -23,19 +22,21 @@ test("backend defaults to offline and test builds cannot contact production", ()
     "test-on-production",
   );
   assert.equal(
-    resolveAccountConfig({ ...settings, environment: "production" }, false)
-      .enabled,
+    resolveAccountConfig(
+      {
+        ...settings,
+        environment: "production",
+        url: "https://api.masterland.app",
+      },
+      false,
+    ).enabled,
     true,
   );
-  for (const key of ["secret", "sb_secret_unsafe", "eyJhbGciOiJIUzI1NiJ9.fake"])
-    assert.equal(
-      resolveAccountConfig({ ...settings, key }, false).enabled,
-      false,
-    );
   for (const url of [
-    "http://example.supabase.co",
-    "https://example.supabase.co.attacker.net",
-    "https://example.supabase.co/path",
+    "http://api-test.masterland.app",
+    "https://api-test.masterland.app.attacker.net",
+    "https://api-test.masterland.app/path",
+    "https://user:secret@api-test.masterland.app",
   ])
     assert.equal(
       resolveAccountConfig({ ...settings, url }, false).enabled,

@@ -23,11 +23,7 @@ export function AccountDeletionPanel() {
     [verified, setVerified] = useState<string | null>(null),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
-  if (
-    (!accountDeletionEnabled && !deletion.hasJournal) ||
-    !account.user ||
-    account.user.is_anonymous
-  )
+  if ((!accountDeletionEnabled && !deletion.hasJournal) || !account.user)
     return null;
   return (
     <View>
@@ -105,7 +101,7 @@ export function AccountDeletionPanel() {
             disabled={
               !accountDeletionEnabled ||
               !confirmed ||
-              verified !== account.user.id ||
+              (!account.user.is_anonymous && verified !== account.user.id) ||
               busy ||
               account.busy
             }

@@ -1,16 +1,10 @@
 import { accountClient } from "./client";
 import { readCloudRow, readWriteResult } from "./cloudProtocol";
 import { validateSave, type Save } from "../game/engine";
-/** Reads only the requested owner; RLS enforces the authenticated account boundary. */
+/** Reads only the requested owner; the verified API session enforces the account boundary. */
 export async function fetchCloudSave(userID: string) {
   if (!accountClient) throw Error("Cloud is not configured");
-  const { data, error } = await accountClient
-    .from("game_saves")
-    .select("user_id,schema_version,revision,payload,updated_at")
-    .eq("user_id", userID)
-    .abortSignal(AbortSignal.timeout(15000))
-    .maybeSingle();
-  if (error) throw error;
+  const data = await accountClient.request("/v1/save", { ownerID: userID });
   return data === null ? null : readCloudRow(data, userID);
 }
 export async function writeCloudSave(
@@ -32,20 +26,15 @@ export async function writeCloudSave(
     )
   )
     throw Error("Invalid cloud snapshot");
-  const session = await accountClient.auth.getSession();
-  if (session.error || session.data.session?.user.id !== ownerID)
-    throw Error("Cloud account changed");
   // Pin the owner's token: an account switch while the request is waiting must not write into the next account.
-  const accessToken = session.data.session.access_token;
-  const { data, error } = await accountClient
-    .rpc("write_game_save", {
+  const data = await accountClient.request("/v1/save", {
+    method: "PUT",
+    ownerID,
+    body: {
       expected_revision: expectedRevision,
       request_id: requestID,
       save_payload: save,
-      save_schema_version: 1,
-    })
-    .setHeader("Authorization", `Bearer ${accessToken}`)
-    .abortSignal(AbortSignal.timeout(15000));
-  if (error) throw error;
+    },
+  });
   return readWriteResult(data);
 }

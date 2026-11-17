@@ -27,7 +27,7 @@ Yeni içerik hazırlamadan önce `docs/isim-referanslari.md` ve `data/content-re
 
 ## Aktif uygulama ve kalite
 
-Aktif kök `/Users/erdi/masterland`, uygulama `mobile/` altındadır. Eski SwiftUI oyun kaynakları proje dışına arşivlenmiştir. Expo tarafından üretilen `mobile/ios` düzenlenmez; native ayarlar config plugin ile tekrar üretilebilir tutulur. Gerçek Release simülatöründe görsel ve etkileşim kontrolü olmadan teslim edildiğini belirtmeyin. Test geçmesi pixel-perfect kabulü değildir.
+Aktif mobil depo `/Users/erdi/masterland/masterland-mobile`, uygulama bu deponun `mobile/` altındadır. Eski SwiftUI oyun kaynakları proje dışına arşivlenmiştir. Expo tarafından üretilen `mobile/ios` düzenlenmez; native ayarlar config plugin ile tekrar üretilebilir tutulur. Gerçek Release simülatöründe görsel ve etkileşim kontrolü olmadan teslim edildiğini belirtmeyin. Test geçmesi pixel-perfect kabulü değildir.
 
 ## Güncel görsel hedef
 

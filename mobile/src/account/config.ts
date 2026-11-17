@@ -3,7 +3,6 @@ export interface AccountConfig {
   enabled: boolean;
   environment: BackendEnvironment;
   url: string;
-  key: string;
   googleIOSClientID: string;
   googleWebClientID: string;
   facebookEnabled: boolean;
@@ -15,7 +14,6 @@ export function resolveAccountConfig(
     enabled?: string;
     environment?: string;
     url?: string;
-    key?: string;
     googleIOSClientID?: string;
     googleWebClientID?: string;
     facebookEnabled?: string;
@@ -32,7 +30,6 @@ export function resolveAccountConfig(
     enabled: false,
     environment,
     url: input.url ?? "",
-    key: input.key ?? "",
     googleIOSClientID: input.googleIOSClientID ?? "",
     googleWebClientID: input.googleWebClientID ?? "",
     facebookEnabled: input.facebookEnabled === "true",
@@ -40,11 +37,13 @@ export function resolveAccountConfig(
   if (input.enabled !== "true") return { ...base, error: "not-configured" };
   if (testBuild && environment === "production")
     return { ...base, error: "test-on-production" };
-  // Only public publishable keys belong in the mobile bundle. Legacy JWT/service keys are rejected.
+  // API origins are closed per environment; credentials never belong in the mobile configuration.
   if (
     environment === "disabled" ||
-    !/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(base.url) ||
-    !base.key.startsWith("sb_publishable_")
+    base.url !==
+      (environment === "production"
+        ? "https://api.masterland.app"
+        : "https://api-test.masterland.app")
   )
     return { ...base, error: "invalid-config" };
   return { ...base, enabled: true, error: null };

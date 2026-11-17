@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-17",
+  "mobileUnitTests": 161,
+  "apiTests": 21,
+  "controlledReleasePassed": [
+    "background/save reload",
+    "city catalog/auth shell",
+    "no cheats/test ad preview"
+  ],
+  "localReleasePassed": [
+    "gameplay/idle/free merge/cooldown",
+    "deletion recovery parchment",
+    "visual measurements"
+  ],
+  "cellCount": 54,
+  "uniqueCellSizes": [
+    [
+      56,
+      56
+    ]
+  ],
+  "initialMixedChannelRun": {
+    "pass": 3,
+    "fail": 3,
+    "reason": "Fixture-only cases were run under TestFlight, which intentionally rejects fixture links"
+  },
+  "localFirstRun": {
+    "pass": 2,
+    "fail": 1,
+    "reason": "Visual measurement referenced the retired info button; only that stale measurement target was removed"
+  },
+  "visualRerunPassed": true,
+  "physicalProviderAcceptance": "pending"
+}

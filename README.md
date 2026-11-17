@@ -4,11 +4,13 @@ Travel Town tarzı saf merge tahtasını, şehirlerde farklı yaşam temaları v
 
 ## Aktif proje
 
-- Klasör: `/Users/erdi/masterland`
+- Klasör: `/Users/erdi/masterland/masterland-mobile`
 - Uygulama: `mobile/` — React Native / Expo, TypeScript, Hermes.
 - iOS kimliği: `com.erditaskin.masterland`; bağlantı şeması: `masterland://`.
 - İlk oynanabilir şehir: Skara Brae. New Haven ileri fırıncılık, Cove balıkçılık ve marangozluk içindir.
 - İçerik ve değiştirilebilir adların tek kaynağı: `data/content-reference.json`.
+
+17 Kasım 2026 altyapı geçişi: API `/Users/erdi/masterland/masterland-api`, web `/Users/erdi/masterland/masterland-web` altında ayrı depolardır. Mobil origin `erditaskin/masterland` olarak korunur. Expo kökü bu repo içinde hâlâ `mobile/` altındadır. API origin'i `https://api.masterland.app`; Supabase çalışma zamanı ve SDK bağımlılığı kaldırılmıştır. Eski altyapı raporları tarihçedir. Güncel kapsam ve kabul sınırları `docs/vps-migration-20261117.md` içindedir.
 
 SwiftUI oyun kaynakları aktif projeden çıkarılmıştır. Güvenlik arşivi proje dışında `/Users/erdi/Documents/Codex/2026-11-14/kanki/work/swiftui-archive-20261115` altında korunur. `mobile/ios` Expo tarafından üretilir; sürüm kontrolüne girmez. Native UI testleri Swift ile yazılmıştır; bunlar SwiftUI oyun kodu değildir.
 

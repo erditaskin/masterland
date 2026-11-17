@@ -1,5 +1,7 @@
 # Hesap kurulum ajanı ile uygulama sözleşmesi
 
+> Tarihsel sözleşme: Aşağıdaki Supabase kurulumu 17 Kasım 2026 VPS kararıyla aktif backend olmaktan çıktı. Güncel mobil geçişi `vps-migration-20261117.md`, aktif sunucu sözleşmesi `/Users/erdi/masterland/masterland-api/docs/contracts.md` içindedir. Eski davranışlar yalnız geçmiş ve regresyon referansı olarak korunur.
+
 Bu dosya uygulama ajanına aittir. Dashboard sonuçları diğer ajanın `account-setup-status.md` raporunda kalır. Otomatik canlı dağıtım yapılmaz.
 
 ## Mobil yapılandırma
