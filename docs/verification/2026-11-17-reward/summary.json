@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-17",
+  "mobileTestsPassed": 165,
+  "releaseSimulatorVideoTestsPassed": [
+    "energy +25 and persisted balance/quota after relaunch",
+    "producer refresh without energy credit",
+    "controlled preview no reward promise and no credit"
+  ],
+  "testSaveEnergyBefore": 100,
+  "testSaveEnergyAfterRelaunch": 125,
+  "testSaveDailyUsedAfterRelaunch": 1,
+  "phoneUpdated": false,
+  "productionRewardsEnabled": false,
+  "liveSSVAcceptance": "pending",
+  "apiTestsPassed": 22,
+  "signedHTTPIntegration": "local ECDSA + isolated PostgreSQL; not live Google SSV"
+}

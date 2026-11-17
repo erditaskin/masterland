@@ -10,6 +10,9 @@ function fixture(
     consent?: boolean;
     verified?: boolean;
     producerUnit?: boolean;
+    testAds?: boolean;
+    testMode?: boolean;
+    flush?: () => Promise<void>;
   } = {},
 ) {
   let user: { id: string } | null = { id: owner };
@@ -109,15 +112,19 @@ function fixture(
       gameStore: {
         get: () => ({ save: {} }),
         dispatch: () => {
-          throw Error("Live SDK callback cannot self-credit");
+          if (!options.testAds || !options.testMode)
+            throw Error("Live SDK callback cannot self-credit");
+          credits++;
+          return { kind: "reward" };
         },
+        flush: options.flush ?? (async () => {}),
       },
     },
-    "../game/testMode": { testModeEnabled: false },
+    "../game/testMode": { testModeEnabled: options.testMode ?? false },
     "./config": {
       resolveAdsConfig: () => ({
         enabled: true,
-        testAds: false,
+        testAds: options.testAds ?? false,
         productionRewardsEnabled: true,
         rewardedUnit: "live-unit",
         producerRewardedUnit: options.producerUnit ? "producer-unit" : null,
@@ -223,4 +230,62 @@ test("a configured cooldown ad uses its own unit with a producer intent", async 
   );
   f.event("closed");
   assert.equal(f.credits(), 0);
+});
+
+test("controlled preview reports no reward and cannot change the balance", async () => {
+  const f = fixture({ testAds: true });
+  await f.service.start();
+  await f.service.watch();
+  f.event("earned");
+  f.event("closed");
+  await settle();
+  assert.equal(f.request()?.unit, "test-unit");
+  assert.equal(f.credits(), 0);
+  assert.equal(f.service.get().rewardOutcome, "preview");
+});
+test("test mode applies exactly one reward after an earned event", async () => {
+  const f = fixture({ testAds: true, testMode: true });
+  await f.service.start();
+  await f.service.watch();
+  f.event("earned");
+  f.event("earned");
+  f.event("closed");
+  await settle();
+  assert.equal(f.credits(), 1);
+  assert.equal(f.service.get().rewardOutcome, "granted");
+});
+
+test("test reward success waits for durable storage and storage failure is visible", async () => {
+  let finish!: () => void;
+  const f = fixture({
+    testAds: true,
+    testMode: true,
+    flush: () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  });
+  await f.service.start();
+  await f.service.watch();
+  f.event("earned");
+  f.event("closed");
+  await settle();
+  assert.equal(f.service.get().rewardOutcome, null);
+  finish();
+  await settle();
+  assert.equal(f.service.get().rewardOutcome, "granted");
+  const failed = fixture({
+    testAds: true,
+    testMode: true,
+    flush: async () => {
+      throw Error("Disk unavailable");
+    },
+  });
+  await failed.service.start();
+  await failed.service.watch();
+  failed.event("earned");
+  failed.event("closed");
+  await settle();
+  assert.equal(failed.service.get().rewardOutcome, null);
+  assert.equal(failed.service.get().error, "ad");
 });

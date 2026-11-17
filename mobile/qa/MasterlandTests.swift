@@ -86,12 +86,31 @@ final class MasterlandTests:XCTestCase {
         app.buttons["stamina"].tap()
         XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"energyAdPanel").firstMatch.waitForExistence(timeout:5))
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Bakiye ve günlük hak değişmez")).firstMatch.exists)
+        let watch=app.buttons["watchEnergyAd"]
+        XCTAssertTrue(watch.label.contains("ödülsüz"))
+        let beforeEnergy=app.buttons["stamina"].label
         shot("controlled-testflight-test-ad-preview")
+        watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:45),.completed)
+        sleep(35)
+        let endClose=app.buttons["Close"].firstMatch, videoClose=app.buttons["Close Advertisement"].firstMatch
+        if endClose.waitForExistence(timeout:5) && endClose.isHittable {endClose.tap()}
+        else if videoClose.isEnabled {videoClose.tap();if endClose.waitForExistence(timeout:5) && endClose.isHittable {endClose.tap()}}
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Bu önizleme ödül vermez")).firstMatch.waitForExistence(timeout:10))
+        shot("controlled-preview-completed-without-reward")
         app.buttons["closePage"].tap()
+        XCTAssertEqual(app.buttons["stamina"].label,beforeEnergy)
         XCTAssertTrue(app.buttons["stamina"].exists)
         shot("controlled-testflight-no-cheats")
     }
     func testRewardedTestInventoryLoadsOnlyOnExplicitEnergyAction() {
+        // Use the simulator's persistent test-mode save, not the ephemeral qa-reset fixture.
+        app.terminate()
+        app.launch()
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:20))
+        app.buttons["testEnergyFill"].tap()
+        let expectedEnergy=String((Int(app.buttons["stamina"].label) ?? 100)+25)
         app.buttons["stamina"].tap()
         XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"energyAdPanel").firstMatch.waitForExistence(timeout:5))
         let watch=app.buttons["watchEnergyAd"]
@@ -109,10 +128,16 @@ final class MasterlandTests:XCTestCase {
         shot("rewarded-after-dismiss")
         XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:10))
         app.buttons["closePage"].tap()
-        let reward=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].exists && self.app.buttons["stamina"].label.contains("125") },object:nil)
+        let reward=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].exists && self.app.buttons["stamina"].label == expectedEnergy },object:nil)
         XCTAssertEqual(XCTWaiter.wait(for:[reward],timeout:10),.completed)
         shot("rewarded-earned-twenty-five-energy")
         app.terminate()
+        app.launch()
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:15))
+        XCTAssertEqual(app.buttons["stamina"].label,expectedEnergy)
+        app.buttons["stamina"].tap()
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","1/4")).firstMatch.exists)
+        shot("rewarded-energy-and-quota-persisted")
     }
     func testRewardedProducerRefreshDoesNotGrantEnergy() {
         app.open(URL(string:"masterland://review")!)

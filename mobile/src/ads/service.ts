@@ -29,6 +29,7 @@ type Snapshot = {
   privacyRequired: boolean;
   dailyUsed: number;
   rewardPending: boolean;
+  rewardOutcome: "preview" | "granted" | null;
   needsAccount: boolean;
   error: "consent" | "offline" | "ad" | null;
 };
@@ -39,6 +40,7 @@ let snapshot: Snapshot = {
     Platform.OS === "ios",
   dailyUsed: 0,
   rewardPending: false,
+  rewardOutcome: null,
   needsAccount: !adsConfig.testAds && !accountStore.get().user,
   phase: "idle",
   consentBusy: false,
@@ -166,7 +168,10 @@ const controller = new EnergyAdController(
       return;
     }
     // Controlled acceptance can preview test creatives without modifying a live-account balance.
-    if (!testModeEnabled) return;
+    if (!testModeEnabled) {
+      publish({ rewardOutcome: "preview" });
+      return;
+    }
     const result = gameStore.dispatch({
       type: "test-ad-reward",
       ...rewardTarget,
@@ -175,6 +180,7 @@ const controller = new EnergyAdController(
     if (!result || result.kind === "blocked")
       throw Error("Test reward rejected");
     await gameStore.flush();
+    publish({ rewardOutcome: "granted" });
   },
 );
 async function connected() {
@@ -393,6 +399,7 @@ export const energyAds = {
           check();
         });
       if (snapshot.phase !== "ready") return false;
+      publish({ rewardOutcome: null });
       rewardTarget = target;
       return await energyAds.show();
     })()

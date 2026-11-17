@@ -167,3 +167,13 @@ Enerji paketi 3 elmas için kaç enerji verecek? Reklam ödülü önceki +15 de�
 ## 17 Kasım 2026 — VPS sonrası kalan kabul
 
 İki cihaz bulut geri yükleme/çakışma testi kullanıcı tarafından ertelendi. Canlı reklam/geç callback, Apple revoke ve gerçek hesap silme kabulü; backend doğrulamalı gerçek satın alma; Meta genel yayın/doğrulaması ve AdMob incelemesi henüz tamamlanmadı. Sunucu dışı DB yedekleme ve veri saklama/temizlik politikası yayından önce netleştirilecektir. Güncel kanıt: vps-migration-20261117.md.
+
+
+## 17 Kasım 2026 — Reklam ödülü hatası bildirimi
+
+Kullanıcı son gerçek cihaz denemesinde test reklam videosunun açıldığını, tamamlandıktan sonra “ödül verildi” mesajı gördüğünü fakat ödülün bakiyeye eklenmediğini bildirdi. Bu, başarılı ödül kabulü değildir. Hangi build/ödül türünde oluştuğu ve kök neden henüz doğrulanmadı. İlk iş istemci başarı mesajı, test reklamı ile doğrulanmış ödül ayrımı, sunucu intent/SSV/redeem ve kalıcı kayıt zincirini incelemektir. Canlı kapıları açmak bu hatanın çözümü sayılmaz. Yeni çalışma sırası kararlar dosyasındadır.
+
+
+### Reklam bildiriminin inceleme sonucu — 17 Kasım 2026
+
+Kontrollü test modu kapalı build’in ödül vermeyen önizleme yolu doğrulandı; yanıltıcı düğme metni ve uygulama sonucu düzeltildi. Google test reklamının kendi “Reward granted” yazısı uygulamanın sunucu ödeme onayı değildir. Test modunda enerji +25/kalıcılık ve üretici ödülü Release simülatöründe geçti. İlk madde canlı SSV/gerçek cihaz kabulü tamamlanana kadar açık kalır; sıradaki hesap silme işine henüz geçilmedi. Ayrıntı: reward-acceptance-20261117.md.

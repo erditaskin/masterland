@@ -29,6 +29,7 @@ export function EnergyAdPanel({
     (producerID && !adsConfig.testAds && !adsConfig.producerRewardedUnit)
   )
     return null;
+  const previewOnly = adsConfig.testAds && !testModeEnabled;
   const showing = ad.phase === "showing" || ad.phase === "earned";
   return (
     <View testID="energyAdPanel" style={{ width: "100%" }}>
@@ -55,6 +56,19 @@ export function EnergyAdPanel({
         )}{" "}
         {testModeEnabled || !adsConfig.testAds ? `${used}/4` : ""}
       </Label>
+      {ad.rewardOutcome && !showing && (
+        <Label size={12}>
+          {ad.rewardOutcome === "preview"
+            ? tx(
+                "Test reklamı tamamlandı. Bu önizleme ödül vermez.",
+                "Test ad completed. This preview does not grant a reward.",
+              )
+            : tx(
+                "Test ödülü uygulandı.",
+                "Test reward applied.",
+              )}
+        </Label>
+      )}
       {ad.needsAccount && (
         <Label size={12}>
           {tx(
@@ -100,12 +114,17 @@ export function EnergyAdPanel({
               ? tx("Reklam gösteriliyor…", "Showing ad…")
               : ad.phase === "loading" || ad.consentBusy
                 ? tx("Hazırlanıyor…", "Preparing…")
-                : producerID
+                : previewOnly
                   ? tx(
-                      "Reklamla üreticiyi hazırla",
-                      "Watch ad to refresh producer",
+                      "Test reklamını önizle · ödülsüz",
+                      "Preview test ad · no reward",
                     )
-                  : tx("Reklam · +25 enerji", "Ad · +25 energy")
+                  : producerID
+                    ? tx(
+                        "Reklamla üreticiyi hazırla",
+                        "Watch ad to refresh producer",
+                      )
+                    : tx("Reklam · +25 enerji", "Ad · +25 energy")
         }
         onPress={() => {
           void energyAds.watch(

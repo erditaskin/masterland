@@ -487,3 +487,19 @@ API ve web aynı IP’de ayrı hostname/servis olarak çalışır. Cloudflare Fr
 ## 17 Kasım 2026 — İki cihaz kabulünün ertelenmesi
 
 Kullanıcı, aynı Facebook hesabıyla Mac simülatöründe yapılacak ikinci cihaz bulut kabulünü açıkça sonraya bıraktı. Telefon üzerinde üç sağlayıcı girişi ve ilk bulut kaydı doğrulanmış olsa da iki cihaz geri yükleme/çakışma testi tamamlanmış sayılmayacaktır. Canlı reklam, hesap silme ve gerçek ödeme kapıları kapalı kalır.
+
+
+## 17 Kasım 2026 — Kullanıcının canlıya hazırlık sırası
+
+Kullanıcı önceki yedi maddelik listenin sırasını 2, 1, 3, 4, 6, 5, 7 olarak değiştirdi ve sona web uygulamasını ekledi. Güncel çalışma sırası:
+
+1. Reklam ödülleri: tamamlanma, iptal, geç callback ve tek ödeme kabulü.
+2. Hesap silme ve Apple yetki iptali kabulü.
+3. Google/Meta/AdMob sağlayıcı paneli ve yayın engelleri.
+4. Sunucu dışında şifreli DB yedeği, geri yükleme ve veri saklama/temizlik politikası.
+5. Backend doğrulamalı gerçek satın alma.
+6. İki cihaz bulut geri yükleme ve çakışma kabulü.
+7. Son Release ve TestFlight/App Store teslimi.
+8. Web uygulamasındaki düzeltmeler; kapsam web incelemesinde netleştirilecektir.
+
+Bu sıra önceki iki cihaz ertelemesini günceller: test artık altıncı adımdadır. Sıralama, kabul edilmemiş canlı ödül/silme/ödeme kapılarını doğrudan açma veya mevcut kullanıcı verisini silme onayı değildir.

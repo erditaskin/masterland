@@ -426,3 +426,13 @@ Mobil Git deposu geçmişi ve370 takipli dosyanın hash’i korunarak masterland
 ## 17 Kasım 2026 — Fiziksel giriş ve ilk bulut kaydı kabulü
 
 Facebook dönüşündeki fragment mirası, backend redirect’inde açık boş fragment ile engellendi; native state/PKCE kontrolleri korunmuştur. Kullanıcı Google, Apple ve Facebook girişlerini telefonda doğruladı. İlk bulut kaydı kullanıcı mesajı ve sunucuda revizyon 1 aggregate kontrolüyle kabul edildi. İki cihaz testi kullanıcı kararıyla ertelendi. API/DB log rotasyonu açık sınırlarla doğrulandı. Ayrıntılı kanıt ve kalan kapılar vps-migration-20261117.md içindedir.
+
+
+## 17 Kasım 2026 — Canlı hazırlık sırası ve reklam hata kaydı
+
+Kullanıcının test videosu sonrasında başarı mesajına rağmen ödül alamadığı bildirimi açık hata olarak kaydedildi. Çalışma sırası reklam, hesap silme, sağlayıcılar, yedekleme, satın alma, iki cihaz, yayın derlemesi ve web düzeltmeleri olarak güncellendi. Hata henüz çözülmüş veya kabul edilmiş değildir.
+
+
+## 17 Kasım 2026 — Test reklamı önizlemesi ve gerçek test ödülü ayrımı
+
+Kontrollü telefon build’inde test modu kapalı olduğundan reklam yalnız önizleniyordu; buna rağmen düğmede ödül vaadi gösteriliyordu. Önizleme düğmesi ve tamamlanma açıklaması düzeltildi. Test ödülü sonucu kalıcı yazım tamamlandıktan sonra yayımlanır. 165 mobil testi ve üç gerçek Release simülatör video kontrolü geçti: enerji +25 ve yeniden açılışta kalıcılık, yalnız üretici yenileme ve ödülsüz kontrollü önizleme. Canlı SSV kabulü tamamlandı sayılmaz. Ayrıntı: reward-acceptance-20261117.md.
