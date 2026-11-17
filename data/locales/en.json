@@ -2,7 +2,7 @@
   "city1_name": "Meadowbrook",
   "city2_name": "Baker’s Market",
   "city3_name": "Timberbay",
-  "city4_name": "Minoc",
+  "city4_name": "Ironvale",
   "collection4_name": "Woodcutting",
   "profession1_name": "Farmer",
   "profession2_name": "Baker",
@@ -266,5 +266,6 @@
   "ui31_label": "Product Groups",
   "city1_map_role": "Crops · Windmill · Oven",
   "city2_map_role": "Patisserie · Cakes",
-  "city3_map_role": "Fishing · Carpentry"
+  "city3_map_role": "Fishing · Carpentry",
+  "city5_name": "Silkford"
 }

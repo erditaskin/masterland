@@ -1,5 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2.119.0";
-import { verifyAdmobCallback } from "../_shared/admobSignature.ts";
+import { verifyAdmobCallback, verifyAdmobSignature } from "../_shared/admobSignature.ts";
 let cached: { until: number; fetchedAt: number; keys: Map<string, string> } | null = null;
 async function verifierKeys(keyID: string) {
   if (
@@ -25,13 +25,30 @@ async function verifierKeys(keyID: string) {
 Deno.serve(async (request) => {
   if (request.method !== "GET")
     return new Response("Method not allowed", { status: 405 });
-  if (Deno.env.get("ADMOB_SSV_ENABLED") !== "true")
+  const rewardsEnabled = Deno.env.get("ADMOB_SSV_ENABLED") === "true";
+  if (!rewardsEnabled && !new URL(request.url).searchParams.has("signature"))
     return new Response("Not enabled", { status: 503 });
+  let keys: Map<string, string>;
+  try {
+    keys = await verifierKeys(new URL(request.url).searchParams.get("key_id") ?? "");
+  } catch {
+    // A temporary key-service outage must remain retryable; it is not an invalid signature.
+    return new Response("Verification temporarily unavailable", { status: 503 });
+  }
+  // Google's console uses sample ad-unit/transaction metadata. Validate its signature without ever paying it.
+  if (!rewardsEnabled) {
+    try {
+      verifyAdmobSignature(request.url, keys);
+      return new Response("Verified; rewards disabled", { status: 200 });
+    } catch {
+      return new Response("Callback not verified", { status: 400 });
+    }
+  }
   let reward;
   try {
     reward = verifyAdmobCallback(
       request.url,
-      await verifierKeys(new URL(request.url).searchParams.get("key_id") ?? ""),
+      keys,
       Deno.env.get("ADMOB_REWARDED_UNIT_ID") ?? "",
       Date.now(),
     );

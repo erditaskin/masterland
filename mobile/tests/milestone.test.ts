@@ -125,7 +125,13 @@ test("orders never require locked city products; countdown disappears at 100 and
   const a = run(s, { type: "travel", id: "city2" }).state;
   for (const order of orders(a))
     for (const r of order.requirements)
-      assert(city(a).opened.includes(r.item_id));
+      assert(
+        city(a).owned.includes(
+          producers.find((p) =>
+            p.products.some((item) => item.id === r.item_id),
+          )!.id,
+        ),
+      );
   assert.equal(energyCountdown(s, now), "");
   s.stamina = 125;
   assert.equal(energyCountdown(s, now), "");

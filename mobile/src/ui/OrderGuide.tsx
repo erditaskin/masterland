@@ -1,13 +1,6 @@
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
-import {
-  city,
-  count,
-  orders,
-  producers,
-  product,
-  type Save,
-} from "../game/engine";
+import { count, orders, producers, product, type Save } from "../game/engine";
 import { Button, Label } from "./Controls";
 import { Item } from "./Art";
 import { ProducerPortrait } from "./ProducerDetails";
@@ -90,9 +83,9 @@ export function OrderGuide({ id, save }: { id: string; save: Save }) {
               </View>
               <Label size={13} style={{ textAlign: "center" }}>
                 {p.name}{" "}
-                {city(save).opened.includes(p.id)
+                {save.discoveries.includes(p.id)
                   ? ""
-                  : `· Seviye ${p.level}, ${p.price} altın`}
+                  : "· Birleştirerek keşfet"}
               </Label>
             </>
           )}

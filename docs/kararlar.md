@@ -430,3 +430,35 @@ Kullanıcı mevcut giriş/şehir tasarım çalışması bırakılmadan aşağıd
 ## 17 Kasım 2026 — Giriş ve şehir görselleri uygulaması
 
 Kullanıcının onaylı isimleri ilk üç şehir için TR/EN sözlüğüne uygulanmıştır. Kimlikler ve kayıt bağlantıları korunur. İlk üç şehir aynı tahta ölçülerine oturan ayrı tam ekran arka planları kullanır. Şehir seçimindeki sağ dar navigasyon yerine küçük şehir kartları; başarılar için ahşap pano üzerinde bağımsız kaydırılan iki sütunlu liste uygulanmıştır. Sonraki adaylar Yakında olarak gösterilir, geliştirme sırası atanmaz. Giriş alanı profilin başındadır; native Apple ve standart logolu Google/Facebook ortak ölçülüdür. Facebook ve silme kapıları kendiliğinden açılmamıştır. Ayrıntılı doğrulama `auth-city-refresh-20261117.md` içindedir. Sonraki ekonomi düzeltmeleri ayrıca sıradadır.
+
+## 17 Kasım 2026 — Son onaylar ve gece durma noktası
+
+Kullanıcı enerji reklamı ve 3 elmas paketinin ikisinin de +25 enerji vermesini onayladı. Demirdere 24, İpekyaka 33. seviye şehir sırası kesinleşti. Google test listesine yalnız erditaskin@gmail.com eklenmesi ve Facebook email izni ayrıca işlem anında onaylandı. Apple local oturumundan Google/Facebook testi için çıkış ayrıca onaylandı; hesap veya yerel ilerleme silinmedi. Kullanıcı daha sonra telefon kullanımının bırakılmasını ve mevcut inceleme bitince sabaha kadar durulmasını istedi. Son hata ve devam kapsamı `resume-20261117.md` içindedir. +25 sunucu dağıtım onayı alınmış olsa da durma isteğinden sonra dağıtım yapılmadı.
+
+
+## 17 Kasım 2026 — İlk yayın sonrası satış ve ustalık tasarımı
+
+Google ve Facebook girişleri kullanıcı tarafından fiziksel cihazda başarılı doğrulandı. Supabase izinli dönüş adresine masterland://auth/callback eklendi.
+
+Kullanıcı ilk yayından hemen sonraki aşamada altın/elmas satışını istedi. iOS dijital para satışı Apple Pay yerine StoreKit uygulama içi satın alma ile ele alınacaktır; canlı satış henüz açılmayacaktır.
+
+Şehir başına en az 10–15 ustalık ödülü hedeflenmektedir. Ustalık, sipariş teslimleriyle ilerleyen meslek/unvan kademeleri, ilerleme göstergeleri ve her unvana özgü profil rozetiyle sunulacaktır. UO unvanları ve WoW achievements yalnız esin kaynağıdır. Apprentice için Türkçe Çırak, İngilizce Apprentice istenir. Journeyman/Expert/Adept/Master/Grandmaster sırası, yerelleştirmeleri ve eşikleri tasarım çalışmasında netleştirilecektir; verilen beş sipariş örneği kesin denge değeri değildir. Üreticiye özel ve birden fazla üreticiyi kapsayan koşullar desteklenmesi istenen tasarım kapsamıdır. Şehir açılışı ustalık tamamlamasına yeniden bağlanmaz.
+
+Şehir/başarı ekranının mevcut büyük kart ızgarası görsel açıdan yetersiz bulunmuştur. Yeni konseptte çok sayıda başarı için bilgi hiyerarşisi, etkileşim durumları, profil rozetleri ve uygulanabilir ölçüler birlikte hazırlanmalıdır. Onaylı 16 şehir adayı vardır; kullanıcı bu tur 10 şehirlik çalışma istemektedir. İlk beş sıra city1 Bahçeyaka, city2 Ballıca, city3 Yalıkoru, city4 Demirdere, city5 İpekyaka olarak kesinleşmiştir; sonraki beş aday ve sıraları ayrıca onaylanacaktır.
+
+
+## 17 Kasım 2026 — Ustalık teknik hazırlığı
+
+Kullanıcı içerik ve tasarım başka ajanla çalışılırken teknik geliştirmeye devam edilmesini istedi. Yeni başarılı teslimlerden şehir/üretici kümesi/ürün adedi sayaçları kaydedilir. Karma sipariş bir mesleğe bir kez sayılır. Eski kayıtlardan bilinmeyen teslim geçmişi türetilmez. Mevcut achievements listesi isteğe bağlı çok koşullu teslim gereklilikleri ve meslek/kademe/rozet kimlikleriyle genişletilir. Kazanılmış profil rozetleri alınan başarı kayıtlarından türetilir. Yeni kademe/eşik/ödül değerleri ve UI onaylanmadan eklenmedi. Sözleşme docs/ustalik-teknik-sozlesmesi.md içindedir.
+
+
+## 17 Kasım 2026 — Canlı hazırlığı devam turu
+
+Kullanıcı diğer ajanla içerik çalışması sürerken canlıya hazırlık işlerine devam edilmesini istedi. Bulut kayıt için açık kayıt seçimi, otomatik kuyruk bağlantısı ve hesap değişimi koruması uygulandı. Reklamın sunucu tarafında atomik ödül tüketimi hazırlandı; canlı reklam yükleme ve gerçek hesap silme kapıları bu tur açılmadı. Cihaz kabulü henüz tamamlanmış sayılmaz. Güncel doğrulama ve bekleyenler docs/release-readiness-20261117.md içindedir.
+
+
+## 17 Kasım 2026 — Kapalı dağıtım ve sağlayıcı yayın durumu
+
+Kullanıcı +25 enerji ve tek seferlik doğrulanmış ödül RPC'sinin kapalı bayraklarla dağıtımını işlem anında onayladı. 005/006 migrationları transaction içinde uygulandı; güncel SSV function dağıtıldı. Google'ın konsol SSV testi yalnız imza doğrulayarak, ledger/ödeme kapalıyken başarıyla geçti. AdMob birimi 25 energy ve doğrulanan callback URL ile kaydedildi. Gerçek ödül ve hesap silme açılmadı.
+
+Kullanıcı Google OAuth'u genel kullanıma açmayı ayrıca işlem anında onayladı; In production görüldü. Marka/logo doğrulaması ayrı bekliyor. Meta yayını Business verification ve kabul edilmeyen veri silme talimat URL'siyle engelli kaldı. Reddedilen taslak değişiklikler geri alındı. Güncel ayrıntılar release-readiness-20261117.md içindedir.

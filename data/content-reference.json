@@ -5,7 +5,7 @@
       "city1_name_tr": "Bahçeyaka",
       "city2_name_tr": "Ballıca",
       "city3_name_tr": "Yalıkoru",
-      "city4_name_tr": "Minoc",
+      "city4_name_tr": "Demirdere",
       "collection1_name_tr": "Tahıl ve ekmek",
       "collection2_name_tr": "Sebze hasadı",
       "collection3_name_tr": "Balıkçılık",
@@ -269,7 +269,8 @@
       "quest102_name_tr": "Tart daveti",
       "quest103_name_tr": "Pastacının imzası",
       "quest104_name_tr": "Meyveli mola",
-      "quest105_name_tr": "Çikolata zamanı"
+      "quest105_name_tr": "Çikolata zamanı",
+      "city5_name_tr": "İpekyaka"
     }
   },
   "cities": [
@@ -292,7 +293,7 @@
       "name_key": "city2_name_tr",
       "theme": "İleri Baker içeriği, bakery ve pastalar",
       "status": "Onaylı",
-      "unlock_level": 12,
+      "unlock_level": 8,
       "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
       "profession_ids": [
         "profession2"
@@ -304,7 +305,7 @@
       "name_key": "city3_name_tr",
       "theme": "Balıkçılık ve marangozluk (carpentry); odunculuk giriş zinciri",
       "status": "Onaylı",
-      "unlock_level": 28,
+      "unlock_level": 15,
       "unlock_level_status": "Kullanıcının örnek eşiği; denge taslağı",
       "profession_ids": [
         "profession3",
@@ -2526,7 +2527,7 @@
     "producers": [
       {
         "producer_id": "producer10",
-        "required_player_level": 12,
+        "required_player_level": 8,
         "unlock_gold": 0,
         "product_unlocks": [
           {
@@ -2584,7 +2585,7 @@
       },
       {
         "producer_id": "producer11",
-        "required_player_level": 13,
+        "required_player_level": 9,
         "unlock_gold": 180,
         "product_unlocks": [
           {
@@ -2649,7 +2650,7 @@
       },
       {
         "producer_id": "producer12",
-        "required_player_level": 14,
+        "required_player_level": 10,
         "unlock_gold": 350,
         "product_unlocks": [
           {
@@ -2721,7 +2722,7 @@
       },
       {
         "producer_id": "producer13",
-        "required_player_level": 15,
+        "required_player_level": 11,
         "unlock_gold": 600,
         "product_unlocks": [
           {
@@ -3125,14 +3126,26 @@
     },
     {
       "id": "city2",
-      "level": 12,
+      "level": 8,
       "gold": 6000,
       "enabled": true
     },
     {
       "id": "city3",
-      "level": 28,
+      "level": 15,
       "gold": 18000,
+      "enabled": false
+    },
+    {
+      "id": "city4",
+      "level": 24,
+      "gold": 30000,
+      "enabled": false
+    },
+    {
+      "id": "city5",
+      "level": 33,
+      "gold": 48000,
       "enabled": false
     }
   ]

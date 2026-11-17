@@ -10,11 +10,27 @@ function setup(existingSession = false) {
   let verified = true;
   let cancelled = false;
   let signedOut = false;
+  let lastProvider: string | null = null;
+  let oauthRequest: any = null;
+  let tokenCalls = 0;
+  let callback = "masterland://auth/callback?code=test-code";
   const auth = {
     getSession: async () => ({ data: { session }, error: null }),
-    signInWithIdToken: async () => {
+    signInWithIdToken: async (credentials: { provider: string }) => {
+      tokenCalls++;
+      lastProvider = credentials.provider;
       session = { user };
       return { data: { user, session }, error: null };
+    },
+    signInWithOAuth: async (request: any) => {
+      oauthRequest = request;
+      return { data: { url: "https://example.com/oauth" }, error: null };
+    },
+    exchangeCodeForSession: async (code: string) => {
+      assert.equal(code, "test-code");
+      lastProvider = oauthRequest.provider;
+      session = { user };
+      return { error: null };
     },
     getUser: async () => ({
       data: { user: verified ? user : null },
@@ -44,14 +60,32 @@ function setup(existingSession = false) {
       CryptoDigestAlgorithm: { SHA256: "sha256" },
       digestStringAsync: async () => "hashed",
     },
-    "expo-web-browser": { maybeCompleteAuthSession() {} },
-    "@react-native-google-signin/google-signin": {},
+    "expo-web-browser": {
+      maybeCompleteAuthSession() {},
+      openAuthSessionAsync: async () =>
+        cancelled ? { type: "cancel" } : { type: "success", url: callback },
+    },
     "./client": {
       accountClient: { auth },
-      accountConfig: {},
+      accountConfig: {
+        googleIOSClientID: "ios-client",
+        googleWebClientID: "web-client",
+        facebookEnabled: true,
+      },
       authRedirect: "masterland://auth/callback",
     },
-    "./oauthReturn": {},
+    "./oauthReturn": {
+      oauthCode: (url: string, expected: string) => {
+        const parsed = new URL(url);
+        if (
+          parsed.origin !== new URL(expected).origin ||
+          parsed.pathname !== new URL(expected).pathname ||
+          !parsed.searchParams.get("code")
+        )
+          throw Error("Invalid callback");
+        return parsed.searchParams.get("code");
+      },
+    },
   };
   const source = readFileSync(
     new URL("../src/account/auth.ts", import.meta.url),
@@ -74,6 +108,12 @@ function setup(existingSession = false) {
       cancelled = true;
     },
     signedOut: () => signedOut,
+    lastProvider: () => lastProvider,
+    oauthRequest: () => oauthRequest,
+    tokenCalls: () => tokenCalls,
+    invalidCallback: () => {
+      callback = "https://evil.example/callback?code=test-code";
+    },
   };
 }
 
@@ -115,3 +155,55 @@ test("stored session is verified and published when visible state has not caught
   assert.equal(await store.signIn("apple"), true);
   assert.equal(store.get().user.id, "player");
 });
+
+for (const provider of ["google", "facebook"] as const) {
+  test(`${provider} verifies server identity before success and supports sign out`, async () => {
+    const { store, lastProvider } = setup();
+    assert.equal(await store.signIn(provider), true);
+    assert.equal(lastProvider(), provider);
+    assert.equal(store.get().user.id, "player");
+    await store.signOut();
+    assert.equal(store.get().user, null);
+  });
+  test(`${provider} cancellation never reports success`, async () => {
+    const { store, cancel } = setup();
+    cancel();
+    assert.equal(await store.signIn(provider), undefined);
+    assert.equal(store.get().user, null);
+    assert.equal(store.get().error, null);
+  });
+  test(`${provider} failed server verification never reports success`, async () => {
+    const { store, failVerification } = setup();
+    failVerification();
+    assert.equal(await store.signIn(provider), undefined);
+    assert.equal(store.get().error, "login-failed");
+  });
+}
+test("Facebook callback from a different origin cannot exchange a code", async () => {
+  const { store, invalidCallback, lastProvider } = setup();
+  invalidCallback();
+  assert.equal(await store.signIn("facebook"), undefined);
+  assert.equal(lastProvider(), null);
+  assert.equal(store.get().error, "login-failed");
+});
+
+for (const provider of ["google", "facebook"] as const) {
+  test(`${provider} uses browser code exchange instead of an SDK ID token without a nonce`, async () => {
+    const { store, oauthRequest, tokenCalls } = setup();
+    assert.equal(await store.signIn(provider), true);
+    assert.equal(tokenCalls(), 0);
+    assert.equal(oauthRequest().provider, provider);
+    assert.equal(
+      oauthRequest().options.redirectTo,
+      "masterland://auth/callback",
+    );
+    assert.equal(oauthRequest().options.skipBrowserRedirect, true);
+  });
+  test(`${provider} rejects an unrelated callback before code exchange`, async () => {
+    const { store, invalidCallback, lastProvider } = setup();
+    invalidCallback();
+    assert.equal(await store.signIn(provider), undefined);
+    assert.equal(lastProvider(), null);
+    assert.equal(store.get().error, "login-failed");
+  });
+}

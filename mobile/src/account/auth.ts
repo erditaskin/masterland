@@ -2,11 +2,7 @@ import { AppState } from "react-native";
 import * as Apple from "expo-apple-authentication";
 import * as Crypto from "expo-crypto";
 import * as Browser from "expo-web-browser";
-import {
-  GoogleSignin,
-  isSuccessResponse,
-} from "@react-native-google-signin/google-signin";
-import type { User } from "@supabase/supabase-js";
+import type { SignInWithOAuthCredentials, User } from "@supabase/supabase-js";
 import { accountClient, accountConfig, authRedirect } from "./client";
 import { oauthCode } from "./oauthReturn";
 export type LoginProvider = "apple" | "google" | "facebook";
@@ -28,7 +24,6 @@ const publish = (change: Partial<AccountSnapshot>) => {
   listeners.forEach((listener) => listener());
 };
 let starting: Promise<void> | null = null;
-let googleConfigured = false;
 let deletionProof: { userID: string; code: string; at: number } | null = null;
 export function consumeAppleDeletionProof(userID: string) {
   const proof = deletionProof;
@@ -88,17 +83,20 @@ export const accountStore = {
         publish({ ready: true, user: existing.data.user, error: null });
         return true;
       }
-      if (provider === "facebook") {
-        const credentials = {
+      if (provider !== "apple") {
+        const credentials: SignInWithOAuthCredentials = {
           provider,
           options: {
             redirectTo: authRedirect,
             skipBrowserRedirect: true,
-            ...(reauthenticate
-              ? { queryParams: { auth_type: "reauthenticate" } }
-              : {}),
+            scopes: provider === "google" ? "openid email profile" : "email",
+            ...(provider === "google"
+              ? { queryParams: { prompt: "select_account" } }
+              : reauthenticate
+                ? { queryParams: { auth_type: "reauthenticate" } }
+                : {}),
           },
-        } as const;
+        };
         const response = await accountClient.auth.signInWithOAuth(credentials);
         if (response.error || !response.data.url)
           throw response.error ?? Error("Missing OAuth URL");
@@ -112,43 +110,23 @@ export const accountStore = {
         );
         if (exchanged.error) throw exchanged.error;
       } else {
-        let token: string | null, nonce: string | undefined;
-        if (provider === "apple") {
-          nonce = Crypto.randomUUID();
-          const hashed = await Crypto.digestStringAsync(
-            Crypto.CryptoDigestAlgorithm.SHA256,
-            nonce,
-          );
-          const result = await Apple.signInAsync({
-            requestedScopes: [
-              Apple.AppleAuthenticationScope.EMAIL,
-              Apple.AppleAuthenticationScope.FULL_NAME,
-            ],
-            nonce: hashed,
-          });
-          appleName = result.fullName
-            ? Apple.formatFullName(result.fullName).trim() || null
-            : null;
-          token = result.identityToken;
-          appleCode = result.authorizationCode;
-        } else {
-          if (
-            !accountConfig.googleIOSClientID ||
-            !accountConfig.googleWebClientID
-          )
-            throw Error("Google not configured");
-          if (!googleConfigured) {
-            GoogleSignin.configure({
-              iosClientId: accountConfig.googleIOSClientID,
-              webClientId: accountConfig.googleWebClientID,
-            });
-            googleConfigured = true;
-          }
-          if (reauthenticate) await GoogleSignin.signOut();
-          const result = await GoogleSignin.signIn();
-          if (!isSuccessResponse(result)) return;
-          token = result.data.idToken;
-        }
+        const nonce = Crypto.randomUUID();
+        const hashed = await Crypto.digestStringAsync(
+          Crypto.CryptoDigestAlgorithm.SHA256,
+          nonce,
+        );
+        const result = await Apple.signInAsync({
+          requestedScopes: [
+            Apple.AppleAuthenticationScope.EMAIL,
+            Apple.AppleAuthenticationScope.FULL_NAME,
+          ],
+          nonce: hashed,
+        });
+        appleName = result.fullName
+          ? Apple.formatFullName(result.fullName).trim() || null
+          : null;
+        const token = result.identityToken;
+        appleCode = result.authorizationCode;
         if (!token) throw Error("Missing identity token");
         const credentials = { provider, token, nonce };
         const response =

@@ -19,6 +19,29 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testGameplayRefreshIdleCooldownAndFreeMerge() {
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"idleHint").firstMatch.waitForExistence(timeout:8))
+        app.buttons["producer1"].tap()
+        app.buttons["producer1"].tap()
+        mergePair("Buğday başağı")
+        app.buttons["producer1"].tap();app.buttons["producer1"].tap()
+        mergePair("Buğday başağı")
+        mergePair("Buğday demeti")
+        XCTAssertEqual(cells(named:"Tahıl çuvalı").count,1)
+        shot("free-merge-discovery")
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer5"].waitForExistence(timeout:5))
+        app.buttons["producer5"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch.waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["refillProducerGems"].exists)
+        XCTAssertTrue(app.buttons["watchProducerAd"].exists)
+        shot("producer-cooldown-options")
+        app.buttons["refillProducerGems"].tap()
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch.exists)
+        app.buttons["closePage"].tap()
+        app.buttons["producer5"].tap()
+        shot("producer-refreshed")
+    }
     func testCityCatalogAndAuthRefreshPreserveBoard() {
         let board=cell(0).frame, gold=app.buttons["gold"].label
         app.buttons["tab-cities"].tap()
@@ -74,12 +97,8 @@ final class MasterlandTests:XCTestCase {
         let watch=app.buttons["watchEnergyAd"]
         XCTAssertTrue(watch.isHittable)
         watch.tap()
-        let loaded=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in watch.label.contains("İzle") && watch.isEnabled },object:nil)
-        let outcome=XCTWaiter.wait(for:[loaded],timeout:60)
-        if outcome != .completed { shot("rewarded-load-failure"); print(app.debugDescription) }
-        XCTAssertEqual(outcome,.completed)
-        shot("rewarded-test-inventory-ready")
-        watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:45),.completed)
         sleep(3)
         shot("rewarded-test-inventory-presented")
         sleep(32)
@@ -90,9 +109,9 @@ final class MasterlandTests:XCTestCase {
         shot("rewarded-after-dismiss")
         XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:10))
         app.buttons["closePage"].tap()
-        let reward=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].exists && self.app.buttons["stamina"].label.contains("115") },object:nil)
+        let reward=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].exists && self.app.buttons["stamina"].label.contains("125") },object:nil)
         XCTAssertEqual(XCTWaiter.wait(for:[reward],timeout:10),.completed)
-        shot("rewarded-earned-fifteen-energy")
+        shot("rewarded-earned-twenty-five-energy")
         app.terminate()
     }
     func testOfflineAccountPanelAndContentLanguage() {
@@ -383,8 +402,8 @@ final class MasterlandTests:XCTestCase {
         app.buttons["powerProductDetails"].tap()
         app.buttons["unlock-item27"].tap();app.buttons["unlock-item49"].tap();app.buttons["closePage"].tap()
         app.buttons["producer1"].press(forDuration:0.6);app.buttons["power-4"].tap()
-        app.buttons["producer1"].tap();energy("103");XCTAssertEqual(cells(named:"Buğday arabası").count,1)
-        app.buttons["producer1"].tap();energy("95");XCTAssertEqual(cells(named:"Buğday arabası").count,2)
+        app.buttons["producer1"].tap();energy("103");XCTAssertEqual(cells(named:"Tahıl çuvalı").count,1)
+        app.buttons["producer1"].tap();energy("95");XCTAssertEqual(cells(named:"Tahıl çuvalı").count,2)
         app.buttons["producer1"].tap();energy("94");XCTAssertEqual(cells(named:"Buğday başağı").count,5)
         XCTAssertTrue(app.buttons["producer1"].label.contains("4x seçili, 1x etkin"))
         shot("power-threshold-fallback")
@@ -603,9 +622,9 @@ final class MasterlandTests:XCTestCase {
 
     func testMilestoneMarketExchangesAndAchievement() {
         milestone();app.buttons["tab-market"].tap()
-        app.buttons["exchange-energy25"].tap();energy("115");XCTAssertTrue(app.buttons["gems"].label.contains("9"))
+        app.buttons["exchange-energy25"].tap();energy("125");XCTAssertTrue(app.buttons["gems"].label.contains("9"))
         app.buttons["exchange-gold500"].tap();XCTAssertTrue(app.buttons["gold"].label.contains("8.500"));XCTAssertTrue(app.buttons["gems"].label.contains("4"))
-        app.buttons["exchange-energy100"].tap();energy("115");XCTAssertTrue(app.buttons["gems"].label.contains("4"))
+        app.buttons["exchange-energy100"].tap();energy("125");XCTAssertTrue(app.buttons["gems"].label.contains("4"))
         shot("milestone-game-market")
         app.buttons["closePage"].tap();app.buttons["tab-cities"].tap();app.buttons["achievement-achievement1"].tap()
         app.buttons["claimAchievement"].tap();XCTAssertTrue(app.buttons["dismissReward"].waitForExistence(timeout:5));shot("milestone-custom-achievement")

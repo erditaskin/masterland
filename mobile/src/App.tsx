@@ -1,3 +1,5 @@
+import { startCloudSync } from "./account/cloudSync";
+import { IdleHint } from "./ui/IdleHint";
 import { cityScenes } from "./ui/cityScenes";
 import { DeletionRecovery } from "./ui/DeletionRecovery";
 import { deletionStore } from "./account/deletion";
@@ -149,10 +151,14 @@ const ProducerCard = memo(
       >
         <ProducerButton
           testID={p.id}
-          label={`${p.name}, ${plan.selected}x seçili, ${plan.effective}x etkin, ${plan.cost} enerji, güç için basılı tut`}
+          label={`${p.name}, ${2 ** (plan.selected - 1)}x seçili, ${plan.cost}x etkin, ${plan.cost} enerji, güç için basılı tut`}
           onPress={() =>
             owned
-              ? dispatch({ type: "produce", id: p.id })
+              ? seconds > 0
+                ? open({ kind: "producer", index })
+                : save.stamina < plan.cost
+                  ? open({ kind: "energy" })
+                  : dispatch({ type: "produce", id: p.id })
               : open({ kind: "producer", index })
           }
           onLongPress={() => {
@@ -220,7 +226,7 @@ const ProducerCard = memo(
                   color: colors.goldLight,
                 }}
               >
-                {plan.selected}x
+                {2 ** (plan.selected - 1)}x
               </Text>
             </View>
           )}
@@ -402,6 +408,7 @@ const Navigation = memo(function Navigation({
   );
 });
 function Game() {
+  useEffect(() => startCloudSync(), []);
   const [deletionPreview, setDeletionPreview] = useState(false);
   const language = useSyncExternalStore(
     languageStore.subscribe,
@@ -429,6 +436,8 @@ function Game() {
     [assetError, setAssetError] = useState(false),
     [assetAttempt, setAssetAttempt] = useState(0),
     [launchPreview, setLaunchPreview] = useState(false);
+  const [activity, setActivity] = useState(0),
+    [touching, setTouching] = useState(false);
   const lastOrderDeliveryAt = useRef(0);
   const playAudio = useGameAudio(save.sound);
   const uiSound = useCallback(() => playAudio("tap"), [playAudio]);
@@ -654,7 +663,7 @@ function Game() {
     noticeHeight = 58 * scale,
     cardWidth = (noticeWidth - 24 * scale) / 3,
     cardHeight = 48 * scale,
-    producerSize = 52 * scale;
+    producerSize = 58 * scale;
   const activeOrders = useMemo(
     () => prioritizeOrderRail(orders(save), save),
     [save],
@@ -731,7 +740,19 @@ function Game() {
       onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
       style={{ flex: 1 }}
     >
-      <View pointerEvents="auto" style={StyleSheet.absoluteFill}>
+      <View
+        pointerEvents="auto"
+        style={StyleSheet.absoluteFill}
+        onTouchStart={() => {
+          setTouching(true);
+          setActivity((n) => n + 1);
+        }}
+        onTouchEnd={() => {
+          setTouching(false);
+          setActivity((n) => n + 1);
+        }}
+        onTouchCancel={() => setTouching(false)}
+      >
         <View
           style={{
             position: "absolute",
@@ -1235,14 +1256,14 @@ function Game() {
                 top: top + 122 * scale,
                 left: 8 * scale,
                 right: 8 * scale,
-                height: 54 * scale,
+                height: 62 * scale,
                 borderRadius: 12,
                 backgroundColor: "transparent",
                 justifyContent: "center",
                 paddingHorizontal: 0,
               }}
             >
-              <WoodTray width={width - 16 * scale} height={54 * scale} />
+              <WoodTray width={width - 16 * scale} height={62 * scale} />
               {producerEdges.left && (
                 <Button
                   testID="producerRailPrev"
@@ -1358,6 +1379,20 @@ function Game() {
                 onTap={tapCell}
                 onMove={move}
                 onInfo={info}
+              />
+              <IdleHint
+                save={save}
+                enabled={
+                  !page &&
+                  !powerMenu &&
+                  !(reduced || save.reducedMotion) &&
+                  !save.rewardQueue?.length
+                }
+                activity={activity}
+                touching={touching}
+                cell={cellWidth}
+                inset={frameInset}
+                width={bw}
               />
             </View>
           </>

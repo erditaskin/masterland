@@ -1,6 +1,5 @@
 import { Pressable, View } from "react-native";
 import {
-  city,
   productionPlan,
   productionPowerCosts,
   type Save,
@@ -109,15 +108,16 @@ export function PowerMenu({
           color="#cad9e2"
           style={{ textAlign: "center", marginBottom: 5 }}
         >
-          2x–4x: 100 üzeri enerji
+          2x–8x: 100 üzeri enerji
         </Label>
         {[1, 2, 3, 4].map((mode) => {
-          const locked = !city(save).opened.includes(p.products[mode - 1]!.id);
+          const locked =
+            mode > 1 && !save.discoveries.includes(p.products[mode - 1]!.id);
           return (
             <Button
               key={mode}
               testID={`power-${mode}`}
-              label={`${mode}x, ${productionPowerCosts[mode - 1]} enerji${locked ? ", ürün alanı kilitli" : ""}`}
+              label={`${productionPowerCosts[mode - 1]}x, ${productionPowerCosts[mode - 1]} enerji${locked ? ", ürün alanı kilitli" : ""}`}
               onPress={() => {
                 const r = dispatch({ type: "power", id: p.id, mode });
                 if (r?.kind === "tap") close();
@@ -142,7 +142,7 @@ export function PowerMenu({
               >
                 <View>
                   <Label title size={16} color={colors.goldLight}>
-                    {mode}x
+                    {productionPowerCosts[mode - 1]}x
                   </Label>
                   <Label size={9} color={colors.goldLight}>
                     {productionPowerCosts[mode - 1]} enerji

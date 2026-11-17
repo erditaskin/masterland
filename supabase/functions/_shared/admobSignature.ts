@@ -8,12 +8,7 @@ export interface AdmobReward {
   adUnit: string;
 }
 /** Verify the original encoded query bytes. Re-encoding query parameters changes the signed message. */
-export function verifyAdmobCallback(
-  rawURL: string,
-  keys: ReadonlyMap<string, string>,
-  allowedAdUnit: string,
-  now: number,
-): AdmobReward {
+export function verifyAdmobSignature(rawURL: string, keys: ReadonlyMap<string, string>): URLSearchParams {
   const raw = new URL(rawURL).search.slice(1);
   if (raw.length > 8192) throw Error("Invalid callback");
   const match = /^(.*)&signature=([A-Za-z0-9_=-]+)&key_id=(\d+)$/.exec(raw);
@@ -33,6 +28,15 @@ export function verifyAdmobCallback(
     )
   )
     throw Error("Invalid signature");
+  return params;
+}
+export function verifyAdmobCallback(
+  rawURL: string,
+  keys: ReadonlyMap<string, string>,
+  allowedAdUnit: string,
+  now: number,
+): AdmobReward {
+  const params = verifyAdmobSignature(rawURL, keys);
   const transactionID = params.get("transaction_id") ?? "";
   const userID = params.get("user_id") ?? "";
   const intentID = params.get("custom_data") ?? "";
@@ -42,7 +46,7 @@ export function verifyAdmobCallback(
   const expectedUnit = allowedAdUnit.split("/").at(-1);
   if (
     adUnit !== expectedUnit ||
-    params.get("reward_amount") !== "15" ||
+    params.get("reward_amount") !== "25" ||
     params.get("reward_item") !== "energy" ||
     !/^[a-f0-9]{16,128}$/i.test(transactionID) ||
     !/^[a-f0-9-]{36}$/i.test(userID) ||

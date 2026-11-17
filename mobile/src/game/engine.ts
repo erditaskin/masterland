@@ -1,3 +1,10 @@
+import {
+  recordDelivery,
+  deliveryProgress,
+  validDeliveryProgress,
+  type DeliveryProgress,
+  type DeliveryRequirement,
+} from "./deliveryProgress";
 import { contentName } from "../i18n/locale";
 import { storeKitTestEnabled, testModeEnabled } from "./testMode";
 import reference from "../../../data/content-reference.json";
@@ -135,6 +142,7 @@ export interface City {
 }
 export interface Save {
   schema: 2;
+  progressionVersion?: 2;
   testOnly?: boolean;
   xp: number;
   gold: number;
@@ -142,6 +150,7 @@ export interface Save {
   stamina: number;
   staminaCapacity?: number;
   claimedAchievements?: string[];
+  deliveryProgress?: DeliveryProgress;
   energyAt: number;
   discoveries: string[];
   titles: string[];
@@ -156,21 +165,30 @@ export interface Save {
   testAdRewards?: { day: string; receipts: string[] };
 }
 export const city = (s: Save) => s.cities[s.cityID]!;
-const thresholds = [0, 20, 60, 120, 200, 320, 480, 680, 920, 1200];
-export const level = (s: Save) =>
-  s.xp >= 1200
-    ? 10 + Math.floor((s.xp - 1200) / 400)
-    : thresholds.filter((x) => s.xp >= x).length;
+const legacyThresholds = [0, 20, 60, 120, 200, 320, 480, 680, 920, 1200];
+const thresholds = [0, 20, 60, 120, 320, 720, 1400, 2300, 3000, 3800];
+function levelFloor(l: number, modern: boolean) {
+  const values = modern ? thresholds : legacyThresholds;
+  return l <= 10
+    ? values[l - 1]!
+    : values[9]! + (l - 10) * (modern ? 850 : 400);
+}
+export const level = (s: Save) => {
+  const modern = s.progressionVersion === 2,
+    values = modern ? thresholds : legacyThresholds;
+  return s.xp >= values[9]!
+    ? 10 + Math.floor((s.xp - values[9]!) / (modern ? 850 : 400))
+    : values.filter((x) => s.xp >= x).length;
+};
 export const levelRange = (s: Save) => {
-  const l = level(s);
-  return [
-    l <= 10 ? thresholds[l - 1]! : 1200 + (l - 10) * 400,
-    l < 10 ? thresholds[l]! : 1200 + (l - 9) * 400,
-  ] as const;
+  const l = level(s),
+    modern = s.progressionVersion === 2;
+  return [levelFloor(l, modern), levelFloor(l + 1, modern)] as const;
 };
 export function fresh(now: number): Save {
   return {
     schema: 2,
+    progressionVersion: 2,
     ...(testModeEnabled ? { testOnly: true } : {}),
     xp: 0,
     gold: 0,
@@ -212,39 +230,73 @@ export function orders(s: Save): Order[] {
   const opening = cityIntro(s)[c.introIndex];
   if (
     opening &&
-    opening.requirements.every((r) => c.opened.includes(r.item_id))
+    opening.requirements.every((r) =>
+      c.owned.includes(producers[product(r.item_id).producer]!.id),
+    )
   )
     result.push(opening);
   const available = cityProducers(s)
     .filter((p) => c.owned.includes(p.id))
     .flatMap((p) => p.products)
-    .filter((p) => c.opened.includes(p.id));
+    .filter(
+      (p) =>
+        p.tier <= Math.min(5, 2 + Math.floor(l / 3)) ||
+        s.discoveries.includes(p.id),
+    );
   for (let i = 0; i < 5 && available.length; i++) {
     // Keep one quick, base-product order so expensive upper tiers cannot stall play.
     const quick = available.filter((p) => p.tier === 1);
+    const groups = [...new Set(available.map((p) => p.producer))];
+    const group = available.filter(
+      (p) => p.producer === groups[(c.repeatIndex + i) % groups.length],
+    );
     const p = (
         i === 0 && quick.length
           ? quick[c.repeatIndex % quick.length]
-          : available[(c.repeatIndex + i) % available.length]
+          : group[
+              (c.repeatIndex + Math.floor(i / groups.length)) % group.length
+            ]
       )!,
       m =
         s.mastery[
           p.producer === 0 || p.producer === 4 ? "profession1" : "profession2"
         ] ?? 0,
       q = 1 + Math.min(2, Math.floor(l / 5));
+    const different = available.filter((item) => item.producer !== p.producer);
+    const wanted = i === 0 || l < 3 ? 1 : i % 2 === 0 ? 3 : 2;
+    const requirements = [{ item_id: p.id, quantity: q }];
+    for (const candidate of [
+      ...different.slice((c.repeatIndex + i) % Math.max(1, different.length)),
+      ...different,
+    ]) {
+      if (requirements.length >= wanted) break;
+      if (
+        requirements.some(
+          (r) => product(r.item_id).producer === candidate.producer,
+        )
+      )
+        continue;
+      requirements.push({ item_id: candidate.id, quantity: 1 });
+    }
     result.push({
       id: `${s.cityID}-repeat-${c.repeatIndex}-${i}`,
-      requirements: [{ item_id: p.id, quantity: q }],
-      gold:
-        (12 * 2 ** (p.tier - 1) +
-          Math.min(10, l) +
-          Math.min(5, Math.floor(m / 500))) *
-        q,
-      xp:
-        2 +
-        p.tier +
-        Math.min(4, Math.floor(l / 5)) +
-        Math.min(2, Math.floor(m / 500)),
+      requirements,
+      gold: requirements.reduce(
+        (sum, r) =>
+          sum +
+          (12 * 2 ** (product(r.item_id).tier - 1) + Math.min(10, l)) *
+            r.quantity,
+        0,
+      ),
+      xp: requirements.reduce(
+        (sum, r) =>
+          sum +
+          2 +
+          product(r.item_id).tier +
+          Math.min(4, Math.floor(l / 5)) +
+          Math.min(2, Math.floor(m / 500)),
+        0,
+      ),
       titles: [],
     });
   }
@@ -256,7 +308,13 @@ export type Action =
   | { type: "produce"; id: string }
   | { type: "power"; id: string; mode: number }
   | { type: "energy-capacity" }
-  | { type: "test-ad-reward"; receipt: string }
+  | { type: "producer-refill"; id: string }
+  | {
+      type: "test-ad-reward";
+      receipt: string;
+      producerID?: string;
+      cityID?: string;
+    }
   | { type: "test-energy-fill" }
   | { type: "test-gold-add" }
   | { type: "test-gems-add" }
@@ -321,6 +379,8 @@ function copySave(s: Save): Save {
 export const energyCapacityStep = reference.energy_design.capacity_step;
 export const energyIntervalMs =
   reference.energy_design.regeneration_seconds * 1000;
+export const productionBatchSize = 80;
+export const productionCooldownMs = 120000;
 export const productionPowerCosts = reference.energy_design.power_costs;
 // Compatibility export: this is a passive refill limit, never a wallet capacity.
 export const energyCap = (_s: Save) => 100;
@@ -348,28 +408,12 @@ export const exchanges = [
     grantGold: 0,
   },
   {
-    id: "energy100",
-    title: "100 enerji",
-    gems: 10,
-    gold: 0,
-    energy: 100,
-    grantGold: 0,
-  },
-  {
     id: "gold500",
     title: "500 altın",
     gems: 5,
     gold: 0,
     energy: 0,
     grantGold: 500,
-  },
-  {
-    id: "supply",
-    title: "20 enerji",
-    gems: 0,
-    gold: 400,
-    energy: 20,
-    grantGold: 0,
   },
 ];
 export const storeProducts = [
@@ -404,6 +448,10 @@ export interface Achievement {
   metric: string;
   target: number;
   subject_id: string | null;
+  requirements?: DeliveryRequirement[];
+  profession_id?: string;
+  rank_id?: string;
+  badge_id?: string;
   celebration?: {
     message?: string;
     ornament?: "gift" | "title" | "xp" | "energy";
@@ -421,6 +469,21 @@ export const achievements = reference.achievements as Achievement[];
 export function achievementProgress(s: Save, a: Achievement): number {
   const c = s.cities[a.city_id];
   if (!c) return 0;
+  if (a.requirements?.length) {
+    const ratio = Math.min(
+      ...a.requirements.map((requirement) =>
+        requirement.target > 0
+          ? deliveryProgress(
+              s.deliveryProgress,
+              a.city_id,
+              requirement,
+              (id) => producers[product(id)?.producer]?.id,
+            ) / requirement.target
+          : 0,
+      ),
+    );
+    return Math.min(a.target, Math.floor(a.target * ratio));
+  }
   switch (a.metric) {
     case "intro":
       return c.introIndex;
@@ -442,9 +505,45 @@ export function achievementProgress(s: Save, a: Achievement): number {
       return 0;
   }
 }
+export function earnedBadges(s: Save) {
+  return achievements
+    .filter((a) => a.badge_id && (s.claimedAchievements ?? []).includes(a.id))
+    .map((a) => ({
+      achievementID: a.id,
+      badgeID: a.badge_id!,
+      titleID: a.reward.title,
+      professionID: a.profession_id,
+      rankID: a.rank_id,
+      cityID: a.city_id,
+    }));
+}
 export function achievementState(s: Save, a: Achievement) {
   if ((s.claimedAchievements ?? []).includes(a.id)) return "claimed";
   if (!a.enabled || !s.cities[a.city_id]) return "locked";
+  if (
+    a.requirements?.some(
+      (r) =>
+        !Number.isSafeInteger(r.target) ||
+        r.target < 1 ||
+        !r.producer_ids.length ||
+        r.producer_ids.some(
+          (id) => producers.find((p) => p.id === id)?.cityID !== a.city_id,
+        ),
+    )
+  )
+    return "locked";
+  if (a.requirements?.length)
+    return a.requirements.every(
+      (requirement) =>
+        deliveryProgress(
+          s.deliveryProgress,
+          a.city_id,
+          requirement,
+          (id) => producers[product(id)?.producer]?.id,
+        ) >= requirement.target,
+    )
+      ? "ready"
+      : "progress";
   return achievementProgress(s, a) >= a.target ? "ready" : "progress";
 }
 function grantEnergy(s: Save, _capacity: number, energy: number, now: number) {
@@ -453,6 +552,18 @@ function grantEnergy(s: Save, _capacity: number, energy: number, now: number) {
 }
 export function migrateCurrentSave(s: Save, now: number): Save {
   const out = copySave(s);
+  if (s.progressionVersion !== 2) {
+    const oldLevel = level(s),
+      [start, end] = levelRange(s);
+    const progress = (s.xp - start) / (end - start);
+    out.progressionVersion = 2;
+    out.xp =
+      levelFloor(oldLevel, true) +
+      Math.floor(
+        progress *
+          (levelFloor(oldLevel + 1, true) - levelFloor(oldLevel, true)),
+      );
+  }
   if (testModeEnabled) out.testOnly = true;
   delete out.staminaCapacity;
   if (out.stamina >= 100) out.energyAt = now;
@@ -472,7 +583,7 @@ export function advance(s: Save, now: number): Save {
   }
   for (const [id, b] of Object.entries(city(s).batches)) {
     if (b.readyAt > 0 && b.readyAt <= now)
-      city(edit()).batches[id] = { remaining: 30, readyAt: 0 };
+      city(edit()).batches[id] = { remaining: productionBatchSize, readyAt: 0 };
   }
   return next ?? s;
 }
@@ -615,8 +726,18 @@ export function transition(
       if (receipts.length >= 4)
         return blocked("Bugünkü reklam ödüllerin tamamlandı.");
       s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
-      grantEnergy(s, 0, 15, now);
-      return done("reward", "Test reklamı: +15 enerji kazandın.");
+      if (action.producerID) {
+        const p = producers.find(
+          (p) => p.id === action.producerID && p.cityID === action.cityID,
+        );
+        const target = action.cityID ? s.cities[action.cityID] : null;
+        if (!p || !target?.owned.includes(p.id))
+          return blocked("Üretici bulunamadı.");
+        target.batches[p.id] = { remaining: productionBatchSize, readyAt: 0 };
+        return done("reward", "Test reklamı: üretici hazır.");
+      }
+      grantEnergy(s, 0, 25, now);
+      return done("reward", "Test reklamı: +25 enerji kazandın.");
     }
     case "test-energy-fill": {
       if (!testModeEnabled) return blocked("Test modu kapalı.");
@@ -650,16 +771,22 @@ export function transition(
       const i = productionCell(c.board);
       if (i < 0) return blocked("Tahta dolu. Birleştir veya depoya gönder.");
       const plan = productionPlan(s, p);
-      if (!plan.product || !c.opened.includes(plan.product.id))
-        return blocked("Güç modu için önce ürün alanını aç.");
+      if (
+        !plan.product ||
+        (plan.product.tier > 1 && !s.discoveries.includes(plan.product.id))
+      )
+        return blocked("Güç modu için önce bu ürünü birleştirerek keşfet.");
       if (s.stamina < plan.cost) return blocked("Dayanıklılık yenileniyor.");
       if (s.stamina >= 100) s.energyAt = now;
       s.stamina -= plan.cost;
       const item = plan.product.id;
       c.board[i] = tile(s, item);
-      const b = c.batches[p.id] ?? { remaining: 30, readyAt: 0 };
+      const b = c.batches[p.id] ?? {
+        remaining: productionBatchSize,
+        readyAt: 0,
+      };
       b.remaining--;
-      if (b.remaining === 0) b.readyAt = now + 120000;
+      if (b.remaining === 0) b.readyAt = now + productionCooldownMs;
       c.batches[p.id] = b;
       discover(item);
       return done("produce", plan.product.name, undefined, i);
@@ -675,13 +802,29 @@ export function transition(
         !p.products[action.mode - 1]
       )
         return blocked("Güç modu geçersiz.");
-      if (!c.opened.includes(p.products[action.mode - 1]!.id))
-        return blocked("Önce bu ürün alanını aç.");
+      if (
+        action.mode > 1 &&
+        !s.discoveries.includes(p.products[action.mode - 1]!.id)
+      )
+        return blocked("Önce bu ürünü birleştirerek keşfet.");
       c.powers = { ...c.powers, [p.id]: action.mode };
       return done(
         "tap",
-        `${action.mode}x seçildi. 100 ve altında üretim 1x olur.`,
+        `${productionPowerCosts[action.mode - 1]}x seçildi. 100 ve altında üretim 1x olur.`,
       );
+    }
+    case "producer-refill": {
+      const p = producers.find((p) => p.id === action.id);
+      if (
+        !p ||
+        !c.owned.includes(p.id) ||
+        !((c.batches[p.id]?.readyAt ?? 0) > now)
+      )
+        return blocked("Üretici zaten hazır.");
+      if (s.gems < 3) return blocked("3 elmas gerekiyor.");
+      s.gems -= 3;
+      c.batches[p.id] = { remaining: productionBatchSize, readyAt: 0 };
+      return done("tap", "Üretici hazır.");
     }
     case "energy-capacity": {
       const cost = energyUpgradeCost(s);
@@ -739,12 +882,11 @@ export function transition(
       const p = product(a.item),
         next = producers[p.producer]!.products[p.tier];
       if (!next) return blocked("Bu zincirin son ürünü.");
-      if (!c.opened.includes(next.id))
-        return blocked(`${next.name}: ürün alanını aç.`);
+      if (!c.opened.includes(next.id)) c.opened.push(next.id);
       c.board[from] = null;
       c.board[to] = tile(s, next.id);
       discover(next.id);
-      return done("merge", next.name, from, to);
+      return done("merge", "", from, to);
     }
     case "deliver": {
       const o = orders(base).find((o) => o.id === action.id);
@@ -765,6 +907,15 @@ export function transition(
       }
       if (cityIntro(s)[c.introIndex]?.id === o.id) c.introIndex++;
       else c.repeatIndex++;
+      s.deliveryProgress = recordDelivery(
+        s.deliveryProgress,
+        s.cityID,
+        o.requirements.map((r) => ({
+          itemID: r.item_id,
+          producerID: producers[product(r.item_id).producer]!.id,
+          quantity: r.quantity,
+        })),
+      );
       s.gold += o.gold;
       s.xp += o.xp;
       s.titles = Array.from(new Set([...s.titles, ...o.titles]));
@@ -793,17 +944,9 @@ export function transition(
       return done("unlock", `${p.name} açıldı.`);
     }
     case "unlock": {
-      const p = product(action.id);
-      if (!p || c.opened.includes(p.id)) return blocked("");
-      const producer = producers[p.producer]!;
-      if (!c.owned.includes(producer.id)) return blocked("Önce üreticiyi aç.");
-      if (level(s) < p.level) return blocked(`${p.level}. seviye gerekiyor.`);
-      if (p.tier > 1 && !c.opened.includes(producer.products[p.tier - 2]!.id))
-        return blocked("Önce önceki basamağı aç.");
-      if (s.gold < p.price) return blocked(`${p.price} altın gerekiyor.`);
-      s.gold -= p.price;
-      c.opened.push(p.id);
-      return done("unlock", "Ürün alanı açıldı. Birleştirerek keşfet.");
+      return blocked(
+        "Ürünleri satın alma; aynı iki ürünü birleştirerek keşfet.",
+      );
     }
     case "store": {
       if (
@@ -875,7 +1018,14 @@ export function validateSave(value: unknown): value is Save {
         new Set(s.testAdRewards.receipts).size !==
           s.testAdRewards.receipts.length)) ||
     (s.testOnly !== undefined && typeof s.testOnly !== "boolean") ||
+    (s.deliveryProgress !== undefined &&
+      !validDeliveryProgress(
+        s.deliveryProgress,
+        (id) => producers.find((p) => p.id === id)?.cityID,
+        (id) => producers[product(id)?.producer]?.cityID,
+      )) ||
     s.schema !== 2 ||
+    (s.progressionVersion !== undefined && s.progressionVersion !== 2) ||
     ![s.xp, s.gold, s.gems, s.stamina, s.serial].every(nonNegative) ||
     (s.staminaCapacity !== undefined &&
       (!nonNegative(s.staminaCapacity) || s.staminaCapacity < 100)) ||
@@ -948,7 +1098,7 @@ export function validateSave(value: unknown): value is Save {
         (b) =>
           b &&
           nonNegative(b.remaining) &&
-          b.remaining <= 30 &&
+          b.remaining <= productionBatchSize &&
           Number.isFinite(b.readyAt) &&
           b.readyAt >= 0,
       )

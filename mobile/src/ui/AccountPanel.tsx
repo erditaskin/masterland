@@ -1,3 +1,5 @@
+import { CloudSyncPanel } from "./CloudSyncPanel";
+import { cloudSync } from "../account/cloudSync";
 import { deletionStore } from "../account/deletion";
 import { AccountDeletionPanel } from "./AccountDeletionPanel";
 import { AdPrivacyControl } from "./EnergyAdPanel";
@@ -24,6 +26,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
     languageStore.subscribe,
     languageStore.get,
   );
+  const cloud = useSyncExternalStore(cloudSync.subscribe, cloudSync.get);
   const [signingIn, setSigningIn] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [languageError, setLanguageError] = useState(false);
@@ -75,12 +78,6 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
       </View>
       <Label style={{ marginTop: 6 }}>
         {tx("Cihazda kayıtlı", "Saved on this device")}
-      </Label>
-      <Label size={12} style={{ marginVertical: 8 }}>
-        {tx(
-          "Bulut eşitleme henüz etkin değil. Mevcut oyun kaydın cihazında korunuyor.",
-          "Cloud sync is not enabled yet. Your existing progress remains on this device.",
-        )}
       </Label>
       {!accountConfig.enabled && (
         <Label size={12}>
@@ -181,7 +178,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
             testID="accountSignOut"
             tone="secondary"
             text={tx("Hesaptan çık", "Sign out")}
-            disabled={account.busy || deletion.hasJournal}
+            disabled={account.busy || deletion.hasJournal || cloud.busy}
             onPress={() => {
               void accountStore.signOut();
             }}
@@ -202,6 +199,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
           )}
         </Label>
       )}
+      <CloudSyncPanel />
       <AccountDeletionPanel />
       <AdPrivacyControl />
       <Divider />

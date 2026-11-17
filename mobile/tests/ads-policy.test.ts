@@ -31,7 +31,7 @@ test("rewarded energy requires online server quota and a loaded ad", () => {
     energyAdAvailability({ online: true, serverRewardsToday: 3, loaded: true }),
     "ready",
   );
-  assert.equal(energyAdPolicy.energy, 15);
+  assert.equal(energyAdPolicy.energy, 25);
 });
 test("promotion cooldown and session budget do not interrupt gameplay", () => {
   const base = {

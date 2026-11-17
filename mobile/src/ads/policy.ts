@@ -1,6 +1,6 @@
 /** UX limits only. The server must independently authorize each reward. */
 export const energyAdPolicy = Object.freeze({
-  energy: 15,
+  energy: 25,
   dailyRewards: 4,
   promotionIntervalMs: 30 * 60 * 1000,
   promotionsPerSession: 2,

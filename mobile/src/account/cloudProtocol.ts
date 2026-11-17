@@ -15,6 +15,7 @@ export function readCloudRow(value: unknown, expectedUser: string): CloudSave {
     !Number.isSafeInteger(row.revision) ||
     row.revision! < 1 ||
     !validateSave(row.payload) ||
+    row.payload.testOnly === true ||
     typeof row.updated_at !== "string" ||
     !Number.isFinite(Date.parse(row.updated_at))
   )

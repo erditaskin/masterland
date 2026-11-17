@@ -13,6 +13,8 @@ import { testModeEnabled, testFlightBeta } from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FS from "expo-file-system/legacy";
 import {
+  level,
+  levelRange,
   advance,
   migrateCurrentSave,
   fresh,
@@ -66,13 +68,19 @@ function persist(): Promise<void> {
 async function writePending() {
   if (writing) return;
   writing = true;
+  let inFlight: string | null = null;
   try {
     while (pending !== null) {
-      const value = pending;
+      inFlight = pending;
       pending = null;
-      await AsyncStorage.setItem(KEY, value);
+      await AsyncStorage.setItem(KEY, inFlight);
+      inFlight = null;
     }
+    if (snapshot.error === "İlerlemen kaydedilemedi. Tekrar dene.")
+      publish({ ...snapshot, error: null });
   } catch {
+    // Keep the latest snapshot retryable; a newer queued save takes precedence.
+    if (pending === null) pending = inFlight;
     publish({ ...snapshot, error: "İlerlemen kaydedilemedi. Tekrar dene." });
   } finally {
     writing = false;
@@ -102,7 +110,7 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
           ? visualFixture(Date.now())
           : fresh(Date.now());
       if (mode === "milestone") {
-        save.xp = 2000;
+        while (level(save) < 12) save.xp = levelRange(save)[1];
         save.gold = 8000;
         save.stamina = 90;
       }

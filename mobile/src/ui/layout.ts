@@ -13,7 +13,7 @@ export function fitSquareBoard(
     Math.floor(
       Math.min(
         (width - 24 * scale - 2 * frameInset) / 6,
-        (navTop - 8 - top - 176 * scale - 2 * frameInset) / 9,
+        (navTop - 8 - top - 184 * scale - 2 * frameInset) / 9,
       ) * pixels,
     ) / pixels;
   const boardWidth = cell * 6 + frameInset * 2;

@@ -1,12 +1,12 @@
 import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
-import { useState } from "react";
+import { EnergyAdPanel } from "./EnergyAdPanel";
+import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { Crop, Item } from "./Art";
 import { ActionButton, AppChoice, Label } from "./Controls";
 import { colors, art } from "./theme";
 import {
   city,
-  level,
   name,
   productionPlan,
   type Save,
@@ -79,10 +79,42 @@ export function ProducerDetails({
   );
   const a = p.products.find((a) => a.id === selected)!;
   const owned = c.owned.includes(p.id),
-    opened = c.opened.includes(a.id),
-    eligible = level(save) >= a.level;
+    opened = save.discoveries.includes(a.id);
+  const [now, setNow] = useState(Date.now);
+  const readyAt = c.batches[p.id]?.readyAt ?? 0;
+  useEffect(() => {
+    if (readyAt <= Date.now()) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [readyAt]);
+  const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000));
   return (
     <View style={{ gap: 8 }}>
+      {owned && seconds > 0 && (
+        <View
+          testID="producerCooldown"
+          style={{
+            padding: 14,
+            backgroundColor: "#f1d394",
+            borderRadius: 12,
+            gap: 8,
+          }}
+        >
+          <Label title size={22}>
+            Üretici hazırlanıyor
+          </Label>
+          <Label size={20}>
+            {Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, "0")}{" "}
+            sonra hazır
+          </Label>
+          <ActionButton
+            testID="refillProducerGems"
+            text="Şimdi hazırla · 3 elmas"
+            onPress={() => dispatch({ type: "producer-refill", id: p.id })}
+          />
+          <EnergyAdPanel save={save} producerID={p.id} />
+        </View>
+      )}
       <Label size={12} color={colors.muted} style={{ textAlign: "center" }}>
         {name(save.cityID)} · Ürün alanları
       </Label>
@@ -104,7 +136,8 @@ export function ProducerDetails({
             selected={item.id === selected}
             testID={"product-slot-" + item.id}
             label={
-              item.name + (c.opened.includes(item.id) ? ", Açık" : ", Kilitli")
+              item.name +
+              (save.discoveries.includes(item.id) ? ", Açık" : ", Kilitli")
             }
             onPress={() => setSelected(item.id)}
             style={{
@@ -112,14 +145,18 @@ export function ProducerDetails({
               height: 72,
             }}
           >
-            <View style={{ opacity: c.opened.includes(item.id) ? 1 : 0.45 }}>
+            <View
+              style={{ opacity: save.discoveries.includes(item.id) ? 1 : 0.45 }}
+            >
               <Item id={item.id} size={46} />
             </View>
             <Label
               size={11}
-              color={c.opened.includes(item.id) ? colors.green : colors.muted}
+              color={
+                save.discoveries.includes(item.id) ? colors.green : colors.muted
+              }
             >
-              {c.opened.includes(item.id) ? "✓" : "Kilitli"}
+              {save.discoveries.includes(item.id) ? "✓" : "Kilitli"}
             </Label>
           </AppChoice>
         ))}
@@ -130,58 +167,23 @@ export function ProducerDetails({
       <Label size={12} color={colors.muted} style={{ textAlign: "center" }}>
         Basamak {a.tier}
       </Label>
-      <View style={{ flexDirection: "row", justifyContent: "center", gap: 8 }}>
-        <View
-          style={{
-            padding: 9,
-            backgroundColor: eligible ? "#e1e9b3" : "#ecd5a8",
-            borderRadius: 18,
-          }}
-        >
-          <Label size={13}>
-            Seviye {a.level}
-            {eligible ? " ✓" : ""}
-          </Label>
-        </View>
-        {!opened && (
-          <View
-            style={{ padding: 9, backgroundColor: "#f5d9a2", borderRadius: 18 }}
-          >
-            <Label size={13}>{a.price} altın</Label>
-          </View>
-        )}
-      </View>
       {!owned ? (
         <ActionButton
           testID="buyProducer"
           text={`Aç · ${p.price} altın · Seviye ${p.level}`}
           onPress={() => dispatch({ type: "buy", id: p.id })}
         />
-      ) : opened ? (
+      ) : (
         <Label
           title
-          size={17}
-          color={colors.green}
+          color={opened ? colors.green : colors.muted}
           style={{ textAlign: "center", padding: 12 }}
         >
-          Ürün alanı açık ✓
+          {opened
+            ? "Keşfedildi ✓"
+            : "İki aynı ürünü birleştirerek keşfet. İlk keşif XP ve altın verir."}
         </Label>
-      ) : (
-        <ActionButton
-          testID={"unlock-" + a.id}
-          text={`${a.price} altınla aç`}
-          onPress={() => {
-            const result = dispatch({ type: "unlock", id: a.id });
-            if (result && result.kind !== "blocked") {
-              const next = p.products[a.tier];
-              if (next) setSelected(next.id);
-            }
-          }}
-        />
       )}
-      <Label size={12} color={colors.muted} style={{ textAlign: "center" }}>
-        Açıldıktan sonra birleştirerek elde et.
-      </Label>
       {p.products[a.tier] && (
         <View
           style={{
@@ -210,8 +212,8 @@ export function ProducerDetails({
           color={colors.muted}
           style={{ textAlign: "center", marginTop: 8 }}
         >
-          Üretim gücü {productionPlan(save, p).selected}x. Değiştirmek için
-          tahtadaki üreticiye basılı tut.
+          Üretim gücü {2 ** (productionPlan(save, p).selected - 1)}x.
+          Değiştirmek için tahtadaki üreticiye basılı tut.
         </Label>
       )}
     </View>

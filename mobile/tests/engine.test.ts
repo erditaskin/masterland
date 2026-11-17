@@ -83,7 +83,7 @@ test("different item and maximum-tier merge preserve both tiles", () => {
   city(s).board[1] = { id: "b", item: t.id };
   assert.equal(run(s, { type: "move", from: 0, to: 1 }).state, s);
 });
-test("locked next product preserves both ingredients", () => {
+test("undiscovered next product merges without buying a slot", () => {
   let s = twice();
   s = run(s, { type: "move", from: 0, to: 1 }).state;
   s = run(s, { type: "produce", id: p.id }).state;
@@ -94,18 +94,21 @@ test("locked next product preserves both ingredients", () => {
   s = run(s, { type: "move", from: pieces[0]!, to: pieces[1]! }).state;
   assert.equal(count(s, b.id), 2);
   const r = run(s, { type: "move", from: 1, to: pieces[1]! });
-  assert.equal(r.kind, "blocked");
-  assert.equal(count(r.state, b.id), 2);
+  assert.equal(r.kind, "merge");
+  assert.equal(count(r.state, b.id), 0);
+  assert(r.state.discoveries.includes(p.products[2]!.id));
+  assert(r.state.gold > s.gold);
 });
-test("paid slot spends gold, never XP, and is not discovery", () => {
+test("legacy paid-slot action is rejected without charging or discovering", () => {
   const s = fresh(now);
   s.xp = 60;
   s.gold = 500;
   const t = p.products[2]!;
   const r = run(s, { type: "unlock", id: t.id });
   assert.equal(r.state.xp, 60);
-  assert.equal(r.state.gold, 500 - t.price);
-  assert(city(r.state).opened.includes(t.id));
+  assert.equal(r.kind, "blocked");
+  assert.equal(r.state.gold, 500);
+  assert(!city(r.state).opened.includes(t.id));
   assert(!r.state.discoveries.includes(t.id));
 });
 test("producer purchase is level gated and idempotent", () => {
@@ -136,11 +139,15 @@ test("empty energy does not create an item", () => {
 });
 test("producer batch and offline refill", () => {
   let s = fresh(now);
-  for (let i = 0; i < 30; i++) s = run(s, { type: "produce", id: p.id }).state;
+  for (let i = 0; i < 80; i++) {
+    s = run(s, { type: "produce", id: p.id }).state;
+    city(s).board.fill(null);
+    s.rewardQueue = [];
+  }
   assert.equal(city(s).batches[p.id]!.remaining, 0);
   assert.equal(run(s, { type: "produce", id: p.id }).kind, "blocked");
   s = advance(s, now + 120000);
-  assert.equal(city(s).batches[p.id]!.remaining, 30);
+  assert.equal(city(s).batches[p.id]!.remaining, 80);
   assert.equal(
     run(s, { type: "produce", id: p.id }, now + 120000).kind,
     "produce",
@@ -415,6 +422,7 @@ test("all boost tiers use 1,2,4,8 energy and revert at the strict 100 boundary",
       s.staminaCapacity = 150;
       s.stamina = energy;
       city(s).opened = p.products.map((i) => i.id);
+      s.discoveries = p.products.map((i) => i.id);
       city(s).powers = { [p.id]: mode };
       const result = run(s, { type: "produce", id: p.id }),
         effective = energy > 100 ? mode : 1;
@@ -432,6 +440,7 @@ test("a boost crossing below 100 falls back without changing the selected power"
   s.staminaCapacity = 125;
   s.stamina = 103;
   city(s).opened = p.products.map((i) => i.id);
+  s.discoveries = p.products.map((i) => i.id);
   city(s).powers = { [p.id]: 4 };
   const a = run(s, { type: "produce", id: p.id });
   assert.equal(a.state.stamina, 95);

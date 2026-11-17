@@ -123,9 +123,9 @@ test("test earned receipts persist quota, ignore duplicates and reset on next UT
     const now=1700000000000;let s=fresh(now);s.stamina=100;
     const act=(id,time=now)=>{const r=transition(s,{type:'test-ad-reward',receipt:id},time);s=r.state;return r;};
     const id=(n)=>'00000000-0000-4000-8000-'+String(n).padStart(12,'0');
-    act(id(1));assert.equal(s.stamina,115);assert.equal(s.testOnly,true);act(id(1));assert.equal(s.stamina,115);
-    for(let n=2;n<=4;n++)act(id(n));assert.equal(s.stamina,160);
-    assert.equal(act(id(5)).kind,'blocked');assert.equal(s.stamina,160);
+    act(id(1));assert.equal(s.stamina,125);assert.equal(s.testOnly,true);act(id(1));assert.equal(s.stamina,125);
+    for(let n=2;n<=4;n++)act(id(n));assert.equal(s.stamina,200);
+    assert.equal(act(id(5)).kind,'blocked');assert.equal(s.stamina,200);
     s=JSON.parse(JSON.stringify(s));assert.equal(validateSave(s),true);
     assert.equal(act(id(6)).kind,'blocked');act(id(7),now+86400000);assert.equal(s.testAdRewards.receipts.length,1);
     s.testAdRewards.receipts.push('bad');assert.equal(validateSave(s),false);

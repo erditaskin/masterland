@@ -60,6 +60,9 @@ async function finish(requestID: string) {
   try {
     await accountClient?.auth.signOut({ scope: "local" });
   } finally {
+    // Drain the old owner's network work before erasing its local queues and backups.
+    const { cloudSync } = await import("./cloudSync");
+    await cloudSync.connect(null);
     await gameStore.resetAfterAccountDeletion(requestID);
   }
 }

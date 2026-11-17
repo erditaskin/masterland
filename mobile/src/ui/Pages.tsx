@@ -293,7 +293,7 @@ export function Pages({
                           >
                             {save.discoveries.includes(a.id)
                               ? "✓"
-                              : `Seviye ${a.level}`}
+                              : "Birleştirerek keşfet"}
                           </Label>
                         </Button>
                       ))}

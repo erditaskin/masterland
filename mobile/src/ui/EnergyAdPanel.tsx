@@ -1,41 +1,65 @@
 import { testModeEnabled } from "../game/testMode";
 import { useEffect, useSyncExternalStore } from "react";
 import { View } from "react-native";
-import { energyAds } from "../ads/service";
+import { energyAds, adsConfig } from "../ads/service";
 import { accountText as tx, languageStore } from "../i18n/locale";
 import type { Save } from "../game/engine";
 import { AppButton, Divider, Label } from "./Controls";
-export function EnergyAdPanel({ save }: { save: Save }) {
+export function EnergyAdPanel({
+  save,
+  producerID,
+}: {
+  save: Save;
+  producerID?: string;
+}) {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
   const day = new Date().toISOString().slice(0, 10);
   const used = !testModeEnabled
-    ? 0
+    ? ad.dailyUsed
     : save.testAdRewards?.day === day
       ? save.testAdRewards.receipts.length
       : 0;
   useEffect(() => {
     if (ad.canRequestAds && !ad.consentBusy && used < 4) void energyAds.load();
   }, [ad.canRequestAds, ad.consentBusy, used]);
-  if (!ad.enabled) return null;
+  if (!ad.enabled || (producerID && !adsConfig.testAds)) return null;
   const showing = ad.phase === "showing" || ad.phase === "earned";
   return (
     <View testID="energyAdPanel" style={{ width: "100%" }}>
       <Divider />
       <Label title>
-        {tx("Enerji hediyesi · test reklamı", "Energy gift · test ad")}
+        {adsConfig.testAds
+          ? tx("Enerji hediyesi · test reklamı", "Energy gift · test ad")
+          : tx("Enerji hediyesi", "Energy gift")}
       </Label>
       <Label size={12}>
         {tx(
-          testModeEnabled
-            ? "İsteğe bağlı reklamı tamamla, +15 enerji al."
+          testModeEnabled || !adsConfig.testAds
+            ? "İsteğe bağlı reklamı tamamla, +25 enerji al."
             : "Test reklamı önizlemesi. Bakiye ve günlük hak değişmez.",
-          testModeEnabled
-            ? "Complete an optional ad for +15 energy."
+          testModeEnabled || !adsConfig.testAds
+            ? "Complete an optional ad for +25 energy."
             : "Test ad preview. Balance and daily allowance remain unchanged.",
         )}{" "}
-        {testModeEnabled ? `${used}/4` : ""}
+        {testModeEnabled || !adsConfig.testAds ? `${used}/4` : ""}
       </Label>
+      {ad.needsAccount && (
+        <Label size={12}>
+          {tx(
+            "Reklam ödülünü kaydetmek için hesabına giriş yap.",
+            "Sign in to save your ad reward.",
+          )}
+        </Label>
+      )}
+      {ad.rewardPending && (
+        <Label size={12}>
+          {tx(
+            "Ödülün doğrulanıyor. Bağlantı geldiğinde yeniden kontrol edilecek.",
+            "Your reward is being verified. It will be checked again when connected.",
+          )}
+        </Label>
+      )}
       {ad.error && (
         <Label size={12}>
           {ad.error === "offline"
@@ -50,23 +74,33 @@ export function EnergyAdPanel({ save }: { save: Save }) {
         </Label>
       )}
       <AppButton
-        testID="watchEnergyAd"
+        testID={producerID ? "watchProducerAd" : "watchEnergyAd"}
         disabled={
-          used >= 4 || ad.consentBusy || showing || ad.phase === "loading"
+          used >= 4 ||
+          ad.needsAccount ||
+          ad.rewardPending ||
+          ad.consentBusy ||
+          showing ||
+          ad.phase === "loading"
         }
         text={
           used >= 4
             ? tx("Bugünkü hediyeler tamamlandı", "Today's gifts are complete")
-            : ad.phase === "ready"
-              ? testModeEnabled
-                ? tx("İzle · +15 enerji", "Watch · +15 energy")
-                : tx("Test reklamını izle", "Preview test ad")
-              : tx("Reklamı hazırla", "Prepare ad")
+            : showing
+              ? tx("Reklam gösteriliyor…", "Showing ad…")
+              : ad.phase === "loading" || ad.consentBusy
+                ? tx("Hazırlanıyor…", "Preparing…")
+                : producerID
+                  ? tx(
+                      "Reklamla üreticiyi hazırla",
+                      "Watch ad to refresh producer",
+                    )
+                  : tx("Reklam · +25 enerji", "Ad · +25 energy")
         }
         onPress={() => {
-          if (ad.phase === "ready") void energyAds.show();
-          else if (!ad.canRequestAds) void energyAds.start();
-          else void energyAds.load();
+          void energyAds.watch(
+            producerID ? { producerID, cityID: save.cityID } : undefined,
+          );
         }}
       />
     </View>

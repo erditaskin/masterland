@@ -1,0 +1,88 @@
+import { validateSave, type Save } from "../game/engine";
+const uuid = (value: unknown): value is string =>
+  typeof value === "string" &&
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+export type PreparedEnergyAd =
+  | { kind: "daily_limit"; used: number }
+  | { kind: "ready"; intentID: string; used: number; amount: 25 };
+export function readPreparedEnergyAd(value: unknown): PreparedEnergyAd {
+  if (!value || typeof value !== "object") throw Error("Invalid ad intent");
+  const row = value as Record<string, unknown>;
+  if (
+    !Number.isSafeInteger(row.used) ||
+    Number(row.used) < 0 ||
+    Number(row.used) > 4
+  )
+    throw Error("Invalid daily allowance");
+  if (row.kind === "daily_limit" && row.used === 4)
+    return { kind: "daily_limit", used: 4 };
+  if (
+    row.kind !== "ready" ||
+    !uuid(row.intent_id) ||
+    row.amount !== 25 ||
+    Number(row.used) >= 4
+  )
+    throw Error("Ad reward is not ready");
+  return {
+    kind: "ready",
+    intentID: row.intent_id,
+    used: Number(row.used),
+    amount: 25,
+  };
+}
+export type EnergyRedemption =
+  | { kind: "pending" }
+  | { kind: "already_redeemed" | "conflict"; revision: number }
+  | { kind: "redeemed"; revision: number; amount: 15 | 25; payload: Save };
+/** An SDK earned callback alone is never evidence of a payable reward. */
+export function readEnergyRedemption(
+  value: unknown,
+  intentID: string,
+  before: Save,
+  expectedRevision: number,
+): EnergyRedemption {
+  if (!uuid(intentID) || !value || typeof value !== "object")
+    throw Error("Invalid redemption");
+  const row = value as Record<string, unknown>;
+  if (row.kind === "pending") return { kind: "pending" };
+  if (!Number.isSafeInteger(row.revision) || Number(row.revision) < 0)
+    throw Error("Invalid reward revision");
+  if (row.kind === "already_redeemed" || row.kind === "conflict")
+    return { kind: row.kind, revision: Number(row.revision) };
+  if (
+    row.kind !== "redeemed" ||
+    (row.amount !== 15 && row.amount !== 25) ||
+    row.revision !== expectedRevision + 1 ||
+    !validateSave(row.payload) ||
+    row.payload.testOnly
+  )
+    throw Error("Unverified reward payload");
+  const expected = {
+    ...before,
+    stamina: before.stamina + row.amount,
+    transactions: [...(before.transactions ?? []), `ad:${intentID}`],
+  };
+  if (JSON.stringify(row.payload) !== JSON.stringify(expected)) {
+    // JSON object key order is not significant across PostgreSQL JSONB responses.
+    const ordered = (v: unknown): unknown =>
+      Array.isArray(v)
+        ? v.map(ordered)
+        : v && typeof v === "object"
+          ? Object.fromEntries(
+              Object.entries(v)
+                .sort(([a], [b]) => a.localeCompare(b))
+                .map(([k, entry]) => [k, ordered(entry)]),
+            )
+          : v;
+    if (
+      JSON.stringify(ordered(row.payload)) !== JSON.stringify(ordered(expected))
+    )
+      throw Error("Reward snapshot changed unrelated progress");
+  }
+  return {
+    kind: "redeemed",
+    revision: Number(row.revision),
+    amount: row.amount,
+    payload: row.payload,
+  };
+}

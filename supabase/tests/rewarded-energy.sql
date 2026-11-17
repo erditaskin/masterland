@@ -27,7 +27,7 @@ select public.record_energy_ssv('00000000-0000-4000-8000-000000000004','00000000
 do $$declare result jsonb; begin
   result:=public.record_energy_ssv('00000000-0000-4000-8000-000000000004','00000000-0000-4000-8000-000000000105','real-5',now());
   if result->>'kind'<>'daily_limit' then raise exception 'Daily cap bypass'; end if;
-  if (select sum(amount) from public.energy_ad_rewards where user_id='00000000-0000-4000-8000-000000000004')<>60 then raise exception 'Incorrect credit total'; end if;
+  if (select sum(amount) from public.energy_ad_rewards where user_id='00000000-0000-4000-8000-000000000004')<>100 then raise exception 'Incorrect credit total'; end if;
 end $$;
 set role authenticated;
 set request.jwt.claim.sub='00000000-0000-4000-8000-000000000003';
