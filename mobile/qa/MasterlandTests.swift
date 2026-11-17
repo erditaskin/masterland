@@ -861,6 +861,30 @@ final class MasterlandTests:XCTestCase {
         shot("production-sign-in-without-facebook")
     }
 
+    func testVerifiedTestFlightReleasePolicy() {
+        for id in ["testEnergyFill","testGoldAdd","testGemsAdd","testLevelUp"] {XCTAssertFalse(app.buttons[id].exists)}
+        let expected=String(Int(app.buttons["stamina"].label)!-1)
+        app.buttons["producer1"].tap()
+        let produced=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].label == expected },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[produced],timeout:10),.completed)
+        let before=app.buttons["stamina"].label
+        app.open(URL(string:"masterland://qa-reset")!)
+        XCTAssertEqual(app.buttons["stamina"].label,before)
+        app.open(URL(string:"masterland://milestone-review")!)
+        XCTAssertEqual(app.buttons["stamina"].label,before)
+        shot("testflight-vps-board-no-test-controls")
+        app.buttons["tab-market"].tap()
+        app.scrollViews.firstMatch.swipeUp();app.scrollViews.firstMatch.swipeUp()
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gems30"].exists)
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gold2500"].exists)
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Bu betada gerçek para")).firstMatch.exists)
+        shot("testflight-vps-real-purchases-disabled")
+        app.buttons["tab-board"].tap();app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.buttons["signInGoogle"].waitForExistence(timeout:10))
+        XCTAssertFalse(app.buttons["signInFacebook"].exists)
+        shot("testflight-vps-apple-google-sign-in")
+    }
+
     func testTestFlightBetaPurchasePolicy() {
         XCTAssertTrue(app.buttons["testEnergyFill"].exists)
         let before=app.buttons["profile"].label

@@ -455,3 +455,9 @@ Kullanıcının atlas referansı ve şehir listesi/buton eleştirisiyle Belenyak
 ## 17 Kasım 2026 — Üç ad düzeltmesi ve kalan iki şehir konsepti
 
 Kullanıcının açık düzeltmeleriyle ilk beş Türkçe ad Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu olarak güncellendi. Güncel belge/metin referansları ve konsept etiketleri değiştirildi; görünen adlar dışında kanonik veri değişikliği yapılmadığı denetlendi. Geçmiş gerçek test ekranları kanıt niteliğini korumak için yeniden boyanmadı. Demirdere için taş/demir/bakır, İpekyolu için ince ahşap/kumaş/pirinç ve ticaret yolu kompozisyonu üretildi. Yeni panolar onaylı uygulama ekranı sayılmadı. Canlı atlas adları sürümlü ve CSP hash'leri yeniden üretilen web deployment'ıyla güncellendi; son doğrulama görsel tur raporunda tutulur.
+
+## 17 Kasım 2026 — Görsel yön onayı ve 0.2.0 (3) TestFlight hazırlığı
+
+Kullanıcı beşli görsel yönünü onayladı; production beş harita hazır olunca yapılacak, önce mevcut sürüm TestFlight'a tekrar yüklenecektir. VPS bağlantılı, test kredileri/satış kapalı beta preset'i eklendi ve build numarası 3 yapıldı. Native Release kanal kontrolünün ilk koşusundaki asenkron etiket okuma yarışı test harness'inde giderildi; tekrar 18.715 saniyede geçti. Üç gerçek ekran incelendi. Cihaz arşivi doğru sürüm/ekip/imzayla tamamlandı; Hermes kaynak hash'i test edilen simülatörle aynıdır.
+
+Apple export/upload bir zaman aşımı ve iki App Store Connect HTTP 500 hatası nedeniyle tamamlanamadı. Yeni build TestFlight'ta mevcut olarak raporlanmadı; production gönderimi yapılmadı. İmzalı arşiv korumalı yerel yedekte tutulur. Kanıt ve yeniden yükleme giriş noktası testflight-vps-20261117.md içindedir. Yeni harita görselleri bu beta arşivine uygulanmış sayılmaz.

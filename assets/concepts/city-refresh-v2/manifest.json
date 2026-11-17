@@ -4,34 +4,39 @@
     "width": 1086,
     "height": 1448,
     "sha256": "85b43b52f25fc59cd8f31f37cd138d8c06b8ea88ccd111f6e15ccc98c71e32d4",
-    "status": "proposal-awaiting-user-approval"
+    "status": "approved-art-direction-pending-implementation",
+    "approved_on": "2026-11-17"
   },
   {
     "file": "02-badinca-approval-v1.png",
     "width": 1086,
     "height": 1448,
     "sha256": "9bc12de53af1b95c1354382c040b1d4313bb8545fec0b74d512ce0d51606b13f",
-    "status": "proposal-awaiting-user-approval"
+    "status": "approved-art-direction-pending-implementation",
+    "approved_on": "2026-11-17"
   },
   {
     "file": "03-yalikoru-approval-v1.png",
     "width": 1086,
     "height": 1448,
     "sha256": "5e0821cc92d9a6c930cabdb12c3759795ad4d4983febc143d5ddbccc8eb96d5e",
-    "status": "proposal-awaiting-user-approval"
+    "status": "approved-art-direction-pending-implementation",
+    "approved_on": "2026-11-17"
   },
   {
     "file": "04-demirdere-approval-v1.png",
     "width": 1086,
     "height": 1448,
     "sha256": "a9e92996d4c1af32d51988ab3caa1c2c69145ec3ba78f812b26f1fac748893cf",
-    "status": "proposal-awaiting-user-approval"
+    "status": "approved-art-direction-pending-implementation",
+    "approved_on": "2026-11-17"
   },
   {
     "file": "05-ipekyolu-approval-v1.png",
     "width": 1086,
     "height": 1448,
     "sha256": "2e165e266a17cf41780e28efbc59532cd117fc32868049dda98f4a2c56638b04",
-    "status": "proposal-awaiting-user-approval"
+    "status": "approved-art-direction-pending-implementation",
+    "approved_on": "2026-11-17"
   }
 ]

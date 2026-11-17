@@ -1,5 +1,9 @@
 # İlk beş şehir görsel onay turu — 17 Kasım 2026
 
+## Kullanıcı onayı
+
+Kullanıcı son beş görselin genel yönünü onayladı. Bu dosyadaki önceki onay-bekleniyor ifadeleri üretim turlarının tarihsel durumudur. Güncel durum: görsel yön onaylı; asset ayrıştırması, kesin ekran ölçüleri, refaktör ve ölçülmüş piksel karşılaştırması bekleniyor. Production yayını beş harita hazırlandıktan sonra yapılacaktır. Önce mevcut uygulama ayrı bir yeni TestFlight build'i olarak teslim edilecektir.
+
 ## Son durum
 
 Kullanıcının sonraki ad düzeltmeleriyle güncel beşli **Belenyaka, Badınca, Yalıkoru, Demirdere, İpekyolu** olmuştur. Kalan iki şehrin üretilmesi istenmiş ve beşli konsept paketine eklenmiştir. İpekyolu'nun manzarası dokuma/ticaret ailesi korunarak taş geçit ve kumaş tezgâhları boyunca uzanan ticaret yolu yerleşimi olarak yeniden çalışılmıştır. Bütün güncel pano etiketleri aynı adları kullanır. Alt bölümlerdeki ilk üçlü tur açıklamaları başlangıç aşamasının tarihçesidir; son durum bu bölümdür.

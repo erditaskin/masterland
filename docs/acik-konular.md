@@ -194,3 +194,9 @@ Kullanıcının yeni sırasıyla production öncesi şehirler ekranı, butonlar 
 ### Sonraki güncelleme — beşli görsel paket
 
 Kullanıcı kalan iki şehrin de üretilmesini istedi. Demirdere ve İpekyolu taslakları eklendi; güncel beşli Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu'dur. İpekyolu'nun ticaret yolu kompozisyonu yeni ad doğrultusunda yeniden üretildi. Önceki paragraf ilk üçlü turun tarihsel durumudur. Yeni beşli görsel onayı, nihai ekran/asset ayrıştırması, piksel karşılaştırmalı refaktör ve henüz oynanabilir olmayan şehirlerin içerik/ekonomi kabulü açık kalır.
+
+### Beşli yön onaylandı; mevcut sürüm TestFlight'a hazırlanıyor
+
+Kullanıcı son beşli görsel yönünü onayladı. Görsel onay artık açık iş değildir; nihai asset/ekran ölçüleri, refaktör, haritaların oynanış kabulü ve production kapıları açıktır. Önce mevcut sürümün yeni TestFlight build'i istenmiştir. Apple panel oturumuna bu denemede erişilemedi; imzalı arşiv ve Xcode yükleme yolu ayrıca denenecektir. Sonuç `testflight-vps-20261117.md` dosyasında tutulacaktır.
+
+0.2.0 (3) Release kontrolü ve imzalı cihaz arşivi tamamlandı. Apple upload bir zaman aşımı ve iki HTTP 500 ile başarısız kaldı. TestFlight yükleme/processing ve tester erişimi hâlâ açıktır; yeni build dağıtılmış sayılmaz. Mevcut imzalı arşiv korumalı yerel yedekte saklanır ve Apple servisi erişilebilir olduğunda yeniden yüklenebilir.
