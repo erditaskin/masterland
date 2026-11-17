@@ -439,7 +439,7 @@ Kullanıcının onaylı isimleri ilk üç şehir için TR/EN sözlüğüne uygul
 
 ## 17 Kasım 2026 — Son onaylar ve gece durma noktası
 
-Kullanıcı enerji reklamı ve 3 elmas paketinin ikisinin de +25 enerji vermesini onayladı. Demirdere 24, İpekyaka 33. seviye şehir sırası kesinleşti. Google test listesine yalnız erditaskin@gmail.com eklenmesi ve Facebook email izni ayrıca işlem anında onaylandı. Apple local oturumundan Google/Facebook testi için çıkış ayrıca onaylandı; hesap veya yerel ilerleme silinmedi. Kullanıcı daha sonra telefon kullanımının bırakılmasını ve mevcut inceleme bitince sabaha kadar durulmasını istedi. Son hata ve devam kapsamı `resume-20261117.md` içindedir. +25 sunucu dağıtım onayı alınmış olsa da durma isteğinden sonra dağıtım yapılmadı.
+Kullanıcı enerji reklamı ve 3 elmas paketinin ikisinin de +25 enerji vermesini onayladı. Demirdere 24, İpekyolu 33. seviye şehir sırası kesinleşti. Google test listesine yalnız erditaskin@gmail.com eklenmesi ve Facebook email izni ayrıca işlem anında onaylandı. Apple local oturumundan Google/Facebook testi için çıkış ayrıca onaylandı; hesap veya yerel ilerleme silinmedi. Kullanıcı daha sonra telefon kullanımının bırakılmasını ve mevcut inceleme bitince sabaha kadar durulmasını istedi. Son hata ve devam kapsamı `resume-20261117.md` içindedir. +25 sunucu dağıtım onayı alınmış olsa da durma isteğinden sonra dağıtım yapılmadı.
 
 
 ## 17 Kasım 2026 — İlk yayın sonrası satış ve ustalık tasarımı
@@ -450,7 +450,7 @@ Kullanıcı ilk yayından hemen sonraki aşamada altın/elmas satışını isted
 
 Şehir başına en az 10–15 ustalık ödülü hedeflenmektedir. Ustalık, sipariş teslimleriyle ilerleyen meslek/unvan kademeleri, ilerleme göstergeleri ve her unvana özgü profil rozetiyle sunulacaktır. UO unvanları ve WoW achievements yalnız esin kaynağıdır. Apprentice için Türkçe Çırak, İngilizce Apprentice istenir. Journeyman/Expert/Adept/Master/Grandmaster sırası, yerelleştirmeleri ve eşikleri tasarım çalışmasında netleştirilecektir; verilen beş sipariş örneği kesin denge değeri değildir. Üreticiye özel ve birden fazla üreticiyi kapsayan koşullar desteklenmesi istenen tasarım kapsamıdır. Şehir açılışı ustalık tamamlamasına yeniden bağlanmaz.
 
-Şehir/başarı ekranının mevcut büyük kart ızgarası görsel açıdan yetersiz bulunmuştur. Yeni konseptte çok sayıda başarı için bilgi hiyerarşisi, etkileşim durumları, profil rozetleri ve uygulanabilir ölçüler birlikte hazırlanmalıdır. Onaylı 16 şehir adayı vardır; kullanıcı bu tur 10 şehirlik çalışma istemektedir. İlk beş sıra city1 Bahçeyaka, city2 Ballıca, city3 Yalıkoru, city4 Demirdere, city5 İpekyaka olarak kesinleşmiştir; sonraki beş aday ve sıraları ayrıca onaylanacaktır.
+Şehir/başarı ekranının mevcut büyük kart ızgarası görsel açıdan yetersiz bulunmuştur. Yeni konseptte çok sayıda başarı için bilgi hiyerarşisi, etkileşim durumları, profil rozetleri ve uygulanabilir ölçüler birlikte hazırlanmalıdır. Onaylı 16 şehir adayı vardır; kullanıcı bu tur 10 şehirlik çalışma istemektedir. İlk beş sıra city1 Belenyaka, city2 Badınca, city3 Yalıkoru, city4 Demirdere, city5 İpekyolu olarak kesinleşmiştir; sonraki beş aday ve sıraları ayrıca onaylanacaktır.
 
 
 ## 17 Kasım 2026 — Ustalık teknik hazırlığı
@@ -527,3 +527,13 @@ Kullanıcı Apple servis sorunu sürerken fiziksel Apple silme/revoke kabulünü
 Kullanıcı ilk App Store yayınında gerçek para satışının kapalı kalmasını tekrar onayladı. Öncelik reklamlı ilk mağaza yayınıdır; backend doğrulamalı gerçek satın alma yayın sonrasına bırakılmıştır. Bu kapsam değişikliği, önceki sekiz adımlı sıradaki satın alma maddesinin ilk yayını engellemesini kaldırır. Hesap silme kabulü, sağlayıcı genel erişimi, gizlilik bilgileri ve Apple inceleme gerekleri tamamlanmış olarak varsayılmaz.
 
 Kullanıcı Meta genel erişim doğrulamasını ilk yayının ön koşulu yapmamak için ilk sürümde Facebook giriş düğmesinin gizlenmesini açıkça onayladı. Apple/Google ve hesapsız oyun korunacaktır. Mevcut Facebook hesapları, verileri ve mevcut oturumları silinmeyecektir. Yeni yayın preset'i yalnız giriş seçeneğinin görünürlüğünü kapatır; önceki fiziksel kabul preset'leri ve mevcut Facebook hesabının silme için yeniden doğrulama yolu bu kararla kaldırılmaz. Facebook genel kullanıcı girişi Meta doğrulamasından sonra yeniden gösterilecektir.
+
+## 17 Kasım 2026 — Yayın öncesinde ilk üç, ardından beş şehir görsel turu
+
+Kullanıcı canlı atlas ağacını referans gösterip mevcut şehirler bölümünü ve butonları yetersiz bulduğunu tekrar belirtti. Önce görsel üretimi ve onayı, sonra onaylanan görüntülere piksel düzeyinde sadık refaktör istedi. Önce ilk üç şehir, ardından ilk beş şehir hedefi ele alınacak; bu çalışma sonrası production hazırlığına dönülecektir. İlk üç şehir Belenyaka, Badınca ve Yalıkoru olarak yorumlanmış ve bu yorum kullanıcıya üretim öncesi açıkça bildirilmiştir. İlk üç konsept paketi `city-refresh-v2-20261117.md` içinde kayıtlıdır; kullanıcı henüz bu yeni çizimleri onaylamamıştır. Önceki çevre/malzeme ailelerinin onayı korunur; yeni kompozisyon ve kontroller kendiliğinden kesin karar olmaz.
+
+## 17 Kasım 2026 — Güncel şehir adları ve beş şehirlik ilk yayın hedefi
+
+Kullanıcı birinci şehrin Türkçe adını Belenyaka, ikinci şehrin adını Badınca, beşinci şehrin adını İpekyolu olarak düzeltti ve bütün referansların bu adlarla güncellenmesini istedi. Güncel ilk beş sıra Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu'dur. Kanonik veri, mobil görünen adlar/testler, belgeler, atlaslar ve güncel görsel panolar bu adlara taşınacaktır. Kimlikler, oyuncu kayıtları, ürün/görev bağlantıları ve ekonomi değerleri bu ad değişikliğiyle değiştirilmez. İngilizce görünen adlar bu Türkçe ad düzeltmelerinden bağımsızdır.
+
+Kullanıcı ilk canlı hedefin beş şehir olduğunu belirterek kalan Demirdere ve İpekyolu görsellerinin de üretilmesini istedi. İpekyolu konsepti yeni adına uygun ticaret yolu yerleşimi olarak yeniden çalışılacaktır; dokuma, kumaş ve ticaret ailesi korunur. Yeni çizimler ayrı görsel onaya tabidir. Beş şehrin konseptlerinin üretilmesi, beşinin oyun içeriği ve production kabulünün tamamlandığı anlamına gelmez.

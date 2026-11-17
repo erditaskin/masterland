@@ -4,7 +4,7 @@
 
 Diğer oturumun doğrulanmış Apple giriş, çıkış ve giriş sonrası doğrudan tahtaya dönüş çalışması `10b1dde` commitinde main üzerinde korunmuştur. Hesap silme/bulut altyapısı bu görsel turda açılmamıştır. Kurulum ajanının `account-setup-status.md` dosyası bu commitlerin kapsamına alınmamıştır.
 
-İlk üç şehrin TR/EN görünen adları onaylı belgede belirtildiği gibi uygulanmıştır: Bahçeyaka / Meadowbrook, Ballıca / Baker’s Market, Yalıkoru / Timberbay. city1/city2/city3, eşya, üretici ve görev kimlikleri değişmez. Sonraki onaylı şehir adayları “Yakında” listesinde gösterilir; liste yeni geliştirme sırası veya açılış sözü değildir.
+İlk üç şehrin TR/EN görünen adları onaylı belgede belirtildiği gibi uygulanmıştır: Belenyaka / Meadowbrook, Badınca / Baker’s Market, Yalıkoru / Timberbay. city1/city2/city3, eşya, üretici ve görev kimlikleri değişmez. Sonraki onaylı şehir adayları “Yakında” listesinde gösterilir; liste yeni geliştirme sırası veya açılış sözü değildir.
 
 ## Tasarım
 
@@ -20,7 +20,7 @@ Diğer oturumun doğrulanmış Apple giriş, çıkış ve giriş sonrası doğru
 
 - `testCityCatalogAndAuthRefreshPreserveBoard`: doğru şehir adı ve seçimi, kilitli Yalıkoru, seyahatsiz seçimde aynı altın, değişmeyen tahta ölçüsü, eşit Google/Facebook düğme genişliği, profil kapatma.
 - `testOfflineAccountPanelAndContentLanguage`: devre dışı sağlayıcılar, yerel kayıt ve TR/EN geçişi.
-- `testMilestoneCityRoundTrip`: Ballıca açılışı/üretimi ve şehirler arasında gidip gelince ayrı tahtaların korunması. Bu test mevcut seviye 12 / 6.000 altın ekonomisini sınar; sıraya alınan seviye 8 kararı henüz uygulanmamıştır.
+- `testMilestoneCityRoundTrip`: Badınca açılışı/üretimi ve şehirler arasında gidip gelince ayrı tahtaların korunması. Bu test mevcut seviye 12 / 6.000 altın ekonomisini sınar; sıraya alınan seviye 8 kararı henüz uygulanmamıştır.
 
 Ekran görüntüleri çıkarılıp görsel olarak incelendi. İlk incelemede Google/Facebook iç yüzey genişliği farkı bulundu; `width: 100%` ile düzeltildi ve tekrar native test edildi.
 

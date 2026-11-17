@@ -2,8 +2,8 @@
   "version": 31,
   "locales": {
     "tr": {
-      "city1_name_tr": "Bahçeyaka",
-      "city2_name_tr": "Ballıca",
+      "city1_name_tr": "Belenyaka",
+      "city2_name_tr": "Badınca",
       "city3_name_tr": "Yalıkoru",
       "city4_name_tr": "Demirdere",
       "collection1_name_tr": "Tahıl ve ekmek",
@@ -270,7 +270,7 @@
       "quest103_name_tr": "Pastacının imzası",
       "quest104_name_tr": "Meyveli mola",
       "quest105_name_tr": "Çikolata zamanı",
-      "city5_name_tr": "İpekyaka"
+      "city5_name_tr": "İpekyolu"
     }
   },
   "cities": [

@@ -7,7 +7,7 @@ Travel Town tarzı saf merge tahtasını, şehirlerde farklı yaşam temaları v
 - Klasör: `/Users/erdi/masterland/masterland-mobile`
 - Uygulama: `mobile/` — React Native / Expo, TypeScript, Hermes.
 - iOS kimliği: `com.erditaskin.masterland`; bağlantı şeması: `masterland://`.
-- İlk oynanabilir şehir: Skara Brae. New Haven ileri fırıncılık, Cove balıkçılık ve marangozluk içindir.
+- İlk oynanabilir şehrin Türkçe adı Belenyaka'dır. İlk beş şehir adı Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu olarak belirlenmiştir. Beşli görsel hedef, bütün şehirlerin oynanış kabulünün tamamlandığı anlamına gelmez. Eski UO adları tarihsel/esin referanslarıdır.
 - İçerik ve değiştirilebilir adların tek kaynağı: `data/content-reference.json`.
 
 17 Kasım 2026 altyapı geçişi: API `/Users/erdi/masterland/masterland-api`, web `/Users/erdi/masterland/masterland-web` altında ayrı depolardır. Mobil origin `erditaskin/masterland` olarak korunur. Expo kökü bu repo içinde hâlâ `mobile/` altındadır. API origin'i `https://api.masterland.app`; Supabase çalışma zamanı ve SDK bağımlılığı kaldırılmıştır. Eski altyapı raporları tarihçedir. Güncel kapsam ve kabul sınırları `docs/vps-migration-20261117.md` içindedir.

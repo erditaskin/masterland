@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "status": "proposal-awaiting-user-approval",
+  "currentTurkishNames": [
+    "Belenyaka",
+    "Badınca",
+    "Yalıkoru",
+    "Demirdere",
+    "İpekyolu"
+  ],
+  "ipekyoluConceptPrompt": "Use case: precise-object-edit / ui-mockup. Update this Masterland concept board for the NEW CITY NAME and closely related ART DIRECTION. City5 is now exactly \"İpekyolu\" (capitaldottedİ, thenp-e-k-y-o-l-u). Set EVERY visible city5 name label to \"İpekyolu\": top \"05 · İpekyolu\", left gameplay title \"İpekyolu\", fifth destination card title \"İpekyolu\". Preserve the entire two-screen1086x1448portraitapprovalboard, all6x9squareboardgeometry, resources, controls, itemicons and selectedstates. KEEP the approved fineworkedwood/textile/brass materialfamily, restrainedplum/indigo andcream, same warm illustrated fantasy merge-gameworld. Evolve the backdrop from a generic fabricmarket to a memorable SILK TRADE ROUTE TOWN: a broad but intimate sunlit stone lane recedes under a graceful modest stonegateway, colorful clothcanopies connect wooden merchantfronts, rolledsilks, wovenbaskets and carefullystackedtradebundles beside stalls, small distant loadedwoodencart as backgroundsceneryonly. Weavingatelier andsoftlylitshopfronts, tactilecloth andsmallbrassdetails. No massivepalace, no desolatebrowndesert, no moderncity, no stereotypes, no extragame mechanics. Routeandtrade identity should be readable in the upperpanorama and narrowvisibleedges, centralboard remainscalmandusable. Apply the same new trade-route-town illustration to RIGHTscreen's fifth İpekyolu destinationthumbnail. Other4citycardartmustremainrecognizable andunchanged: Belenyaka gardens, Badınca bakery, Yalıkoru jetty, Demirdere forge. Keep smallsubtitle \"Konsept önizleme\"; keep İpekyolu selected with \"Önizleme\" since this is an unimplementedconcept, not a new unlock announcement. Do notchangeothertext, no newbuttons, no watermark. Mainpurpose is renameplus clearly stronger cloth/trade-route identity, preserve rest of the approved proposal family.",
+  "namingPrompts": {},
+  "note": "The concept prompt uses a normalized positive current-name constraint instead of repeating the superseded source spelling."
+}

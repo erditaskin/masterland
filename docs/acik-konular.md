@@ -186,3 +186,11 @@ Reklam maddesi uygulama/sunucu kabulüyle tamamlandı. Fiziksel +25 ve arka plan
 ## 17 Kasım 2026 — Reklamlı ilk mağaza yayını güncel kapıları
 
 Apple fiziksel silme/revoke kabulü, kullanıcı talebiyle servis sorunu düzelene kadar beklemededir. R2 offsite kurulumunu kullanıcı ertelemiştir. Gerçek para satışı ilk yayından sonra ele alınacaktır; ilk hedef reklamlı App Store sürümüdür. Google alan adı sahipliği Search Console'da doğrulanmıştır; marka doğrulamasının 24 saat sonra yeniden denenmesi gerekir. Meta genel yayınında silme URL kabulü ve işletme/kişi doğrulaması açıktır. AdMob halka açık mağaza eşleştirmesi/incelemesi ve yayın sürümünün test modu ayrımı bekler. App Store Connect bu kontrolde Apple oturumuna erişememiştir. Güncel ayrıntılar `store-release-readiness-20261117.md` içindedir.
+
+## 17 Kasım 2026 — Şehir/arayüz görsel onayı bekleniyor
+
+Kullanıcının yeni sırasıyla production öncesi şehirler ekranı, butonlar ve şehir temaları görsel olarak yeniden çalışılacaktır. Belenyaka, Badınca ve Yalıkoru için ilk üç pano üretildi; kullanıcı onayı beklenmektedir. Demirdere/İpekyolu ve uygulama refaktörü henüz başlamadı. Bu panolar sanat yönü taslağıdır; kesin ekran ölçüsü, ayrıştırılmış asset ve ölçülmüş piksel eşleşmesi değildir. Ayrıntı: `city-refresh-v2-20261117.md`.
+
+### Sonraki güncelleme — beşli görsel paket
+
+Kullanıcı kalan iki şehrin de üretilmesini istedi. Demirdere ve İpekyolu taslakları eklendi; güncel beşli Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu'dur. İpekyolu'nun ticaret yolu kompozisyonu yeni ad doğrultusunda yeniden üretildi. Önceki paragraf ilk üçlü turun tarihsel durumudur. Yeni beşli görsel onayı, nihai ekran/asset ayrıştırması, piksel karşılaştırmalı refaktör ve henüz oynanabilir olmayan şehirlerin içerik/ekonomi kabulü açık kalır.

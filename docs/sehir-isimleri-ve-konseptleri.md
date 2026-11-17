@@ -8,11 +8,11 @@ Bu belge, Masterland şehirlerinin onaylı Türkçe ve İngilizce görünen adla
 
 | Sabit kimlik | Eski referans | Türkçe ad | İngilizce ad | Konsept |
 | --- | --- | --- | --- | --- |
-| city1 | Skara Brae | Bahçeyaka | Meadowbrook | Yeşil, huzurlu başlangıç köyü; lacivert ve yeşil kıyı atmosferi. Ekin, değirmen, fırın, süt ürünleri ve meyve bahçeleri. |
-| city2 | New Haven | Ballıca | Baker’s Market | Pembe, çiçekli, sıcak pastane kasabası. İleri fırıncılık, kurabiye, tart, pasta ve çikolata. |
+| city1 | Skara Brae | Belenyaka | Meadowbrook | Yeşil, huzurlu başlangıç köyü; lacivert ve yeşil kıyı atmosferi. Ekin, değirmen, fırın, süt ürünleri ve meyve bahçeleri. |
+| city2 | New Haven | Badınca | Baker’s Market | Pembe, çiçekli, sıcak pastane kasabası. İleri fırıncılık, kurabiye, tart, pasta ve çikolata. |
 | city3 | Cove | Yalıkoru | Timberbay | Turkuaz denizli, ahşap kıyı kasabası. Balıkçılık, odunculuk ve marangozluk. |
 | city4 | Minoc | Demirdere | Ironvale | Madencilik ve demircilik. Cevher, külçe, zırh ve ekipman. Dördüncü sıra henüz öneridir. |
-| Atanmadı | Vesper | İpekyaka | Silkford | Terzilik ve ticaret. Kumaş, giysi ve ticaret paketleri. |
+| Atanmadı | Vesper | İpekyolu | Silkford | Terzilik ve ticaret. Kumaş, giysi ve ticaret paketleri. |
 | Atanmadı | Yew | Yelepınar | Manespring | Hayvan terbiyeciliği ve binekler. |
 | Atanmadı | Moonglow | Hilalkapı | Moongate | Simya, iksirler ve büyü malzemeleri. |
 | Atanmadı | Wind | Yeraltı | Undercity | Gerçekten yeraltında bulunan ileri büyücülük şehri. Büyü kitapları, asalar ve kristaller. |

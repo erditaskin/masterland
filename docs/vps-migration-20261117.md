@@ -59,7 +59,7 @@ Google/Meta eski Supabase redirect’leri yalnız geri dönüş için tutuldu; y
 
 ## Web yayını ve geri dönüş
 
-Web c1e1feb-20261117 release'i etkinleştirildi; önceki20261117-atlas release'ine rollback ve tekrar final release'e geçiş başarılıdır. /atlas tarayıcıda açılıp Ballıca seçimi ve dinamik içerik doğrulandı; konsol hatası yoktu. Statik iç linkler ve asset yolları doğrulandı. API kaynaklarındaki final güvenlik kontrolü, guest yükseltmesinde eski guest token’larını iptal eder; aynı kayda yeni doğrulanmış token ile erişilir. Bu koruma gerçek PostgreSQL testine dahil edildi.
+Web c1e1feb-20261117 release'i etkinleştirildi; önceki20261117-atlas release'ine rollback ve tekrar final release'e geçiş başarılıdır. /atlas tarayıcıda açılıp Badınca seçimi ve dinamik içerik doğrulandı; konsol hatası yoktu. Statik iç linkler ve asset yolları doğrulandı. API kaynaklarındaki final güvenlik kontrolü, guest yükseltmesinde eski guest token’larını iptal eder; aynı kayda yeni doğrulanmış token ile erişilir. Bu koruma gerçek PostgreSQL testine dahil edildi.
 
 ## Final API aktivasyonu ve ilk fiziksel giriş
 

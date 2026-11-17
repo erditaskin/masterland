@@ -447,3 +447,11 @@ Kullanıcının açık talebiyle SSV sunucu kapısı açıldı. Masterland’in 
 Kullanıcı ilk reklamlı App Store yayınına öncelik verdi; gerçek satış ve R2 offsite kurulumu yayın sonrasına bırakıldı. Apple fiziksel silme kabulü servis sorunu nedeniyle beklemededir. Google Search Console alan adı sahipliği kullanıcı tarafından eklenen TXT ile doğrulandı; marka doğrulaması ayrıca bekler. Meta genel yayın engeli nedeniyle kullanıcı ilk sürümde Facebook düğmesini gizlemeyi onayladı; hesap verileri silinmedi.
 
 Yeni production Release kontrolü, qa-reset bağlantısının TestFlight dışındaki production kanalında test tahtasını açabildiğini yakaladı. İlk koşu başarısız kabul olarak kaydedildi. Production hem başlangıç/sıcak bağlantı işleyicisinde hem doğrudan kayıt yükleme sınırında normal kayıtla sınırlandırıldı. Yeni yayın preset'i gerçek backend ve doğrulanmış reklamı açar; test kredileri ve gerçek para satışı kapalıdır. Son doğrulama sonucu store-release-readiness-20261117.md dosyasında tutulur.
+
+## 17 Kasım 2026 — İlk üç şehir için yeni görsel öneri
+
+Kullanıcının atlas referansı ve şehir listesi/buton eleştirisiyle Belenyaka, Badınca ve Yalıkoru için üç görsel onay panosu üretildi. Her panoda oyun ekranı, şehir seçimi ve kontrol örnekleri vardır. İlk Belenyaka taslağının tahta/ekran oranı ve Badınca'nın seçili durum tutarsızlığı düzeltildi. Son görseller, tam istemler ve hash/ölçü manifesti assets/concepts/city-refresh-v2 altında korundu. Uygulama ve canlı web değiştirilmedi; yeni çizimler onaylı olarak işaretlenmedi. Kullanıcı onayından sonra beş şehir hedefine devam edilecektir.
+
+## 17 Kasım 2026 — Üç ad düzeltmesi ve kalan iki şehir konsepti
+
+Kullanıcının açık düzeltmeleriyle ilk beş Türkçe ad Belenyaka, Badınca, Yalıkoru, Demirdere ve İpekyolu olarak güncellendi. Güncel belge/metin referansları ve konsept etiketleri değiştirildi; görünen adlar dışında kanonik veri değişikliği yapılmadığı denetlendi. Geçmiş gerçek test ekranları kanıt niteliğini korumak için yeniden boyanmadı. Demirdere için taş/demir/bakır, İpekyolu için ince ahşap/kumaş/pirinç ve ticaret yolu kompozisyonu üretildi. Yeni panolar onaylı uygulama ekranı sayılmadı. Canlı atlas adları sürümlü ve CSP hash'leri yeniden üretilen web deployment'ıyla güncellendi; son doğrulama görsel tur raporunda tutulur.

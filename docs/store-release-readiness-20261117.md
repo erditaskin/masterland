@@ -37,7 +37,7 @@ Türkçe alt başlık: **Birleştir ve şehirleri keşfet**
 
 Türkçe açıklama:
 
-Masterland'de aynı eşyaları birleştir, yeni ürünler keşfet ve siparişleri tamamla. Bahçeyaka'nın çiftliklerinden Ballıca'nın fırınlarına uzanan yolculukta üreticilerini geliştir, koleksiyonunu büyüt ve yeni hedeflere ilerle.
+Masterland'de aynı eşyaları birleştir, yeni ürünler keşfet ve siparişleri tamamla. Belenyaka'nın çiftliklerinden Badınca'nın fırınlarına uzanan yolculukta üreticilerini geliştir, koleksiyonunu büyüt ve yeni hedeflere ilerle.
 
 Kendi hızında oyna. Temel oyun internet bağlantısı olmadan çalışır. İstersen Apple veya Google hesabınla giriş yaparak ilerlemeni buluta kaydet. İsteğe bağlı ödüllü reklamlarla enerji kazan veya bekleyen üreticini yenile; reklam ve bulut özellikleri internet bağlantısı gerektirir.
 

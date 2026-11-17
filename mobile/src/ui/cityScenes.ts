@@ -14,7 +14,7 @@ export const cityScenes: Record<string, { source: number; color: string }> = {
 };
 export const upcomingCities = [
   { reference: "Minoc", tr: "Demirdere", en: "Ironvale" },
-  { reference: "Vesper", tr: "İpekyaka", en: "Silkford" },
+  { reference: "Vesper", tr: "İpekyolu", en: "Silkford" },
   { reference: "Yew", tr: "Yelepınar", en: "Manespring" },
   { reference: "Moonglow", tr: "Hilalkapı", en: "Moongate" },
   { reference: "Wind", tr: "Yeraltı", en: "Undercity" },
