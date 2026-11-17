@@ -6,7 +6,7 @@ import { createCloudSyncController } from "../src/account/cloudSyncController";
 import type { CloudSave } from "../src/account/cloudProtocol";
 const first = "00000000-0000-4000-8000-000000000001";
 const second = "00000000-0000-4000-8000-000000000002";
-function fixture() {
+function fixture(guest = false) {
   let local = fresh(100),
     binding: string | null = null,
     online = true;
@@ -65,6 +65,7 @@ function fixture() {
   const controller = createCloudSyncController({
     local: () => local,
     localReady: () => true,
+    isGuest: () => guest,
     fetch: async (owner) => {
       if (pauseFetch) await pauseFetch;
       if (!online) throw Error("offline");
@@ -339,4 +340,19 @@ test("a reward response from a signed-out account never replaces local progress"
   await leaving;
   assert.equal(f.local().stamina, 100);
   assert.equal(f.controller.get().phase, "signed-out");
+});
+
+test("new guest saves automatically without asking for login or save choice", async () => {
+  const f = fixture(true);
+  await f.controller.connect(first);
+  assert.equal(f.controller.get().phase, "synced");
+  assert.equal(f.binding(), first);
+  assert.equal(f.counts().writes, 1);
+});
+test("guest with existing remote progress still requires an explicit choice", async () => {
+  const f = fixture(true);
+  f.remote(first, 2, 900);
+  await f.controller.connect(first);
+  assert.equal(f.controller.get().phase, "choice");
+  assert.equal(f.counts().writes, 0);
 });

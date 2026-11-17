@@ -114,6 +114,29 @@ final class MasterlandTests:XCTestCase {
         shot("rewarded-earned-twenty-five-energy")
         app.terminate()
     }
+    func testRewardedProducerRefreshDoesNotGrantEnergy() {
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer5"].waitForExistence(timeout:10))
+        let beforeEnergy=app.buttons["stamina"].label
+        app.buttons["producer5"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch.waitForExistence(timeout:5))
+        let watch=app.buttons["watchProducerAd"]
+        let prepared=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in watch.exists && watch.isEnabled && watch.isHittable },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[prepared],timeout:35),.completed)
+        watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:45),.completed)
+        sleep(35)
+        let endClose=app.buttons["Close"].firstMatch, videoClose=app.buttons["Close Advertisement"].firstMatch
+        if endClose.waitForExistence(timeout:5) && endClose.isHittable {endClose.tap()}
+        else if videoClose.isEnabled {videoClose.tap();if endClose.waitForExistence(timeout:5) && endClose.isHittable {endClose.tap()}}
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:10))
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch.exists)
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(app.buttons["stamina"].label,beforeEnergy)
+        shot("rewarded-producer-refreshed-without-energy")
+        app.terminate()
+    }
     func testOfflineAccountPanelAndContentLanguage() {
         let gold=app.buttons["gold"].label, xp=app.buttons["profile"].label, frame=cell(0).frame
         app.buttons["profile-menu"].tap()

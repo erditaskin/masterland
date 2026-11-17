@@ -23,7 +23,11 @@ export function AccountDeletionPanel() {
     [verified, setVerified] = useState<string | null>(null),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
-  if ((!accountDeletionEnabled && !deletion.hasJournal) || !account.user)
+  if (
+    (!accountDeletionEnabled && !deletion.hasJournal) ||
+    !account.user ||
+    account.user.is_anonymous
+  )
     return null;
   return (
     <View>

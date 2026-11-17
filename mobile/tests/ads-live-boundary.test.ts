@@ -5,7 +5,13 @@ import ts from "typescript";
 import { EnergyAdController } from "../src/ads/controller";
 const owner = "00000000-0000-4000-8000-000000000001";
 const intent = "00000000-0000-4000-8000-000000000002";
-function fixture(options: { consent?: boolean; verified?: boolean } = {}) {
+function fixture(
+  options: {
+    consent?: boolean;
+    verified?: boolean;
+    producerUnit?: boolean;
+  } = {},
+) {
   let user: { id: string } | null = { id: owner };
   let verified = options.verified ?? true,
     redeemed = false,
@@ -51,6 +57,7 @@ function fixture(options: { consent?: boolean; verified?: boolean } = {}) {
   const modules: Record<string, unknown> = {
     "../account/auth": {
       accountStore: {
+        ensureGuest: async () => !!user,
         get: () => ({ user }),
         subscribe: (listener: () => void) => {
           accountListeners.add(listener);
@@ -65,6 +72,8 @@ function fixture(options: { consent?: boolean; verified?: boolean } = {}) {
           cloudListeners.add(listener);
           return () => cloudListeners.delete(listener);
         },
+        connect: async () => {},
+        sync: async () => {},
         redeem: async () => {
           if (verified && !redeemed) {
             redeemed = true;
@@ -74,11 +83,11 @@ function fixture(options: { consent?: boolean; verified?: boolean } = {}) {
       },
     },
     "./verifiedEnergyRepository": {
-      prepareVerifiedEnergyAd: async () => ({
+      prepareVerifiedEnergyAd: async (_: string, target?: unknown) => ({
         kind: "ready",
         intentID: intent,
         used: 0,
-        amount: 25,
+        amount: target ? 1 : 25,
       }),
       pendingVerifiedEnergyAds: async () =>
         verified && !redeemed ? [intent] : [],
@@ -111,6 +120,7 @@ function fixture(options: { consent?: boolean; verified?: boolean } = {}) {
         testAds: false,
         productionRewardsEnabled: true,
         rewardedUnit: "live-unit",
+        producerRewardedUnit: options.producerUnit ? "producer-unit" : null,
       }),
     },
     "./controller": { EnergyAdController },
@@ -197,4 +207,20 @@ test("sign-out invalidates a loaded live ad and cooldown ads stay blocked withou
     false,
   );
   assert.equal(cooldown.request(), null);
+});
+
+test("a configured cooldown ad uses its own unit with a producer intent", async () => {
+  const f = fixture({ verified: false, producerUnit: true });
+  await f.service.start();
+  assert.equal(
+    await f.service.watch({ cityID: "city1", producerID: "producer1" }),
+    true,
+  );
+  assert.equal(f.request()?.unit, "producer-unit");
+  assert.equal(
+    f.request()?.options.serverSideVerificationOptions.customData,
+    intent,
+  );
+  f.event("closed");
+  assert.equal(f.credits(), 0);
 });

@@ -1,3 +1,5 @@
+> Güncel karar: 17 Kasım 2026 tarihinde Supabase yerine bağımsız VPS/Fastify/PostgreSQL geçişi seçildi. Aşağıdaki Supabase dağıtım bilgileri tarihsel checkpoint bilgisidir; yeni yayın hedefi değildir. Son checkpoint 153 birim testi içerir. Misafir oturumu istemcisi eklendi ancak dashboard ve cihaz kabulü tamamlanmadı. 007 üretici reklamı migrationı kapalı dağıtıldı. Ayrıntılı yeni oturum aktarımı outputs içindeki masterland-vps-handover-20261117.md dosyasındadır.
+
 # Canlı yayın hazırlığı — 17 Kasım 2026
 
 ## Bu tur tamamlanan yerel işler

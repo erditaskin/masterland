@@ -21,9 +21,14 @@ export function EnergyAdPanel({
       ? save.testAdRewards.receipts.length
       : 0;
   useEffect(() => {
+    if (producerID && !adsConfig.testAds) return;
     if (ad.canRequestAds && !ad.consentBusy && used < 4) void energyAds.load();
-  }, [ad.canRequestAds, ad.consentBusy, used]);
-  if (!ad.enabled || (producerID && !adsConfig.testAds)) return null;
+  }, [ad.canRequestAds, ad.consentBusy, used, producerID]);
+  if (
+    !ad.enabled ||
+    (producerID && !adsConfig.testAds && !adsConfig.producerRewardedUnit)
+  )
+    return null;
   const showing = ad.phase === "showing" || ad.phase === "earned";
   return (
     <View testID="energyAdPanel" style={{ width: "100%" }}>
@@ -31,24 +36,30 @@ export function EnergyAdPanel({
       <Label title>
         {adsConfig.testAds
           ? tx("Enerji hediyesi · test reklamı", "Energy gift · test ad")
-          : tx("Enerji hediyesi", "Energy gift")}
+          : producerID
+            ? tx("Üretici hediyesi", "Producer gift")
+            : tx("Enerji hediyesi", "Energy gift")}
       </Label>
       <Label size={12}>
         {tx(
-          testModeEnabled || !adsConfig.testAds
-            ? "İsteğe bağlı reklamı tamamla, +25 enerji al."
-            : "Test reklamı önizlemesi. Bakiye ve günlük hak değişmez.",
-          testModeEnabled || !adsConfig.testAds
-            ? "Complete an optional ad for +25 energy."
-            : "Test ad preview. Balance and daily allowance remain unchanged.",
+          !testModeEnabled && adsConfig.testAds
+            ? "Test reklamı önizlemesi. Bakiye ve günlük hak değişmez."
+            : producerID
+              ? "İsteğe bağlı reklamı tamamla, üreticiyi beklemeden hazırla."
+              : "İsteğe bağlı reklamı tamamla, +25 enerji al.",
+          !testModeEnabled && adsConfig.testAds
+            ? "Test ad preview. Balance and daily allowance remain unchanged."
+            : producerID
+              ? "Complete an optional ad to refresh the producer without waiting."
+              : "Complete an optional ad for +25 energy.",
         )}{" "}
         {testModeEnabled || !adsConfig.testAds ? `${used}/4` : ""}
       </Label>
       {ad.needsAccount && (
         <Label size={12}>
           {tx(
-            "Reklam ödülünü kaydetmek için hesabına giriş yap.",
-            "Sign in to save your ad reward.",
+            "Giriş gerekmez. Reklamı seçtiğinde misafir oturumun hazırlanır.",
+            "No sign-in required. A guest session is prepared when you choose the ad.",
           )}
         </Label>
       )}
@@ -77,7 +88,6 @@ export function EnergyAdPanel({
         testID={producerID ? "watchProducerAd" : "watchEnergyAd"}
         disabled={
           used >= 4 ||
-          ad.needsAccount ||
           ad.rewardPending ||
           ad.consentBusy ||
           showing ||

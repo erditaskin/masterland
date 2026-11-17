@@ -36,6 +36,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
       .then(setAppleAvailable)
       .catch(() => setAppleAvailable(false));
   }, []);
+  const registered = !!account.user && !account.user.is_anonymous;
   const name =
     account.user?.user_metadata.full_name ?? account.user?.user_metadata.name;
   const providers = account.user?.identities
@@ -71,7 +72,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
           style={{ width: 72, height: 72, borderRadius: 18, marginBottom: 12 }}
         />
         <Label title size={24}>
-          {account.user
+          {registered
             ? tx("Hesabın", "Your account")
             : tx("Giriş yap", "Sign in")}
         </Label>
@@ -88,7 +89,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
         </Label>
       )}
       <>
-        {account.user && (
+        {registered && account.user && (
           <View testID="signedInAccount">
             <Label title>{tx("Oturum açık", "Signed in")}</Label>
             {typeof name === "string" && name.trim() ? (
@@ -100,7 +101,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
             </Label>
           </View>
         )}
-        {account.ready && !account.user && (
+        {account.ready && !registered && (
           <View style={{ gap: 10, marginTop: 12, marginBottom: 14 }}>
             {appleAvailable && (
               <View
@@ -173,7 +174,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
             )}
           </Label>
         )}
-        {account.user && (
+        {registered && (
           <AppButton
             testID="accountSignOut"
             tone="secondary"
@@ -191,7 +192,7 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
         text={tx("Kapat", "Close")}
         onPress={onClose}
       />
-      {!account.user && (
+      {!registered && (
         <Label size={12}>
           {tx(
             "Giriş yapmadan oyuna devam edebilirsin. İlerlemen bu cihazda korunur.",

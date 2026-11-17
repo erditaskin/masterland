@@ -5,7 +5,11 @@ import ts from "typescript";
 
 // Run the real auth store with native/provider boundaries replaced; no device credentials enter tests.
 function setup(existingSession = false) {
-  const user = { id: "player", identities: [{ provider: "apple" }] };
+  const user = {
+    is_anonymous: false,
+    id: "player",
+    identities: [{ provider: "apple" }],
+  };
   let session: { user: typeof user } | null = existingSession ? { user } : null;
   let verified = true;
   let cancelled = false;
@@ -14,7 +18,15 @@ function setup(existingSession = false) {
   let oauthRequest: any = null;
   let tokenCalls = 0;
   let callback = "masterland://auth/callback?code=test-code";
+  let guests = 0;
   const auth = {
+    onAuthStateChange() {},
+    signInAnonymously: async () => {
+      guests++;
+      user.is_anonymous = true;
+      session = { user };
+      return { error: null };
+    },
     getSession: async () => ({ data: { session }, error: null }),
     signInWithIdToken: async (credentials: { provider: string }) => {
       tokenCalls++;
@@ -28,6 +40,7 @@ function setup(existingSession = false) {
     },
     exchangeCodeForSession: async (code: string) => {
       assert.equal(code, "test-code");
+      user.is_anonymous = false;
       lastProvider = oauthRequest.provider;
       session = { user };
       return { error: null };
@@ -101,6 +114,7 @@ function setup(existingSession = false) {
   }, exported);
   return {
     store: exported.accountStore,
+    guests: () => guests,
     failVerification: () => {
       verified = false;
     },
@@ -207,3 +221,14 @@ for (const provider of ["google", "facebook"] as const) {
     assert.equal(store.get().error, "login-failed");
   });
 }
+
+test("guest session is reused and does not prevent later Google login", async () => {
+  const f = setup();
+  assert.equal(await f.store.ensureGuest(), true);
+  assert.equal(await f.store.ensureGuest(), true);
+  assert.equal(f.guests(), 1);
+  assert.equal(f.store.get().user.is_anonymous, true);
+  assert.equal(await f.store.signIn("google"), true);
+  assert.equal(f.lastProvider(), "google");
+  assert.equal(f.store.get().user.is_anonymous, false);
+});

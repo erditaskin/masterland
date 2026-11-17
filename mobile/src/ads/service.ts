@@ -18,6 +18,8 @@ export const adsConfig = resolveAdsConfig({
   channel: process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
   testMode: process.env.EXPO_PUBLIC_TEST_MODE,
   rewardedUnit: process.env.EXPO_PUBLIC_ADMOB_IOS_REWARDED_AD_UNIT_ID,
+  producerRewardedUnit:
+    process.env.EXPO_PUBLIC_ADMOB_IOS_PRODUCER_REWARDED_AD_UNIT_ID,
 });
 type Snapshot = {
   enabled: boolean;
@@ -65,6 +67,7 @@ let liveIntent: {
   ownerID: string;
   intentID: string;
   preparedAt: number;
+  target?: { cityID: string; producerID: string };
 } | null = null;
 let recovering: Promise<void> | null = null;
 let awaitingIntent: string | null = null;
@@ -235,11 +238,11 @@ export const energyAds = {
           void recoverVerifiedRewards();
       });
     }
-    await updateConsent();
+    if (!snapshot.canRequestAds) await updateConsent();
     await recoverVerifiedRewards();
   },
   privacy: () => updateConsent(true),
-  load: () => {
+  load: (target?: { cityID: string; producerID: string }) => {
     if (loadJob) return loadJob;
     loadJob = (async () => {
       if (
@@ -263,7 +266,10 @@ export const energyAds = {
           publish({ needsAccount: !owner, error: "ad" });
           return;
         }
-        const intent = await prepareVerifiedEnergyAd(owner);
+        if (target && !adsConfig.producerRewardedUnit) return;
+        await cloudSync.sync();
+        if (cloudSync.get().phase !== "synced") return;
+        const intent = await prepareVerifiedEnergyAd(owner, target);
         publish({ dailyUsed: intent.used });
         if (
           intent.kind !== "ready" ||
@@ -275,6 +281,7 @@ export const energyAds = {
           ownerID: owner,
           intentID: intent.intentID,
           preparedAt: Date.now(),
+          target,
         };
       }
       if (!(await connected())) {
@@ -292,7 +299,11 @@ export const energyAds = {
         await sdk();
       controller.load(Crypto.randomUUID(), (events) => {
         const ad = RewardedAd.createForAdRequest(
-          adsConfig.testAds ? TestIds.REWARDED : adsConfig.rewardedUnit!,
+          adsConfig.testAds
+            ? TestIds.REWARDED
+            : target
+              ? adsConfig.producerRewardedUnit!
+              : adsConfig.rewardedUnit!,
           !adsConfig.testAds && liveIntent
             ? {
                 serverSideVerificationOptions: {
@@ -332,9 +343,16 @@ export const energyAds = {
     watchJob = (async () => {
       if (["showing", "earned"].includes(snapshot.phase) || !snapshot.enabled)
         return false;
-      // Cooldown reward targets require their own server contract; never show an unpayable live ad.
-      if (!adsConfig.testAds && (target || snapshot.rewardPending))
+      if (
+        !adsConfig.testAds &&
+        (snapshot.rewardPending || (target && !adsConfig.producerRewardedUnit))
+      )
         return false;
+      if (
+        !adsConfig.testAds &&
+        JSON.stringify(liveIntent?.target) !== JSON.stringify(target)
+      )
+        controller.reset();
       if (
         !adsConfig.testAds &&
         liveIntent &&
@@ -343,7 +361,14 @@ export const energyAds = {
         controller.reset();
       if (!snapshot.canRequestAds) await updateConsent();
       if (!snapshot.canRequestAds) return false;
-      await energyAds.load();
+      if (!adsConfig.testAds) {
+        if (!(await accountStore.ensureGuest())) return false;
+        const owner = accountStore.get().user?.id;
+        if (!owner) return false;
+        await cloudSync.connect(owner);
+        if (cloudSync.get().phase !== "synced") return false;
+      }
+      await energyAds.load(target);
       if (!adsConfig.testAds && snapshot.dailyUsed >= 4) return false;
       if (snapshot.phase !== "ready")
         await new Promise<void>((resolve, reject) => {

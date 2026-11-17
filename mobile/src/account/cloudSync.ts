@@ -28,6 +28,9 @@ export const cloudSync = createCloudSyncController({
     !gameStore.get().review &&
     !gameStore.get().save.testOnly &&
     !deletionStore.get().hasJournal,
+  isGuest: (owner) =>
+    accountStore.get().user?.id === owner &&
+    accountStore.get().user?.is_anonymous === true,
   fetch: fetchCloudSave,
   binding: async () =>
     (await readCloudBinding(AsyncStorage, namespace))?.ownerID ?? null,

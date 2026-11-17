@@ -14,6 +14,7 @@ type Outbox = ReturnType<typeof createCloudOutbox>;
 export function createCloudSyncController(deps: {
   local(): Save;
   localReady(): boolean;
+  isGuest?(owner: string): boolean;
   fetch(owner: string): Promise<CloudSave | null>;
   binding(): Promise<string | null>;
   bind(owner: string): Promise<void>;
@@ -108,7 +109,15 @@ export function createCloudSyncController(deps: {
       await upload(owner, token, box);
     } else {
       const remote = await deps.fetch(owner);
-      if (valid(token)) publish({ phase: "choice", remote });
+      if (!valid(token)) return;
+      if (!remote && deps.isGuest?.(owner)) {
+        // A new guest identity has no competing cloud save. Never overwrite an existing save implicitly.
+        await deps.backup();
+        if (!valid(token)) return;
+        await box.resolve(0, deps.local());
+        await deps.bind(owner);
+        await upload(owner, token, box);
+      } else publish({ phase: "choice", remote });
     }
   }
   return {

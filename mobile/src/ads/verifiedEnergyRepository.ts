@@ -10,14 +10,22 @@ async function ownerToken(ownerID: string) {
   return session.data.session.access_token;
 }
 /** Prepared for SSV acceptance. Live ad loading remains closed in ads/config.ts. */
-export async function prepareVerifiedEnergyAd(ownerID: string) {
+export async function prepareVerifiedEnergyAd(
+  ownerID: string,
+  target?: { cityID: string; producerID: string },
+) {
   const token = await ownerToken(ownerID);
   const result = await accountClient!
-    .rpc("prepare_energy_ad", { request_id: Crypto.randomUUID() })
+    .rpc(target ? "prepare_producer_ad" : "prepare_energy_ad", {
+      request_id: Crypto.randomUUID(),
+      ...(target
+        ? { city_id: target.cityID, producer_id: target.producerID }
+        : {}),
+    })
     .setHeader("Authorization", `Bearer ${token}`)
     .abortSignal(AbortSignal.timeout(15000));
   if (result.error) throw result.error;
-  return readPreparedEnergyAd(result.data);
+  return readPreparedEnergyAd(result.data, target ? "producer" : "energy");
 }
 export async function redeemVerifiedEnergyAd(
   ownerID: string,

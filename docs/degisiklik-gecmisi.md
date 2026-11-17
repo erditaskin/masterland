@@ -409,3 +409,10 @@ Kullanıcı Türkçe ve İngilizce şehir adlarını ve konseptlerini kesinleşt
 ## 17 Kasım 2026 — Giriş, onaylı şehir adları ve ahşap şehir panosu
 
 Diğer oturumun Apple auth değişiklikleri main üzerinde korunmuştur. İlk üç şehir adı TR/EN olarak uygulandı; sabit ID'ler korunur. imagegen ile mevcut tahta çevre ölçülerine uygun üç tematik tam ekran arka plan ve ahşap başarı panosu üretildi. Giriş sağlayıcı düğmeleri ortak boyuta alındı. Şehir seçimi küçük kartlarla, başarılar bağımsız iki sütunlu listeyle yenilendi; gelecekteki şehirler Yakında olarak listelendi. 97 birim testi, TypeScript, lint ve üç hedefli Release simülatör senaryosu geçti. Ekonomi/cooldown/idle istekleri sıraya kaydedildi, bu görsel değişikliğe karıştırılmadı.
+
+
+## 17 Kasım 2026 — Supabase yerine bağımsız VPS kararı
+
+Kullanıcı, mevcut kodun main dalına commit/push ile kaydedilmesini ve uygulamanın yeni bir oturumda bağımsız Fastify/PostgreSQL altyapısına geçirilmesini istedi. Hedef dizinler `/Users/erdi/masterland/masterland-mobile`, `masterland-api` ve `masterland-web` olacaktır. Mevcut mobil Git geçmişi ve origin adı korunacaktır. API `api.masterland.app`, web `masterland.app` üzerinde çalışacaktır. Sunucu `root@142.93.88.194` adresidir. Soruders kaynakları yalnız referans olarak incelenecek; canlı Soruders projesi değiştirilmeyecektir. Supabase'ten kullanıcı veya veri aktarılmayacaktır. Yayından önce veritabanı sıfırlanabilir; yayın sonrası veri koruması zorunludur. Taşıma ve sunucu kurulumu bu checkpoint kapsamında yapılmadı; yeni oturuma devredildi.
+
+Misafirlerin reklam izlerken giriş yapmaya zorlanmaması onaylandı. İstemcide isteğe bağlı anonim oturum hazırlığı eklendi; Supabase anonim giriş ayarı açılmadı. Yeni VPS mimarisinde bu davranış korunacak, Supabase bağımlılığı taşınmayacaktır. Canlı reklam ve hesap silme bayrakları kapalıdır. Son yerel çalışma 153 birim testinden ve TypeScript kontrolünden geçti. Misafir akışı cihazda doğrulanmış değildir. Önceki 007 üretici reklam migrationı ve tür ayrımlı SSV dağıtımı kapalı bayraklarla tamamlandı; bunlar yeni PostgreSQL uygulamasına davranış referansıdır.

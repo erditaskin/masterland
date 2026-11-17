@@ -63,6 +63,29 @@ export const accountStore = {
     })();
     return starting;
   },
+  ensureGuest: async () => {
+    await accountStore.start();
+    if (!accountClient || snapshot.busy) return false;
+    publish({ busy: true, error: null });
+    try {
+      const current = await accountClient.auth.getSession();
+      if (current.error) throw current.error;
+      if (!current.data.session) {
+        const created = await accountClient.auth.signInAnonymously();
+        if (created.error) throw created.error;
+      }
+      const verified = await accountClient.auth.getUser();
+      if (verified.error || !verified.data.user)
+        throw Error("Guest session unavailable");
+      publish({ ready: true, user: verified.data.user });
+      return true;
+    } catch {
+      publish({ error: "session-failed" });
+      return false;
+    } finally {
+      publish({ busy: false });
+    }
+  },
   signIn: async (provider: LoginProvider, reauthenticate = false) => {
     if (!accountClient || snapshot.busy) return;
     if (provider === "facebook" && !accountConfig.facebookEnabled) return;
@@ -76,7 +99,7 @@ export const accountStore = {
       if (reauthenticate) deletionProof = null;
       if (reauthenticate && !expectedID)
         throw Error("No account to reauthenticate");
-      if (data.session && !reauthenticate) {
+      if (data.session && !data.session.user.is_anonymous && !reauthenticate) {
         const existing = await accountClient.auth.getUser();
         if (existing.error || !existing.data.user)
           throw Error("Session verification failed");

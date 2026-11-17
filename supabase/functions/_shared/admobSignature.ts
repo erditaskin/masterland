@@ -6,6 +6,7 @@ export interface AdmobReward {
   intentID: string;
   timestamp: number;
   adUnit: string;
+  kind: "energy" | "producer";
 }
 /** Verify the original encoded query bytes. Re-encoding query parameters changes the signed message. */
 export function verifyAdmobSignature(rawURL: string, keys: ReadonlyMap<string, string>): URLSearchParams {
@@ -35,6 +36,7 @@ export function verifyAdmobCallback(
   keys: ReadonlyMap<string, string>,
   allowedAdUnit: string,
   now: number,
+  producerAdUnit = "",
 ): AdmobReward {
   const params = verifyAdmobSignature(rawURL, keys);
   const transactionID = params.get("transaction_id") ?? "";
@@ -44,10 +46,12 @@ export function verifyAdmobCallback(
   const adUnit = params.get("ad_unit") ?? "";
   // AdMob documents the callback ad_unit as the numeric suffix, not the SDK's full ca-app-pub ID.
   const expectedUnit = allowedAdUnit.split("/").at(-1);
+  const producerUnit = producerAdUnit.split("/").at(-1);
+  const kind = producerUnit && adUnit === producerUnit ? "producer" : "energy";
   if (
-    adUnit !== expectedUnit ||
-    params.get("reward_amount") !== "25" ||
-    params.get("reward_item") !== "energy" ||
+    (kind === "producer" ? adUnit !== producerUnit : adUnit !== expectedUnit) ||
+    params.get("reward_amount") !== (kind === "producer" ? "1" : "25") ||
+    params.get("reward_item") !== (kind === "producer" ? "producer_refresh" : "energy") ||
     !/^[a-f0-9]{16,128}$/i.test(transactionID) ||
     !/^[a-f0-9-]{36}$/i.test(userID) ||
     !/^[a-f0-9-]{36}$/i.test(intentID) ||
@@ -56,5 +60,5 @@ export function verifyAdmobCallback(
     timestamp > now + 300000
   )
     throw Error("Unexpected reward");
-  return { transactionID, userID, intentID, timestamp, adUnit };
+  return { transactionID, userID, intentID, timestamp, adUnit, kind };
 }

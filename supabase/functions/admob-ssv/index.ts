@@ -51,6 +51,7 @@ Deno.serve(async (request) => {
       keys,
       Deno.env.get("ADMOB_REWARDED_UNIT_ID") ?? "",
       Date.now(),
+      Deno.env.get("ADMOB_PRODUCER_REWARDED_UNIT_ID") ?? "",
     );
   } catch {
     return new Response("Callback not verified", { status: 400 });
@@ -60,11 +61,12 @@ Deno.serve(async (request) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
-  const { error } = await admin.rpc("record_energy_ssv", {
+  const { error } = await admin.rpc("record_game_ssv", {
     owner_id: reward.userID,
     intent_id: reward.intentID,
     transaction_id: reward.transactionID,
     event_time: new Date(reward.timestamp).toISOString(),
+    verified_kind: reward.kind,
   });
   // Non-200 on infrastructure failure permits AdMob retries. Duplicate callbacks return success from the RPC.
   return new Response(error ? "Reward pending" : "OK", {

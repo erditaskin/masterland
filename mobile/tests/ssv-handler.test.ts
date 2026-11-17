@@ -28,6 +28,7 @@ function setup(
       verifyAdmobCallback: () => {
         if (options.invalidSignature) throw Error("bad signature");
         return {
+          kind: "energy",
           userID: "owner",
           intentID: "intent",
           transactionID: "transaction",

@@ -59,3 +59,26 @@ test("console sample metadata passes signature verification but cannot pass prod
   assert.equal(verifyAdmobSignature(sample, keys).get("ad_unit"), "1234567890");
   assert.throws(() => verifyAdmobCallback(sample, keys, unit, now));
 });
+
+test("producer ad signatures cannot masquerade as energy rewards", () => {
+  const producerUnit = "ca-app-pub-2972187520207492/1111111111";
+  const valid = callback({
+    ad_unit: "1111111111",
+    reward_amount: "1",
+    reward_item: "producer_refresh",
+  });
+  assert.equal(
+    verifyAdmobCallback(valid, keys, unit, now, producerUnit).kind,
+    "producer",
+  );
+  assert.throws(() => verifyAdmobCallback(valid, keys, unit, now));
+  assert.throws(() =>
+    verifyAdmobCallback(
+      callback({ ad_unit: "1111111111" }),
+      keys,
+      unit,
+      now,
+      producerUnit,
+    ),
+  );
+});
