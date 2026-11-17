@@ -76,3 +76,19 @@ Bozuk auth verisine rağmen silme receipt’inin anonim sorgulanması ve eski au
 ## Facebook kontrollü derleme düzeltmesi
 
 Facebook tester bayrağı açık, son162-testlik kaynakları içeren imzalı Release build başarılı oldu ve aynı iPhone’a uygulama kaldırılmadan kuruldu. Kullanıcıya Facebook girişi tekrar denemesi iletildi. Bu sırada API ve web final release’lerinde çalışır; iki servisin rollback ve son release’e geri dönüş testleri başarılıdır. Gerçek bulut kayıt seçimi/ilk upload henüz kabul edilmedi; aggregate kontrolde game_saves0 görüldüğü için giriş başarısı yedekleme başarısı olarak sunulmadı.
+
+
+## Facebook dönüş hatasının incelemesi
+
+Facebook düğmesi açıldıktan sonra kullanıcı, sağlayıcıdan oyuna dönünce bağlantı hatası bildirdi. Aggregate sorguda iki Facebook attempt’inin verified_identity ve code_hash aşamalarına ulaştığı, fakat Facebook user identity kaydı oluşmadığı görüldü; sağlayıcı kimlik doğrulaması başarılı, native code exchange tamamlanmamıştı. Olası neden Facebook fragment’inin HTTP redirect sırasında miras kalmasıdır. RFC9110 bölüm10.2.2/17.11 uyarınca backend native Location’ına açık boş fragment eklenerek miras önlenir; mobilin state/PKCE/URL kontrolleri gevşetilmez. Regression test ve yeni API release hazırlığı sürüyor; fiziksel tekrar sonucu bekleniyor.
+
+
+## Son kabul durumu — 17 Kasım 2026
+
+Bu bölüm yukarıdaki ara durumların güncel sonucudur. Facebook dönüşüne açık boş fragment ekleyen ccab06d düzeltmesi dağıtıldı. Kullanıcı aynı iPhone üzerinde Facebook girişinin başarılı olduğunu doğruladı. Google giriş/çıkış/tekrar giriş ve Apple girişi de kullanıcı tarafından doğrulanmıştır. Aggregate sorguda her sağlayıcı için bir identity görüldü; kişisel veri veya ham log aktarılmadı.
+
+Kullanıcı telefon kaydını buluta kaydetti ve “ilerlemen kaydedildi” mesajını bildirdi. Sunucuda bir game_saves kaydı, revizyon 1 doğrulandı. İki cihaz arasında geri yükleme/çakışma kabulü kullanıcı tarafından açıkça sonraya bırakıldı; başarılı sayılmaz. Eski Supabase OAuth callback’leri geri dönüş imkânı için hâlâ tutulmaktadır; proje veya verileri silinmedi.
+
+Güncel API release kimliği cf6d5533e83f8092a05d83b8e561bc0fcffac144’tür. Uygulama imajı ccab06d kaynaklarını içerir; sonraki commit yalnız compose log sınırlarını ekler. Çalışan API ve DB konteynerlerinde json-file logları 10 MB × 3 ile sınırlandı; DB kalıcı volume korunarak yeniden başlatıldı. Web c1e1feb-20261117 release’indedir.
+
+Sonuç: 162 mobil ve 21 API testi geçti. Son OAuth parser ek kontrolleriyle hedefli 9 test de geçti. Release simülatör kontrolleri ve 54 eşit kare hücre ölçümü yukarıdaki kanıtlarla doğrulandı. Fiziksel üç sağlayıcı ve ilk bulut upload kabul edildi. Canlı reklam ödülü, gerçek para satın alma ve hesap silme kapıları kapalıdır. Gerçek reklam/geç callback, Apple revoke/silme ve iki cihaz kabulü tamamlanmadı. Meta genel yayını/doğrulaması, AdMob mağaza incelemesi ve sunucu dışı DB yedekleme ayrıca beklemektedir. Sunucu içi günlük yedek/restore testi afet kurtarma yerine geçmez.

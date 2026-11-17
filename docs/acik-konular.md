@@ -162,3 +162,8 @@ Bu sıra kaydı uygulandı veya test edildi anlamına gelmez. Aktif giriş/şehi
 ### Son ekonomi düzeltmesi için netleştirilecekler
 
 Enerji paketi 3 elmas için kaç enerji verecek? Reklam ödülü önceki +15 değerinde mi kalacak? Cooldown geçişinde elmas fiyatı ve üretici başına kullanım serisi ölçülerek belirlenmelidir. Ürünler artık altınla basamak açmadığından sipariş/keşif XP eğrisi ve ücretsiz şehir erişim süresi yeniden simüle edilmelidir. Yeni şehirlerin 24/33 eşikleri kesin, city4/city5 adaylarının kesin sırası henüz ayrıca doğrulanmadı. Kullanıcının isteğiyle bu konular aktif görsel turunu kesmeden sıraya alındı.
+
+
+## 17 Kasım 2026 — VPS sonrası kalan kabul
+
+İki cihaz bulut geri yükleme/çakışma testi kullanıcı tarafından ertelendi. Canlı reklam/geç callback, Apple revoke ve gerçek hesap silme kabulü; backend doğrulamalı gerçek satın alma; Meta genel yayın/doğrulaması ve AdMob incelemesi henüz tamamlanmadı. Sunucu dışı DB yedekleme ve veri saklama/temizlik politikası yayından önce netleştirilecektir. Güncel kanıt: vps-migration-20261117.md.

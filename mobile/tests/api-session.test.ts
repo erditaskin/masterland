@@ -192,11 +192,16 @@ test("OAuth return requires exact state and rejects duplicates, fragments and cr
     oauthCode(`${base}?code=ok&state=expected`, base, "expected"),
     "ok",
   );
+  assert.equal(
+    oauthCode(`${base}?code=ok&state=expected#`, base, "expected"),
+    "ok",
+  );
   for (const url of [
     `${base}?code=ok`,
     `${base}?code=ok&state=wrong`,
     `${base}?code=ok&state=expected&state=expected`,
     `${base}?code=ok&state=expected#token`,
+    `${base}?code=ok&state=expected#_=_`,
     "masterland://user:pass@auth/callback?code=ok&state=expected",
   ])
     assert.throws(() => oauthCode(url, base, "expected"));

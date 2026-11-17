@@ -33,7 +33,19 @@
   "physicalProviderAcceptance": {
     "google": "User confirmed login/logout/relogin; aggregate provider identity verified",
     "apple": "User confirmed successful return to game; aggregate identity verified",
-    "facebook": "Initial build had tester flag false; corrected controlled build in progress"
+    "facebook": "User confirmed successful login after explicit empty redirect fragment fix; aggregate identity verified"
   },
-  "latestControlledNativeRerunPassed": true
+  "latestControlledNativeRerunPassed": true,
+  "cloudSaveAcceptance": {
+    "userConfirmedSaved": true,
+    "aggregateSaveCount": 1,
+    "revision": 1,
+    "twoDeviceAcceptance": "Deferred by explicit user decision; not passed"
+  },
+  "liveGates": {
+    "adRewards": false,
+    "accountDeletion": false,
+    "productionIAP": false
+  },
+  "apiRelease": "cf6d5533e83f8092a05d83b8e561bc0fcffac144"
 }

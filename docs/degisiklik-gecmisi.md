@@ -421,3 +421,8 @@ Misafirlerin reklam izlerken giriş yapmaya zorlanmaması onaylandı. İstemcide
 ## 17 Kasım 2026 — Bağımsız VPS geçişinin uygulanması
 
 Mobil Git deposu geçmişi ve370 takipli dosyanın hash’i korunarak masterland-mobile altına taşındı; Expo kökü mobile olarak bırakıldı. Ayrı Fastify/PostgreSQL API ve mevcut web deposu yeni köklere alındı. Cloudflare DNS kullanıcı tarafından aynı VPS’e yönlendirildi; API/web HTTPS ve TLS yenileme testi, ayrı DB rolü, yedek/restore ve sunucu güvenlik sınırları kuruldu. Google/Meta callback’leri yeni API’ye eklendi; eski URL’ler gerçek cihaz giriş kabulüne kadar korundu. İki AdMob SSV URL’si yeni API’ye taşınıp imzalı konsol testleri kapalı ledger ile geçti. Mobil Supabase SDK’sı kaldırıldı; mevcut oyun, kayıt ve outbox davranışları korundu. Ayrıntılı gerçek sonuçlar ve tamamlanmamış kabul adımları vps-migration-20261117.md içinde tutulur.
+
+
+## 17 Kasım 2026 — Fiziksel giriş ve ilk bulut kaydı kabulü
+
+Facebook dönüşündeki fragment mirası, backend redirect’inde açık boş fragment ile engellendi; native state/PKCE kontrolleri korunmuştur. Kullanıcı Google, Apple ve Facebook girişlerini telefonda doğruladı. İlk bulut kaydı kullanıcı mesajı ve sunucuda revizyon 1 aggregate kontrolüyle kabul edildi. İki cihaz testi kullanıcı kararıyla ertelendi. API/DB log rotasyonu açık sınırlarla doğrulandı. Ayrıntılı kanıt ve kalan kapılar vps-migration-20261117.md içindedir.

@@ -482,3 +482,8 @@ Misafirlerin reklam izlerken giriş yapmaya zorlanmaması onaylandı. İstemcide
 Kullanıcı, yalnız Masterland’e ait Google/Facebook secret’ları, Apple özel anahtarı, yeni DB kimlikleri ve Masterland Slack webhook’unun142.93.88.194 VPS’indeki korumalı Masterland dizinlerine SSH ile aktarımını açıkça onayladı. Ek talebiyle Masaüstündeki mevcut özel anahtar klasörüne tarihli0600 izinli yedek arşiv alındı. Soruders secret’ları veya verileri bu kapsama dahil değildir.
 
 API ve web aynı IP’de ayrı hostname/servis olarak çalışır. Cloudflare Free kullanılır; DNS değişikliklerini kullanıcı yaptı. Kullanıcı Google callback eklenmesini ve ayrıca Meta/AdMob panellerindeki Masterland callback güncellemelerini onayladı. Eski OAuth adresleri yeni fiziksel girişler doğrulanana kadar tutulur. Canlı reklam/gerçek ödeme/hesap silme kapıları bu kabul onaylarından kendiliğinden açılmaz.
+
+
+## 17 Kasım 2026 — İki cihaz kabulünün ertelenmesi
+
+Kullanıcı, aynı Facebook hesabıyla Mac simülatöründe yapılacak ikinci cihaz bulut kabulünü açıkça sonraya bıraktı. Telefon üzerinde üç sağlayıcı girişi ve ilk bulut kaydı doğrulanmış olsa da iki cihaz geri yükleme/çakışma testi tamamlanmış sayılmayacaktır. Canlı reklam, hesap silme ve gerçek ödeme kapıları kapalı kalır.
