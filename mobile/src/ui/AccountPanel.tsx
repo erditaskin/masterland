@@ -141,25 +141,28 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
               }
               onPress={() => void signIn("google")}
             />
-            <ProviderButton
-              provider="facebook"
-              text={tx("Facebook ile devam et", "Continue with Facebook")}
-              disabled={
-                !accountConfig.enabled ||
-                account.busy ||
-                deletion.hasJournal ||
-                !accountConfig.facebookEnabled
-              }
-              onPress={() => void signIn("facebook")}
-            />
-            {!accountConfig.facebookEnabled && (
-              <Label size={11}>
-                {tx(
-                  "Facebook girişi yakında.",
-                  "Facebook sign-in coming soon.",
-                )}
-              </Label>
+            {process.env.EXPO_PUBLIC_FACEBOOK_LOGIN_HIDDEN !== "true" && (
+              <ProviderButton
+                provider="facebook"
+                text={tx("Facebook ile devam et", "Continue with Facebook")}
+                disabled={
+                  !accountConfig.enabled ||
+                  account.busy ||
+                  deletion.hasJournal ||
+                  !accountConfig.facebookEnabled
+                }
+                onPress={() => void signIn("facebook")}
+              />
             )}
+            {!accountConfig.facebookEnabled &&
+              process.env.EXPO_PUBLIC_FACEBOOK_LOGIN_HIDDEN !== "true" && (
+                <Label size={11}>
+                  {tx(
+                    "Facebook girişi yakında.",
+                    "Facebook sign-in coming soon.",
+                  )}
+                </Label>
+              )}
           </View>
         )}
         {!account.ready && (

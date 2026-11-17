@@ -53,12 +53,18 @@ export function AccountDeletionPanel() {
       {open && (
         <View testID="accountDeletionConfirmation">
           <Label>
-            {tx(
-              "Bulut hesabın ve bu telefondaki ilerlemen silinecek. Bu işlem geri alınamaz. Aynı e-postayla daha sonra yeni bir hesap açabilirsin; eski ilerleme geri gelmez.",
-              "Your cloud account and progress on this phone will be deleted. This cannot be undone. You can create a new account with the same email later; old progress will not return.",
-            )}
+            {account.user.is_anonymous
+              ? tx(
+                  "Bu misafir hesabı ve bu cihazdaki ilerlemen kalıcı olarak silinecek. Bu işlem geri alınamaz.",
+                  "This guest account and progress on this device will be permanently deleted. This cannot be undone.",
+                )
+              : tx(
+                  "Bulut hesabın ve bu telefondaki ilerlemen silinecek. Bu işlem geri alınamaz. Aynı e-postayla daha sonra yeni bir hesap açabilirsin; eski ilerleme geri gelmez.",
+                  "Your cloud account and progress on this phone will be deleted. This cannot be undone. You can create a new account with the same email later; old progress will not return.",
+                )}
           </Label>
           <AppCheckbox
+            testID="confirmAccountDeletionConsent"
             label={tx(
               "Hesabımı ve ilerlememi kalıcı olarak silmeyi onaylıyorum.",
               "I confirm permanent deletion of my account and progress.",

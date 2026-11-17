@@ -1,6 +1,37 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+test("production release rejects test currency and StoreKit credits", () => {
+  execFileSync(
+    process.execPath,
+    ["--import", "tsx", "--input-type=module", "-e", `
+      import assert from 'node:assert/strict';
+      import { fresh,transition } from './src/game/engine.ts';
+      import { productionRelease,testModeEnabled,storeKitTestEnabled } from './src/game/testMode.ts';
+      assert.equal(productionRelease,true);
+      assert.equal(testModeEnabled,false);
+      assert.equal(storeKitTestEnabled,false);
+      const s=fresh(1700000000000);
+      for (const action of [
+        {type:'test-energy-fill'}, {type:'test-gold-add'},
+        {type:'test-gems-add'}, {type:'test-level-up'},
+        {type:'storekit-credit',sku:'com.erditaskin.masterland.gems30',transaction:'forged-production'}
+      ]) {
+        const result=transition(s,action,1700000000000);
+        assert.equal(result.kind,'blocked');
+        assert.deepEqual(result.state,s);
+      }
+    `],
+    {
+      env: {
+        ...process.env,
+        EXPO_PUBLIC_TEST_MODE: "false",
+        EXPO_PUBLIC_DISTRIBUTION_CHANNEL: "production",
+      },
+      stdio: "pipe",
+    },
+  );
+});
 test("test build refills without reducing overflow and credits each StoreKit transaction once", () => {
   const script = `
  import assert from 'node:assert/strict';

@@ -180,6 +180,55 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(app.buttons["stamina"].label,expected)
         shot("verified-server-energy-persisted")
     }
+    func openGuestDeletionConfirmation() {
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch.waitForExistence(timeout:10))
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"signedInAccount").firstMatch.exists)
+        let open=app.buttons["openAccountDeletion"]
+        for _ in 0..<4 where !open.isHittable {app.scrollViews.firstMatch.swipeUp()}
+        XCTAssertTrue(open.isHittable);open.tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"accountDeletionConfirmation").firstMatch.waitForExistence(timeout:5))
+    }
+    func testPrepareGuestDeletionConfirmation() {
+        openGuestDeletionConfirmation()
+        let consent=app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
+        XCTAssertTrue(consent.exists)
+        let erase=app.buttons["confirmAccountDeletion"]
+        for _ in 0..<3 where !erase.isHittable {app.scrollViews.firstMatch.swipeUp()}
+        XCTAssertTrue(erase.exists)
+        XCTAssertFalse(erase.isEnabled)
+        shot("guest-deletion-awaiting-explicit-approval")
+    }
+    func testApprovedGuestDeletionEndToEnd() throws {
+        guard ProcessInfo.processInfo.environment["MASTERLAND_APPROVED_GUEST_DELETION"] == "true" else {
+            throw XCTSkip("Explicit approval for the isolated Reward-Cancel-QA guest is required.")
+        }
+        // Run only after explicit approval for the isolated empty guest in Reward-Cancel-QA.
+        app.buttons["producer1"].tap()
+        XCTAssertEqual(app.buttons["stamina"].label,"99")
+        if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()}
+        openGuestDeletionConfirmation()
+        let consent=app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
+        for _ in 0..<3 where !consent.isHittable {app.scrollViews.firstMatch.swipeUp()}
+        XCTAssertTrue(consent.isHittable);consent.tap()
+        let erase=app.buttons["confirmAccountDeletion"]
+        for _ in 0..<3 where !erase.isHittable {app.scrollViews.firstMatch.swipeUp()}
+        XCTAssertTrue(erase.isEnabled);erase.tap()
+        let deleted=app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Hesabın silindi")).firstMatch
+        XCTAssertTrue(deleted.waitForExistence(timeout:40))
+        shot("approved-guest-deletion-completed")
+        if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()}
+        if app.buttons["closeAccount"].exists {app.buttons["closeAccount"].tap()}
+        XCTAssertEqual(app.buttons["stamina"].label,"100")
+        app.terminate();app.launch()
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:20))
+        XCTAssertEqual(app.buttons["stamina"].label,"100")
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"deletionRecovery").firstMatch.exists)
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch.waitForExistence(timeout:10))
+        XCTAssertFalse(app.buttons["openAccountDeletion"].exists)
+        shot("approved-guest-deletion-persists-after-relaunch")
+    }
     func testVerifiedAbandonedAdNeverCredits() {
         XCTAssertEqual(app.buttons["stamina"].label,"100")
         app.buttons["stamina"].tap()
@@ -784,6 +833,32 @@ final class MasterlandTests:XCTestCase {
         app.buttons["closePage"].tap();app.buttons["tab-cities"].tap();app.buttons["achievement-achievement1"].tap()
         app.buttons["claimAchievement"].tap();XCTAssertTrue(app.buttons["dismissReward"].waitForExistence(timeout:5));shot("milestone-custom-achievement")
         app.buttons["dismissReward"].tap();XCTAssertFalse(app.buttons["claimAchievement"].exists)
+    }
+
+    func testProductionReleasePolicy() {
+        XCTAssertFalse(app.buttons["testEnergyFill"].exists)
+        XCTAssertFalse(app.buttons["testGoldAdd"].exists)
+        XCTAssertFalse(app.buttons["testGemsAdd"].exists)
+        XCTAssertFalse(app.buttons["testLevelUp"].exists)
+        app.buttons["producer1"].tap()
+        let before=app.buttons["stamina"].label
+        app.open(URL(string:"masterland://qa-reset")!)
+        XCTAssertEqual(app.buttons["stamina"].label,before)
+        app.open(URL(string:"masterland://milestone-review")!)
+        XCTAssertEqual(app.buttons["stamina"].label,before)
+        shot("production-board-no-test-controls")
+        app.buttons["tab-market"].tap()
+        let scroll=app.scrollViews.firstMatch;scroll.swipeUp();scroll.swipeUp()
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gems30"].exists)
+        XCTAssertFalse(app.buttons["com.erditaskin.masterland.gold2500"].exists)
+        XCTAssertTrue(app.staticTexts["Gerçek para paketleri yakında."].exists)
+        shot("production-market-real-purchases-disabled")
+        app.buttons["tab-board"].tap()
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.buttons["signInGoogle"].waitForExistence(timeout:10))
+        XCTAssertFalse(app.buttons["signInFacebook"].exists)
+        XCTAssertFalse(app.staticTexts["Facebook girişi yakında."].exists)
+        shot("production-sign-in-without-facebook")
     }
 
     func testTestFlightBetaPurchasePolicy() {

@@ -513,3 +513,17 @@ Kullanıcı, canlı sunucu ödülünü çalışır hâle getirip telefonda uçta
 ## 17 Kasım 2026 — Yerel test konteynerlerinin temizlenmesi
 
 Kullanıcı Docker test konteynerlerinin temizlenmesini ayrıca istedi. Bu çalışma kapsamında oluşturulan yerel Masterland test konteynerleri ve onlara ait geçici DB birimleri, testleri bitince silinecektir. Başka projeler ve canlı VPS servisleri bu yerel test temizliğinin kapsamında değildir. Mevcut yerel Masterland API test konteyneri ve anonim test volume’u silindi.
+
+## 17 Kasım 2026 — Hesap silme kabulü için açık onaylar
+
+Kullanıcı yalnız yeni Masterland-Reward-Cancel-QA simülatöründe oluşturulan boş misafir hesabının canlı DB kayıtlarıyla kalıcı silinmesini açıkça onayladı; bu test tamamlandı. Ardından Apple testi öncesinde yalnız AsyncStorage manifest.json dosyasının özel uygulama ayarları içerebileceğini bilerek korumalı yerel yedeğe kopyalanmasını onayladı. Keychain veya oturum dosyası kopyası bu kapsama dahil değildir. Geri yükleme yalnız normal/kontrollü iki oyun kaydı ve bunların eşlemesiyle sınırlıdır.
+
+Kullanıcı daha sonra Masterland’de Apple ile açılmış, bulut kaydı ve ödülü olmayan hesabın kalıcı silinmesini ve Masterland’in Apple giriş yetkisinin iptalini ayrıca onayladı. Yerel ilerlemenin de sıfırlanacağı, ardından normal/kontrollü oyun yedeklerinin geri yüklenip Facebook hesabına dönüleceği açıklandı ve kabul edildi. Bu onay Facebook veya Google hesabını silmeyi kapsamaz. Sonuçlar account-deletion-acceptance-20261117.md içindedir.
+
+## 17 Kasım 2026 — Reklamlı ilk App Store yayınına öncelik
+
+Kullanıcı Apple servis sorunu sürerken fiziksel Apple silme/revoke kabulünün beklemede tutulmasını, diğer yayın işlerine devam edilmesini istedi. Bu test tamamlandı sayılmaz; test hesabı ve yerel ilerleme silinmemiştir. Kullanıcı mevcut Cloudflare R2 alanı olduğunu belirtti, ancak offsite yedek kurulumunu daha sonra yapmaya karar verdi. VPS içindeki günlük yedek bağımsız afet yedeği yerine geçmez.
+
+Kullanıcı ilk App Store yayınında gerçek para satışının kapalı kalmasını tekrar onayladı. Öncelik reklamlı ilk mağaza yayınıdır; backend doğrulamalı gerçek satın alma yayın sonrasına bırakılmıştır. Bu kapsam değişikliği, önceki sekiz adımlı sıradaki satın alma maddesinin ilk yayını engellemesini kaldırır. Hesap silme kabulü, sağlayıcı genel erişimi, gizlilik bilgileri ve Apple inceleme gerekleri tamamlanmış olarak varsayılmaz.
+
+Kullanıcı Meta genel erişim doğrulamasını ilk yayının ön koşulu yapmamak için ilk sürümde Facebook giriş düğmesinin gizlenmesini açıkça onayladı. Apple/Google ve hesapsız oyun korunacaktır. Mevcut Facebook hesapları, verileri ve mevcut oturumları silinmeyecektir. Yeni yayın preset'i yalnız giriş seçeneğinin görünürlüğünü kapatır; önceki fiziksel kabul preset'leri ve mevcut Facebook hesabının silme için yeniden doğrulama yolu bu kararla kaldırılmaz. Facebook genel kullanıcı girişi Meta doğrulamasından sonra yeniden gösterilecektir.

@@ -441,3 +441,9 @@ Kontrollü telefon build’inde test modu kapalı olduğundan reklam yalnız ön
 ## 17 Kasım 2026 — Canlı doğrulanmış reklam kabulü
 
 Kullanıcının açık talebiyle SSV sunucu kapısı açıldı. Masterland’in kendi Google birimleri, gerçek Google imzası ve canlı ledger/redeem hattıyla enerji ve üretici ödülleri doğrulandı. Kullanıcı telefonda +25 ve arka plan kurtarmasını kabul etti. Release simülatöründe üretici kalıcılığı, ortak 4 ödül sınırı ve tamamlanmadan tamamen terk etmede 100 enerji/0 kullanım doğrulandı. 169 mobil ve 23 API testi geçti. İptal edilen rezervasyonlar geçerli geç ödülü kaybetmeden serbest bırakılır. Yerel test konteyneri ve anonim test DB birimi kullanıcı isteğiyle silindi. Ayrıntı: live-reward-acceptance-20261117.md.
+
+## 17 Kasım 2026 — İlk reklamlı mağaza kapsamı ve production QA sınırı
+
+Kullanıcı ilk reklamlı App Store yayınına öncelik verdi; gerçek satış ve R2 offsite kurulumu yayın sonrasına bırakıldı. Apple fiziksel silme kabulü servis sorunu nedeniyle beklemededir. Google Search Console alan adı sahipliği kullanıcı tarafından eklenen TXT ile doğrulandı; marka doğrulaması ayrıca bekler. Meta genel yayın engeli nedeniyle kullanıcı ilk sürümde Facebook düğmesini gizlemeyi onayladı; hesap verileri silinmedi.
+
+Yeni production Release kontrolü, qa-reset bağlantısının TestFlight dışındaki production kanalında test tahtasını açabildiğini yakaladı. İlk koşu başarısız kabul olarak kaydedildi. Production hem başlangıç/sıcak bağlantı işleyicisinde hem doğrudan kayıt yükleme sınırında normal kayıtla sınırlandırıldı. Yeni yayın preset'i gerçek backend ve doğrulanmış reklamı açar; test kredileri ve gerçek para satışı kapalıdır. Son doğrulama sonucu store-release-readiness-20261117.md dosyasında tutulur.

@@ -9,7 +9,11 @@ import {
   resumeDeletionReset,
 } from "./accountDeletion";
 import { preservePreCloudSave } from "./localBackup";
-import { testModeEnabled, testFlightBeta } from "../game/testMode";
+import {
+  testModeEnabled,
+  testFlightBeta,
+  productionRelease,
+} from "../game/testMode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FS from "expo-file-system/legacy";
 import {
@@ -97,7 +101,8 @@ async function removeLegacyImports() {
 }
 async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
   // TestFlight sessions always use the tester's persistent normal save.
-  if (testFlightBeta) mode = "normal";
+  // Production likewise rejects transient QA/preview saves, including direct store calls.
+  if (testFlightBeta || productionRelease) mode = "normal";
   const token = ++loadEpoch;
   activeMode = mode;
   try {

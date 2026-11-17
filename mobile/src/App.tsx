@@ -10,7 +10,11 @@ import { loadLanguage } from "./i18n/preferences";
 import { EnergyTimer } from "./ui/EnergyTimer";
 import { RewardCelebration } from "./ui/RewardCelebration";
 import { ProducerPortrait } from "./ui/ProducerDetails";
-import { testModeEnabled, testFlightBeta } from "./game/testMode";
+import {
+  testModeEnabled,
+  testFlightBeta,
+  productionRelease,
+} from "./game/testMode";
 import {
   memo,
   type ComponentRef,
@@ -495,9 +499,10 @@ function Game() {
       setDeletionPreview(
         testModeEnabled &&
           !testFlightBeta &&
+          !productionRelease &&
           Boolean(url?.includes("deletion-recovery-review")),
       );
-      const mode = testFlightBeta
+      const mode = testFlightBeta || productionRelease
         ? "normal"
         : testModeEnabled && url?.includes("milestone-review")
           ? "milestone"
@@ -507,14 +512,21 @@ function Game() {
               ? "qa"
               : "normal";
       setLaunchPreview(
-        !testFlightBeta && Boolean(url?.includes("loading-review")),
+        !testFlightBeta &&
+          !productionRelease &&
+          Boolean(url?.includes("loading-review")),
       );
       setSelected(mode === "review" ? 0 : null);
       return gameStore.load(mode);
     });
     const sub = Linking.addEventListener("url", ({ url: incoming }) => {
       const url = incoming.split(/[?#]/)[0]!;
-      if (testFlightBeta || url.startsWith("masterland://auth/")) return;
+      if (
+        testFlightBeta ||
+        productionRelease ||
+        url.startsWith("masterland://auth/")
+      )
+        return;
       setDeletionPreview(
         testModeEnabled && url.includes("deletion-recovery-review"),
       );

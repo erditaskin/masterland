@@ -182,3 +182,7 @@ Kontrollü test modu kapalı build’in ödül vermeyen önizleme yolu doğrulan
 ## 17 Kasım 2026 — Reklam kabulünün kapanışı
 
 Reklam maddesi uygulama/sunucu kabulüyle tamamlandı. Fiziksel +25 ve arka plan, gerçek Google imzalı enerji/üretici ödülü, Release kalıcılık, ortak günlük sınır ve temiz simülatörde terk etmede sıfır ödeme doğrulandı. Fiziksel negatif tekrar günlük kota nedeniyle yapılamadı; simülatör kontrolü telefon kontrolü gibi raporlanmaz. Sonraki iş hesap silme/Apple yetki iptali kabulüdür. AdMob 0.2.0 sürümüne özel test modu yayından önce kaldırılacak veya yayın sürümü ayrılacaktır; genel mağaza/AdMob onayı reklam geliri için ayrıca gereklidir. Ayrıntı: live-reward-acceptance-20261117.md.
+
+## 17 Kasım 2026 — Reklamlı ilk mağaza yayını güncel kapıları
+
+Apple fiziksel silme/revoke kabulü, kullanıcı talebiyle servis sorunu düzelene kadar beklemededir. R2 offsite kurulumunu kullanıcı ertelemiştir. Gerçek para satışı ilk yayından sonra ele alınacaktır; ilk hedef reklamlı App Store sürümüdür. Google alan adı sahipliği Search Console'da doğrulanmıştır; marka doğrulamasının 24 saat sonra yeniden denenmesi gerekir. Meta genel yayınında silme URL kabulü ve işletme/kişi doğrulaması açıktır. AdMob halka açık mağaza eşleştirmesi/incelemesi ve yayın sürümünün test modu ayrımı bekler. App Store Connect bu kontrolde Apple oturumuna erişememiştir. Güncel ayrıntılar `store-release-readiness-20261117.md` içindedir.
