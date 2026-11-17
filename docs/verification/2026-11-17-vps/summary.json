@@ -1,6 +1,6 @@
 {
   "date": "2026-11-17",
-  "mobileUnitTests": 161,
+  "mobileUnitTests": 162,
   "apiTests": 21,
   "controlledReleasePassed": [
     "background/save reload",
@@ -30,5 +30,10 @@
     "reason": "Visual measurement referenced the retired info button; only that stale measurement target was removed"
   },
   "visualRerunPassed": true,
-  "physicalProviderAcceptance": "pending"
+  "physicalProviderAcceptance": {
+    "google": "User confirmed login/logout/relogin; aggregate provider identity verified",
+    "apple": "User confirmed successful return to game; aggregate identity verified",
+    "facebook": "Initial build had tester flag false; corrected controlled build in progress"
+  },
+  "latestControlledNativeRerunPassed": true
 }

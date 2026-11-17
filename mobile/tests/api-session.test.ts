@@ -172,6 +172,20 @@ test("deletion capability status sends no session token", async () => {
   });
   assert.equal(f.calls.at(-1)?.headers.has("authorization"), false);
 });
+
+test("deletion receipt recovery remains available when the old auth session is corrupt", async () => {
+  const f = setup();
+  f.values.set("session", "{}");
+  await f.client.request("/v1/account/deletion/status", {
+    method: "POST",
+    anonymous: true,
+    body: { request_id: "request", receipt: "receipt" },
+  });
+  assert.equal(f.calls[0]?.headers.has("authorization"), false);
+  await f.client.clearLocal();
+  assert.equal(await f.client.getSession(), null);
+  assert.equal(f.values.has("session"), false);
+});
 test("OAuth return requires exact state and rejects duplicates, fragments and credentials", () => {
   const base = "masterland://auth/callback";
   assert.equal(

@@ -60,3 +60,19 @@ Google/Meta eski Supabase redirect’leri yalnız geri dönüş için tutuldu; y
 ## Web yayını ve geri dönüş
 
 Web c1e1feb-20261117 release'i etkinleştirildi; önceki20261117-atlas release'ine rollback ve tekrar final release'e geçiş başarılıdır. /atlas tarayıcıda açılıp Ballıca seçimi ve dinamik içerik doğrulandı; konsol hatası yoktu. Statik iç linkler ve asset yolları doğrulandı. API kaynaklarındaki final güvenlik kontrolü, guest yükseltmesinde eski guest token’larını iptal eder; aynı kayda yeni doğrulanmış token ile erişilir. Bu koruma gerçek PostgreSQL testine dahil edildi.
+
+## Final API aktivasyonu ve ilk fiziksel giriş
+
+API81f0b7a119e692c0fe4cc248ed84f798c567e4dd etkinleştirildi. İlk release’e rollback ve aynı final commit’e tekrar aktivasyon, release kimliği eşleşen readiness kontrolüyle geçti. İmaj doğrulamasında docker-save ham config’i kullanıldı; Docker Desktop inspect’in eklediği boş/false varsayılanlar kaynak config ile karıştırılmadı. Tüm içerik katmanları ve gerçek runtime config’i eşleşti.
+
+Kullanıcı telefonda Google ile giriş, çıkış ve tekrar girişin başarılı olduğunu bildirdi. Apple/Facebook ve iki cihaz çakışması kabulü ayrı ilerliyor. Silme receipt sorgusunun bozuk/eski auth oturumuna bağımlı olmaması için anonim capability transport’u ayrıldı; bu son ek regresyon testiyle doğrulanacaktır.
+
+## Son kontrollü doğrulama
+
+Bozuk auth verisine rağmen silme receipt’inin anonim sorgulanması ve eski auth kaydının temizlenmesi testiyle mobil toplam162/162 oldu; TypeScript ve ESLint geçti. Bu kaynakla kontrollü Release’te3 native kontrol tekrar geçti. Kullanıcı Apple girişinin oyuna başarıyla döndüğünü bildirdi; sunucuda Google1 ve Apple1 provider kaydı aggregate olarak görüldü. Ham log aktarımı otomatik denetimde reddedildi; yalnız kişisel veri içermeyen toplamlarla devam edildi.
+
+İlk telefon build’inde Facebook tester bayrağı false kaldığı için düğme pasifti. ios:acceptance komutuna EXPO_PUBLIC_FACEBOOK_LOGIN_ENABLED=true açıkça eklendi ve kontrollü telefon build’i tekrar hazırlanıyor. Bu, Meta uygulamasını yayınlama veya genel production Facebook bayrağını açma değildir.
+
+## Facebook kontrollü derleme düzeltmesi
+
+Facebook tester bayrağı açık, son162-testlik kaynakları içeren imzalı Release build başarılı oldu ve aynı iPhone’a uygulama kaldırılmadan kuruldu. Kullanıcıya Facebook girişi tekrar denemesi iletildi. Bu sırada API ve web final release’lerinde çalışır; iki servisin rollback ve son release’e geri dönüş testleri başarılıdır. Gerçek bulut kayıt seçimi/ilk upload henüz kabul edilmedi; aggregate kontrolde game_saves0 görüldüğü için giriş başarısı yedekleme başarısı olarak sunulmadı.

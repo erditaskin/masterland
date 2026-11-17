@@ -75,8 +75,10 @@ export function createAccountClient(deps: {
   const restore = async () => {
     if (!loading)
       loading = (async () => {
+        const current = generation;
         const raw = await deps.storage.getItem(deps.key);
-        if (raw) session = readAccountSession(JSON.parse(raw));
+        if (raw && current === generation)
+          session = readAccountSession(JSON.parse(raw));
       })().catch((error) => {
         loading = null;
         throw error;
@@ -92,7 +94,7 @@ export function createAccountClient(deps: {
       anonymous?: boolean;
     } = {},
   ): Promise<unknown> => {
-    await restore();
+    if (!options.anonymous) await restore();
     const pinned = options.anonymous ? null : session;
     if (options.ownerID && pinned?.user.id !== options.ownerID)
       throw Error("Account changed");
@@ -216,7 +218,6 @@ export function createAccountClient(deps: {
       );
     },
     clearLocal: async () => {
-      await restore();
       const work = async () => {
         await deps.storage.removeItem(deps.key);
         session = null;
