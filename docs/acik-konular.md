@@ -177,3 +177,8 @@ Kullanıcı son gerçek cihaz denemesinde test reklam videosunun açıldığın�
 ### Reklam bildiriminin inceleme sonucu — 17 Kasım 2026
 
 Kontrollü test modu kapalı build’in ödül vermeyen önizleme yolu doğrulandı; yanıltıcı düğme metni ve uygulama sonucu düzeltildi. Google test reklamının kendi “Reward granted” yazısı uygulamanın sunucu ödeme onayı değildir. Test modunda enerji +25/kalıcılık ve üretici ödülü Release simülatöründe geçti. İlk madde canlı SSV/gerçek cihaz kabulü tamamlanana kadar açık kalır; sıradaki hesap silme işine henüz geçilmedi. Ayrıntı: reward-acceptance-20261117.md.
+
+
+## 17 Kasım 2026 — Reklam kabulünün kapanışı
+
+Reklam maddesi uygulama/sunucu kabulüyle tamamlandı. Fiziksel +25 ve arka plan, gerçek Google imzalı enerji/üretici ödülü, Release kalıcılık, ortak günlük sınır ve temiz simülatörde terk etmede sıfır ödeme doğrulandı. Fiziksel negatif tekrar günlük kota nedeniyle yapılamadı; simülatör kontrolü telefon kontrolü gibi raporlanmaz. Sonraki iş hesap silme/Apple yetki iptali kabulüdür. AdMob 0.2.0 sürümüne özel test modu yayından önce kaldırılacak veya yayın sürümü ayrılacaktır; genel mağaza/AdMob onayı reklam geliri için ayrıca gereklidir. Ayrıntı: live-reward-acceptance-20261117.md.

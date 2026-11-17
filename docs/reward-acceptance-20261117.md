@@ -1,5 +1,7 @@
 # Reklam ödülü incelemesi — 17 Kasım 2026
 
+> Bu rapor önceki önizleme aşamasıdır. Sonraki canlı sunucu kabulü ve güncel kapılar [canlı reklam kabulü](live-reward-acceptance-20261117.md) raporundadır.
+
 ## Bildirim ve neden
 
 Kullanıcı test videosu sonunda “ödül verildi” görmesine rağmen ödül alamadığını bildirdi. Son telefona kurulan kontrollü TestFlight derlemesi `EXPO_PUBLIC_TEST_MODE=false` ve test reklam envanteri kullanıyordu. Bu kombinasyonun mevcut davranışı yalnız önizlemedir; `service.ts` earned callback’inde oyun bakiyesine dokunmadan döner. Buna rağmen düğmede “Reklam · +25 enerji” veya üreticiyi hazırlama vaadi bulunuyordu. Bu çelişki giderildi.

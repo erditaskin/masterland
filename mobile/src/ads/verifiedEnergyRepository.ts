@@ -75,3 +75,15 @@ export async function verifiedIntentWasRedeemed(
     throw Error("Invalid reward receipt");
   return data.redeemed;
 }
+
+/** Cancelling only frees the reservation; a delayed signed reward is still recoverable. */
+export async function cancelVerifiedEnergyAd(
+  ownerID: string,
+  intentID: string,
+) {
+  if (!accountClient) return;
+  await accountClient.request(`/v1/rewards/${intentID}/cancel`, {
+    method: "POST",
+    ownerID,
+  });
+}

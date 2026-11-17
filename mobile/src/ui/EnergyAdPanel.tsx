@@ -21,7 +21,8 @@ export function EnergyAdPanel({
       ? save.testAdRewards.receipts.length
       : 0;
   useEffect(() => {
-    if (producerID && !adsConfig.testAds) return;
+    // Live intents reserve shared quota; prepare them only after an explicit watch action.
+    if (!adsConfig.testAds) return;
     if (ad.canRequestAds && !ad.consentBusy && used < 4) void energyAds.load();
   }, [ad.canRequestAds, ad.consentBusy, used, producerID]);
   if (
@@ -63,10 +64,12 @@ export function EnergyAdPanel({
                 "Test reklamı tamamlandı. Bu önizleme ödül vermez.",
                 "Test ad completed. This preview does not grant a reward.",
               )
-            : tx(
-                "Test ödülü uygulandı.",
-                "Test reward applied.",
-              )}
+            : ad.rewardOutcome === "verified"
+              ? tx(
+                  "Ödül doğrulandı ve hesabına eklendi.",
+                  "Reward verified and added to your account.",
+                )
+              : tx("Test ödülü uygulandı.", "Test reward applied.")}
         </Label>
       )}
       {ad.needsAccount && (
@@ -92,10 +95,15 @@ export function EnergyAdPanel({
                 "Reklam için internet gerekiyor.",
                 "An internet connection is required.",
               )
-            : tx(
-                "Reklam hazırlanamadı. Hakkın korunuyor.",
-                "The ad could not be prepared. No reward allowance was used.",
-              )}
+            : ad.error === "cloud"
+              ? tx(
+                  "Ödül için bulut kaydını eşitle. Hesap bölümünden kontrol edebilirsin.",
+                  "Sync your cloud save before earning rewards. Check the account page.",
+                )
+              : tx(
+                  "Reklam hazırlanamadı. Hakkın korunuyor.",
+                  "The ad could not be prepared. No reward allowance was used.",
+                )}
         </Label>
       )}
       <AppButton

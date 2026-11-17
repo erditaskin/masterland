@@ -156,3 +156,40 @@ test("production rejects client-side test ad credit", () => {
     { env: { ...process.env, EXPO_PUBLIC_TEST_MODE: "false" } },
   );
 });
+
+test("verified rewards require explicit production or controlled acceptance and never test progress", () => {
+  const base = {
+    enabled: "true",
+    verifiedRewards: "true",
+    rewardedUnit: "ca-app-pub-1/2",
+  };
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "local" }).productionRewardsEnabled,
+    false,
+  );
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "testflight" })
+      .productionRewardsEnabled,
+    false,
+  );
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "testflight", controlled: "true" })
+      .productionRewardsEnabled,
+    true,
+  );
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "testflight", controlled: "true" })
+      .testAds,
+    false,
+  );
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "production", testMode: "true" })
+      .productionRewardsEnabled,
+    false,
+  );
+  assert.equal(
+    resolveAdsConfig({ ...base, channel: "production" })
+      .productionRewardsEnabled,
+    true,
+  );
+});

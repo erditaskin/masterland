@@ -139,6 +139,113 @@ final class MasterlandTests:XCTestCase {
         XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","1/4")).firstMatch.exists)
         shot("rewarded-energy-and-quota-persisted")
     }
+    func dismissVerifiedTestAd() {
+        let endClose=app.buttons["Close"].firstMatch, videoClose=app.buttons["Close Advertisement"].firstMatch
+        let earned=app.staticTexts["Reward granted"].firstMatch
+        let dismissable=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+            (endClose.exists && endClose.isEnabled && endClose.isHittable) ||
+            (videoClose.exists && videoClose.isEnabled && videoClose.isHittable) || earned.exists
+        },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[dismissable],timeout:180),.completed)
+        if endClose.exists && endClose.isEnabled && endClose.isHittable {endClose.tap()}
+        else if videoClose.isEnabled {videoClose.tap();if endClose.waitForExistence(timeout:5) && endClose.isHittable {endClose.tap()}}
+        else {
+            // The observed Google two-ad test creative draws X immediately right of this label,
+            // while exposing only a disabled placeholder close button to XCTest accessibility.
+            XCTAssertTrue(earned.exists)
+            earned.coordinate(withNormalizedOffset:CGVector(dx:1,dy:0.5)).withOffset(CGVector(dx:18,dy:0)).tap()
+        }
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:20))
+    }
+    func testVerifiedEnergySSVEndToEnd() {
+        let before=Int(app.buttons["stamina"].label) ?? 100
+        let expected=String(before+25)
+        app.buttons["stamina"].tap()
+        let watch=app.buttons["watchEnergyAd"]
+        XCTAssertTrue(watch.waitForExistence(timeout:10))
+        XCTAssertFalse(watch.label.contains("ödülsüz"))
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in watch.exists && watch.isEnabled && watch.isHittable },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:45),.completed)
+        watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:60),.completed)
+        shot("verified-own-unit-test-ad-presented")
+        dismissVerifiedTestAd()
+        app.buttons["closePage"].tap()
+        let credited=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["stamina"].label == expected },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[credited],timeout:90),.completed)
+        shot("verified-server-energy-credited")
+        app.terminate();app.launch()
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:20))
+        XCTAssertEqual(app.buttons["stamina"].label,expected)
+        shot("verified-server-energy-persisted")
+    }
+    func testVerifiedAbandonedAdNeverCredits() {
+        XCTAssertEqual(app.buttons["stamina"].label,"100")
+        app.buttons["stamina"].tap()
+        let watch=app.buttons["watchEnergyAd"]
+        XCTAssertTrue(watch.waitForExistence(timeout:10));watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:60),.completed)
+        shot("verified-ad-abandoned-before-completion")
+        XCUIDevice.shared.press(.home)
+        sleep(5)
+        app.terminate();app.launch()
+        XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:20))
+        XCTAssertEqual(app.buttons["stamina"].label,"100")
+        app.buttons["stamina"].tap()
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","0/4")).firstMatch.waitForExistence(timeout:10))
+        shot("verified-abandoned-no-credit-no-daily-use")
+    }
+    func testVerifiedSharedDailyLimitPreventsFifthAd() {
+        let before=Int(app.buttons["stamina"].label) ?? 0
+        app.buttons["stamina"].tap()
+        let watch=app.buttons["watchEnergyAd"]
+        XCTAssertTrue(watch.waitForExistence(timeout:10))
+        watch.tap()
+        let limited=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in watch.exists && !watch.isEnabled && watch.label.contains("Bugünkü hediyeler tamamlandı") },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[limited],timeout:30),.completed)
+        XCTAssertTrue(app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","4/4")).firstMatch.exists)
+        XCTAssertFalse(app.buttons["Close Advertisement"].exists)
+        shot("verified-shared-four-per-day-no-fifth-ad")
+        app.buttons["closePage"].tap()
+        let after=Int(app.buttons["stamina"].label) ?? 0
+        XCTAssertGreaterThanOrEqual(after,before)
+        XCTAssertLessThanOrEqual(after,before+1)
+    }
+    func testVerifiedProducerSSVEndToEnd() {
+        let producer=app.buttons["producer1"]
+        producer.press(forDuration:0.8)
+        XCTAssertTrue(app.buttons["power-1"].waitForExistence(timeout:10))
+        app.buttons["power-1"].tap()
+        for _ in 0..<81 {
+            if app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch.exists {break}
+            if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()}
+            producer.tap()
+            let pair=app.descendants(matching:.any).matching(NSPredicate(format:"identifier BEGINSWITH %@ AND label == %@","cell-","Buğday başağı")).allElementsBoundByIndex
+            if pair.count>=2 {pair[0].press(forDuration:0.1,thenDragTo:pair[1])}
+        }
+        let cooldown=app.descendants(matching:.any).matching(identifier:"producerCooldown").firstMatch
+        XCTAssertTrue(cooldown.waitForExistence(timeout:10))
+        let before=Int(app.buttons["stamina"].label) ?? 0, started=Date()
+        let watch=app.buttons["watchProducerAd"]
+        XCTAssertTrue(watch.waitForExistence(timeout:10));watch.tap()
+        let presented=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["Close Advertisement"].exists || self.app.buttons["Close"].exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:60),.completed)
+        dismissVerifiedTestAd()
+        let refreshed=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in !cooldown.exists },object:nil)
+        XCTAssertEqual(XCTWaiter.wait(for:[refreshed],timeout:90),.completed)
+        let after=Int(app.buttons["stamina"].label) ?? 0
+        let passiveMaximum=before>=100 ? before : min(100,before+Int(ceil(Date().timeIntervalSince(started)/120))+1)
+        XCTAssertGreaterThanOrEqual(after,before)
+        XCTAssertLessThanOrEqual(after,passiveMaximum)
+        shot("verified-producer-ready-without-energy-reward")
+        app.terminate();app.launch()
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:20))
+        producer.tap()
+        XCTAssertFalse(cooldown.exists)
+        shot("verified-producer-refresh-persisted")
+    }
     func testRewardedProducerRefreshDoesNotGrantEnergy() {
         app.open(URL(string:"masterland://review")!)
         XCTAssertTrue(app.buttons["producer5"].waitForExistence(timeout:10))

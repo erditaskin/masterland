@@ -13,20 +13,27 @@ function fixture(
     testAds?: boolean;
     testMode?: boolean;
     flush?: () => Promise<void>;
+    localSyncFailure?: boolean;
   } = {},
 ) {
   let user: { id: string } | null = { id: owner };
+  let cloudPhase = "synced";
   let verified = options.verified ?? true,
     redeemed = false,
     credits = 0,
-    shows = 0;
+    shows = 0,
+    cancellations = 0;
   const accountListeners = new Set<() => void>(),
     cloudListeners = new Set<() => void>();
   const events = new Map<string, () => void>();
+  let appStateChanged: ((state: string) => void) | undefined;
   let request: { unit: string; options: any } | null = null;
   const sdk = {
     __esModule: true,
-    default: () => ({ initialize: async () => {} }),
+    default: () => ({
+      initialize: async () => {},
+      setRequestConfiguration: async () => {},
+    }),
     AdsConsent: {
       gatherConsent: async () => {},
       getConsentInfo: async () => ({
@@ -70,22 +77,29 @@ function fixture(
     },
     "../account/cloudSync": {
       cloudSync: {
-        get: () => ({ phase: "synced", ownerID: user?.id }),
+        get: () => ({ phase: cloudPhase, ownerID: user?.id }),
         subscribe: (listener: () => void) => {
           cloudListeners.add(listener);
           return () => cloudListeners.delete(listener);
         },
-        connect: async () => {},
+        connect: async () => {
+          throw Error("Already synced owner must not reconnect");
+        },
+        retry: async () => {},
         sync: async () => {},
         redeem: async () => {
           if (verified && !redeemed) {
             redeemed = true;
             credits++;
+            if (options.localSyncFailure) cloudPhase = "pending";
           }
         },
       },
     },
     "./verifiedEnergyRepository": {
+      cancelVerifiedEnergyAd: async () => {
+        cancellations++;
+      },
       prepareVerifiedEnergyAd: async (_: string, target?: unknown) => ({
         kind: "ready",
         intentID: intent,
@@ -106,7 +120,12 @@ function fixture(
     "expo-crypto": { randomUUID: () => intent },
     "react-native": {
       Platform: { OS: "ios" },
-      AppState: { addEventListener: () => ({ remove() {} }) },
+      AppState: {
+        addEventListener: (_: string, listener: (state: string) => void) => {
+          appStateChanged = listener;
+          return { remove() {} };
+        },
+      },
     },
     "../state/store": {
       gameStore: {
@@ -147,7 +166,13 @@ function fixture(
     request: () => request,
     credits: () => credits,
     shows: () => shows,
+    cancellations: () => cancellations,
+    background: () => appStateChanged?.("background"),
     event: (event: string) => events.get(event)?.(),
+    resync: () => {
+      cloudPhase = "synced";
+      cloudListeners.forEach((listener) => listener());
+    },
     verified: () => {
       verified = true;
       cloudListeners.forEach((listener) => listener());
@@ -288,4 +313,66 @@ test("test reward success waits for durable storage and storage failure is visib
   await settle();
   assert.equal(failed.service.get().rewardOutcome, null);
   assert.equal(failed.service.get().error, "ad");
+});
+
+test("closing without earning cancels one reservation, while an earned close never cancels", async () => {
+  const cancelled = fixture({ verified: false });
+  await cancelled.service.start();
+  await cancelled.service.watch();
+  cancelled.event("closed");
+  cancelled.event("closed");
+  await settle();
+  assert.equal(cancelled.cancellations(), 1);
+  assert.equal(cancelled.credits(), 0);
+  const earned = fixture({ verified: false });
+  await earned.service.start();
+  await earned.service.watch();
+  earned.event("earned");
+  earned.event("closed");
+  await settle();
+  earned.verified();
+  await settle();
+  await settle();
+  assert.equal(earned.cancellations(), 0);
+  assert.equal(earned.credits(), 1);
+});
+
+test("a server receipt cannot announce success before the local cloud save is durable", async () => {
+  const f = fixture({ verified: false, localSyncFailure: true });
+  await f.service.start();
+  await f.service.watch();
+  f.event("earned");
+  f.event("closed");
+  await settle();
+  f.verified();
+  await settle();
+  await settle();
+  assert.equal(f.credits(), 1);
+  assert.equal(f.service.get().rewardPending, true);
+  assert.equal(f.service.get().rewardOutcome, null);
+  f.resync();
+  await settle();
+  await settle();
+  await new Promise((resolve) => setTimeout(resolve, 2100));
+  assert.equal(f.service.get().rewardPending, false);
+  assert.equal(f.service.get().rewardOutcome, "verified");
+  assert.equal(f.credits(), 1);
+});
+
+test("backgrounding before completion frees quota without losing a later verified earned reward", async () => {
+  const f = fixture({ verified: false });
+  await f.service.start();
+  await f.service.watch();
+  f.background();
+  await settle();
+  assert.equal(f.cancellations(), 1);
+  assert.equal(f.credits(), 0);
+  f.event("earned");
+  f.event("closed");
+  await settle();
+  f.verified();
+  await settle();
+  await settle();
+  assert.equal(f.credits(), 1);
+  assert.equal(f.cancellations(), 1);
 });

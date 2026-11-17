@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-17",
+  "apiRelease": "76f23907b6a53ee6b5d4d954fd045b85494df8cc",
+  "apiTestsPassed": 23,
+  "mobileTestsPassed": 169,
+  "realGoogleSSV": true,
+  "manualLedgerCredit": false,
+  "physicalEnergyPlus25": "user confirmed",
+  "physicalBackgroundRecovery": "user confirmed",
+  "physicalAbandonedVideoNoReward": "blocked by real daily cap; verified on clean Release simulator",
+  "releaseEnergyTest": "passed in log; enclosing bundle interrupted during next producer test",
+  "releaseProducerTest": "passed standalone",
+  "releaseSharedQuotaTest": "passed standalone",
+  "admobAppLevelTestVersion": "0.2.0",
+  "admobAppLevelTestEnabled": true,
+  "serverSSVEnabled": true,
+  "accountDeletionEnabled": false,
+  "productionIAPEnabled": false,
+  "releaseAbandonedVideoTest": "passed; live DB: 1 new guest, 0 rewards, 1 cancelled intent, stamina 100",
+  "localTestContainerRemoved": true,
+  "localAnonymousTestVolumeRemoved": true,
+  "rewardAcceptanceComplete": true
+}

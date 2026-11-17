@@ -2,6 +2,7 @@ import { accountStore } from "../account/auth";
 import { cloudSync } from "../account/cloudSync";
 import {
   prepareVerifiedEnergyAd,
+  cancelVerifiedEnergyAd,
   pendingVerifiedEnergyAds,
   verifiedIntentWasRedeemed,
 } from "./verifiedEnergyRepository";
@@ -17,6 +18,9 @@ export const adsConfig = resolveAdsConfig({
   enabled: process.env.EXPO_PUBLIC_ADS_ENABLED,
   channel: process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
   testMode: process.env.EXPO_PUBLIC_TEST_MODE,
+  controlled: process.env.EXPO_PUBLIC_CONTROLLED_ACCEPTANCE,
+  verifiedRewards: process.env.EXPO_PUBLIC_VERIFIED_REWARDS_ENABLED,
+  testDeviceIDs: process.env.EXPO_PUBLIC_ADMOB_TEST_DEVICE_IDS,
   rewardedUnit: process.env.EXPO_PUBLIC_ADMOB_IOS_REWARDED_AD_UNIT_ID,
   producerRewardedUnit:
     process.env.EXPO_PUBLIC_ADMOB_IOS_PRODUCER_REWARDED_AD_UNIT_ID,
@@ -29,9 +33,9 @@ type Snapshot = {
   privacyRequired: boolean;
   dailyUsed: number;
   rewardPending: boolean;
-  rewardOutcome: "preview" | "granted" | null;
+  rewardOutcome: "preview" | "granted" | "verified" | null;
   needsAccount: boolean;
-  error: "consent" | "offline" | "ad" | null;
+  error: "consent" | "offline" | "ad" | "cloud" | null;
 };
 let snapshot: Snapshot = {
   enabled:
@@ -96,6 +100,7 @@ async function recoverVerifiedRewards(expectedIntent?: string) {
     if (accountStore.get().user?.id === owner)
       publish({
         rewardPending:
+          cloudSync.get().phase !== "synced" ||
           (await pendingVerifiedEnergyAds(owner)).length > 0 ||
           (Boolean(expectedIntent) &&
             !(await verifiedIntentWasRedeemed(owner, expectedIntent!))),
@@ -136,8 +141,22 @@ cloudSync.subscribe(() => {
   }
 });
 const controller = new EnergyAdController(
-  (phase) =>
-    publish({ phase, ...(phase === "error" ? { error: "ad" as const } : {}) }),
+  (phase) => {
+    const previous = snapshot.phase;
+    if (
+      !adsConfig.testAds &&
+      liveIntent &&
+      ((phase === "closed" && previous === "showing") || phase === "error")
+    ) {
+      const cancelled = liveIntent;
+      liveIntent = null;
+      // Best effort when offline; the server reservation also expires automatically.
+      void cancelVerifiedEnergyAd(cancelled.ownerID, cancelled.intentID).catch(
+        () => {},
+      );
+    }
+    publish({ phase, ...(phase === "error" ? { error: "ad" as const } : {}) });
+  },
   async (receipt) => {
     if (!snapshot.enabled) throw Error("Rewards disabled");
     if (!adsConfig.testAds) {
@@ -154,10 +173,18 @@ const controller = new EnergyAdController(
       for (let attempt = 0; attempt < 8; attempt++) {
         if (accountStore.get().user?.id !== intent.ownerID) return;
         await recoverVerifiedRewards(intent.intentID);
-        if (await verifiedIntentWasRedeemed(intent.ownerID, intent.intentID)) {
+        if (
+          cloudSync.get().phase === "synced" &&
+          cloudSync.get().ownerID === intent.ownerID &&
+          (await verifiedIntentWasRedeemed(intent.ownerID, intent.intentID)) &&
+          accountStore.get().user?.id === intent.ownerID &&
+          cloudSync.get().ownerID === intent.ownerID &&
+          cloudSync.get().phase === "synced"
+        ) {
           awaitingIntent = null;
           publish({
             rewardPending: false,
+            rewardOutcome: "verified",
             dailyUsed: Math.min(4, snapshot.dailyUsed + 1),
           });
           return;
@@ -207,6 +234,9 @@ async function updateConsent(privacy = false) {
           AdsConsentPrivacyOptionsRequirementStatus.REQUIRED,
       });
       if (info.canRequestAds && !initialized) {
+        await (await sdk()).default().setRequestConfiguration({
+          testDeviceIdentifiers: adsConfig.testDeviceIDs,
+        });
         await (await sdk()).default().initialize();
         initialized = true;
       }
@@ -238,6 +268,18 @@ export const energyAds = {
       liveRecoveryStarted = true;
       AppState.addEventListener("change", (state) => {
         if (state === "active") void recoverVerifiedRewards();
+        if (
+          state === "background" &&
+          liveIntent &&
+          !snapshot.rewardPending &&
+          ["loading", "ready", "showing"].includes(snapshot.phase)
+        ) {
+          // Keep the intent binding: a valid late earned callback must still be redeemable.
+          void cancelVerifiedEnergyAd(
+            liveIntent.ownerID,
+            liveIntent.intentID,
+          ).catch(() => {});
+        }
       });
       NetInfo.addEventListener((network) => {
         if (network.isConnected && network.isInternetReachable !== false)
@@ -362,7 +404,7 @@ export const energyAds = {
       if (
         !adsConfig.testAds &&
         liveIntent &&
-        Date.now() - liveIntent.preparedAt > 20 * 60 * 1000
+        Date.now() - liveIntent.preparedAt >= 14 * 60 * 1000
       )
         controller.reset();
       if (!snapshot.canRequestAds) await updateConsent();
@@ -371,8 +413,12 @@ export const energyAds = {
         if (!(await accountStore.ensureGuest())) return false;
         const owner = accountStore.get().user?.id;
         if (!owner) return false;
-        await cloudSync.connect(owner);
-        if (cloudSync.get().phase !== "synced") return false;
+        if (cloudSync.get().ownerID !== owner) await cloudSync.connect(owner);
+        else if (cloudSync.get().phase !== "synced") await cloudSync.retry();
+        if (cloudSync.get().phase !== "synced") {
+          publish({ error: "cloud" });
+          return false;
+        }
       }
       await energyAds.load(target);
       if (!adsConfig.testAds && snapshot.dailyUsed >= 4) return false;

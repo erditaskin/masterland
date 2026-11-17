@@ -92,3 +92,13 @@ Kullanıcı telefon kaydını buluta kaydetti ve “ilerlemen kaydedildi” mesa
 Güncel API release kimliği cf6d5533e83f8092a05d83b8e561bc0fcffac144’tür. Uygulama imajı ccab06d kaynaklarını içerir; sonraki commit yalnız compose log sınırlarını ekler. Çalışan API ve DB konteynerlerinde json-file logları 10 MB × 3 ile sınırlandı; DB kalıcı volume korunarak yeniden başlatıldı. Web c1e1feb-20261117 release’indedir.
 
 Sonuç: 162 mobil ve 21 API testi geçti. Son OAuth parser ek kontrolleriyle hedefli 9 test de geçti. Release simülatör kontrolleri ve 54 eşit kare hücre ölçümü yukarıdaki kanıtlarla doğrulandı. Fiziksel üç sağlayıcı ve ilk bulut upload kabul edildi. Canlı reklam ödülü, gerçek para satın alma ve hesap silme kapıları kapalıdır. Gerçek reklam/geç callback, Apple revoke/silme ve iki cihaz kabulü tamamlanmadı. Meta genel yayını/doğrulaması, AdMob mağaza incelemesi ve sunucu dışı DB yedekleme ayrıca beklemektedir. Sunucu içi günlük yedek/restore testi afet kurtarma yerine geçmez.
+
+
+## Güncel canlı reklam kabulü — 17 Kasım 2026
+
+Kullanıcının sonraki açık talebiyle SSV sunucu kapısı açıldı; önceki “canlı SSV kapalı” kayıtları bu andan önceki durumu anlatır. Eski env dosyası sunucuda korumalı olarak yedeklendi. Cihaz/Google imzalı callback/kalıcı bakiye kabulü sürmektedir; kapının açık olması kabulün geçtiği anlamına gelmez. Hesap silme ve gerçek satın alma kapıları kapalı kalır. İptal rezervasyonu düzeltmesi ve fiziksel sonuçlar tamamlandıkça ayrı rapora eklenecektir.
+
+
+## Canlı reklam sonucu — 17 Kasım 2026
+
+Reklam kabulü tamamlandı. Güncel API 76f23907b6a53ee6b5d4d954fd045b85494df8cc; SSV kapısı açık, silme ve gerçek satın alma kapıları kapalıdır. Kullanıcı fiziksel +25 ve arka plan kurtarmasını doğruladı. Gerçek Google callback’leri enerji ve üretici ledger/redeem hattında işlendi; Release kalıcılık, ortak kota ve temiz simülatörde terk etmede sıfır ödeme geçti. Ayrıntılı kanıt/sınırlar live-reward-acceptance-20261117.md içindedir. Sıradaki iş hesap silme kabulüdür.

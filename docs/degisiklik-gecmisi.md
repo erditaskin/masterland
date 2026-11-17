@@ -436,3 +436,8 @@ Kullanıcının test videosu sonrasında başarı mesajına rağmen ödül alama
 ## 17 Kasım 2026 — Test reklamı önizlemesi ve gerçek test ödülü ayrımı
 
 Kontrollü telefon build’inde test modu kapalı olduğundan reklam yalnız önizleniyordu; buna rağmen düğmede ödül vaadi gösteriliyordu. Önizleme düğmesi ve tamamlanma açıklaması düzeltildi. Test ödülü sonucu kalıcı yazım tamamlandıktan sonra yayımlanır. 165 mobil testi ve üç gerçek Release simülatör video kontrolü geçti: enerji +25 ve yeniden açılışta kalıcılık, yalnız üretici yenileme ve ödülsüz kontrollü önizleme. Canlı SSV kabulü tamamlandı sayılmaz. Ayrıntı: reward-acceptance-20261117.md.
+
+
+## 17 Kasım 2026 — Canlı doğrulanmış reklam kabulü
+
+Kullanıcının açık talebiyle SSV sunucu kapısı açıldı. Masterland’in kendi Google birimleri, gerçek Google imzası ve canlı ledger/redeem hattıyla enerji ve üretici ödülleri doğrulandı. Kullanıcı telefonda +25 ve arka plan kurtarmasını kabul etti. Release simülatöründe üretici kalıcılığı, ortak 4 ödül sınırı ve tamamlanmadan tamamen terk etmede 100 enerji/0 kullanım doğrulandı. 169 mobil ve 23 API testi geçti. İptal edilen rezervasyonlar geçerli geç ödülü kaybetmeden serbest bırakılır. Yerel test konteyneri ve anonim test DB birimi kullanıcı isteğiyle silindi. Ayrıntı: live-reward-acceptance-20261117.md.

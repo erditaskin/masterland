@@ -503,3 +503,13 @@ Kullanıcı önceki yedi maddelik listenin sırasını 2, 1, 3, 4, 6, 5, 7 olara
 8. Web uygulamasındaki düzeltmeler; kapsam web incelemesinde netleştirilecektir.
 
 Bu sıra önceki iki cihaz ertelemesini günceller: test artık altıncı adımdadır. Sıralama, kabul edilmemiş canlı ödül/silme/ödeme kapılarını doğrudan açma veya mevcut kullanıcı verisini silme onayı değildir.
+
+
+## 17 Kasım 2026 — Canlı reklam ödülünün uçtan uca kabulü
+
+Kullanıcı, canlı sunucu ödülünü çalışır hâle getirip telefonda uçtan uca doğrulamayı açıkça istedi ve telefonu bağlayacağını bildirdi. Önce reklam maddesi tamamen tamamlanacak; ardından mevcut sekiz adımlı sıraya devam edilecektir. Bu talep doğrultusunda VPS `ADMOB_SSV_ENABLED=true` yapıldı; değişiklikten önce root erişimli env yedeği alındı. Mobilde doğrulanmış ödül yolu açık bir build bayrağıyla production veya kontrollü TestFlight kabul kanalında çalışır. Kabul sırasında Masterland’in kendi AdMob birimleri Google’ın cihaz veya sürüm bazlı test modunda kullanılacaktır. SDK earned callback’i tek başına ödeme yapmayacaktır. Silme ve gerçek satın alma kapıları bu taleple açılmamıştır.
+
+
+## 17 Kasım 2026 — Yerel test konteynerlerinin temizlenmesi
+
+Kullanıcı Docker test konteynerlerinin temizlenmesini ayrıca istedi. Bu çalışma kapsamında oluşturulan yerel Masterland test konteynerleri ve onlara ait geçici DB birimleri, testleri bitince silinecektir. Başka projeler ve canlı VPS servisleri bu yerel test temizliğinin kapsamında değildir. Mevcut yerel Masterland API test konteyneri ve anonim test volume’u silindi.
