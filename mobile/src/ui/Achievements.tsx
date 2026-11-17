@@ -13,6 +13,8 @@ import {
 import { Crop } from "./Art";
 import { ActionButton, AppProgress, Label } from "./Controls";
 import { colors } from "./theme";
+import { useCityTheme } from "./CityThemeProvider";
+import { PaperCard } from "./PagePrimitives";
 export function AchievementIcon({
   kind,
   size = 40,
@@ -57,6 +59,7 @@ export function AchievementDetails({
   dispatch: (a: Action) => Result | null;
   onReturn: () => void;
 }) {
+  const theme = useCityTheme();
   const a = achievements.find((a) => a.id === id)!;
   const state = achievementState(save, a),
     progress = Math.min(a.target, achievementProgress(save, a));
@@ -68,9 +71,9 @@ export function AchievementDetails({
           width: 132,
           height: 132,
           borderRadius: 66,
-          backgroundColor: "#193648",
+          backgroundColor: theme.paperLight,
           borderWidth: 2,
-          borderColor: colors.gold,
+          borderColor: theme.edge,
           alignItems: "center",
           justifyContent: "center",
           marginBottom: 18,
@@ -83,7 +86,7 @@ export function AchievementDetails({
       </Label>
       <Label
         size={13}
-        color={colors.muted}
+        tone="muted"
         style={{ textAlign: "center", marginVertical: 12 }}
       >
         {locale[a.id + "_description_tr"]}
@@ -106,28 +109,18 @@ export function AchievementDetails({
           <View style={{ marginVertical: 12, width: "100%" }}>
             <AppProgress value={progress} total={a.target} />
           </View>
-          <View
-            style={{
-              width: "100%",
-              padding: 16,
-              borderRadius: 12,
-              borderWidth: 1,
-              borderColor: colors.gold,
-              backgroundColor: "#fff6e2",
-              marginVertical: 12,
-            }}
-          >
+          <PaperCard style={{ width: "100%", marginVertical: 12 }}>
             <Label title size={17} style={{ marginBottom: 8 }}>
-              Sandığında
+              Ödül
             </Label>
             <Label size={14}>{rewardText(a)}</Label>
             {a.reward.capacity && (
-              <Label size={11} color={colors.muted} style={{ marginTop: 8 }}>
+              <Label size={11} tone="muted" style={{ marginTop: 8 }}>
                 100 enerjiyi geçince üreticiye basılı tutarak 2x–4x gücü
                 seçebilirsin.
               </Label>
             )}
-          </View>
+          </PaperCard>
           {state === "ready" && (
             <ActionButton
               text="Ödülü al"
@@ -152,7 +145,11 @@ export function AchievementDetails({
           )}
         </>
       )}
-      <ActionButton text="Yola dön" testID="returnToRoute" onPress={onReturn} />
+      <ActionButton
+        text="Başarılara dön"
+        testID="returnToRoute"
+        onPress={onReturn}
+      />
     </View>
   );
 }

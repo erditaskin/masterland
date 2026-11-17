@@ -10,6 +10,8 @@ import {
 } from "../game/engine";
 import { storeKitTestEnabled, testFlightBeta } from "../game/testMode";
 import { gameStore } from "../state/store";
+import { PaperCard } from "./PagePrimitives";
+import { useCityTheme } from "./CityThemeProvider";
 import { ActionButton, Label } from "./Controls";
 import { Sprite } from "./Art";
 function TestStore() {
@@ -160,8 +162,9 @@ export function Market({
   save: Save;
   dispatch: (a: Action) => Result | null;
 }) {
+  const theme = useCityTheme();
   return (
-    <View style={{ gap: 14 }}>
+    <View style={{ gap: 12 }}>
       <Label title size={23}>
         Gezginin Kesesi
       </Label>
@@ -171,27 +174,37 @@ export function Market({
         <Sprite kind="icons" index={7} size={34} />
         <Label title>{save.gems}</Label>
       </View>
-      <Label size={12}>Oyun içi paketler</Label>
       {exchanges.map((offer) => (
-        <View
-          key={offer.id}
-          style={{
-            padding: 12,
-            borderRadius: 12,
-            backgroundColor: "#ffedc9",
-            borderWidth: 1,
-            borderColor: "#dec28d",
-          }}
-        >
-          <Label title size={18}>
-            {offer.title}
-          </Label>
-          <ActionButton
-            testID={"exchange-" + offer.id}
-            text={`${offer.gems ? offer.gems + " elmas" : offer.gold + " altın"} · Al`}
-            onPress={() => dispatch({ type: "exchange", id: offer.id })}
-          />
-        </View>
+        <PaperCard key={offer.id}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
+            <View
+              style={{
+                width: 88,
+                height: 88,
+                borderRadius: 18,
+                backgroundColor: theme.paperLight,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Sprite
+                kind="icons"
+                index={offer.id === exchanges[0]?.id ? 5 : 6}
+                size={65}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Label title size={22}>
+                {offer.title}
+              </Label>
+              <ActionButton
+                testID={"exchange-" + offer.id}
+                text={`${offer.gems ? offer.gems + " elmas" : offer.gold + " altın"} · Al`}
+                onPress={() => dispatch({ type: "exchange", id: offer.id })}
+              />
+            </View>
+          </View>
+        </PaperCard>
       ))}
       {storeKitTestEnabled ? (
         <TestStore />

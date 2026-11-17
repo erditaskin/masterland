@@ -1,0 +1,6 @@
+{
+  "status": "implementation-candidate-not-pixel-accepted",
+  "source_reference": "01-account-belenyaka-v1.png",
+  "output": "../../../mobile/assets/art/shared-profile-v1.png",
+  "prompt": "Use case: game-art. Extract and faithfully recreate ONLY the shared round profile emblem from the supplied account reference: exactly one adult woman and one adult man standing back-to-back, equal prominence, warm friendly expressions, village adventurer clothing, woman's flowered straw hat, man's green vest. Same polished colorful Masterland casual-game art. Gold circular frame, tiny leaves around its lower rim, sky/greenery within the circle. One isolated circular emblem on truly TRANSPARENT background, 512x512. No text, labels, numbers, UI, title, menu, choice, or extra people. This is generic shared artwork; no gender selection."
+}

@@ -19,6 +19,114 @@ final class MasterlandTests:XCTestCase {
     func drag(_ a:Int,_ b:Int){cell(a).press(forDuration:0.1,thenDragTo:cell(b))}
     func energy(_ expected:String){XCTAssertTrue(app.buttons["stamina"].label.contains(expected),app.buttons["stamina"].label)}
     func shot(_ name:String){let a=XCTAttachment(screenshot:app.screenshot());a.name=name;a.lifetime = .keepAlways;add(a)}
+    func testThemedDetailScreensRemainNavigable() {
+        app.open(URL(string:"masterland://review")!)
+        app.buttons["tab-collection"].tap()
+        app.buttons["collection-producer-producer1"].tap()
+        XCTAssertTrue(app.buttons["viewProducerFromCollection"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["tab-collection"].isSelected)
+        shot("theme-belenyaka-collection-chain")
+        app.buttons["viewProducerFromCollection"].tap()
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["tab-board"].isSelected)
+        app.buttons["closePage"].tap()
+        app.buttons["producer5"].tap()
+        XCTAssertTrue(app.buttons["refillProducerGems"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-producer-cooldown")
+        app.buttons["closePage"].tap()
+        app.buttons["allOrders"].tap()
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-orders")
+        let guide=app.buttons["order-detail-city1-repeat-1-4"]
+        for _ in 0..<4 {if guide.isHittable {break};app.swipeUp()}
+        XCTAssertTrue(guide.isHittable)
+        guide.tap()
+        XCTAssertTrue(app.otherElements["orderGuide"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-order-guide")
+        app.buttons["closePage"].tap()
+        app.buttons["tab-cities"].tap()
+        let list=app.buttons["openCityAchievements"]
+        for _ in 0..<4 {if list.isHittable {break};app.swipeUp()}
+        XCTAssertTrue(list.isHittable)
+        list.tap()
+        let achievement=app.buttons["achievement-achievement3"]
+        for _ in 0..<3 {if achievement.isHittable {break};app.swipeUp()}
+        XCTAssertTrue(achievement.isHittable)
+        shot("theme-belenyaka-achievement-list")
+        achievement.tap()
+        XCTAssertTrue(app.buttons["returnToRoute"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-achievement-detail")
+        let back=app.buttons["returnToRoute"]
+        if !back.isHittable {app.swipeUp()}
+        back.tap()
+        XCTAssertTrue(app.buttons["achievement-achievement3"].waitForExistence(timeout:5))
+    }
+    func testFiveCityMaterialPreviewsKeepGameplayAndSquareGeometry() {
+        for (id,name) in [("city1","Belenyaka"),("city2","Badınca"),("city3","Yalıkoru"),("city4","Demirdere"),("city5","İpekyolu")] {
+            app.open(URL(string:"masterland://city-theme-review/"+id)!)
+            let marker=app.staticTexts["visualReviewMarker"]
+            XCTAssertTrue(marker.waitForExistence(timeout:10))
+            let ready=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+                id == "city1" ? marker.label == "Görsel inceleme" : marker.label.contains(name)
+            },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:10),.completed)
+            XCTAssertEqual(cell(0).frame.width,cell(53).frame.height,accuracy:0.01)
+            XCTAssertTrue(app.buttons["gold"].label.contains("750"))
+            shot("theme-"+id+"-board")
+            for tab in ["collection","storage","market","cities"] {
+                app.buttons["tab-"+tab].tap()
+                XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+                XCTAssertTrue(app.buttons["tab-"+tab].isSelected)
+                shot("theme-"+id+"-"+tab)
+                app.buttons["closePage"].tap()
+            }
+            XCTAssertTrue(app.buttons["gold"].label.contains("750"))
+        }
+    }
+    func testCityThemeCompositePagesAndStorage() {
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:10))
+        shot("theme-belenyaka-board")
+        for tab in ["collection","storage","market","cities"] {
+            app.buttons["tab-"+tab].tap()
+            let close=app.buttons["closePage"]
+            XCTAssertTrue(close.waitForExistence(timeout:5))
+            XCTAssertTrue(close.isHittable)
+            XCTAssertTrue(app.frame.contains(close.frame))
+            XCTAssertTrue(app.buttons["tab-"+tab].isHittable)
+            XCTAssertTrue(app.buttons["tab-"+tab].isSelected)
+            shot("theme-belenyaka-"+tab)
+            if tab == "cities" {
+                for id in ["city1","city2","city3"] { XCTAssertTrue(app.buttons["jump-"+id].exists) }
+                app.swipeUp()
+                XCTAssertTrue(app.buttons["jump-city5"].waitForExistence(timeout:5))
+                shot("theme-first-five-city-list")
+            }
+            close.tap()
+        }
+        app.buttons["profile-menu"].tap()
+        XCTAssertTrue(app.otherElements["accountPanel"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-account-guest")
+        app.buttons["closePage"].tap()
+        app.open(URL(string:"masterland://qa-reset")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:5))
+        app.buttons["producer1"].tap()
+        let index=cells(named:"Buğday başağı")[0]
+        cell(index).press(forDuration:0.6)
+        XCTAssertTrue(app.buttons["storeSelected"].waitForExistence(timeout:5))
+        shot("theme-belenyaka-item")
+        app.buttons["storeSelected"].tap()
+        app.buttons["tab-storage"].tap()
+        app.buttons["storage-0"].tap()
+        let restore=app.buttons["restoreSelected"]
+        if !restore.isHittable {app.swipeUp()}
+        XCTAssertTrue(restore.waitForExistence(timeout:5))
+        shot("theme-belenyaka-storage-selected")
+        restore.tap()
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(cells(named:"Buğday başağı").count,1)
+        XCTAssertEqual(cell(0).frame.width,cell(0).frame.height,accuracy:0.01)
+    }
     func testGameplayRefreshIdleCooldownAndFreeMerge() {
         XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"idleHint").firstMatch.waitForExistence(timeout:8))
         app.buttons["producer1"].tap()

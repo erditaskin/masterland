@@ -1,3 +1,5 @@
+import { visualReviewCity } from "./ui/visualReview";
+import { CityThemeProvider, useCityTheme } from "./ui/CityThemeProvider";
 import { startCloudSync } from "./account/cloudSync";
 import { IdleHint } from "./ui/IdleHint";
 import { cityScenes } from "./ui/cityScenes";
@@ -31,7 +33,6 @@ import {
   BackHandler,
   ImageBackground,
   PixelRatio,
-  Image,
   Linking,
   ScrollView,
   StyleSheet,
@@ -91,28 +92,15 @@ const navigation = [
   ["Market", "market"],
 ] as const;
 const startupAssets = [
-  art.city,
-  cityScenes.city2!.source,
-  cityScenes.city3!.source,
+  cityScenes.city1!.source,
   require("../assets/art/skara-items-v2.png"),
   require("../assets/art/haven-items-v1.png"),
-  require("../assets/art/carved-city-sign-v1.png"),
-  require("../assets/art/carved-wood-rail-v1.png"),
   require("../assets/art/flour-packet-v1.png"),
   art.concept,
   art.approved,
   art.products,
   art.icons,
   require("../assets/art/skara-brand-v1.png"),
-  require("../assets/art/skara-route-v2.png"),
-  require("../assets/art/canonical-map-clean-v1.png"),
-  require("../assets/art/map-scroll-v3.png"),
-  require("../assets/art/city-tabs-v4.png"),
-  require("../assets/art/haven-route-v2.png"),
-  require("../assets/art/cove-route-v2.png"),
-  require("../assets/art/page-frame-v2.png"),
-  require("../assets/art/title-plaque-v2.png"),
-  require("../assets/art/route-card-v2.png"),
   require("../assets/art/route-icons-v2.png"),
   require("../assets/art/skara-field-hero-v2.png"),
 ];
@@ -317,6 +305,7 @@ const Navigation = memo(function Navigation({
   open: (p: Page) => void;
   onBoard: () => void;
 }) {
+  const theme = useCityTheme();
   return (
     <View
       style={{
@@ -334,6 +323,7 @@ const Navigation = memo(function Navigation({
         <Button
           key={target}
           testID={"tab-" + target}
+          selected={active === target}
           label={
             target === "cities" && readyCount
               ? `${label}, ${readyCount} ödül hazır`
@@ -346,11 +336,10 @@ const Navigation = memo(function Navigation({
             flex: 1,
             marginHorizontal: 2,
             borderRadius: 8,
-            backgroundColor:
-              active === target ? "#a86628" : "rgba(48, 23, 10, 0.38)",
+            backgroundColor: active === target ? theme.primary : theme.heading,
             backgroundImage:
               active === target
-                ? "linear-gradient(180deg, #cf9448 0%, #925021 100%)"
+                ? `linear-gradient(180deg, ${theme.primaryLight} 0%, ${theme.primary} 100%)`
                 : "linear-gradient(180deg, rgba(31, 15, 5, 0.32) 0%, rgba(108, 58, 24, 0.12) 100%)",
             shadowColor: active === target ? "#ffbd39" : "transparent",
             shadowOpacity: active === target ? 0.55 : 0,
@@ -411,7 +400,13 @@ const Navigation = memo(function Navigation({
     </View>
   );
 });
-function Game() {
+function Game({
+  themeCityID,
+  onPreviewTheme,
+}: {
+  themeCityID: string;
+  onPreviewTheme: (id: string | null) => void;
+}) {
   useEffect(() => startCloudSync(), []);
   const [deletionPreview, setDeletionPreview] = useState(false);
   const language = useSyncExternalStore(
@@ -496,21 +491,29 @@ function Game() {
   useEffect(() => {
     void Linking.getInitialURL().then((incoming) => {
       const url = incoming ? incoming.split(/[?#]/)[0] : null;
+      onPreviewTheme(
+        visualReviewCity(
+          incoming,
+          testModeEnabled,
+          process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
+        ),
+      );
       setDeletionPreview(
         testModeEnabled &&
           !testFlightBeta &&
           !productionRelease &&
           Boolean(url?.includes("deletion-recovery-review")),
       );
-      const mode = testFlightBeta || productionRelease
-        ? "normal"
-        : testModeEnabled && url?.includes("milestone-review")
-          ? "milestone"
-          : url?.includes("review")
-            ? "review"
-            : url?.includes("qa-reset")
-              ? "qa"
-              : "normal";
+      const mode =
+        testFlightBeta || productionRelease
+          ? "normal"
+          : testModeEnabled && url?.includes("milestone-review")
+            ? "milestone"
+            : url?.includes("review")
+              ? "review"
+              : url?.includes("qa-reset")
+                ? "qa"
+                : "normal";
       setLaunchPreview(
         !testFlightBeta &&
           !productionRelease &&
@@ -527,6 +530,13 @@ function Game() {
         url.startsWith("masterland://auth/")
       )
         return;
+      onPreviewTheme(
+        visualReviewCity(
+          incoming,
+          testModeEnabled,
+          process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
+        ),
+      );
       setDeletionPreview(
         testModeEnabled && url.includes("deletion-recovery-review"),
       );
@@ -546,7 +556,7 @@ function Game() {
       }
     });
     return () => sub.remove();
-  }, []);
+  }, [onPreviewTheme]);
   useEffect(() => {
     void AccessibilityInfo.isReduceMotionEnabled().then(setReduced);
     const sub = AccessibilityInfo.addEventListener(
@@ -747,7 +757,7 @@ function Game() {
     c = city(save);
   return (
     <ImageBackground
-      source={cityScenes[save.cityID]?.source ?? art.city}
+      source={cityScenes[themeCityID]?.source ?? art.city}
       resizeMode="cover"
       onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
       style={{ flex: 1 }}
@@ -1050,18 +1060,10 @@ function Game() {
                 shadowOffset: { width: 0, height: 1 },
               }}
             >
-              <Image
-                pointerEvents="none"
-                accessible={false}
-                source={require("../assets/art/notice-board-v11.png")}
-                resizeMode="stretch"
-                style={{
-                  position: "absolute",
-                  left: (-noticeWidth * 18) / 2136,
-                  top: (-noticeHeight * 63) / 599,
-                  width: (noticeWidth * 2172) / 2136,
-                  height: (noticeHeight * 724) / 599,
-                }}
+              <WoodTray
+                width={noticeWidth}
+                height={noticeHeight}
+                variant="producer"
               />
               <ScrollView
                 testID="orderRail"
@@ -1275,7 +1277,11 @@ function Game() {
                 paddingHorizontal: 0,
               }}
             >
-              <WoodTray width={width - 16 * scale} height={62 * scale} />
+              <WoodTray
+                width={width - 16 * scale}
+                height={62 * scale}
+                variant="producer"
+              />
               {producerEdges.left && (
                 <Button
                   testID="producerRailPrev"
@@ -1412,14 +1418,16 @@ function Game() {
         <View style={{ position: "absolute", top: navTop, left: 10 }}>
           <Navigation
             active={
-              page?.kind === "achievement"
-                ? "cities"
-                : page &&
-                    ["collection", "cities", "storage", "market"].includes(
-                      page.kind,
-                    )
-                  ? page.kind
-                  : "board"
+              page?.kind === "producer" && page.variant === "collection"
+                ? "collection"
+                : page?.kind === "achievement"
+                  ? "cities"
+                  : page &&
+                      ["collection", "cities", "storage", "market"].includes(
+                        page.kind,
+                      )
+                    ? page.kind
+                    : "board"
             }
             width={width}
             open={open}
@@ -1576,6 +1584,7 @@ function Game() {
       <DeletionRecovery preview={deletionPreview} />
       {review && (
         <Text
+          testID="visualReviewMarker"
           pointerEvents="none"
           style={{
             position: "absolute",
@@ -1586,10 +1595,23 @@ function Game() {
             fontFamily: fonts.body,
           }}
         >
-          Görsel inceleme
+          {themeCityID === save.cityID
+            ? "Görsel inceleme"
+            : `${name(themeCityID)} · Tema önizlemesi`}
         </Text>
       )}
     </ImageBackground>
+  );
+}
+const currentThemeCity = () => gameStore.get().save.cityID;
+function GameTheme() {
+  const cityID = useSyncExternalStore(gameStore.subscribe, currentThemeCity);
+  const [preview, setPreview] = useState<string | null>(null);
+  const themeCityID = preview ?? cityID;
+  return (
+    <CityThemeProvider cityID={themeCityID}>
+      <Game themeCityID={themeCityID} onPreviewTheme={setPreview} />
+    </CityThemeProvider>
   );
 }
 export default function App() {
@@ -1600,7 +1622,7 @@ export default function App() {
     >
       <SafeAreaProvider>
         <StatusBar hidden />
-        <Game />
+        <GameTheme />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

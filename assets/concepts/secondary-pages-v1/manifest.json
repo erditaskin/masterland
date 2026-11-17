@@ -1,0 +1,49 @@
+{
+  "status": "approved-art-direction-pending-device-reference",
+  "date": "2026-11-17",
+  "scope": "Belenyaka visual concepts; not implemented runtime screens",
+  "boards": [
+    {
+      "key": "account",
+      "file": "01-account-belenyaka-v1.png",
+      "sha256": "d5fd3615ff02e722659e16adea41f010f7bd3f19975b1994477ceab44a150bb6"
+    },
+    {
+      "key": "collection",
+      "file": "02-collection-belenyaka-v1.png",
+      "sha256": "59ca2781e0f429cc5c075cbd7a9c384e69cf632cb631e7cbcaba00242bc24d0c"
+    },
+    {
+      "key": "storage",
+      "file": "03-storage-belenyaka-v1.png",
+      "sha256": "57815bd69a8fe69641d4f84e4d18b80562b3ffceec82087a55671618586c9423"
+    },
+    {
+      "key": "market",
+      "file": "04-market-belenyaka-v1.png",
+      "sha256": "0ea5ea248dfb55285eb9f6917714614fc03c2c821d991793e78d1c14c72263c8"
+    },
+    {
+      "key": "producer_item",
+      "file": "05-producer-item-belenyaka-v1.png",
+      "sha256": "65639788657211c0428899d75f6468a36877603795c8cd1e397aeb41e42fb352"
+    },
+    {
+      "key": "orders_guide",
+      "file": "06-orders-guide-belenyaka-v1.png",
+      "sha256": "06d0bb6e6d4de9bb289496a07f668e38337641d3029fb18461bd4428c5ebb164"
+    },
+    {
+      "key": "achievements",
+      "file": "07-achievements-belenyaka-v1.png",
+      "sha256": "1014b0d5da1898d054c000e2c33ca395f7ab6d19668924c8bda10e1efb3ed756"
+    },
+    {
+      "key": "cloud_deletion",
+      "file": "08-cloud-deletion-belenyaka-v1.png",
+      "sha256": "8be5816b093c3fea21cb0f6958352f0194af4596b7a98a33597f738a3d7e5782"
+    }
+  ],
+  "approved_on": "2026-11-17",
+  "acceptance": "not-pixel-verified"
+}

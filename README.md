@@ -1,5 +1,9 @@
 # Masterland
 
+## Şehir teması refaktörü — 18 Kasım 2026
+
+Beş şehir için ortak tema ve bileşik ekran çalışması sürüyor. Son ekran çizimleri uygulama yönüdür; cihaz ölçülü nihai referans kararı ve %100 piksel kabulü henüz yoktur. Apple/TestFlight gönderimi kullanıcının son kararıyla beklemededir. Kod, kanıtlar ve açık sınırlar [şehir teması refaktörü](docs/city-theme-composites-20261118.md) belgesindedir.
+
 ## Güncel TestFlight hazırlığı — 17 Kasım 2026
 
 VPS bağlantılı mevcut sürüm 0.2.0 (3) olarak derlendi, Release kanal kontrolü geçti ve cihaz arşivi imzalandı. Apple yüklemesi bir zaman aşımı ve ardından iki HTTP 500 hatası nedeniyle tamamlanmadı; bu build henüz TestFlight'ta mevcut olarak raporlanmaz. Yeni kanal `npm run ios:beta-vps` ile tekrar üretilir; test kredileri ve gerçek satış kapalıdır, eski test kredili beta kaydı ayrı korunur. Ayrıntılar `docs/testflight-vps-20261117.md` içindedir. Aşağıdaki ilk 0.2.0 (2) beta bilgileri tarihçedir.

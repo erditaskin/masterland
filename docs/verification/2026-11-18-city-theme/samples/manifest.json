@@ -1,0 +1,129 @@
+{
+  "status": "draft-not-pixel-accepted",
+  "source": "../pass-4/manifest.json",
+  "samples": [
+    {
+      "name": "theme-belenyaka-storage-selected",
+      "file": "theme-belenyaka-storage-selected.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "600e91d3080bd5756bf9cc1a8ca6df37e2dc28b958f3fd3131f172f5ce508ca8",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-belenyaka-account-guest",
+      "file": "theme-belenyaka-account-guest.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "4fa8fb5310a75b88d2af1106c41ecbef7d0351a5a9351fc80baf0c7f81f62a52",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-belenyaka-market",
+      "file": "theme-belenyaka-market.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "7bb3c3fe5c45655519ecd7be5b66f7cc886b7470c6da0ae4fb14ff1ca55050a4",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-belenyaka-collection",
+      "file": "theme-belenyaka-collection.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "c73adaac1887f05080c3b768059b5ceeb656eaa9e2ea6aafafdcc20829731788",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-city5-board",
+      "file": "theme-city5-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "edaf06d7a3d9811c10d98099480b32441572d58e2f0c38822104ab04e6d25d8f",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-city4-board",
+      "file": "theme-city4-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "2ecd6239be2337aa0cea1f0490542cdc143bf64b03b32653066393ef0b01a159",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-city3-board",
+      "file": "theme-city3-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "14939a40a55481dd1cacf36a22b5a837f8d4cd2eb6717ed65e6309e7e181d9f9",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-city2-board",
+      "file": "theme-city2-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "ed50d22787d5882d4cff094e1b3d3326897e63d99ad9a3b19c98b8e150238375",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-city1-board",
+      "file": "theme-city1-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "2485aa3467fc1595845bed176a522b1560ad5320efb26ad7e867bbfab487b616",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "theme-belenyaka-collection-chain",
+      "file": "theme-belenyaka-collection-chain.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "afcafd10be42412d72ca84381de618cf6c4f45a4ddba2e2c02229a0ca0386cda",
+      "device": "Masterland-Store-Release-QA",
+      "status": "interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "milestone-haven-collection",
+      "file": "milestone-haven-collection.png",
+      "sha256": "b5900528f10617b840d326edd14a16c9105fa6b0afc77d9ec31c0319aee566cf",
+      "status": "playable-city-interaction-proof-not-pixel-accepted"
+    },
+    {
+      "name": "milestone-haven-board",
+      "file": "milestone-haven-board.png",
+      "sha256": "e0f581eea80ff799f53fff78aee679d25fb91da739633cef6e59bcbbafdf39f0",
+      "status": "playable-city-interaction-proof-not-pixel-accepted"
+    }
+  ],
+  "additional_source": "../pass-travel/manifest.json"
+}

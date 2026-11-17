@@ -1,20 +1,12 @@
-export const cityScenes: Record<string, { source: number; color: string }> = {
-  city1: {
-    source: require("../../assets/art/city1-surround-v4.png"),
-    color: "#286142",
-  },
-  city2: {
-    source: require("../../assets/art/city2-surround-v2.png"),
-    color: "#a64370",
-  },
-  city3: {
-    source: require("../../assets/art/city3-surround-v1.png"),
-    color: "#236978",
-  },
-};
+import { cityArt } from "./cityArt";
+import { cityThemes } from "./cityTheme";
+export const cityScenes = Object.fromEntries(
+  Object.entries(cityArt).map(([id, art]) => [
+    id,
+    { source: art.scene, color: cityThemes[id]!.primary },
+  ]),
+);
 export const upcomingCities = [
-  { reference: "Minoc", tr: "Demirdere", en: "Ironvale" },
-  { reference: "Vesper", tr: "İpekyolu", en: "Silkford" },
   { reference: "Yew", tr: "Yelepınar", en: "Manespring" },
   { reference: "Moonglow", tr: "Hilalkapı", en: "Moongate" },
   { reference: "Wind", tr: "Yeraltı", en: "Undercity" },

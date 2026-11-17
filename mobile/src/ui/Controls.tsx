@@ -14,19 +14,24 @@ import {
   type TextStyle,
 } from "react-native";
 import { colors, fonts, parchment } from "./theme";
+import { useCityTheme } from "./CityThemeProvider";
+import { semanticColors } from "./cityTheme";
 export function Label({
   children,
   title = false,
   size = 14,
-  color = colors.ink,
+  color,
+  tone = "default",
   style,
 }: {
   children: React.ReactNode;
   title?: boolean;
   size?: number;
   color?: string;
+  tone?: "default" | "muted" | "success";
   style?: StyleProp<TextStyle>;
 }) {
+  const theme = useCityTheme();
   return (
     <Text
       allowFontScaling
@@ -35,7 +40,13 @@ export function Label({
         {
           fontFamily: title ? fonts.title : fonts.body,
           fontSize: size,
-          color,
+          color:
+            color ??
+            (tone === "muted"
+              ? theme.mutedInk
+              : tone === "success"
+                ? semanticColors.success
+                : theme.ink),
           includeFontPadding: false,
         },
         style,
@@ -122,11 +133,17 @@ const paperButtonSurface: ViewStyle = {
 };
 /** Non-interactive face for a button already owned by its surrounding achievement card. */
 export function AppButtonStamp({ text }: { text: string }) {
+  const theme = useCityTheme();
   return (
     <View
       style={[
         paperButtonSurface,
-        { paddingHorizontal: 10, paddingVertical: 3 },
+        {
+          paddingHorizontal: 10,
+          paddingVertical: 3,
+          backgroundColor: theme.paper,
+          borderColor: theme.edge,
+        },
       ]}
     >
       <Label title size={12} color={parchment.greenInk}>
@@ -144,6 +161,7 @@ export function AppProgress({
   total: number;
   label?: string;
 }) {
+  const theme = useCityTheme();
   const fraction = total > 0 ? Math.max(0, Math.min(1, value / total)) : 0;
   return (
     <View
@@ -152,8 +170,8 @@ export function AppProgress({
         width: "100%",
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: parchment.edge,
-        backgroundColor: "#dec28d",
+        borderColor: theme.edge,
+        backgroundColor: theme.paper,
         overflow: "hidden",
       }}
     >
@@ -164,7 +182,7 @@ export function AppProgress({
           left: 0,
           bottom: 0,
           width: `${fraction * 100}%`,
-          backgroundColor: "#62834b",
+          backgroundColor: semanticColors.success,
         }}
       />
       {label && (
@@ -187,10 +205,22 @@ export function AppButton({
   text: string;
   onPress: () => void;
   testID?: string;
-  tone?: "primary" | "secondary" | "muted";
+  tone?: "primary" | "secondary" | "muted" | "danger";
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
 }) {
+  const theme = useCityTheme();
+  const primary = tone === "primary";
+  const fill = disabled
+    ? semanticColors.disabled
+    : primary
+      ? theme.primary
+      : theme.paper;
+  const top = disabled
+    ? "#c6c8c4"
+    : primary
+      ? theme.primaryLight
+      : theme.paperLight;
   return (
     <Button
       label={text}
@@ -204,7 +234,11 @@ export function AppButton({
           paddingHorizontal: 14,
           paddingVertical: 9,
           marginVertical: 4,
-          opacity: disabled ? 0.55 : 1,
+          opacity: 1,
+          borderColor: disabled ? "#999b95" : theme.edge,
+          borderRadius: 18,
+          backgroundColor: fill,
+          backgroundImage: `linear-gradient(180deg, ${top} 0%, ${fill} 100%)`,
         },
         style,
       ]}
@@ -213,11 +247,15 @@ export function AppButton({
         title
         size={parchment.fontSize}
         color={
-          tone === "primary"
-            ? parchment.greenInk
-            : tone === "muted"
-              ? parchment.mutedInk
-              : parchment.ink
+          disabled
+            ? semanticColors.disabledInk
+            : primary
+              ? theme.onPrimary
+              : tone === "muted"
+                ? theme.mutedInk
+                : tone === "danger"
+                  ? semanticColors.danger
+                  : theme.ink
         }
         style={{ textAlign: "center", lineHeight: 19 }}
       >
@@ -240,6 +278,7 @@ export function AppCheckbox({
   onChange: () => void;
   testID?: string;
 }) {
+  const theme = useCityTheme();
   return (
     <Button
       label={label}
@@ -262,7 +301,7 @@ export function AppCheckbox({
             width: 25,
             height: 25,
             borderWidth: 1.5,
-            borderColor: parchment.ink,
+            borderColor: theme.edge,
             borderRadius: 4,
             transform: [{ rotate: "-3deg" }],
             backgroundColor: "#f0cf8c44",
@@ -289,10 +328,11 @@ export function AppCheckbox({
 }
 
 export function AppInput({ style, ...props }: TextInputProps) {
+  const theme = useCityTheme();
   return (
     <TextInput
-      placeholderTextColor={parchment.mutedInk}
-      selectionColor={parchment.greenInk}
+      placeholderTextColor={theme.mutedInk}
+      selectionColor={theme.primary}
       {...props}
       style={[
         {
@@ -303,7 +343,7 @@ export function AppInput({ style, ...props }: TextInputProps) {
           paddingHorizontal: 10,
           paddingVertical: 8,
           borderRadius: 5,
-          color: parchment.ink,
+          color: theme.ink,
           fontFamily: fonts.body,
           fontSize: 15,
           fontStyle: "italic",
@@ -319,6 +359,7 @@ export function AppChoice({
   style,
   ...props
 }: React.ComponentProps<typeof Button>) {
+  const theme = useCityTheme();
   return (
     <Button
       {...props}
@@ -327,8 +368,8 @@ export function AppChoice({
         {
           borderRadius: parchment.radius,
           borderWidth: selected ? 2 : 1,
-          borderColor: selected ? parchment.greenInk : parchment.edge,
-          backgroundColor: selected ? parchment.selected : parchment.paper,
+          borderColor: selected ? theme.primary : theme.edge,
+          backgroundColor: selected ? theme.selected : theme.paper,
         },
         style,
       ]}
@@ -343,6 +384,7 @@ export function AppCloseButton({
   onPress: () => void;
   testID?: string;
 }) {
+  const theme = useCityTheme();
   return (
     <Button
       label="Bitti"
@@ -358,8 +400,8 @@ export function AppCloseButton({
           borderRadius: 16,
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#f5d69799",
-          borderColor: parchment.edge,
+          backgroundColor: theme.paper,
+          borderColor: theme.edge,
           borderWidth: 1,
         }}
       >

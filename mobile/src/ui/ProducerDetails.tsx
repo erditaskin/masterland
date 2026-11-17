@@ -1,3 +1,5 @@
+import { useCityTheme } from "./CityThemeProvider";
+import { squareTileSize } from "./PagePrimitives";
 import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { EnergyAdPanel } from "./EnergyAdPanel";
 import { useEffect, useState } from "react";
@@ -65,16 +67,26 @@ export function ProducerDetails({
   index,
   save,
   dispatch,
+  width,
+  variant = "producer",
+  onProducer,
 }: {
+  width: number;
+  variant?: "producer" | "collection";
+  onProducer: () => void;
   producer: Producer;
   index: number;
   save: Save;
   dispatch: (a: Action) => Result | null;
 }) {
+  const theme = useCityTheme();
+  const side = squareTileSize(width, 4, 6);
   const c = city(save);
   const [selected, setSelected] = useState(
     () =>
-      p.products.find((a) => !c.opened.includes(a.id))?.id ??
+      (variant === "collection"
+        ? p.products[0]?.id
+        : p.products.find((a) => !c.opened.includes(a.id))?.id) ??
       p.products.at(-1)!.id,
   );
   const a = p.products.find((a) => a.id === selected)!;
@@ -90,12 +102,12 @@ export function ProducerDetails({
   const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000));
   return (
     <View style={{ gap: 8 }}>
-      {owned && seconds > 0 && (
+      {variant === "producer" && owned && seconds > 0 && (
         <View
           testID="producerCooldown"
           style={{
             padding: 14,
-            backgroundColor: "#f1d394",
+            backgroundColor: theme.paperLight,
             borderRadius: 12,
             gap: 8,
           }}
@@ -115,7 +127,7 @@ export function ProducerDetails({
           <EnergyAdPanel save={save} producerID={p.id} />
         </View>
       )}
-      <Label size={12} color={colors.muted} style={{ textAlign: "center" }}>
+      <Label size={12} tone="muted" style={{ textAlign: "center" }}>
         {name(save.cityID)} · Ürün alanları
       </Label>
       <View style={{ alignItems: "center", paddingVertical: 4 }}>
@@ -129,7 +141,7 @@ export function ProducerDetails({
           <ProducerPortrait index={index} size={125} />
         )}
       </View>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 5 }}>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
         {p.products.map((item) => (
           <AppChoice
             key={item.id}
@@ -141,15 +153,17 @@ export function ProducerDetails({
             }
             onPress={() => setSelected(item.id)}
             style={{
-              width: "23%",
-              height: 72,
+              width: side,
+              height: side,
             }}
           >
-            <View
-              style={{ opacity: save.discoveries.includes(item.id) ? 1 : 0.45 }}
-            >
-              <Item id={item.id} size={46} />
-            </View>
+            {save.discoveries.includes(item.id) ? (
+              <Item id={item.id} size={side * 0.7} />
+            ) : (
+              <Label title size={side * 0.48} color={theme.mutedInk}>
+                ?
+              </Label>
+            )}
             <Label
               size={11}
               color={
@@ -164,10 +178,17 @@ export function ProducerDetails({
       <Label title size={24} style={{ textAlign: "center", marginTop: 6 }}>
         {a.name}
       </Label>
-      <Label size={12} color={colors.muted} style={{ textAlign: "center" }}>
+      <Label size={12} tone="muted" style={{ textAlign: "center" }}>
         Basamak {a.tier}
       </Label>
-      {!owned ? (
+      {variant === "collection" ? (
+        <ActionButton
+          testID="viewProducerFromCollection"
+          text="Üreticiyi gör"
+          tone="secondary"
+          onPress={onProducer}
+        />
+      ) : !owned ? (
         <ActionButton
           testID="buyProducer"
           text={`Aç · ${p.price} altın · Seviye ${p.level}`}
@@ -197,7 +218,7 @@ export function ProducerDetails({
         >
           <Item id={p.products[a.tier]!.id} size={56} />
           <View style={{ flex: 1 }}>
-            <Label size={11} color={colors.muted}>
+            <Label size={11} tone="muted">
               Sonraki ürün
             </Label>
             <Label title size={16}>
@@ -209,7 +230,7 @@ export function ProducerDetails({
       {owned && (
         <Label
           size={11}
-          color={colors.muted}
+          tone="muted"
           style={{ textAlign: "center", marginTop: 8 }}
         >
           Üretim gücü {2 ** (productionPlan(save, p).selected - 1)}x.

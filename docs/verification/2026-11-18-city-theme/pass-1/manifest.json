@@ -1,0 +1,247 @@
+[
+  {
+    "name": "theme-belenyaka-storage-selected",
+    "file": "theme-belenyaka-storage-selected.png",
+    "sha256": "95d7f445811013ce470a1449b96e104a2e526822188f0ec22d1ca61c7276688e",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-item",
+    "file": "theme-belenyaka-item.png",
+    "sha256": "6066ad1491b019204df0c9d6114010da4aadb3f593695d60d5a303e6fafce609",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-account-guest",
+    "file": "theme-belenyaka-account-guest.png",
+    "sha256": "7782aea907bc8221b23cfd1b0609076e8de3442ca36627bedd22629a6566dc5a",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-first-five-city-list",
+    "file": "theme-first-five-city-list.png",
+    "sha256": "f0cb43f740a586465a75baf487a4970ca707086b1df62a883ab1fd67dbe80b4c",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-cities",
+    "file": "theme-belenyaka-cities.png",
+    "sha256": "6234ea4c01f583c56313bac6ce8aff142035df736f1a3bf4f8f2f47b041ee8b4",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-market",
+    "file": "theme-belenyaka-market.png",
+    "sha256": "f02bb46b1fb8f729f4a0c89b52cf479c99dcd7b80bbe78b0e8bfc88289cde941",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-storage",
+    "file": "theme-belenyaka-storage.png",
+    "sha256": "01a0da2e326d97e767bcebde8d5208923eeea1ffc3b4affcab17bbecb78218fe",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-collection",
+    "file": "theme-belenyaka-collection.png",
+    "sha256": "61507e77183e6f44ae92d82e95ab13652fcaed263e7a4c4f9284c0ff4b32f602",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-belenyaka-board",
+    "file": "theme-belenyaka-board.png",
+    "sha256": "eeb926eca8d5f44be50d11d87fbd5c7cca6f2e4d315bd128eaf1416171a37773",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city5-cities",
+    "file": "theme-city5-cities.png",
+    "sha256": "02aaed4276caddaf3d87fd110b999953ea0673ab25f0ece34c401e57cf6ef92c",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city5-market",
+    "file": "theme-city5-market.png",
+    "sha256": "37d8f4fd58b0941642d5b8527a5cddabfc43bc98ecfb611134ad37a0ebc8c119",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city5-storage",
+    "file": "theme-city5-storage.png",
+    "sha256": "7e7acfe6dadaab43695f14d91e1d072b2d8edcebe56bf43c25f72438a3211da2",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city5-collection",
+    "file": "theme-city5-collection.png",
+    "sha256": "7e51e7236b99f2f7520c761f4e7a9bcbb7217567800327710fb83a32ab8a9d5e",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city5-board",
+    "file": "theme-city5-board.png",
+    "sha256": "2993af46aed1e407e2e5db90f85f5c4c81f4ab3fdb004c5b0e40565f25f45a54",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city4-cities",
+    "file": "theme-city4-cities.png",
+    "sha256": "368951a818f2cadcbf0dd65371f721ac105af7709694ede527617bd523c3c389",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city4-market",
+    "file": "theme-city4-market.png",
+    "sha256": "32ef80a66ea2d6e5ae0edf987babf0c601bbe8a3fce6fd7e2257f125218f3a85",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city4-storage",
+    "file": "theme-city4-storage.png",
+    "sha256": "e9ff5f88b5b88c7383ed6e17e541196a6eb1dca2cb30da82725b7295a6d8b303",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city4-collection",
+    "file": "theme-city4-collection.png",
+    "sha256": "bcc95add13a10954c9ab3ffcd70c931f1c8c8b4511278db9672a15d3f47d6838",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city4-board",
+    "file": "theme-city4-board.png",
+    "sha256": "17806189ab703d15d23d6dcba92d81f47969c83a1713a875a88286302023000c",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city3-cities",
+    "file": "theme-city3-cities.png",
+    "sha256": "8409ffc18ccd225dfe76dfffd7d58380a02235f8158f46139eadb4e66fb4bdea",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city3-market",
+    "file": "theme-city3-market.png",
+    "sha256": "759dec61290d20fc217c69236f2a259ac5564eba4733f33f438911e38b199e4d",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city3-storage",
+    "file": "theme-city3-storage.png",
+    "sha256": "b272fe519bfa01654c10e2c5cca1ddd1f2e52861753c1bb7edb8a61a905b6edb",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city3-collection",
+    "file": "theme-city3-collection.png",
+    "sha256": "33f0bb716479f1d9b1fb0157811cc7ba2a3e6bf2a432801cd24dc6fbedadc5d5",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city3-board",
+    "file": "theme-city3-board.png",
+    "sha256": "d9b7b980a289421f3328ad68ca99b350b86a73609244d78efef44ae3bd3b4a85",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city2-cities",
+    "file": "theme-city2-cities.png",
+    "sha256": "7a9bffce4ea0bb87143cbcb8dea1480e1970959d602d2d471a9837c902792826",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city2-market",
+    "file": "theme-city2-market.png",
+    "sha256": "3515c605923527f22d5c128f65f02f129ad4498be25992d82b558cdecad797ea",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city2-storage",
+    "file": "theme-city2-storage.png",
+    "sha256": "251c7dba6d1d983d9bb44e5adcb44336e1bd729c9d1ffe738df2cd7db6a9788e",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city2-collection",
+    "file": "theme-city2-collection.png",
+    "sha256": "3addb56797dd8643c3b81ae56399f58c439f243321d9f896fdded44cd5ef7621",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city2-board",
+    "file": "theme-city2-board.png",
+    "sha256": "433e11cf0e0e99767e20df268e85d273096cc1dfea0e30afaea51ea3bee6d4d8",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city1-cities",
+    "file": "theme-city1-cities.png",
+    "sha256": "90917ff3b18352612695c5d34ff87179ea0eea6f06bfb61551991f9f20205477",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city1-market",
+    "file": "theme-city1-market.png",
+    "sha256": "b431340b7f76685b4ba99b1f59dfba5736f77b0c1d5cb4c40f78f18c13dac13a",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city1-storage",
+    "file": "theme-city1-storage.png",
+    "sha256": "3690448bd1b7dcbee22edd14d22fabf55949d58ae0ee14a5dc5145802b39f980",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city1-collection",
+    "file": "theme-city1-collection.png",
+    "sha256": "0ef2f7dc936f0d4d7a97aafb08d6e6f04597d88b6193eeb9496e159efb014101",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "theme-city1-board",
+    "file": "theme-city1-board.png",
+    "sha256": "8563a4088cc663ba9391c0cb5cc2a7d9246ef00cb7a27e19cee4fde3e9c8aab0",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "rn-selection-and-merge",
+    "file": "rn-selection-and-merge.png",
+    "sha256": "89930cd796fa945046a2fc3ab020df23c32cf98248cc66da63d8d822588d869d",
+    "device": "Masterland-Store-Release-QA",
+    "status": "interaction-proof-not-pixel-accepted"
+  }
+]

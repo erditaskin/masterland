@@ -46,7 +46,7 @@ export function AccountDeletionPanel() {
       <Divider />
       <AppButton
         testID="openAccountDeletion"
-        tone="muted"
+        tone="danger"
         text={tx("Hesabımı sil", "Delete my account")}
         onPress={() => setOpen(!open)}
       />
@@ -103,7 +103,7 @@ export function AccountDeletionPanel() {
             ))}
           <AppButton
             testID="confirmAccountDeletion"
-            tone="muted"
+            tone="danger"
             disabled={
               !accountDeletionEnabled ||
               !confirmed ||

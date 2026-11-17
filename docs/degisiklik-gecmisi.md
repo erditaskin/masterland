@@ -461,3 +461,15 @@ Kullanıcının açık düzeltmeleriyle ilk beş Türkçe ad Belenyaka, Badınca
 Kullanıcı beşli görsel yönünü onayladı; production beş harita hazır olunca yapılacak, önce mevcut sürüm TestFlight'a tekrar yüklenecektir. VPS bağlantılı, test kredileri/satış kapalı beta preset'i eklendi ve build numarası 3 yapıldı. Native Release kanal kontrolünün ilk koşusundaki asenkron etiket okuma yarışı test harness'inde giderildi; tekrar 18.715 saniyede geçti. Üç gerçek ekran incelendi. Cihaz arşivi doğru sürüm/ekip/imzayla tamamlandı; Hermes kaynak hash'i test edilen simülatörle aynıdır.
 
 Apple export/upload bir zaman aşımı ve iki App Store Connect HTTP 500 hatası nedeniyle tamamlanamadı. Yeni build TestFlight'ta mevcut olarak raporlanmadı; production gönderimi yapılmadı. İmzalı arşiv korumalı yerel yedekte tutulur. Kanıt ve yeniden yükleme giriş noktası testflight-vps-20261117.md içindedir. Yeni harita görselleri bu beta arşivine uygulanmış sayılmaz.
+
+## 17 Kasım 2026 — Belenyaka ikincil ekran görsel turu
+
+Hesap/giriş, koleksiyon/zincir, depo/tahta dolu, market/enerji, üretici/eşya, ilan/rehber, başarı listesi/detay ve bulut seçimi/hesap silme için sekiz görsel pano üretildi. Hesap avatarı kullanıcının düzeltmesiyle sırt sırta bir kadın ve bir erkek içeren ortak illüstrasyona çevrildi. İstemler, kaynaklar ve SHA-256 manifesti konsept klasöründe saklandı. Yeni runtime kodu veya dağıtım yapılmadı; görsel onay ve sabit ölçülü karşılaştırma referansları beklenmektedir.
+
+## 18 Kasım 2026 — Ortak şehir teması ve bileşik sayfa refaktörü
+
+Sabit şehir ID'leriyle çözülen değişmez tema değerleri ve bir tema sağlayıcısı eklendi. Sayfa kabuğu, başlık, parşömen kartı ve şehir kartı ortaklaştırıldı. Koleksiyon, depo ve ilan sayfaları ayrı veri/eylem prop'larıyla kuruldu. Tema; hesap, bulut, başarı, üretici, rehber, kontrol ve tahta katmanlarına taşındı. Manzara, çerçeve ve tabela/raf/navigasyon atlasları beş şehir için ayrı katmanlar olarak üretildi; dinamik yazılar native kaldı.
+
+Tahtadaki 54 hücre başına eski büyük doku Crop katmanı kaldırıldı; UI runtime üzerindeki sürükleme ve üretim tanıma akışları korundu. Kullanılmayan eski görsel ön yüklemeleri çıkarıldı. Yalnız açık local test kanalına izin veren, kaydı/şehir kilidini değiştirmeyen tema önizlemesi ve bunun yayın kanalı sınır testi eklendi. Görsel doğrulama aracı eksik kanıtı, ölçü/renk profili farkını ve tek piksel farkını reddeder; otomatik baseline üretmez. Bu kayıt nihai piksel kabulü veya dağıtım değildir.
+
+Son kaynakta 171 birim testi, görsel kapı testi ve seçili beş Release testi geçti. Son görsel turda 41, gerçek Belenyaka–Badınca seyahat turunda iki kayıpsız cihaz görüntüsü alındı. Çerçeve taşması ve koleksiyon zincirinin yanlış seçili sekmesi inceleme sırasında giderildi. 90 görsel durumdan 33'ünün cihaz görüntüsü vardır; 0/90 piksel kabulü vardır. Cihaz ölçülü nihai referans kararı ve kalan görsel durumlar açıkken çalışma tamamlandı olarak işaretlenmedi.

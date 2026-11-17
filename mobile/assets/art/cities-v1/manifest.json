@@ -1,0 +1,172 @@
+{
+  "status": "implementation-candidate-not-pixel-accepted",
+  "date": "2026-11-18",
+  "dynamic_text": "native-only",
+  "artifacts": [
+    {
+      "file": "city1-chrome.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1905470,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "72b78f375771a16c9f3f1946a702d166189735b62408117110ed3f5f2fb56387"
+    },
+    {
+      "file": "city1-frame.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1115514,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "f199c8aa656cffc955a4768617090fb837a1b417eebef9608b8a06c308b5acbf"
+    },
+    {
+      "file": "city1-scene.png",
+      "width": 789,
+      "height": 1991,
+      "bytes": 2732024,
+      "mode": "RGB",
+      "alpha_range": null,
+      "sha256": "93f8bfc6e2c729c5d80d83f9f4a062fa6f6bcd5d1d05ae92a302e1c4f45950a6"
+    },
+    {
+      "file": "city2-chrome.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1829198,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "21b06cd852f2e13bbd259905237de2cbf950314d3dd1d11c3f2296e450faa4ab"
+    },
+    {
+      "file": "city2-frame.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1133964,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "721dc9c89a8cf6f4e55a975a046e8f71b796b396e94f2d6502b4c77890dffb9b"
+    },
+    {
+      "file": "city2-scene.png",
+      "width": 789,
+      "height": 1994,
+      "bytes": 2861510,
+      "mode": "RGB",
+      "alpha_range": null,
+      "sha256": "95a263a297b9130d6e6c085c9bd3294d87c263ac01b1dbd7ffbe728c71f54a9d"
+    },
+    {
+      "file": "city3-chrome.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2169666,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "7f0abb45ddc654e6a7860305ec8ea9e45816a469d49c8a7607e042e0eae51e3f"
+    },
+    {
+      "file": "city3-frame.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1297617,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "b0200918b96d53fd9a4e824e1c7d59798e9a35621bf0cbd011b907e1d34f4e7b"
+    },
+    {
+      "file": "city3-scene.png",
+      "width": 789,
+      "height": 1993,
+      "bytes": 3070419,
+      "mode": "RGB",
+      "alpha_range": null,
+      "sha256": "d971615ee35c21139052444740bb5e68a1880e1dbcc7f7060c07422ed0cbba92"
+    },
+    {
+      "file": "city4-chrome.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 1900560,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "1c76b601c8da323e95d0065776c9dccdcec8e762d5e88009d69fb8339c4a5309"
+    },
+    {
+      "file": "city4-frame.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1112224,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "fa01b8b32f37bc34f008348046a4085a4542f85f7d34dacb21aa495f3d86dccc"
+    },
+    {
+      "file": "city4-scene.png",
+      "width": 789,
+      "height": 1994,
+      "bytes": 2782399,
+      "mode": "RGB",
+      "alpha_range": null,
+      "sha256": "d23c26b93e96883b0e1c1146ab0bade718e0d47fe051d9982fec81a4977fd92b"
+    },
+    {
+      "file": "city5-chrome.png",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2095503,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "6d239363ffcd3106a760cec8075b121fc831d2ef82e905d1db83e67edf16497c"
+    },
+    {
+      "file": "city5-frame.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1330627,
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        254
+      ],
+      "sha256": "3b50615b8b0c7347c3ff251429bdf2df9e97b714e07498983fceb1ae6e27e595"
+    },
+    {
+      "file": "city5-scene.png",
+      "width": 789,
+      "height": 1993,
+      "bytes": 2913839,
+      "mode": "RGB",
+      "alpha_range": null,
+      "sha256": "083ff25c2be45626c4a6e5204dead970feefd21b3451e463991e89a52cbd33b7"
+    }
+  ]
+}

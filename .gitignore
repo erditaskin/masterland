@@ -10,3 +10,5 @@ mobile/android/
 *.xcresult/
 .env*
 !.env.example
+# Repeated full-resolution QA captures stay local; manifests and selected samples are versioned.
+docs/verification/2026-11-18-city-theme/pass-*/*.png

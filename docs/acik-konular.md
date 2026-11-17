@@ -200,3 +200,17 @@ Kullanıcı kalan iki şehrin de üretilmesini istedi. Demirdere ve İpekyolu ta
 Kullanıcı son beşli görsel yönünü onayladı. Görsel onay artık açık iş değildir; nihai asset/ekran ölçüleri, refaktör, haritaların oynanış kabulü ve production kapıları açıktır. Önce mevcut sürümün yeni TestFlight build'i istenmiştir. Apple panel oturumuna bu denemede erişilemedi; imzalı arşiv ve Xcode yükleme yolu ayrıca denenecektir. Sonuç `testflight-vps-20261117.md` dosyasında tutulacaktır.
 
 0.2.0 (3) Release kontrolü ve imzalı cihaz arşivi tamamlandı. Apple upload bir zaman aşımı ve iki HTTP 500 ile başarısız kaldı. TestFlight yükleme/processing ve tester erişimi hâlâ açıktır; yeni build dağıtılmış sayılmaz. Mevcut imzalı arşiv korumalı yerel yedekte saklanır ve Apple servisi erişilebilir olduğunda yeniden yüklenebilir.
+
+## 17 Kasım 2026 — Belenyaka ikincil ekran panoları
+
+Sekiz pano ve on altı görünüm `assets/concepts/secondary-pages-v1` altındadır. Hesap panosundaki iki avatar alanı ortak, sırt sırta kadın/erkek illüstrasyonuna düzeltildi. Görseller kullanıcı onayı beklemektedir. Uygulama kodu bu turda değiştirilmedi.
+
+Panoların üretilmiş yazı ve örnek sayaçları oyun kurallarının kaynağı değildir. Depo çizimindeki yığın adetleri mevcut tek eşyalı slot modeline uymaz ve uygulanmayacaktır. Koleksiyonun sol görünümünde 4/7 etiketiyle görünen üç keşfedilmiş ikon tutarsızdır. Bazı panolarda HUD örnek değerleri ve alt navigasyon görünürlüğü ortak istemden sapmıştır. Nihai referans sabit cihaz ölçüsünde, tutarlı mock kayıtla ve bu düzeltmelerle dondurulmalıdır. %100 piksel eşitliği henüz doğrulanmamıştır.
+
+## 18 Kasım 2026 — Şehir teması refaktörü tamamlanmış sayılmaz
+
+Şehir teması ve bileşik sayfa refaktörü `codex/city-theme-composites-20261118` dalında sürmektedir. İlk gerçek Release turunda üç test geçti ve 35 cihaz görüntüsü alındı. Görsel inceleme, çerçevenin ilk satıra taşmasını yakaladı. Bu taşma ve koleksiyon zincirinin seçili sekme eşlemesi düzeltildi; son kaynakta dört görsel/etkileşim testi ve gerçek iki şehir gidiş dönüş testi geçti. Son görsel tur 41 ekran içerir; piksel kabulü hâlâ yoktur. Ayrıntı ve son sonuç `city-theme-composites-20261118.md` dosyasında tutulur.
+
+Orijinal beş şehir ve sekiz ikincil pano sanat yönü referansıdır. Bunların cihaz ölçüsünde nihai referanslara dönüştürülmesiyle ilgili soru yanıt bekler. Üretilmiş yeni manzara, malzeme ve avatar katmanları uygulama adayıdır; özgün referansla piksel eşitliği veya ayrı nihai onay sayılmaz. Katı görsel kabul bütün ekran/şehir durumları için açık kalır.
+
+Beş temanın aynı Belenyaka test kaydı üzerinde gösterilmesi diğer üç şehrin oynanabilir içerik kabulü değildir. Kanonik çalışma zamanı yalnız ilk iki şehrin üretici planlarını içerir. Kalan şehirlerin üretici/eşya zinciri, denge ve oynanış kabulü ayrıca tamamlanmalıdır; bu görsel turda kilitleri açılmaz. Gerçek kayıtlı hesap, bulut seçim/silme durumları, reklamın tüm görsel durumları ve kompakt cihaz kabulü de ayrıca izlenir.

@@ -17,9 +17,10 @@ import Animated, {
   type SharedValue,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { Item, Crop } from "./Art";
+import { Item } from "./Art";
 import { ReadyGlow, ReadyIcon } from "./ReadyGlow";
 import { BoardFrame } from "./Skin";
+import { useCityTheme } from "./CityThemeProvider";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
 interface Drag {
@@ -143,10 +144,14 @@ const BoardGrid = memo(function BoardGrid({
   cellWidth: number;
   cellHeight: number;
 }) {
+  const theme = useCityTheme();
   return (
     <View
       pointerEvents="none"
-      style={[StyleSheet.absoluteFill, { borderRadius: 7, overflow: "hidden" }]}
+      style={[
+        StyleSheet.absoluteFill,
+        { borderRadius: 7, overflow: "hidden", backgroundColor: theme.paper },
+      ]}
     >
       {Array.from({ length: 54 }, (_, i) => (
         <View
@@ -159,14 +164,16 @@ const BoardGrid = memo(function BoardGrid({
             height: cellHeight,
           }}
         >
-          <Crop
-            source={require("../../assets/art/skara-ui-chrome-v1.png")}
-            x={316}
-            y={1060}
-            w={104}
-            h={84}
-            width={cellWidth}
-            height={cellHeight}
+          <View
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: 5,
+              backgroundColor: theme.paper,
+              backgroundImage: `linear-gradient(135deg, ${theme.paperLight} 0%, ${theme.paper} 100%)`,
+              borderWidth: 0.5,
+              borderColor: theme.edge,
+            }}
           />
           {board[i] &&
             (readyOrderItems.has(board[i]!.item) ||
@@ -434,10 +441,6 @@ export const Board = memo(function Board({
         shadowOffset: { width: 0, height: 2 },
       }}
     >
-      <BoardFrame
-        width={cellWidth * 6 + 2 * frameInset}
-        height={cellHeight * 9 + 2 * frameInset}
-      />
       <View
         style={{
           width: cellWidth * 6,
@@ -497,6 +500,11 @@ export const Board = memo(function Board({
           </View>
         </GestureDetector>
       </View>
+      <BoardFrame
+        inset={frameInset}
+        width={cellWidth * 6 + 2 * frameInset}
+        height={cellHeight * 9 + 2 * frameInset}
+      />
     </View>
   );
 });

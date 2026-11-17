@@ -1,0 +1,14 @@
+[
+  {
+    "name": "milestone-haven-collection",
+    "file": "milestone-haven-collection.png",
+    "sha256": "b5900528f10617b840d326edd14a16c9105fa6b0afc77d9ec31c0319aee566cf",
+    "status": "playable-city-interaction-proof-not-pixel-accepted"
+  },
+  {
+    "name": "milestone-haven-board",
+    "file": "milestone-haven-board.png",
+    "sha256": "e0f581eea80ff799f53fff78aee679d25fb91da739633cef6e59bcbbafdf39f0",
+    "status": "playable-city-interaction-proof-not-pixel-accepted"
+  }
+]

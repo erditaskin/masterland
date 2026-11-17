@@ -1,0 +1,678 @@
+{
+  "status": "awaiting-device-reference-decision",
+  "device": "Masterland-Store-Release-QA / iPhone 16 Pro / iOS 18.6",
+  "pixel_size": [
+    1206,
+    2622
+  ],
+  "font_scale": 1,
+  "theme_only_previews_are_not_playable_city_acceptance": true,
+  "cases": [
+    {
+      "id": "city1/board",
+      "reference_approved": false,
+      "expected": "expected/city1-board.png",
+      "actual": "pass-4/theme-city1-board.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/cities",
+      "reference_approved": false,
+      "expected": "expected/city1-cities.png",
+      "actual": "pass-4/theme-city1-cities.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/account-registered",
+      "reference_approved": false,
+      "expected": "expected/city1-account-registered.png",
+      "actual": "actual/city1-account-registered.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city1/account-guest",
+      "reference_approved": false,
+      "expected": "expected/city1-account-guest.png",
+      "actual": "pass-4/theme-belenyaka-account-guest.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/collection",
+      "reference_approved": false,
+      "expected": "expected/city1-collection.png",
+      "actual": "pass-4/theme-city1-collection.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/collection-chain",
+      "reference_approved": false,
+      "expected": "expected/city1-collection-chain.png",
+      "actual": "pass-4/theme-belenyaka-collection-chain.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/storage",
+      "reference_approved": false,
+      "expected": "expected/city1-storage.png",
+      "actual": "pass-4/theme-city1-storage.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/storage-board-full",
+      "reference_approved": false,
+      "expected": "expected/city1-storage-board-full.png",
+      "actual": "actual/city1-storage-board-full.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city1/market",
+      "reference_approved": false,
+      "expected": "expected/city1-market.png",
+      "actual": "pass-4/theme-city1-market.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/energy",
+      "reference_approved": false,
+      "expected": "expected/city1-energy.png",
+      "actual": "actual/city1-energy.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city1/producer-cooldown",
+      "reference_approved": false,
+      "expected": "expected/city1-producer-cooldown.png",
+      "actual": "pass-4/theme-belenyaka-producer-cooldown.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/item",
+      "reference_approved": false,
+      "expected": "expected/city1-item.png",
+      "actual": "pass-4/theme-belenyaka-item.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/orders",
+      "reference_approved": false,
+      "expected": "expected/city1-orders.png",
+      "actual": "pass-4/theme-belenyaka-orders.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/order-guide",
+      "reference_approved": false,
+      "expected": "expected/city1-order-guide.png",
+      "actual": "pass-4/theme-belenyaka-order-guide.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/achievements",
+      "reference_approved": false,
+      "expected": "expected/city1-achievements.png",
+      "actual": "pass-4/theme-belenyaka-achievement-list.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/achievement",
+      "reference_approved": false,
+      "expected": "expected/city1-achievement.png",
+      "actual": "pass-4/theme-belenyaka-achievement-detail.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city1/cloud-choice",
+      "reference_approved": false,
+      "expected": "expected/city1-cloud-choice.png",
+      "actual": "actual/city1-cloud-choice.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city1/account-deletion",
+      "reference_approved": false,
+      "expected": "expected/city1-account-deletion.png",
+      "actual": "actual/city1-account-deletion.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/board",
+      "reference_approved": false,
+      "expected": "expected/city2-board.png",
+      "actual": "pass-travel/milestone-haven-board.png",
+      "actual_capture_available": true,
+      "capture_mode": "playable-city-round-trip"
+    },
+    {
+      "id": "city2/cities",
+      "reference_approved": false,
+      "expected": "expected/city2-cities.png",
+      "actual": "pass-4/theme-city2-cities.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city2/account-registered",
+      "reference_approved": false,
+      "expected": "expected/city2-account-registered.png",
+      "actual": "actual/city2-account-registered.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/account-guest",
+      "reference_approved": false,
+      "expected": "expected/city2-account-guest.png",
+      "actual": "actual/city2-account-guest.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/collection",
+      "reference_approved": false,
+      "expected": "expected/city2-collection.png",
+      "actual": "pass-travel/milestone-haven-collection.png",
+      "actual_capture_available": true,
+      "capture_mode": "playable-city-round-trip"
+    },
+    {
+      "id": "city2/collection-chain",
+      "reference_approved": false,
+      "expected": "expected/city2-collection-chain.png",
+      "actual": "actual/city2-collection-chain.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/storage",
+      "reference_approved": false,
+      "expected": "expected/city2-storage.png",
+      "actual": "pass-4/theme-city2-storage.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city2/storage-board-full",
+      "reference_approved": false,
+      "expected": "expected/city2-storage-board-full.png",
+      "actual": "actual/city2-storage-board-full.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/market",
+      "reference_approved": false,
+      "expected": "expected/city2-market.png",
+      "actual": "pass-4/theme-city2-market.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city2/energy",
+      "reference_approved": false,
+      "expected": "expected/city2-energy.png",
+      "actual": "actual/city2-energy.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/producer-cooldown",
+      "reference_approved": false,
+      "expected": "expected/city2-producer-cooldown.png",
+      "actual": "actual/city2-producer-cooldown.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/item",
+      "reference_approved": false,
+      "expected": "expected/city2-item.png",
+      "actual": "actual/city2-item.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/orders",
+      "reference_approved": false,
+      "expected": "expected/city2-orders.png",
+      "actual": "actual/city2-orders.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/order-guide",
+      "reference_approved": false,
+      "expected": "expected/city2-order-guide.png",
+      "actual": "actual/city2-order-guide.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/achievements",
+      "reference_approved": false,
+      "expected": "expected/city2-achievements.png",
+      "actual": "actual/city2-achievements.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/achievement",
+      "reference_approved": false,
+      "expected": "expected/city2-achievement.png",
+      "actual": "actual/city2-achievement.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/cloud-choice",
+      "reference_approved": false,
+      "expected": "expected/city2-cloud-choice.png",
+      "actual": "actual/city2-cloud-choice.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city2/account-deletion",
+      "reference_approved": false,
+      "expected": "expected/city2-account-deletion.png",
+      "actual": "actual/city2-account-deletion.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/board",
+      "reference_approved": false,
+      "expected": "expected/city3-board.png",
+      "actual": "pass-4/theme-city3-board.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city3/cities",
+      "reference_approved": false,
+      "expected": "expected/city3-cities.png",
+      "actual": "pass-4/theme-city3-cities.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city3/account-registered",
+      "reference_approved": false,
+      "expected": "expected/city3-account-registered.png",
+      "actual": "actual/city3-account-registered.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/account-guest",
+      "reference_approved": false,
+      "expected": "expected/city3-account-guest.png",
+      "actual": "actual/city3-account-guest.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/collection",
+      "reference_approved": false,
+      "expected": "expected/city3-collection.png",
+      "actual": "pass-4/theme-city3-collection.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city3/collection-chain",
+      "reference_approved": false,
+      "expected": "expected/city3-collection-chain.png",
+      "actual": "actual/city3-collection-chain.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/storage",
+      "reference_approved": false,
+      "expected": "expected/city3-storage.png",
+      "actual": "pass-4/theme-city3-storage.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city3/storage-board-full",
+      "reference_approved": false,
+      "expected": "expected/city3-storage-board-full.png",
+      "actual": "actual/city3-storage-board-full.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/market",
+      "reference_approved": false,
+      "expected": "expected/city3-market.png",
+      "actual": "pass-4/theme-city3-market.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city3/energy",
+      "reference_approved": false,
+      "expected": "expected/city3-energy.png",
+      "actual": "actual/city3-energy.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/producer-cooldown",
+      "reference_approved": false,
+      "expected": "expected/city3-producer-cooldown.png",
+      "actual": "actual/city3-producer-cooldown.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/item",
+      "reference_approved": false,
+      "expected": "expected/city3-item.png",
+      "actual": "actual/city3-item.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/orders",
+      "reference_approved": false,
+      "expected": "expected/city3-orders.png",
+      "actual": "actual/city3-orders.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/order-guide",
+      "reference_approved": false,
+      "expected": "expected/city3-order-guide.png",
+      "actual": "actual/city3-order-guide.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/achievements",
+      "reference_approved": false,
+      "expected": "expected/city3-achievements.png",
+      "actual": "actual/city3-achievements.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/achievement",
+      "reference_approved": false,
+      "expected": "expected/city3-achievement.png",
+      "actual": "actual/city3-achievement.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/cloud-choice",
+      "reference_approved": false,
+      "expected": "expected/city3-cloud-choice.png",
+      "actual": "actual/city3-cloud-choice.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city3/account-deletion",
+      "reference_approved": false,
+      "expected": "expected/city3-account-deletion.png",
+      "actual": "actual/city3-account-deletion.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/board",
+      "reference_approved": false,
+      "expected": "expected/city4-board.png",
+      "actual": "pass-4/theme-city4-board.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city4/cities",
+      "reference_approved": false,
+      "expected": "expected/city4-cities.png",
+      "actual": "pass-4/theme-city4-cities.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city4/account-registered",
+      "reference_approved": false,
+      "expected": "expected/city4-account-registered.png",
+      "actual": "actual/city4-account-registered.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/account-guest",
+      "reference_approved": false,
+      "expected": "expected/city4-account-guest.png",
+      "actual": "actual/city4-account-guest.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/collection",
+      "reference_approved": false,
+      "expected": "expected/city4-collection.png",
+      "actual": "pass-4/theme-city4-collection.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city4/collection-chain",
+      "reference_approved": false,
+      "expected": "expected/city4-collection-chain.png",
+      "actual": "actual/city4-collection-chain.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/storage",
+      "reference_approved": false,
+      "expected": "expected/city4-storage.png",
+      "actual": "pass-4/theme-city4-storage.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city4/storage-board-full",
+      "reference_approved": false,
+      "expected": "expected/city4-storage-board-full.png",
+      "actual": "actual/city4-storage-board-full.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/market",
+      "reference_approved": false,
+      "expected": "expected/city4-market.png",
+      "actual": "pass-4/theme-city4-market.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city4/energy",
+      "reference_approved": false,
+      "expected": "expected/city4-energy.png",
+      "actual": "actual/city4-energy.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/producer-cooldown",
+      "reference_approved": false,
+      "expected": "expected/city4-producer-cooldown.png",
+      "actual": "actual/city4-producer-cooldown.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/item",
+      "reference_approved": false,
+      "expected": "expected/city4-item.png",
+      "actual": "actual/city4-item.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/orders",
+      "reference_approved": false,
+      "expected": "expected/city4-orders.png",
+      "actual": "actual/city4-orders.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/order-guide",
+      "reference_approved": false,
+      "expected": "expected/city4-order-guide.png",
+      "actual": "actual/city4-order-guide.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/achievements",
+      "reference_approved": false,
+      "expected": "expected/city4-achievements.png",
+      "actual": "actual/city4-achievements.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/achievement",
+      "reference_approved": false,
+      "expected": "expected/city4-achievement.png",
+      "actual": "actual/city4-achievement.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/cloud-choice",
+      "reference_approved": false,
+      "expected": "expected/city4-cloud-choice.png",
+      "actual": "actual/city4-cloud-choice.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city4/account-deletion",
+      "reference_approved": false,
+      "expected": "expected/city4-account-deletion.png",
+      "actual": "actual/city4-account-deletion.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/board",
+      "reference_approved": false,
+      "expected": "expected/city5-board.png",
+      "actual": "pass-4/theme-city5-board.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city5/cities",
+      "reference_approved": false,
+      "expected": "expected/city5-cities.png",
+      "actual": "pass-4/theme-city5-cities.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city5/account-registered",
+      "reference_approved": false,
+      "expected": "expected/city5-account-registered.png",
+      "actual": "actual/city5-account-registered.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/account-guest",
+      "reference_approved": false,
+      "expected": "expected/city5-account-guest.png",
+      "actual": "actual/city5-account-guest.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/collection",
+      "reference_approved": false,
+      "expected": "expected/city5-collection.png",
+      "actual": "pass-4/theme-city5-collection.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city5/collection-chain",
+      "reference_approved": false,
+      "expected": "expected/city5-collection-chain.png",
+      "actual": "actual/city5-collection-chain.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/storage",
+      "reference_approved": false,
+      "expected": "expected/city5-storage.png",
+      "actual": "pass-4/theme-city5-storage.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city5/storage-board-full",
+      "reference_approved": false,
+      "expected": "expected/city5-storage-board-full.png",
+      "actual": "actual/city5-storage-board-full.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/market",
+      "reference_approved": false,
+      "expected": "expected/city5-market.png",
+      "actual": "pass-4/theme-city5-market.png",
+      "actual_capture_available": true,
+      "capture_mode": "local-presentation-fixture"
+    },
+    {
+      "id": "city5/energy",
+      "reference_approved": false,
+      "expected": "expected/city5-energy.png",
+      "actual": "actual/city5-energy.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/producer-cooldown",
+      "reference_approved": false,
+      "expected": "expected/city5-producer-cooldown.png",
+      "actual": "actual/city5-producer-cooldown.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/item",
+      "reference_approved": false,
+      "expected": "expected/city5-item.png",
+      "actual": "actual/city5-item.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/orders",
+      "reference_approved": false,
+      "expected": "expected/city5-orders.png",
+      "actual": "actual/city5-orders.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/order-guide",
+      "reference_approved": false,
+      "expected": "expected/city5-order-guide.png",
+      "actual": "actual/city5-order-guide.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/achievements",
+      "reference_approved": false,
+      "expected": "expected/city5-achievements.png",
+      "actual": "actual/city5-achievements.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/achievement",
+      "reference_approved": false,
+      "expected": "expected/city5-achievement.png",
+      "actual": "actual/city5-achievement.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/cloud-choice",
+      "reference_approved": false,
+      "expected": "expected/city5-cloud-choice.png",
+      "actual": "actual/city5-cloud-choice.png",
+      "actual_capture_available": false
+    },
+    {
+      "id": "city5/account-deletion",
+      "reference_approved": false,
+      "expected": "expected/city5-account-deletion.png",
+      "actual": "actual/city5-account-deletion.png",
+      "actual_capture_available": false
+    }
+  ],
+  "app_language": "tr",
+  "system_locale_frozen": false,
+  "note": "Native provider labels follow system language. Final device reference must freeze it explicitly."
+}

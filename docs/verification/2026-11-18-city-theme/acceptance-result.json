@@ -1,0 +1,366 @@
+{
+  "status": "not-accepted",
+  "policy": "zero-different-pixels; same dimensions and color metadata; no masks or rescaling",
+  "cases": [
+    {
+      "id": "city1/board",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/cities",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/account-registered",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/account-guest",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/collection",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/collection-chain",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/storage",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/storage-board-full",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/market",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/energy",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/producer-cooldown",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/item",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/orders",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/order-guide",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/achievements",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/achievement",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/cloud-choice",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city1/account-deletion",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/board",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/cities",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/account-registered",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/account-guest",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/collection",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/collection-chain",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/storage",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/storage-board-full",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/market",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/energy",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/producer-cooldown",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/item",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/orders",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/order-guide",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/achievements",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/achievement",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/cloud-choice",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city2/account-deletion",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/board",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/cities",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/account-registered",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/account-guest",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/collection",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/collection-chain",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/storage",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/storage-board-full",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/market",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/energy",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/producer-cooldown",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/item",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/orders",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/order-guide",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/achievements",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/achievement",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/cloud-choice",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city3/account-deletion",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/board",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/cities",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/account-registered",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/account-guest",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/collection",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/collection-chain",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/storage",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/storage-board-full",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/market",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/energy",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/producer-cooldown",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/item",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/orders",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/order-guide",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/achievements",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/achievement",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/cloud-choice",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city4/account-deletion",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/board",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/cities",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/account-registered",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/account-guest",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/collection",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/collection-chain",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/storage",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/storage-board-full",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/market",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/energy",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/producer-cooldown",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/item",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/orders",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/order-guide",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/achievements",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/achievement",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/cloud-choice",
+      "status": "reference-awaiting-approval"
+    },
+    {
+      "id": "city5/account-deletion",
+      "status": "reference-awaiting-approval"
+    }
+  ]
+}

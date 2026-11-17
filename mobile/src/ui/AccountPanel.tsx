@@ -3,7 +3,12 @@ import { cloudSync } from "../account/cloudSync";
 import { deletionStore } from "../account/deletion";
 import { AccountDeletionPanel } from "./AccountDeletionPanel";
 import { AdPrivacyControl } from "./EnergyAdPanel";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import {
+  useEffect,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import { ActivityIndicator, Image, View } from "react-native";
 import { ProviderButton } from "./ProviderButton";
 import * as Apple from "expo-apple-authentication";
@@ -11,9 +16,18 @@ import { accountStore, type LoginProvider } from "../account/auth";
 import { accountConfig } from "../account/client";
 import { languageStore, accountText as tx } from "../i18n/locale";
 import { setLanguage } from "../i18n/preferences";
-import { AppButton, AppChoice, Divider, Label } from "./Controls";
+import { PaperCard } from "./PagePrimitives";
+import { AppButton, AppChoice, Label } from "./Controls";
 
-export function AccountPanel({ onClose }: { onClose: () => void }) {
+export function AccountPanel({
+  onClose,
+  summary,
+  settings,
+}: {
+  onClose: () => void;
+  summary?: ReactNode;
+  settings?: ReactNode;
+}) {
   const deletion = useSyncExternalStore(
     deletionStore.subscribe,
     deletionStore.get,
@@ -66,20 +80,51 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
   }
   return (
     <View testID="accountPanel" style={{ marginTop: 14 }}>
-      <View style={{ alignItems: "center", marginBottom: 18 }}>
-        <Image
-          source={require("../../assets/icon.png")}
-          style={{ width: 72, height: 72, borderRadius: 18, marginBottom: 12 }}
-        />
-        <Label title size={24}>
-          {registered
-            ? tx("Hesabın", "Your account")
-            : tx("Giriş yap", "Sign in")}
-        </Label>
-      </View>
-      <Label style={{ marginTop: 6 }}>
-        {tx("Cihazda kayıtlı", "Saved on this device")}
-      </Label>
+      <PaperCard>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Image
+            source={require("../../assets/art/shared-profile-v1.png")}
+            style={{ width: 90, height: 90 }}
+            resizeMode="contain"
+          />
+          <View style={{ flex: 1, gap: 6 }}>
+            <Label title size={21}>
+              {registered
+                ? tx("Gezgin", "Traveler")
+                : tx("Hesapsız oynuyorsun", "Playing as a guest")}
+            </Label>
+            {registered ? (
+              summary
+            ) : (
+              <Label size={13}>
+                {tx(
+                  "İlerlemen bu cihazda korunur.",
+                  "Your progress stays on this device.",
+                )}
+              </Label>
+            )}
+          </View>
+        </View>
+      </PaperCard>
+      {!registered && (
+        <PaperCard
+          header={
+            <Label title size={18}>
+              {tx(
+                "İlerlemeni buluta kaydet",
+                "Save your progress to the cloud",
+              )}
+            </Label>
+          }
+        >
+          <Label size={13}>
+            {tx(
+              "Hesabını bağlayarak ilerlemeni koru ve farklı cihazlarda da devam et.",
+              "Link your account to protect your progress and continue on other devices.",
+            )}
+          </Label>
+        </PaperCard>
+      )}
       {!accountConfig.enabled && (
         <Label size={12}>
           {tx(
@@ -204,35 +249,43 @@ export function AccountPanel({ onClose }: { onClose: () => void }) {
         </Label>
       )}
       <CloudSyncPanel />
+      <PaperCard
+        header={
+          <Label title size={20}>
+            {tx("Ayarlar", "Settings")}
+          </Label>
+        }
+      >
+        {settings}
+        <Label title size={18}>
+          {tx("Dil · EN önizleme", "Language · EN preview")}
+        </Label>
+        <View style={{ flexDirection: "row", gap: 8, marginTop: 10 }}>
+          {(
+            [
+              ["tr", "Türkçe"],
+              ["en", "English"],
+            ] as const
+          ).map(([code, label]) => (
+            <AppChoice
+              key={code}
+              testID={`language-${code}`}
+              label={label}
+              selected={language === code}
+              onPress={() => {
+                void setLanguage(code)
+                  .then(() => setLanguageError(false))
+                  .catch(() => setLanguageError(true));
+              }}
+              style={{ flex: 1, minHeight: 44 }}
+            >
+              <Label>{label}</Label>
+            </AppChoice>
+          ))}
+        </View>
+      </PaperCard>
       <AccountDeletionPanel />
       <AdPrivacyControl />
-      <Divider />
-      <Label title size={18}>
-        {tx("Dil · EN önizleme", "Language · EN preview")}
-      </Label>
-      <View style={{ flexDirection: "row", gap: 8, marginTop: 10 }}>
-        {(
-          [
-            ["tr", "Türkçe"],
-            ["en", "English"],
-          ] as const
-        ).map(([code, label]) => (
-          <AppChoice
-            key={code}
-            testID={`language-${code}`}
-            label={label}
-            selected={language === code}
-            onPress={() => {
-              void setLanguage(code)
-                .then(() => setLanguageError(false))
-                .catch(() => setLanguageError(true));
-            }}
-            style={{ flex: 1, minHeight: 44 }}
-          >
-            <Label>{label}</Label>
-          </AppChoice>
-        ))}
-      </View>
       {languageError && (
         <Label>
           {tx(

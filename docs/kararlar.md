@@ -543,3 +543,17 @@ Kullanıcı ilk canlı hedefin beş şehir olduğunu belirterek kalan Demirdere 
 Kullanıcı son beşli görsel yönünü onayladı ve bu yönde uygulamaya devam edilmesini istedi. App Store production yayını beş harita hazırlandıktan sonra yapılacaktır. Bundan önce mevcut uygulamanın yeni bir TestFlight build'iyle tekrar yüklenmesini açıkça istedi. Bu TestFlight talebi yeni haritaların mevcut sürüme uygulanmış olduğu anlamına gelmez; yeni görsel refaktör mevcut sürümün beta tesliminden ayrıdır.
 
 Yeni beta 0.2.0 (3) olarak hazırlanır: canlı Masterland VPS, doğrulanmış reklam akışı, test kredileri kapalı, gerçek para satışı kapalı, yeni giriş ekranında Facebook gizli, hesap silme arayüzü açık. 0.2.0 için AdMob uygulama düzeyinde test modu korunur. Kontrollü TestFlight kayıt alanı kullanılır; eski test kredili beta kaydı silinmez veya production bulutuna otomatik taşınmaz. Bu beta yüklemesi App Store production gönderimi veya yeni testçi daveti değildir.
+
+## 17 Kasım 2026 — Belenyaka ekran onayı ve ortak hesap illüstrasyonu
+
+Kullanıcı Apple/TestFlight işlemlerini şimdilik beklemeye alıp production öncesi ilk beş şehir hazırlığına öncelik verdi. Kodlamadan önce tüm ekranların Belenyaka temasıyla görsel referanslarının hazırlanmasını ve onaylanmasını istedi. Şehir değişiminde çerçeve, malzeme, yazı rengi ve buton arka planı şehir temasına uyacaktır; ortak etkileşimler ve durumların anlamı korunacaktır.
+
+Hesap illüstrasyonunda tek kadın yerine bir kadın ve bir erkek sırt sırta duracaktır. Bu, bütün kullanıcılar için ortak bir illüstrasyondur. Cinsiyet seçimi yapılmayacak ve cinsiyet bilgisi toplanmayacaktır. Yeni sekiz ekran panosu henüz kullanıcı onayı bekleyen önerilerdir; önceki beş şehir görsel yön onayı bunları kendiliğinden onaylamaz.
+
+## 18 Kasım 2026 — Şehir teması bileşen sözleşmesi ve görsel kabul kapısı
+
+Kullanıcı son ekran çizimleriyle birlikte beş şehir panosunu uygulama yönü olarak kabul ederek ortak, bileşik ve prop üzerinden ayarlanabilen bir sistem istedi. Seçilen şehir; manzara, malzeme çerçevesi, tabela/raf/navigasyon yüzeyi, yazı rengi ve birincil buton renklerini belirleyecektir. Durum anlamları ve oyun davranışları ortak kalacaktır. Cinsiyet bilgisi toplanmaz; hesapta ortak sırt sırta kadın/erkek illüstrasyonu kullanılır.
+
+Kullanıcı, Device Hub simülatör kanıtı ve onaylı referanslarla %100 piksel eşitliği olmadan işin tamamlandı olarak işaretlenmemesini açıkça istedi. Birim ve etkileşim testlerinin geçmesi görsel kabul yerine geçmez. Aynı cihaz ölçüsü ve renk profili, sabit durum ve yerel ayar ile sıfır farklı piksel kabulü aranacaktır. Yeni referanslar mevcut çıktılardan kendiliğinden üretilip onaylı ilan edilmeyecektir.
+
+Onay panoları cihaz ölçüsünde olmadığından ve bazı örnek sayaç/depo çizimleri oyun kurallarıyla tutarsız olduğundan, cihaz ölçülü nihai referansa dönüşüm için kullanıcıya ayrı soru gönderilmiştir. Yanıt henüz gelmemiştir. Mimari ve bileşen çalışması ilerleyebilir; nihai görsel referans dondurma ve %100 kabul bu yanıt gelmeden yapılmaz. Apple/TestFlight ve production gönderimi beklemede kalır.

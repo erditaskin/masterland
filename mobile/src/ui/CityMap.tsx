@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { FlatList, Image, View } from "react-native";
-import reference from "../../../data/content-reference.json";
+import { FlatList, View } from "react-native";
+import { cityThemes } from "./cityTheme";
+import { PaperCard } from "./PagePrimitives";
 import {
   cityRule,
   level,
@@ -18,11 +19,10 @@ import {
   Button,
   Label,
 } from "./Controls";
-import { RouteIcon } from "./Achievements";
-import { Crop } from "./Art";
-import { colors } from "./theme";
-import { accountText as tx, languageStore } from "../i18n/locale";
-import { cityScenes, upcomingCities } from "./cityScenes";
+import { RouteIcon, rewardText } from "./Achievements";
+import { CityCard } from "./CityCard";
+import { accountText as tx } from "../i18n/locale";
+import { cityScenes } from "./cityScenes";
 function RoutePin({
   a,
   save,
@@ -39,63 +39,45 @@ function RoutePin({
   return (
     <Button
       testID={"achievement-" + a.id}
-      label={
-        name(a.id) +
-        ", " +
-        (state === "ready"
-          ? "Ödül hazır"
-          : state === "claimed"
-            ? "Alındı"
-            : state === "locked"
-              ? "Kilitli"
-              : progress + "/" + a.target)
-      }
+      label={`${name(a.id)}, ${state === "ready" ? "Ödül hazır" : state === "claimed" ? "Alındı" : state === "locked" ? "Kilitli" : progress + "/" + a.target}`}
       onPress={press}
-      style={{ width, height: 145 }}
+      style={{ width, minHeight: 138, marginBottom: 10 }}
     >
-      <Image
-        pointerEvents="none"
-        source={require("../../assets/art/route-card-v2.png")}
-        resizeMode="stretch"
-        style={{ position: "absolute", left: 0, top: 18, width, height: 126 }}
-      />
-      <View
-        pointerEvents="none"
-        style={{ position: "absolute", top: 0, left: (width - 56) / 2 }}
-      >
-        <RouteIcon kind={a.kind} size={56} />
-      </View>
-      <View
-        pointerEvents="none"
+      <PaperCard
+        selected={state === "ready"}
         style={{
-          position: "absolute",
-          left: 14,
-          right: 14,
-          top: 64,
-          alignItems: "center",
+          width,
+          marginBottom: 0,
+          ...(state === "ready"
+            ? { borderColor: "#34852b", backgroundColor: "#e1f2b3" }
+            : {}),
         }}
       >
-        <Label title size={13} style={{ textAlign: "center", marginBottom: 7 }}>
-          {name(a.id)}
-        </Label>
-        {state === "ready" ? (
-          <AppButtonStamp text="Ödülü al" />
-        ) : state === "claimed" ? (
-          <Label title size={21} color={colors.green}>
-            ✓
-          </Label>
-        ) : state === "locked" ? (
-          <Label size={10} color={colors.muted}>
-            Şehir kilitli
-          </Label>
-        ) : (
-          <AppProgress
-            value={progress}
-            total={a.target}
-            label={`${progress}/${a.target}`}
-          />
-        )}
-      </View>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+          <RouteIcon kind={a.kind} size={76} />
+          <View style={{ flex: 1, gap: 8 }}>
+            <Label title size={20}>
+              {name(a.id)}
+            </Label>
+            {state === "ready" ? (
+              <AppButtonStamp text="Ödül hazır" />
+            ) : state === "claimed" ? (
+              <Label title color="#34852b">
+                ✓ Alındı
+              </Label>
+            ) : state === "locked" ? (
+              <Label size={12}>Şehir kilitli</Label>
+            ) : (
+              <AppProgress
+                value={progress}
+                total={a.target}
+                label={`${progress}/${a.target}`}
+              />
+            )}
+            <Label size={12}>{rewardText(a)}</Label>
+          </View>
+        </View>
+      </PaperCard>
     </Button>
   );
 }
@@ -109,6 +91,10 @@ export function CityMap({
   onReturn,
   onTravel,
   onInteract,
+  initialOffset,
+  onOffsetChange,
+  initialView,
+  onViewChange,
 }: {
   currentCity: string;
   save: Save;
@@ -116,14 +102,21 @@ export function CityMap({
   height: number;
   onAchievement: (id: string) => void;
   initialOffset?: () => number;
+  initialView?: () => { cityID: string; achievements: boolean };
+  onViewChange?: (cityID: string, achievements: boolean) => void;
   onOffsetChange: (y: number) => void;
   onReturn: () => void;
   onTravel: (id: string) => void;
   onInteract: () => void;
   reduced: boolean;
 }) {
-  const [active, setActive] = useState(currentCity);
-  const stops = reference.ui.city_map.stops;
+  const [active, setActive] = useState(
+    () => initialView?.().cityID ?? currentCity,
+  );
+  const [showAchievements, setShowAchievements] = useState(
+    () => initialView?.().achievements ?? false,
+  );
+  const stops = useMemo(() => Object.keys(cityThemes), []);
   const nodes = useMemo(
     () => achievements.filter((a) => a.city_id === active),
     [active],
@@ -144,146 +137,110 @@ export function CityMap({
             )
           : tx(`${rule.gold} altınla şehri aç`, `Unlock for ${rule.gold} gold`);
   return (
-    <View style={{ width, height, paddingHorizontal: 7, gap: 8 }}>
-      <View style={{ flexDirection: "row", gap: 6 }}>
-        {stops.map((stop) => {
-          const scene = cityScenes[stop.city_id]!;
-          const selected = active === stop.city_id;
+    <View style={{ width, height, paddingHorizontal: 2 }}>
+      <FlatList
+        testID="cityRouteScroll"
+        contentOffset={{ x: 0, y: initialOffset?.() ?? 0 }}
+        onScroll={(e) => onOffsetChange(e.nativeEvent.contentOffset.y)}
+        scrollEventThrottle={32}
+        data={showAchievements ? [] : stops}
+        keyExtractor={(id) => id}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 8 }}
+        renderItem={({ item: id }) => {
+          const r = cityRule(id)!;
+          const current = id === currentCity;
+          const open = !!save.cities[id];
+          const selected = active === id;
+          const status = current
+            ? "Mevcut Şehir"
+            : open
+              ? "Açık"
+              : r.enabled
+                ? `Seviye ${r.level}`
+                : "Önizleme";
           return (
-            <Button
-              key={stop.city_id}
-              testID={"jump-" + stop.city_id}
-              label={name(stop.city_id)}
+            <CityCard
+              id={id}
+              title={name(id)}
+              scene={cityScenes[id]!.source}
+              width={width}
+              status={status}
+              current={current}
               selected={selected}
-              onPress={() => {
+              action={
+                current
+                  ? "✓ Buradasın"
+                  : open
+                    ? "Git"
+                    : r.enabled
+                      ? "Şehri aç"
+                      : "Yakında"
+              }
+              disabled={
+                !current && !open && (!r.enabled || level(save) < r.level)
+              }
+              onSelect={() => {
                 onInteract();
-                setActive(stop.city_id);
+                setActive(id);
+                onViewChange?.(id, false);
               }}
-              style={{ flex: 1, height: 85 }}
-            >
-              <View
-                pointerEvents="none"
-                style={{
-                  flex: 1,
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  borderWidth: selected ? 2 : 1,
-                  borderColor: selected ? "#e8b650" : "#ab8258",
-                  backgroundColor: scene.color,
-                }}
-              >
-                <Crop
-                  source={scene.source}
-                  x={0}
-                  y={0}
-                  w={875}
-                  h={300}
-                  width={(width - 30) / 3}
-                  height={52}
-                />
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Label title size={11} color="#fff1cd">
-                    {name(stop.city_id)}
-                  </Label>
-                </View>
-              </View>
-            </Button>
-          );
-        })}
-      </View>
-      <View
-        testID="cityMapViewport"
-        style={{
-          flex: 1,
-          borderRadius: 13,
-          overflow: "hidden",
-          backgroundColor: "#58321e",
-        }}
-      >
-        <Image
-          source={require("../../assets/art/city-achievement-wood-v1.png")}
-          resizeMode="cover"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            opacity: 0.85,
-          }}
-        />
-        <FlatList
-          key={active}
-          testID="cityRouteScroll"
-          data={nodes}
-          numColumns={2}
-          keyExtractor={(a) => a.id}
-          showsVerticalScrollIndicator
-          contentContainerStyle={{ padding: 10 }}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-          ListHeaderComponent={
-            <View style={{ marginBottom: 12 }}>
-              <Label title size={19} color="#ffe7ad">
-                {name(active)}
-              </Label>
-              <Label size={12} color="#f4d8ad">
-                {tx("Özel başarılar", "Special achievements")}
-              </Label>
-            </View>
-          }
-          renderItem={({ item }) => (
-            <RoutePin
-              a={item}
-              save={save}
-              width={(width - 44) / 2}
-              press={() => {
+              onAction={() => {
                 onInteract();
-                onAchievement(item.id);
+                if (current) onReturn();
+                else onTravel(id);
               }}
             />
-          )}
-          ListFooterComponent={
-            <View style={{ marginTop: 16, gap: 9 }}>
-              <Label title size={16} color="#ffe7ad">
-                {tx("Yeni ufuklar · Yakında", "New horizons · Coming soon")}
+          );
+        }}
+        ListHeaderComponent={
+          showAchievements ? (
+            <View>
+              <AppButton
+                text="Şehirlere dön"
+                tone="secondary"
+                onPress={() => {
+                  setShowAchievements(false);
+                  onViewChange?.(active, false);
+                  onOffsetChange(0);
+                }}
+              />
+              <Label title size={22}>
+                {name(active)} · Başarılar
               </Label>
-              {upcomingCities.map((c) => (
-                <View
-                  key={c.reference}
-                  style={{
-                    padding: 10,
-                    borderRadius: 8,
-                    backgroundColor: "#fff0cc12",
-                    borderWidth: 1,
-                    borderColor: "#d5ac6444",
-                  }}
-                >
-                  <Label title color="#f8dda0">
-                    {languageStore.get() === "tr" ? c.tr : c.en}
-                  </Label>
-                  <Label size={11} color="#e7c9a0">
-                    {tx("Yakında", "Coming soon")}
-                  </Label>
-                </View>
-              ))}
             </View>
-          }
-        />
-      </View>
-      {!rule.enabled && (
-        <View testID={"map-lock-" + active}>
-          <Label size={12}>
-            {tx("Bu şehir yakında açılacak.", "This city is coming soon.")}
-          </Label>
-        </View>
-      )}
-      {rule.enabled && !visited && !here && (
-        <View testID={"map-lock-" + active}>
+          ) : undefined
+        }
+        ListFooterComponent={
+          showAchievements ? (
+            <View>
+              {nodes.map((a) => (
+                <RoutePin
+                  key={a.id}
+                  a={a}
+                  save={save}
+                  width={width - 4}
+                  press={() => onAchievement(a.id)}
+                />
+              ))}
+              {!nodes.length && <Label>Bu şehrin başarıları yakında.</Label>}
+            </View>
+          ) : (
+            <AppButton
+              testID="openCityAchievements"
+              text={`${name(active)} · Başarılar`}
+              tone="secondary"
+              onPress={() => {
+                setShowAchievements(true);
+                onViewChange?.(active, true);
+                onOffsetChange(0);
+              }}
+            />
+          )
+        }
+      />
+      {!here && !visited && (
+        <View testID={`map-lock-${active}`}>
           <Label size={12}>{text}</Label>
         </View>
       )}
@@ -296,7 +253,6 @@ export function CityMap({
           if (here) onReturn();
           else onTravel(active);
         }}
-        style={{ marginBottom: 4 }}
       />
     </View>
   );

@@ -1,3 +1,4 @@
+import { useCityTheme } from "./CityThemeProvider";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { count, orders, producers, product, type Save } from "../game/engine";
@@ -5,6 +6,7 @@ import { Button, Label } from "./Controls";
 import { Item } from "./Art";
 import { ProducerPortrait } from "./ProducerDetails";
 export function OrderGuide({ id, save }: { id: string; save: Save }) {
+  const theme = useCityTheme();
   const order = orders(save).find((o) => o.id === id);
   const [selected, setSelected] = useState(0);
   if (!order) return <Label>Bu ilan teslim edildi.</Label>;
@@ -31,7 +33,7 @@ export function OrderGuide({ id, save }: { id: string; save: Save }) {
               borderRadius: 12,
               borderWidth: 2,
               borderColor: i === selected ? "#75a33c" : "#e3cb99",
-              backgroundColor: "#ffefcb",
+              backgroundColor: theme.paperLight,
             }}
           >
             <Item id={r.item_id} size={52} />
@@ -50,11 +52,11 @@ export function OrderGuide({ id, save }: { id: string; save: Save }) {
         <View
           key={p.id}
           style={{
-            backgroundColor: "#ffedc9",
+            backgroundColor: theme.paperLight,
             borderRadius: 12,
             padding: 10,
             borderWidth: 1,
-            borderColor: "#dbc18d",
+            borderColor: theme.edge,
             gap: 5,
           }}
         >

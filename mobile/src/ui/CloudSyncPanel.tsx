@@ -1,3 +1,4 @@
+import { PaperCard } from "./PagePrimitives";
 import { useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { cloudSync, cloudSyncEnabled } from "../account/cloudSync";
@@ -11,7 +12,7 @@ export function CloudSyncPanel() {
   const [choice, setChoice] = useState<"device" | "cloud" | null>(null);
   if (!cloudSyncEnabled || !state.ownerID) return null;
   return (
-    <View testID="cloudSyncPanel">
+    <PaperCard testID="cloudSyncPanel">
       <Divider />
       <Label title size={18}>
         {tx("Bulut kaydı", "Cloud save")}
@@ -110,6 +111,6 @@ export function CloudSyncPanel() {
           onPress={() => void cloudSync.retry()}
         />
       )}
-    </View>
+    </PaperCard>
   );
 }
