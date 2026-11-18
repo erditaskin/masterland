@@ -45,7 +45,7 @@ Native proje yeniden üretilebilir: `npx expo prebuild --platform ios`. UI test 
 
 ## Kayıt ve inceleme
 
-Normal ilerleme cihazda `@masterland/save/v2` anahtarıyla saklanır. Bozuk kayıt sessizce sıfırlanmaz. Eski RN ve Swift kayıtları `mobile/scripts/import-rn-save.py` ve `import-swift-save.py` ile kaynak değiştirilmeden aktarılabilir.
+Güncel tahta 7×9 kare hücreden oluşur. Normal ilerleme cihazda `@masterland/save/v3` anahtarıyla saklanır. Kullanıcının temiz başlangıç kararıyla eski 54 hücreli kayıtlar aktif yükleme yolunda taşınmaz. Eski import araçları tarihsel kaynaklardır; canlı DB toplu sıfırlaması bu yerel görsel çalışma sırasında yapılmamıştır.
 
 `masterland://review` görsel inceleme, `masterland://qa-reset` temiz test oturumudur. İkisi de normal oyuncu kaydını değiştirmez. Bunlar prototip girişleridir; mağaza yayını öncesi sınırlandırılmalıdır.
 
@@ -55,7 +55,7 @@ Normal ilerleme cihazda `@masterland/save/v2` anahtarıyla saklanır. Bozuk kay�
 - `docs/acik-konular.md`: Açık tasarım ve denge konuları.
 - `docs/isim-referanslari.md`: Sabit ID ve değiştirilebilir ad standardı.
 - `docs/ureticiler-ve-zincirler.md`: Üretici, ürün ve başlangıç ekonomi tablosu.
-- `docs/ui-standard.md`: 15 Kasım fotoğrafına göre güncel ortak görsel hedef.
+- `docs/sehir-ekrani-standardi.md`: Belenyaka temelli güncel şehir ekranı ve iPhone kabul standardı.
 - `docs/reference-fidelity-20261115.md`: Gerçek ekran, renk uzayı ve geometri ölçümleri.
 - `docs/react-native-migration.md`: Mimari, etkileşim ve doğrulama sınırları.
 - `docs/masterland-release-verification.md`: Güncel uygulama doğrulaması.

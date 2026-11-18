@@ -137,7 +137,7 @@ test("language changes resolve existing product objects without changing save id
   languageStore.set("tr");
   assert.equal(p.name, "Buğday Tarlası");
   assert.equal(JSON.stringify(save), before);
-  assert.equal(city(save).board.length, 54);
+  assert.equal(city(save).board.length, 63);
 });
 test("language selection respects saved choice and normalizes device locales", () => {
   assert.equal(chooseLanguage("en", ["tr-TR"]), "en");
@@ -193,4 +193,42 @@ test("legacy screen translations preserve IDs, number values and Unicode boundar
   assert.equal(displayText("Tahta", "tr"), "Tahta");
   assert.equal(displayText("city1 item1 12", "en"), "city1 item1 12");
   assert.equal(displayText("Tahta", "en"), "Board");
+});
+
+test("atlas achievement ranks and city labels have complete Turkish and English pairs", async () => {
+  const { contentText, cityAchievementsTitle, earnedAchievementsLabel } =
+    await import("../src/i18n/locale");
+  const { displayText } = await import("../src/i18n/display");
+  const tr = [
+    "Hevesli",
+    "Çırak",
+    "Kalfa",
+    "Uzman",
+    "Üstat",
+    "Usta",
+    "Büyük Usta",
+  ];
+  const en = [
+    "Novice",
+    "Apprentice",
+    "Journeyman",
+    "Specialist",
+    "Savant",
+    "Master",
+    "Grandmaster",
+  ];
+  tr.forEach((rank, index) => {
+    assert.equal(contentText(`rank${index}_name`, "tr"), rank);
+    assert.equal(contentText(`rank${index}_name`, "en"), en[index]);
+    assert.equal(displayText(rank, "en"), en[index]);
+  });
+  assert.equal(cityAchievementsTitle("Yalıkoru", "tr"), "Yalıkoru Başarıları");
+  assert.equal(
+    cityAchievementsTitle("Timberbay", "en"),
+    "Timberbay Achievements",
+  );
+  assert.equal(earnedAchievementsLabel(1, "en"), "1 achievement earned");
+  assert.equal(earnedAchievementsLabel(2, "en"), "2 achievements earned");
+  assert.equal(displayText("✓ Alındı", "en"), "✓ Claimed");
+  assert.equal(displayText("Tümü ⌄", "en"), "All ⌄");
 });

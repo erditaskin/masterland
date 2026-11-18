@@ -505,6 +505,11 @@ Kullanıcı önceki yedi maddelik listenin sırasını 2, 1, 3, 4, 6, 5, 7 olara
 Bu sıra önceki iki cihaz ertelemesini günceller: test artık altıncı adımdadır. Sıralama, kabul edilmemiş canlı ödül/silme/ödeme kapılarını doğrudan açma veya mevcut kullanıcı verisini silme onayı değildir.
 
 
+## 17 Kasım 2026 — Şehirlerin görsel malzeme aileleri onayı
+
+Kullanıcı arka plan, tahta dışında görünen çevre, üretici/ürün görselleri ve tabela/çerçeve malzemelerini şehir temasına göre birlikte tasarlamayı onayladı. İlk beş şehir için güncel sanat yönü ve ortak TR/EN istem şablonu [şehir görsel dili](sehir-gorsel-dili.md) belgesindedir. Belenyaka'da deniz detayı az olacak; bahçeler, canlı yeşil köy ve alçak taş duvarlar öne çıkacaktır. Açık meşe, başak oymaları ve az pirinç kullanılacaktır. Badınca boyalı ahşap/krem seramik/bakır; Yalıkoru deniz aşındırmış ahşap/halat/demir; Demirdere kesme taş/dövme demir/bakır perçin; İpekyolu ince işlenmiş ahşap/kumaş/pirinç ailesini kullanacaktır. Ortak yerleşim, kare hücreler, dokunma davranışı ve durum anlamları korunur. Belenyaka'nın beş ürün grubunun görsel aileleri de referans belgede kaydedildi. Gelecek şehirlerin sanat yönleri birlikte onaylandıkça aynı belgeye eklenecektir. Bu tur yalnız belge kaydıdır; görsel üretimi veya uygulama değişikliği yapılmadı.
+
+
 ## 17 Kasım 2026 — Canlı reklam ödülünün uçtan uca kabulü
 
 Kullanıcı, canlı sunucu ödülünü çalışır hâle getirip telefonda uçtan uca doğrulamayı açıkça istedi ve telefonu bağlayacağını bildirdi. Önce reklam maddesi tamamen tamamlanacak; ardından mevcut sekiz adımlı sıraya devam edilecektir. Bu talep doğrultusunda VPS `ADMOB_SSV_ENABLED=true` yapıldı; değişiklikten önce root erişimli env yedeği alındı. Mobilde doğrulanmış ödül yolu açık bir build bayrağıyla production veya kontrollü TestFlight kabul kanalında çalışır. Kabul sırasında Masterland’in kendi AdMob birimleri Google’ın cihaz veya sürüm bazlı test modunda kullanılacaktır. SDK earned callback’i tek başına ödeme yapmayacaktır. Silme ve gerçek satın alma kapıları bu taleple açılmamıştır.
@@ -513,6 +518,7 @@ Kullanıcı, canlı sunucu ödülünü çalışır hâle getirip telefonda uçta
 ## 17 Kasım 2026 — Yerel test konteynerlerinin temizlenmesi
 
 Kullanıcı Docker test konteynerlerinin temizlenmesini ayrıca istedi. Bu çalışma kapsamında oluşturulan yerel Masterland test konteynerleri ve onlara ait geçici DB birimleri, testleri bitince silinecektir. Başka projeler ve canlı VPS servisleri bu yerel test temizliğinin kapsamında değildir. Mevcut yerel Masterland API test konteyneri ve anonim test volume’u silindi.
+
 
 ## 17 Kasım 2026 — Hesap silme kabulü için açık onaylar
 
@@ -565,3 +571,122 @@ Kullanıcı, onay panolarının mevcut oyun kuralları korunarak cihaz ölçüs�
 ## 18 Kasım 2026 — Görsel kabulün ve kesintisiz devam kapsamının teyidi
 
 Kullanıcı, iOS simülatöründe ilgili şehrin onaylı tasarımına yüzde yüz uyum doğrulanmadan işin tamamlandı sayılmayacağını tekrar belirtti. Cihaz ölçüsüne uyarlama, onaylı sanat yönünü değiştirme yetkisi değildir. Kullanıcı, uygulama ve doğrulama işinin yeni bir devam komutu beklenmeden sürdürülmesini istedi. iOS dağıtımı önceliklidir; Android için ortak React Native bileşenleri, tema değerleri ve veri/eylem sınırları korunacaktır. Yalnız simülatör görüntüsü veya yüksek bir benzerlik yüzdesi bu kabulün yerine geçmez.
+
+
+## 18 Kasım 2026 — İlan ürünlerinin yeşil vurgusu korunuyor
+
+Kullanıcı, onay panosunda toplu vurgu görünmemesine rağmen mevcut ilan ürünlerinin yeşil vurgusunun korunmasını ve cihaz referansına eklenmesini açıkça istedi. Tam karşılanan ilanların açık yeşil, kısmi karşılanan gereksinimlerin koyu yeşil ayrımı korunur. Seçili eşya çerçevesi ayrı kalır. Ortak hafif glow ve hareket azaltma ayarı korunur. Daha önce yanıt beklenirken uygulanmış yalnız seçili eşya varsayımı bu kararla geçersizdir. Referans değişikliği özgün panoya bu açık kullanıcı eklemesi olarak kaydedilir; uygulama ekranı baseline yapılmaz.
+
+
+## 18 Kasım 2026 — Özgün pano ve parça oranları yeniden vurgulandı
+
+Kullanıcı, uygulamadaki tahta, pano ve üretici kutularının onaylı ilk Belenyaka görseline benzemediğini açıkça belirtti. 15.28–15.29 tarihli yedi yakın planı HUD, tabela/ilanlar, üretici rafı, tahta, alt menü ve şehir kartları için yeniden esas kaynak olarak gönderdi. Kullanıcı özgün referansın aynısını istiyor; uygulamadan türetilmiş hedefe yüksek benzerlik bunun yerine geçmez. Şehre göre malzeme ve renkler değiştirilebilir tema verisinden gelmelidir.
+
+Oranları korumak için yan boşluk seçeneği önce kabul edilmiş, hemen ardından kullanıcı “referansta yanda boşluklar yoksa olmasın” diyerek bunu düzeltmiştir. Son istek yan boşluk eklenmemesi ve referansın aynısıdır. Yan boşluk kesin tasarım kararı olarak uygulanmaz. Farklı cihaz oranından kaynaklanan bir uyarlama yüzde yüz özdeşlik gibi sunulamaz. Özgün panoya görsel kabul hâlâ açıktır.
+
+
+18 Kasım devamı: Kullanıcının tekrar gönderdiği özgün pano ve “ölçüler birebir aynı oranda” düzeltmesi bu görsel turda önceki kare hücre varsayımından önceliklidir. Belenyaka hücre aralığı kaynak panoda yaklaşık 79 × 75 piksel ölçülür. Son uygulama bu oranı tek fiziksel piksel adımıyla korur; 6 × 9 kapasite ve oyun kaydı değişmez. Bu, bütün ekranın piksel özdeşliği kabulü değildir. Yeni tahta hücresi ve çerçeve katmanları özgün onay panosundan kayıpsız kırpılır; kaynak SHA ve kesim koordinatları `mobile/assets/art/approved-board-v1/provenance.json` içinde saklanır.
+
+
+## 18 Kasım 2026 — Son Belenyaka çizimi açıkça onaylandı
+
+Kullanıcı, üst HUD'u küçültülüp yukarı alınmış, alt menüsü aşağıda ve tahtası uzatılmış son Belenyaka çizimini “tamam bro bu tasarım uygun buna koşalım” ve “aynısını istiyorum bro iphoneda” mesajlarıyla onayladı. Kanonik dosya `assets/references/approved-belenyaka-20261118/source.png` içindedir; SHA ve gerçek dosya ölçüsü manifestte korunur. Kaynak çizim 784 × 2007 pikseldir. Bu dosyanın onayı, henüz 1206 × 2622 iPhone çıktısıyla piksel eşitliği veya bütün uygulama kabulü değildir. Sonraki görsel üretimi bu dosyayı sessizce değiştiremez. Uygulama bu sabit kaynakla sürdürülür; doğrulanmamış yüzde yüz eşleşme ileri sürülmez.
+
+
+## 18 Kasım 2026 — Son kesin düzeltme: mevcut atlas, 7×9 kare tahta, temiz başlangıç
+
+Kullanıcı yeni eşya çizimleri istemediğini ve mevcut atlasın kullanılmasını açıkça söyledi. `Art.tsx` mevcut atlas eşlemelerine geri döndü; mevcut atlas PNG ve bounds dosyaları değiştirilmedi. Üretilmiş un torbası/ekmek/sürahi adayları uygulamaya alınmaz. Son onaylı Belenyaka çizimi kabuk ve yerleşim kaynağıdır; eşya piksellerini değiştirmek için yetki değildir.
+
+Kullanıcı 7 sütun ve kare hücre istedi; sorulan seçeneklerden 7×9’u seçerek 9 satırı ve 63 hücreyi kesinleştirdi. Bu açık karar eski 6×9/54 kapasitesinden ve kaynak fotoğrafın 79:75 hücre oranından önceliklidir. Kurallar, hit testi, çizim ve kayıt doğrulaması aynı 7×9 sabitlerini kullanır.
+
+Kullanıcı eski verilerin kaybolabileceğini, canlı Masterland hesapları dahil veri taşımaya zaman harcanmamasını ve lansmanda toplu sıfırlama yapılacağını açıkça belirtti. Eski 54 hücre kayıtlarını taşıma kodu eklenmez. Yeni yerel kayıt alanı normal v3, kontrollü v2 olur; eski import dosyaları aktif yükleme yolundan çıkarılır. Bu görsel çalışma kapsamında canlı DB şimdi sıfırlanmaz; toplu lansman sıfırlaması ayrı adımdır.
+
+## 18 Kasım 2026 — Şeffaf kabuk ve değişken üretici sayısı
+
+Kullanıcı, raf ile tahta arasındaki görüntü izlerini, alt menünün uyumsuzluğunu ve koleksiyondaki düz renk kesimlerini reddetti. Arka plana oturan şeffaf görsel malzemeler ve koleksiyon öğeleri arasında daha geniş aralık istedi. Kontrol delikleri taşıyan tam ekran katman ikincil sayfalarda kullanılmaz; temiz şehir manzarası kullanılır. Raf ve menü ayrı RGBA malzemelerdir; içerikleri gerçek bileşenlerle çizilir.
+
+Kullanıcının bazı şehirlerde altı kutu olabileceği düzeltmesi üretici rafına uygulanır. Raf beş veya altı üreticiyi şehir verisinden alır; daha fazla üreticide yatay kaydırma korunur. Bu düzeltme 7×9 tahta kararını değiştirmez.
+
+## 18 Kasım 2026 — Belenyaka üretici rafı ve alt menü
+
+Belenyaka prototipinde beş yuvalı ahşap arka plan üretici kutularının arkasına, bölmesiz ahşap arka plan alt menüye yerleştirilir. Alt menüde ikon ve etiket grupları ortalanır, ikonların üstünde bir fiziksel piksel boşluk bırakılır ve menü iPhone’un alt köşeleri ve ana ekran göstergesi için kenarlardan içeri alınır.
+
+## 18 Kasım 2026 — Belenyaka HTML prototipinin mobil uygulaması
+
+Kullanıcı şeffaf ve boş yüzeylerle kurulan Belenyaka HTML prototipini onayladı ve mobil uygulamanın yalnız Belenyaka için bu tasarıma geçmesini istedi. Metinler, simgeler ve tahta içeriği oyun durumundan çizilir. İlan yüzeyi, yan köşeler sabit kalacak şekilde iki veya üç ilana ve çok ürünlü kartın genişliğine uyarlanır. Alt menü, kaynak çizimdeki konumunun 18 fiziksel piksel üstündedir. HTML’deki çerçeveye uyarlanan mobil tahta mevcut 7 × 9 kayıt düzenini kullanır.
+
+## 18 Kasım 2026 — Belenyaka kenardan kenara arka plan ve 6 × 9 tahta
+
+Köy arka planı iPhone ekranının iki kenarına kadar devam eder. Belenyaka tahtası dış çerçevenin önceki ölçü ve konumunu koruyarak altı sütun ve dokuz satıra geçer. Diğer şehirlerin oyun alanı bu düzeltmenin kapsamı dışındadır. Kullanıcı eski tahta kayıtlarının taşınmasını istemedi.
+
+## 18 Kasım 2026 — Belenyaka zemin, ilan rayı ve tahta çizimi
+
+Köy zemini ekranın dışına taşan boyutta hazırlanır ve merkezden kesilir. İlan rayı ekranın merkezine hizalanır. Alt menüde ikon ve etiket, kendi oyma yuvasının ortasına yerleşir. Tahta çerçevesinin dış köşeleri şeffaftır. Belenyaka’nın boş 6 × 9 ızgarası tek arka plan görseliyle çizilir; ürün, vurgu, hareket ve erişilebilir hücreler canlı kalır.
+
+## 18 Kasım 2026 — Belenyaka bahçe sahnesi ve genişlik
+
+Kullanıcı düz çim ve yatay tahta zemini reddetti. Belenyaka zemini, şehir temalarındaki gibi tahtayı iki yandan çevreleyen taş duvarlar, çiçekler ve köy eşyaları içeren kesintisiz bir bahçedir. Tahta, ilanlar ve üretici rafı referans uzayında 42 piksel genişletildi. Tahta 6 × 9 kaldı. Oyun ekranının altındaki dört test düğmesi arayüzden kaldırıldı.
+
+## 18 Kasım 2026 — Belenyaka üretici temalı bahçe ve ayrı üst panel
+
+Köy çevresinde elma ağacı ve meyve kasaları, saman ve başak demetleri, süt kapları ve mandıra ürünleri tahtanın iki yanında görünür. Üst bölümün zemini köy sahnesinden ayrılmış şeffaf PNG'dir. Tabela, ilanlar ve üretici rafı bu zeminin üzerinde ayrı katmanlar olarak durur. Tahta ve üst grup son turda 30 piksel, alt menü 36 piksel daha genişletildi.
+
+## 18 Kasım 2026 — Belenyaka çok ürünlü ilanlar ve sabit köy zemini
+
+Üst panel biraz büyütülür ve açık bal meşesi tonunda, daha belirgin kütük damarıyla hazırlanır. İlanlarda ürün simgeleri, adetler ve ödül yazıları küçültülür. Ödül alanı ürünlerden ayrılır ve iki veya üç farklı ürün isteyen ilanlar tam kart halinde gösterilebilir. Seviye yazısı korunur, enerji, altın ve elmas değerleri küçültülür. Tümü dahil Belenyaka içinde açılan sayfalar aynı köy arka planını kullanır.
+
+## 18 Kasım 2026 — Belenyaka şehir standardı onaylandı
+
+Kullanıcı açık damarlı üst paneli, kenardan kenara çiftlik sahnesini, kompakt çok ürünlü ilanları, 6 × 9 tahtayı ve sabit şehir arka planını şehir ekranlarının referansı olarak onayladı. Sonraki şehir, kendi referans dosyası geldikten sonra ayrı tam ekran arka plan ve boş şeffaf bölüm varlıklarıyla hazırlanır. İlgili şehir iPhone simülatöründe açılarak değerlendirilir. Kabul maddeleri [şehir ekranı standardında](sehir-ekrani-standardi.md) yer alır.
+
+## 18 Kasım 2026 — Badınca şehir standardına geçti
+
+Badınca’nın referansındaki pembe tenteli pastane sokağı, krem seramik ve bakır tonlu boş yüzeyler ile altı sütun ve dokuz satırlı tahta ortak düzen içinde uygulandı. Üretici rafı kanonik dört Badınca zincirini gösterir. Referanstaki şekerleme kutusu bir içerik onayı olarak kullanılmaz. Yerel simülatör testi, Badınca’yı aktif şehir yapan geçici kayıtla çalışır.
+
+## 18 Kasım 2026 — Badınca Şekerleme Tezgâhı ve ilan oranları
+
+Kullanıcı Badınca’da beş üretici istedi. Referanstaki Şekerleme Tezgâhı, seviye 12 ve 800 altınla açılan beşinci üreticidir. Yedi basamaklı şekerleme zinciri mevcut üretim ve birleşme kurallarını kullanır. İlan kartlarının genişliği bir, iki ve üç ürün için sırasıyla 1×, 1,25× ve 1,5× olur. Yatay kaydırma sürer. Belenyaka ve Badınca tahta ürünleri görünür ikon sınırlarıyla yatay ve dikey ortalanır. Boyut, hücrenin kısa kenarı üzerinden belirlenir ve hazır ilan animasyonu için pay bırakılır.
+
+## 18 Kasım 2026 — İlk temasta sürükleme ve tahta genişliği
+
+Kullanıcı, ürünün önceden seçilmeden sürüklenebilmesini istedi. Aynı ürünler birleşir, farklı ürünün üzerine bırakılan ürün kaynağına döner. Boş hücreye taşıma korunur. Belenyaka ve Badınca tahtasının yatay sınırları üst ilan paneliyle eşleşir. Tahtanın yüksekliği ve dikey konumu korunur.
+
+## 19 Kasım 2026 — Sürükleme önizlemesi ve tahta yüksekliği
+
+Belenyaka ve Badınca’da ürün, sürükleme eşiği geçildiğinde kaynak slottan kalkar ve ayrı önizleme olarak dokunuşu izler. Tek dokunma akışı seçim, taşıma ve birleşmeyi yönetir. Geçersiz bırakmada önizleme kaynağa döner. Alt menü güvenli alan içinde aşağı alındı. Tahta aşağı doğru uzatıldı ve tahta ile alt menü arasındaki boşluk üst panelle arasındaki boşluğa eşitlendi.
+
+## 19 Kasım 2026 — Sürükleme sırasında kaynak slot efekti
+
+Ürün sürüklenmeye başlayınca kaynak hücredeki seçim ve ilan vurguları gizlenir. Geçersiz bırakmada ürünün dönüşü tamamlanınca geçerli vurgular yeniden görünür. Diğer hücrelerin vurguları sürükleme boyunca görünür kalır.
+
+## 19 Kasım 2026 — Yalıkoru simülatör önizlemesi
+
+Belenyaka ve Badınca’da ortak 6 × 9 tahta, orantılı ilan genişlikleri, taşan başlıkların küçülmesi ve sürükleme vurguları doğrulanır. Yalıkoru bu düzeni liman sahnesi, halatlı ahşap yüzeyler, turkuaz alt menü vurgusu ve referanstaki beş üreticiyle kullanır. Balık, kereste, halat, ağ, sandal ve yelken bezi simülatörde geçici oturumda denenebilir. Kalıcı Yalıkoru erişim kuralı mevcut önizleme durumunu korur.
+
+## 19 Kasım 2026 — Hazır ilanlar ve ortak birleştirme ipucu
+
+Teslim edilebilir ilanlar listenin önüne taşınır ve yeşil yüzeyle işaretlenir. İlan rayı yeni bir teslim seçeneği oluştuğunda ilk karta döner. Teslime hazır ilanda istenen her türün tahtadaki bütün örnekleri neon yeşil görünür. Sadece tamamlanmamış bir ilanın karşılanmış ihtiyacını sağlayan türler koyu yeşil görünür. İki durum çakışırsa hazır vurgu önceliklidir.
+
+Tahta, her üç şehirde aynı seçim, taşıma, birleşme ve bekleme ipucu akışını kullanır. Yakın birleştirilebilir çift 2,8 saniye sonra gösterilir. Azaltılmış hareket ayarında ipucu iki sabit çerçeveyle verilir. Yalıkoru rafı yatayda simetrik yerleşir; üretici kartlarının enerji ve bekleme göstergeleri daha büyük, ayrı bir alt bant kullanır.
+
+## 19 Kasım 2026 — Ortak şehir yerleşimi ve Başarılar
+
+Şehir kartları boşlukla ayrılır. Üretici rafındaki büyük ve ortalı yerleşim Belenyaka, Badınca ve Yalıkoru'da ortaktır. Alt menü öğeleri beş eşit, ortalı yuvaya yerleşir. Cüzdanda elmasın sağındaki Başarılar düğmesi açık şehrin kazanım sayısını ve listesini açar. Şehre özel mevcut başarılar korunur ve her şehir aynı yedi teslim basamağını kullanır. Eşik ve ödül verisi tek yapıdan okunur; teslimler şehirler arasında birikmez.
+
+Kullanıcı Yalıkoru alt menüsünü görsel referans olarak seçti. Belenyaka ve Badınca menüleri aynı yuva ölçülerini kendi dokulu çerçeveleri ve renkleriyle uygular.
+
+## 19 Kasım 2026 — Atlas yerelleştirmesi ve kompakt üretici bandı
+
+Başarı adları atlasın TR ve EN rozet sözlüğüne eşitlendi. Şehir ve üretim ekranları iki dilde aynı ortak metin ve kart kurallarını kullanır. Üretici enerji, kilit ve süre bandı, portrenin daha fazla bölümünü göstermek için daraltıldı ve alt kenara sabitlendi. Yeni şehir kabulünde iki dil ile bant ölçüsünün kontrolü zorunludur.
+
+## 19 Kasım 2026 — Mesleğe bağlı şehir unvanları
+
+Atlasın meslek ve üretici grupları temel alınır. Belenyaka Çiftçi ve Fırıncı, Badınca Pastacı ve Şekerlemeci, Yalıkoru Balıkçı, Marangoz ve Gemi Yapımcısı olarak ilerler. Yedi seviyenin her birinde şehirdeki bütün meslekler ilgili teslim eşiğini karşıladığında birleşik unvan açılır. Belenyaka için atlasın ilk beş şehir verisinde yerel birleşik ad bulunmadığından Köy Zanaatkârı adı kullanılır. Badınca Şef ve Yalıkoru Denizci adlarını kullanır. Atlasın şehirler arası Şef kombinasyonu yerine, bu şehir ödüllerinde kullanıcının yerel meslek kuralı uygulanır. Aynı teslim her ilgili mesleğe bir kez yazılır. Birleşik ve tekil ödüller aynı mekanizmadan bir kez alınır. Önceki genel basamakların alınmış ödül kimlikleri eski kayıtların okunabilmesi için saklanır.
+
+## 19 Kasım 2026 — Ortak market, hesap ve kayıt karşılaştırması
+
+Girişsiz hesap ekranı Apple, Google ve Facebook seçeneklerini aynı düzende gösterir. Hesap açıldığında isim, e-posta, yöntem ve oturumu kapatma ayarların üstünde yer alır. İlerleme kalıcı işaretlerle karşılaştırılır. Harcanabilir bakiyeler ve tahta yerleşimi tek başına kaydı daha ileride yapmaz. Daha ilerideki bulut kaydı bütün şehirlerle birlikte cihaza alınır. Yerel veya birbirinden farklı ilerlemeler için onay gerekir. Şimdi değil seçeneği mevcut kayıtları korur ve o hesap oturumunda aynı karşılaştırmayı yeniden açmaz.
+
+## 19 Kasım 2026 — Demirdere ve İpekyolu oynanabilir önizlemeleri
+
+İki şehir, kullanıcının referansındaki beş üretici ve tema malzemeleriyle ortak şehir standardına bağlandı. İlk oynanabilir üretim zincirleri ile ürünler simülatör oturumunda etkin, normal oyunun yayın kilidi mevcut durumda kaldı. Yerel önizlemede iki şehrin tahtaları ayrı tutulur ve Şehirler listesinden geçiş yapılabilir. Meslekler ve birleşik unvanlar ortak veri üzerinden yönetilir.

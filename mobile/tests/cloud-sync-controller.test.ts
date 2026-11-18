@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { fresh } from "../src/game/engine";
+import { fresh, newCity, type Save } from "../src/game/engine";
 import { createCloudOutbox } from "../src/account/cloudOutbox";
 import { createCloudSyncController } from "../src/account/cloudSyncController";
 import type { CloudSave } from "../src/account/cloudProtocol";
@@ -112,6 +112,9 @@ function fixture(guest = false) {
     remotes,
     queue,
     local: () => local,
+    setLocal: (save: Save) => {
+      local = save;
+    },
     binding: () => binding,
     counts: () => ({ writes, backups, adoptions }),
     offline: (value: boolean) => {
@@ -355,4 +358,55 @@ test("guest with existing remote progress still requires an explicit choice", as
   await f.controller.connect(first);
   assert.equal(f.controller.get().phase, "choice");
   assert.equal(f.counts().writes, 0);
+});
+
+test("a cloud save ahead across cities is adopted without confirmation and subsequent play uploads", async () => {
+  const f = fixture();
+  const remote = fresh(100);
+  remote.xp = 500;
+  remote.gold = 0;
+  remote.cities.city2 = newCity("city2");
+  remote.cities.city2.introIndex = 2;
+  remote.cityID = "city2";
+  f.remotes.set(first, {
+    user_id: first,
+    revision: 4,
+    schema_version: 1,
+    payload: remote,
+    updated_at: new Date().toISOString(),
+  });
+  await f.controller.connect(first);
+  assert.equal(f.controller.get().phase, "synced");
+  assert.equal(f.counts().adoptions, 1);
+  assert.equal(f.counts().writes, 0);
+  assert.equal(f.local().cityID, "city2");
+  assert.equal(f.local().cities.city2?.introIndex, 2);
+  f.change(123);
+  await f.controller.sync();
+  assert.equal(f.remotes.get(first)?.payload.gold, 123);
+});
+
+test("local or divergent city progress waits for explicit confirmation", async () => {
+  for (const divergent of [false, true]) {
+    const f = fixture();
+    const local = fresh(100);
+    local.cities.city2 = newCity("city2");
+    local.cities.city2.introIndex = 2;
+    f.setLocal(local);
+    const remote = fresh(100);
+    remote.xp = divergent ? 900 : 0;
+    f.remotes.set(first, {
+      user_id: first,
+      revision: 4,
+      schema_version: 1,
+      payload: remote,
+      updated_at: new Date().toISOString(),
+    });
+    await f.controller.connect(first);
+    await f.controller.sync();
+    assert.equal(f.controller.get().phase, "choice");
+    assert.equal(f.counts().writes, 0);
+    await f.controller.choose("device");
+    assert.equal(f.remotes.get(first)?.payload.cities.city2?.introIndex, 2);
+  }
 });

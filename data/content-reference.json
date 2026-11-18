@@ -14,30 +14,83 @@
       "producer2_name_tr": "Sebze tarlası",
       "producer3_name_tr": "Balıkçı iskelesi",
       "producer4_name_tr": "Odun yığını",
-      "profession1_name_tr": "Farmer",
-      "profession2_name_tr": "Baker",
-      "profession3_name_tr": "Fisherman",
-      "profession4_name_tr": "Carpenter",
-      "rank1_name_tr": "Apprentice",
-      "title1_name_tr": "Apprentice Farmer",
-      "title2_name_tr": "Apprentice Baker",
-      "rank2_name_tr": "Journeyman",
-      "title3_name_tr": "Journeyman Farmer",
-      "title4_name_tr": "Journeyman Baker",
-      "rank3_name_tr": "Expert",
-      "title5_name_tr": "Expert Farmer",
-      "title6_name_tr": "Expert Baker",
-      "rank4_name_tr": "Adept",
-      "title7_name_tr": "Adept Farmer",
-      "title8_name_tr": "Adept Baker",
-      "rank5_name_tr": "Master",
-      "title9_name_tr": "Master Farmer",
-      "title10_name_tr": "Master Baker",
-      "rank6_name_tr": "Grandmaster",
-      "title11_name_tr": "Grandmaster Farmer",
-      "title12_name_tr": "Grandmaster Baker",
-      "title13_name_tr": "Apprentice Fisherman",
-      "title14_name_tr": "Apprentice Carpenter",
+      "producer15_name_tr": "Balıkçı Donanımı",
+      "producer16_name_tr": "Tekne Atölyesi",
+      "producer17_name_tr": "Yelken Tezgâhı",
+      "item167_name_tr": "Balıkçı ipi",
+      "item168_name_tr": "Balık ağı",
+      "item169_name_tr": "Kürekli sandal",
+      "item170_name_tr": "Yelken bezi",
+      "profession1_name_tr": "Çiftçi",
+      "profession2_name_tr": "Fırıncı",
+      "profession3_name_tr": "Balıkçı",
+      "profession4_name_tr": "Marangoz",
+      "profession5_name_tr": "Pastacı",
+      "profession6_name_tr": "Şekerlemeci",
+      "profession7_name_tr": "Gemi Yapımcısı",
+      "profession8_name_tr": "Madenci",
+      "profession9_name_tr": "Demirci",
+      "profession10_name_tr": "Terzi",
+      "profession11_name_tr": "Tüccar",
+      "combo1_name_tr": "Köy Zanaatkârı",
+      "combo2_name_tr": "Şef",
+      "combo3_name_tr": "Denizci",
+      "combo4_name_tr": "Metal Sanatkârı",
+      "combo5_name_tr": "İpek Taciri",
+      "producer18_name_tr": "Cevher Ocağı",
+      "producer19_name_tr": "Demir Ocağı",
+      "producer20_name_tr": "Demirci Donanımı",
+      "producer21_name_tr": "Zırh Tezgâhı",
+      "producer22_name_tr": "Alet Tezgâhı",
+      "producer23_name_tr": "Dokuma Tezgâhı",
+      "producer24_name_tr": "Boya Kazanı",
+      "producer25_name_tr": "Dikiş Masası",
+      "producer26_name_tr": "Aksesuar Tezgâhı",
+      "producer27_name_tr": "Ticaret Masası",
+      "item171_name_tr": "Gümüş cevheri",
+      "item172_name_tr": "Demir külçesi",
+      "item173_name_tr": "Bakır cevheri",
+      "item174_name_tr": "Demirci maşası",
+      "item175_name_tr": "Demir miğfer",
+      "item176_name_tr": "Demirci çekici",
+      "item177_name_tr": "Cevher arabası",
+      "item178_name_tr": "Bakır külçesi",
+      "item179_name_tr": "Örs",
+      "item180_name_tr": "Demir göğüslük",
+      "item181_name_tr": "Alet rafı",
+      "item183_name_tr": "Mor iplik makarası",
+      "item184_name_tr": "Kırmızı iplik makarası",
+      "item185_name_tr": "Mavi boya",
+      "item186_name_tr": "İşlemeli kumaş",
+      "item187_name_tr": "Ticaret defteri",
+      "item188_name_tr": "İşlemeli kese",
+      "item189_name_tr": "İpek topu",
+      "item190_name_tr": "Mor boya",
+      "item191_name_tr": "Kumaş makası",
+      "item192_name_tr": "Mor taşlı kolye",
+      "item193_name_tr": "Tüccar terazisi",
+      "item194_name_tr": "Brokarlı kumaş",
+      "rank0_name_tr": "Hevesli",
+      "rank1_name_tr": "Çırak",
+      "title1_name_tr": "Çırak Çiftçi",
+      "title2_name_tr": "Çırak Fırıncı",
+      "rank2_name_tr": "Kalfa",
+      "title3_name_tr": "Kalfa Çiftçi",
+      "title4_name_tr": "Kalfa Fırıncı",
+      "rank3_name_tr": "Uzman",
+      "title5_name_tr": "Uzman Çiftçi",
+      "title6_name_tr": "Uzman Fırıncı",
+      "rank4_name_tr": "Üstat",
+      "title7_name_tr": "Üstat Çiftçi",
+      "title8_name_tr": "Üstat Fırıncı",
+      "rank5_name_tr": "Usta",
+      "title9_name_tr": "Usta Çiftçi",
+      "title10_name_tr": "Usta Fırıncı",
+      "rank6_name_tr": "Büyük Usta",
+      "title11_name_tr": "Büyük Usta Çiftçi",
+      "title12_name_tr": "Büyük Usta Fırıncı",
+      "title13_name_tr": "Çırak Balıkçı",
+      "title14_name_tr": "Çırak Marangoz",
       "item1_name_tr": "Buğday başağı",
       "item2_name_tr": "Buğday demeti",
       "item3_name_tr": "Buğday çuvalı",
@@ -175,7 +228,7 @@
       "city3_map_role_tr": "Balıkçılık · Marangozluk",
       "title15_name_tr": "Tarla Kâşifi",
       "title16_name_tr": "Fırın Dostu",
-      "title17_name_tr": "Skara Gezgini",
+      "title17_name_tr": "Belenyaka Gezgini",
       "achievement1_name_tr": "İlk Işık",
       "achievement1_description_tr": "İlk ilanını teslim et. Gezgin sandığını aç.",
       "achievement2_name_tr": "İki Tezgâh",
@@ -186,14 +239,14 @@
       "achievement4_description_tr": "Somun ekmeği ilk kez keşfet.",
       "achievement5_name_tr": "Gezginin Kesesi",
       "achievement5_description_tr": "On farklı ürün keşfet.",
-      "achievement6_name_tr": "Skara Hatırası",
-      "achievement6_description_tr": "Skara’nın altı başlangıç ilanını teslim et.",
+      "achievement6_name_tr": "Belenyaka Hatırası",
+      "achievement6_description_tr": "Belenyaka’nın altı başlangıç ilanını teslim et.",
       "achievement7_name_tr": "Pastanenin Daveti",
-      "achievement7_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement7_description_tr": "Badınca’da ilk başlangıç ilanını teslim et.",
       "achievement8_name_tr": "Tatlı Koleksiyon",
-      "achievement8_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement8_description_tr": "Badınca’da sekiz farklı ürün keşfet.",
       "achievement9_name_tr": "Ustanın İmzası",
-      "achievement9_description_tr": "Şehir açıldığında koşulları belli olacak.",
+      "achievement9_description_tr": "Badınca’da dört üretici aç.",
       "achievement10_name_tr": "İlk Ağ",
       "achievement10_description_tr": "Şehir açıldığında koşulları belli olacak.",
       "achievement11_name_tr": "Ahşabın Dili",
@@ -264,6 +317,14 @@
       "item157_name_tr": "Çikolata hediye sepeti",
       "item158_name_tr": "Çikolata şelalesi",
       "item159_name_tr": "Çikolata ustasının kupası",
+      "producer14_name_tr": "Şekerleme Tezgâhı",
+      "item160_name_tr": "Meyveli şeker",
+      "item161_name_tr": "Çizgili nane şekeri",
+      "item162_name_tr": "Renkli lolipoplar",
+      "item163_name_tr": "Şekerleme kâsesi",
+      "item164_name_tr": "Şeker kavanozu",
+      "item165_name_tr": "Hediye şeker kutusu",
+      "item166_name_tr": "Şekerleme kulesi",
       "quest100_name_tr": "Tatlı bir merhaba",
       "quest101_name_tr": "Kurabiye sepeti",
       "quest102_name_tr": "Tart daveti",
@@ -2798,6 +2859,64 @@
           "item158",
           "item159"
         ]
+      },
+      {
+        "producer_id": "producer14",
+        "required_player_level": 12,
+        "unlock_gold": 800,
+        "product_unlocks": [
+          {
+            "item_id": "item160",
+            "tier": 1,
+            "required_player_level": 16,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item161",
+            "tier": 2,
+            "required_player_level": 16,
+            "gold_cost": 0
+          },
+          {
+            "item_id": "item162",
+            "tier": 3,
+            "required_player_level": 16,
+            "gold_cost": 35
+          },
+          {
+            "item_id": "item163",
+            "tier": 4,
+            "required_player_level": 17,
+            "gold_cost": 70
+          },
+          {
+            "item_id": "item164",
+            "tier": 5,
+            "required_player_level": 18,
+            "gold_cost": 140
+          },
+          {
+            "item_id": "item165",
+            "tier": 6,
+            "required_player_level": 19,
+            "gold_cost": 280
+          },
+          {
+            "item_id": "item166",
+            "tier": 7,
+            "required_player_level": 20,
+            "gold_cost": 560
+          }
+        ],
+        "chain_item_ids": [
+          "item160",
+          "item161",
+          "item162",
+          "item163",
+          "item164",
+          "item165",
+          "item166"
+        ]
       }
     ],
     "intro_quests": [
@@ -3115,8 +3234,225 @@
     "item159": {
       "sheet": "haven",
       "index": 33
+    },
+    "item160": {
+      "sheet": "candy",
+      "index": 0
+    },
+    "item161": {
+      "sheet": "candy",
+      "index": 1
+    },
+    "item162": {
+      "sheet": "candy",
+      "index": 2
+    },
+    "item163": {
+      "sheet": "candy",
+      "index": 3
+    },
+    "item164": {
+      "sheet": "candy",
+      "index": 4
+    },
+    "item165": {
+      "sheet": "candy",
+      "index": 5
+    },
+    "item166": {
+      "sheet": "candy",
+      "index": 6
     }
   },
+  "city_preview_producers": {
+    "city3": [
+      [
+        "producer3",
+        "item15"
+      ],
+      [
+        "producer4",
+        "item23"
+      ],
+      [
+        "producer15",
+        "item167",
+        "item168"
+      ],
+      [
+        "producer16",
+        "item169"
+      ],
+      [
+        "producer17",
+        "item170"
+      ]
+    ],
+    "city4": [
+      [
+        "producer18",
+        "item171",
+        "item177"
+      ],
+      [
+        "producer19",
+        "item173",
+        "item178"
+      ],
+      [
+        "producer20",
+        "item172",
+        "item179"
+      ],
+      [
+        "producer21",
+        "item175",
+        "item180"
+      ],
+      [
+        "producer22",
+        "item174",
+        "item176",
+        "item181"
+      ]
+    ],
+    "city5": [
+      [
+        "producer23",
+        "item183",
+        "item189"
+      ],
+      [
+        "producer24",
+        "item185",
+        "item190"
+      ],
+      [
+        "producer25",
+        "item184",
+        "item191",
+        "item186",
+        "item194"
+      ],
+      [
+        "producer26",
+        "item192",
+        "item188"
+      ],
+      [
+        "producer27",
+        "item187",
+        "item193"
+      ]
+    ]
+  },
+  "city_specialties": [
+    {
+      "city_id": "city1",
+      "combo_id": "combo1",
+      "professions": [
+        {
+          "id": "profession1",
+          "producer_ids": [
+            "producer1",
+            "producer6",
+            "producer7"
+          ]
+        },
+        {
+          "id": "profession2",
+          "producer_ids": [
+            "producer5",
+            "producer8"
+          ]
+        }
+      ]
+    },
+    {
+      "city_id": "city2",
+      "combo_id": "combo2",
+      "professions": [
+        {
+          "id": "profession5",
+          "producer_ids": [
+            "producer10",
+            "producer11",
+            "producer12"
+          ]
+        },
+        {
+          "id": "profession6",
+          "producer_ids": [
+            "producer13",
+            "producer14"
+          ]
+        }
+      ]
+    },
+    {
+      "city_id": "city3",
+      "combo_id": "combo3",
+      "professions": [
+        {
+          "id": "profession3",
+          "producer_ids": [
+            "producer3",
+            "producer15"
+          ]
+        },
+        {
+          "id": "profession4",
+          "producer_ids": [
+            "producer4"
+          ]
+        },
+        {
+          "id": "profession7",
+          "producer_ids": [
+            "producer16",
+            "producer17"
+          ]
+        }
+      ]
+    },
+    {
+      "city_id": "city4",
+      "combo_id": "combo4",
+      "professions": [
+        {
+          "id": "profession8",
+          "producer_ids": ["producer18", "producer19"]
+        },
+        {
+          "id": "profession9",
+          "producer_ids": ["producer20", "producer21", "producer22"]
+        }
+      ]
+    },
+    {
+      "city_id": "city5",
+      "combo_id": "combo5",
+      "professions": [
+        {
+          "id": "profession10",
+          "producer_ids": ["producer23", "producer24", "producer25", "producer26"]
+        },
+        {
+          "id": "profession11",
+          "producer_ids": ["producer27"]
+        }
+      ]
+    }
+  ],
+  "city_delivery_ranks": [
+    {"id": "rank0", "target": 1, "reward": {"gold": 25}},
+    {"id": "rank1", "target": 5, "reward": {"gold": 50, "energy": 5}},
+    {"id": "rank2", "target": 15, "reward": {"gold": 100, "energy": 10}},
+    {"id": "rank3", "target": 35, "reward": {"gold": 150, "gems": 1}},
+    {"id": "rank4", "target": 75, "reward": {"gold": 250, "gems": 2}},
+    {"id": "rank5", "target": 150, "reward": {"gold": 400, "gems": 3}},
+    {"id": "rank6", "target": 300, "reward": {"gold": 650, "gems": 5}}
+  ],
   "city_economy": [
     {
       "id": "city1",

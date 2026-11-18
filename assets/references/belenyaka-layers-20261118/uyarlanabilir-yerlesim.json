@@ -1,0 +1,57 @@
+{
+  "canvas": {
+    "width": 1206,
+    "height": 2622
+  },
+  "orders": {
+    "card": "uyarlanabilir/ilan-karti.png",
+    "sourceSize": {
+      "width": 336,
+      "height": 181
+    },
+    "capInsets": {
+      "left": 49,
+      "right": 49,
+      "top": 39,
+      "bottom": 39
+    },
+    "axis": "horizontal",
+    "minimumWidth": 99,
+    "button": {
+      "file": "uyarlanabilir/ilan-ver-dugmesi.png",
+      "width": 138,
+      "height": 48,
+      "right": 15,
+      "top": 20
+    },
+    "slices": [
+      "uyarlanabilir/ilan-sol-kenar.png",
+      "uyarlanabilir/ilan-orta-doku.png",
+      "uyarlanabilir/ilan-sag-kenar.png"
+    ],
+    "exampleWidths": [
+      [
+        337,
+        337,
+        338
+      ],
+      [
+        512,
+        512
+      ],
+      [
+        392,
+        632
+      ]
+    ]
+  },
+  "navigation": {
+    "file": "bos-yuzeyler/13-alt-menu.png",
+    "emptyFace": "bos-yuzeyler/13-alt-menu.png",
+    "x": 105,
+    "y": 2411,
+    "width": 1007,
+    "height": 161,
+    "shiftY": -18
+  }
+}

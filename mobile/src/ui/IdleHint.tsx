@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { boardColumns } from "../game/grid";
+import { useEffect, useMemo, useState } from "react";
 import { AppState, View } from "react-native";
 import Animated, {
   useSharedValue,
@@ -16,17 +17,21 @@ import { Label } from "./Controls";
 export function IdleHint({
   save,
   enabled,
+  reduced,
   activity,
   touching,
   cell,
+  cellHeight = cell,
   inset,
   width,
 }: {
   save: Save;
   enabled: boolean;
+  reduced: boolean;
   activity: number;
   touching: boolean;
   cell: number;
+  cellHeight?: number;
   inset: number;
   width: number;
 }) {
@@ -45,13 +50,17 @@ export function IdleHint({
     if (!enabled || touching || !foreground) return;
     const t = setTimeout(
       () => setActivation({ activity, at: Date.now() }),
-      3800,
+      2800,
     );
     return () => clearTimeout(t);
   }, [enabled, activity, touching, foreground]);
+  const columns = boardColumns(save.cityID);
   const visible =
     enabled && !touching && foreground && activation?.activity === activity;
-  const hint = visible ? idleHint(save, activation!.at) : null;
+  const hint = useMemo(
+    () => (visible && activation ? idleHint(save, activation.at) : null),
+    [visible, activation, save],
+  );
   const hasHint = !!hint;
   const phase = useSharedValue(0);
   const from = hint && "from" in hint ? hint.from : 0,
@@ -59,7 +68,7 @@ export function IdleHint({
 
   useEffect(() => {
     phase.set(0);
-    if (hasHint)
+    if (hasHint && !reduced && from !== to)
       phase.set(
         withRepeat(
           withSequence(
@@ -72,14 +81,18 @@ export function IdleHint({
         ),
       );
     return () => cancelAnimation(phase);
-  }, [from, to, hasHint, phase]);
+  }, [from, to, hasHint, phase, reduced]);
   const style = useAnimatedStyle(() => ({
     opacity: 0.65 * (1 - phase.get() * 0.4),
     transform: [
-      { translateX: ((to % 6) - (from % 6)) * cell * phase.get() },
+      {
+        translateX: ((to % columns) - (from % columns)) * cell * phase.get(),
+      },
       {
         translateY:
-          (Math.floor(to / 6) - Math.floor(from / 6)) * cell * phase.get(),
+          (Math.floor(to / columns) - Math.floor(from / columns)) *
+          cellHeight *
+          phase.get(),
       },
     ],
   }));
@@ -91,26 +104,47 @@ export function IdleHint({
       style={{ position: "absolute", inset: 0 }}
     >
       {"from" in hint ? (
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              left: inset + (from % 6) * cell,
-              top: inset + Math.floor(from / 6) * cell,
-              width: cell,
-              height: cell,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 10,
-              borderWidth: 2,
-              borderColor: "#ffe39a",
-              backgroundColor: "#fff3cd44",
-            },
-            style,
-          ]}
-        >
-          <Item id={hint.item} size={cell * 0.85} />
-        </Animated.View>
+        reduced ? (
+          [from, to].map((index) => (
+            <View
+              key={index}
+              pointerEvents="none"
+              style={{
+                position: "absolute",
+                left: inset + (index % columns) * cell,
+                top: inset + Math.floor(index / columns) * cellHeight,
+                width: cell,
+                height: cellHeight,
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: "#ffe39a",
+              }}
+            />
+          ))
+        ) : (
+          <Animated.View
+            collapsable={false}
+            testID="idleMergeMotion"
+            style={[
+              {
+                position: "absolute",
+                left: inset + (from % columns) * cell,
+                top: inset + Math.floor(from / columns) * cellHeight,
+                width: cell,
+                height: cellHeight,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: "#ffe39a",
+                backgroundColor: "#fff3cd44",
+              },
+              style,
+            ]}
+          >
+            <Item id={hint.item} size={Math.min(cell, cellHeight) * 0.79} />
+          </Animated.View>
+        )
       ) : (
         <View
           style={{

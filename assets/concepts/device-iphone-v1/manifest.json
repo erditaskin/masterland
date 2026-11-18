@@ -1,0 +1,27 @@
+{
+  "status": "awaiting-design-authoring-and-user-approval",
+  "device": "iPhone 16 Pro / 402x874 pt @3x",
+  "target_pixels": [
+    1206,
+    2622
+  ],
+  "cities": [
+    "city1",
+    "city2",
+    "city3",
+    "city4",
+    "city5"
+  ],
+  "views": [
+    "board",
+    "cities"
+  ],
+  "constraints": [
+    "board close to side edges",
+    "navigation close to bottom safe area",
+    "preserve original city art and materials",
+    "no forced side letterbox",
+    "implementation resumes after user approval"
+  ],
+  "generated_cutout_is_not_integrated": true
+}

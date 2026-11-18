@@ -15,13 +15,11 @@ export function AccountPanel({
   onClose,
   save,
   dispatch,
-  onCloud,
   onDeletion,
 }: {
   onClose: () => void;
   save: Save;
   dispatch: (action: Action) => Result | null;
-  onCloud: () => void;
   onDeletion: () => void;
 }) {
   const deletion = useSyncExternalStore(
@@ -47,8 +45,10 @@ export function AccountPanel({
       .catch(() => setAppleAvailable(false));
   }, []);
   const registered = !!account.user && !account.user.is_anonymous;
-  const name =
-    account.user?.user_metadata.full_name ?? account.user?.user_metadata.name;
+  const metadata = account.user?.user_metadata;
+  const name = [metadata?.full_name, metadata?.name].find(
+    (value) => typeof value === "string" && value.trim(),
+  );
   const providers = account.user?.identities
     ?.map(
       (identity) =>
@@ -63,8 +63,11 @@ export function AccountPanel({
     .join(", ");
   const signIn = async (provider: LoginProvider) => {
     setSigningIn(true);
-    if (await accountStore.signIn(provider)) onClose();
-    else setSigningIn(false);
+    try {
+      await accountStore.signIn(provider);
+    } finally {
+      setSigningIn(false);
+    }
   };
   if (signingIn) {
     return (
@@ -87,31 +90,19 @@ export function AccountPanel({
         language,
         languageError,
         blocked: account.busy || deletion.hasJournal || cloud.busy,
-        cloudPhase: cloud.phase,
         connectionEnabled: accountConfig.enabled,
-        googleEnabled:
-          !!accountConfig.googleIOSClientID &&
-          !!accountConfig.googleWebClientID,
         facebookEnabled: accountConfig.facebookEnabled,
-        facebookVisible:
-          process.env.EXPO_PUBLIC_FACEBOOK_LOGIN_HIDDEN !== "true",
-        deleting: deletion.hasJournal,
-        busy: account.busy,
         ready: account.ready,
         error: !!account.error,
       }}
       actions={{
         close: onClose,
-        cloud: onCloud,
         deletion: onDeletion,
         signIn: (provider) => {
           void signIn(provider);
         },
         signOut: () => {
           void accountStore.signOut();
-        },
-        sync: () => {
-          void cloudSync.retry();
         },
         language: (code) => {
           void setLanguage(code)

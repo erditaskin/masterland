@@ -5,7 +5,7 @@ import {
   type Save,
   type Action,
   type Result,
-  producers,
+  producerCatalog as producers,
 } from "../game/engine";
 import { Button, Label } from "./Controls";
 import { StatusIcon } from "./StatusIcon";

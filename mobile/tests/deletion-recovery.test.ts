@@ -10,7 +10,7 @@ const journal: DeletionJournal = {
   requestID: "00000000-0000-4000-8000-000000000001",
   userID: "00000000-0000-4000-8000-000000000002",
   receipt: "a".repeat(64),
-  namespace: "@masterland/save/controlled-testflight/v1",
+  namespace: "@masterland/save/controlled-testflight/v2",
 };
 test("deletion journals require a random receipt and stable identities", () => {
   assert.deepEqual(readDeletionJournal(JSON.stringify(journal)), journal);

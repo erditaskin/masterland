@@ -1,8 +1,11 @@
+import { boardCapacity, boardColumns } from "./game/grid";
 import { PresentationPage } from "./ui/PresentationPage";
+import { presentationRailOrders } from "./game/presentationFixture";
 import { BoardChrome } from "./ui/BoardChrome";
 import { CityBackdrop, WalletHUD, GameNavigation } from "./ui/GameChrome";
 import { presentationReview, visualReviewCity } from "./ui/visualReview";
 import { CityThemeProvider } from "./ui/CityThemeProvider";
+import { useCloudSyncPrompt } from "./ui/useCloudSyncPrompt";
 import { startCloudSync } from "./account/cloudSync";
 import { IdleHint } from "./ui/IdleHint";
 import { cityScenes } from "./ui/cityScenes";
@@ -47,11 +50,11 @@ import { LaunchScreen } from "./ui/LaunchScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
+import { prioritizeOrderRail, orderItemHighlights } from "./ui/orderRail";
 import { useReadyPulse } from "./ui/ReadyGlow";
-import { orderItemHighlights, prioritizeOrderRail } from "./ui/orderRail";
-import { fitSquareBoard } from "./ui/layout";
+import { fitReferenceBoard } from "./ui/layout";
 import { PowerMenu, type PowerAnchor } from "./ui/PowerMenu";
-import { Button, Label, ActionButton } from "./ui/Controls";
+import { Label, ActionButton } from "./ui/Controls";
 import { Pages, type Page } from "./ui/Pages";
 import { art, colors, fonts } from "./ui/theme";
 import { gameStore } from "./state/store";
@@ -62,13 +65,28 @@ import {
   count,
   name,
   orders,
-  producers,
+  producerCatalog as producers,
   product,
   type Action,
   type Result,
 } from "./game/engine";
+function boardPresentation(view: string | null): string | null {
+  if (!view) return null;
+  return ["board-two", "board-mixed", "badinca", "yalikoru", "demirdere", "ipekyolu"].includes(view)
+    ? view
+    : "board";
+}
 function presentationPage(view: string): Page | null {
-  if (view === "board") return null;
+  if (
+    view === "board" ||
+    view === "board-two" ||
+    view === "board-mixed" ||
+    view === "badinca" ||
+    view === "yalikoru" ||
+    view === "demirdere" ||
+    view === "ipekyolu"
+  )
+    return null;
   if (view === "item") return { kind: "info", index: 7 };
   if (view.startsWith("storage")) return { kind: "storage" };
   if (view.startsWith("account-")) return { kind: "profile" };
@@ -108,6 +126,7 @@ function Game({
   onPreviewTheme: (id: string | null) => void;
 }) {
   useEffect(() => startCloudSync(), []);
+  useCloudSyncPrompt();
   const [deletionPreview, setDeletionPreview] = useState(false);
   const [presentation, setPresentation] = useState<string | null>(null);
   const language = useSyncExternalStore(
@@ -146,20 +165,20 @@ function Game({
         uiSound();
         setPowerMenu(null);
         setPage(p);
-        setPresentation((value) => (value ? "board" : null));
+        setPresentation(boardPresentation);
       },
       [uiSound],
     ),
     close = useCallback(() => {
       uiSound();
       setPage(null);
-      setPresentation((value) => (value ? "board" : null));
+      setPresentation(boardPresentation);
     }, [uiSound]),
     boardTab = useCallback(() => {
       uiSound();
       setPage(null);
       setSelected(null);
-      setPresentation((value) => (value ? "board" : null));
+      setPresentation(boardPresentation);
     }, [uiSound]);
   const dismissReward = useCallback(() => {
     const notice = gameStore.get().save.rewardQueue?.[0];
@@ -406,20 +425,33 @@ function Game({
     [selected, move, select],
   );
   const top = Math.max(insets.top, 20);
-  const layout = fitSquareBoard(
+  const layout = fitReferenceBoard(
     width,
     height,
     top,
     insets.bottom,
     PixelRatio.get(),
+    themeCityID,
+    boardColumns(save.cityID),
   );
   const { frameInset, boardTop } = layout,
-    cellWidth = layout.cell,
-    cellHeight = layout.cell,
+    cellWidth = layout.cellWidth,
+    cellHeight = layout.cellHeight,
     bw = layout.boardWidth;
+  const rawBoard = city(save).board;
+  const capacity = boardCapacity(save.cityID);
+  const activeBoard = useMemo(
+    () => rawBoard.slice(0, capacity),
+    [rawBoard, capacity],
+  );
   const activeOrders = useMemo(
-    () => prioritizeOrderRail(orders(save), save),
-    [save],
+    () =>
+      presentation === "board-mixed"
+        ? presentationRailOrders(3, true)
+        : presentation === "board" || presentation === "board-two"
+          ? presentationRailOrders(presentation === "board-two" ? 2 : 3)
+          : prioritizeOrderRail(orders(save), save),
+    [save, presentation],
   );
   const { ready: readyOrderItems, partial: partialOrderItems } = useMemo(
     () => orderItemHighlights(activeOrders, save),
@@ -454,7 +486,6 @@ function Game({
         }}
       />
     );
-  const c = city(save);
   return (
     <View
       style={{ flex: 1 }}
@@ -474,10 +505,18 @@ function Game({
         }}
         onTouchCancel={() => setTouching(false)}
       >
-        <WalletHUD save={save} width={width} open={open} />
+        <WalletHUD
+          save={save}
+          width={width}
+          height={height}
+          safeTop={top}
+          open={open}
+        />
         {!page && (
           <>
             <BoardChrome
+              producerOffset={layout.producerOffset}
+              height={height}
               width={width}
               save={save}
               orders={activeOrders}
@@ -504,15 +543,16 @@ function Game({
               style={{
                 position: "absolute",
                 top: boardTop,
-                left: (width - bw) / 2,
+                left: layout.boardLeft,
               }}
             >
               <Board
-                board={c.board}
-                language={language}
                 readyOrderItems={readyOrderItems}
                 partialOrderItems={partialOrderItems}
                 readyPulse={readyPulse}
+                board={activeBoard}
+                columns={boardColumns(save.cityID)}
+                language={language}
                 cellWidth={cellWidth}
                 cellHeight={cellHeight}
                 frameInset={frameInset}
@@ -524,16 +564,18 @@ function Game({
                 onInfo={info}
               />
               <IdleHint
+                key={save.cityID}
                 save={save}
+                reduced={reduced || save.reducedMotion}
                 enabled={
                   !page &&
                   !powerMenu &&
-                  !(reduced || save.reducedMotion) &&
                   !save.rewardQueue?.length
                 }
                 activity={activity}
                 touching={touching}
                 cell={cellWidth}
+                cellHeight={cellHeight}
                 inset={frameInset}
                 width={bw}
               />
@@ -574,6 +616,7 @@ function Game({
       {presentation &&
       [
         "account-guest",
+        "account-error",
         "account-registered",
         "cloud-choice",
         "account-deletion",
@@ -651,72 +694,6 @@ function Game({
         >
           <Label>{error}</Label>
           <ActionButton text="Tekrar dene" onPress={gameStore.retry} />
-        </View>
-      )}
-      {testModeEnabled && !page && !presentation && (
-        <View
-          style={{
-            position: "absolute",
-            left: 10,
-            right: 10,
-            bottom: 3,
-            flexDirection: "row",
-            gap: 5,
-          }}
-        >
-          {[
-            {
-              id: "testEnergyFill",
-              label: "Test: enerjiyi 100’e tamamla",
-              text: "TEST · Enerji 100",
-              type: "test-energy-fill",
-            },
-            {
-              id: "testGoldAdd",
-              label: "Test: 10.000 altın ekle",
-              text: "+10.000 altın",
-              type: "test-gold-add",
-            },
-            {
-              id: "testGemsAdd",
-              label: "Test: 100 elmas ekle",
-              text: "+100 elmas",
-              type: "test-gems-add",
-            },
-            {
-              id: "testLevelUp",
-              label: "Test: bir seviye atla",
-              text: "+1 seviye",
-              type: "test-level-up",
-            },
-          ].map((control) => (
-            <Button
-              key={control.id}
-              testID={control.id}
-              label={control.label}
-              onPress={() =>
-                dispatch({
-                  type: control.type as
-                    | "test-energy-fill"
-                    | "test-gold-add"
-                    | "test-gems-add"
-                    | "test-level-up",
-                })
-              }
-              style={{
-                flex: 1,
-                height: 25,
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: "#bda26b",
-                backgroundColor: "#3c542cee",
-              }}
-            >
-              <Label size={9} color="#ffefc9">
-                {control.text}
-              </Label>
-            </Button>
-          ))}
         </View>
       )}
       {!!save.rewardQueue?.[0] && (

@@ -1,0 +1,63 @@
+{
+  "source": "assets/concepts/city-refresh-v2/01-belenyaka-approval-v1.png",
+  "source_sha256": "85b43b52f25fc59cd8f31f37cd138d8c06b8ea88ccd111f6e15ccc98c71e32d4",
+  "operation": "lossless crop only; no redraw, color adjustment, or screenshot input",
+  "regions_ltrb": {
+    "city1-cell": [
+      278,
+      628,
+      355,
+      703
+    ],
+    "city1-heading": [
+      152,
+      279,
+      420,
+      330
+    ],
+    "city1-filter-tr": [
+      35,
+      283,
+      130,
+      331
+    ],
+    "city1-frame": [
+      31,
+      542,
+      523,
+      1226
+    ],
+    "city1-producer-field": [
+      64,
+      445,
+      140,
+      501
+    ],
+    "city1-producer-mill": [
+      157,
+      445,
+      231,
+      501
+    ],
+    "city1-producer-oven": [
+      250,
+      445,
+      324,
+      501
+    ],
+    "city1-producer-barn": [
+      343,
+      445,
+      417,
+      501
+    ],
+    "city1-producer-orchard": [
+      437,
+      445,
+      510,
+      501
+    ]
+  },
+  "frame_cap_source_pixels": 12,
+  "layout": "Native layout preserves the selected square-cell rule; artwork pixels come from the approved board."
+}

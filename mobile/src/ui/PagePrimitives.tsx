@@ -6,6 +6,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from "react-native";
+import { semanticColors } from "./cityTheme";
 import { useCityTheme } from "./CityThemeProvider";
 import { TitlePlaque } from "./Skin";
 import { AppCloseButton, Label } from "./Controls";
@@ -21,6 +22,7 @@ export const PaperCard = memo(function PaperCard({
   testID,
   designRect,
   danger = false,
+  variant = "paper",
 }: {
   children?: ReactNode;
   header?: ReactNode;
@@ -30,25 +32,50 @@ export const PaperCard = memo(function PaperCard({
   testID?: string;
   designRect?: DesignRect;
   danger?: boolean;
+  variant?: "paper" | "order";
 }) {
   const theme = useCityTheme();
   if (designRect) {
     const [x, y, w, h] = designRect;
     return (
       <>
-        <DesignSurface rect={[x, y + 5, w, h]} fill="#c99a59" radius={36} />
+        <DesignSurface
+          rect={[x, y + 5, w, h]}
+          fill="#c99a59"
+          radius={variant === "order" ? 24 : 36}
+        />
         <DesignSurface
           rect={designRect}
-          fill={theme.paperLight}
-          end={selected ? "#e6f3ba" : theme.paper}
-          stroke={danger ? "#a83929" : selected ? "#36872c" : theme.edge}
-          radius={36}
+          fill={
+            variant === "order" && selected
+              ? semanticColors.successLight
+              : theme.paperLight
+          }
+          end={
+            variant === "order" && selected
+              ? "#accd65"
+              : selected
+                ? theme.id === "city3"
+                  ? theme.paper
+                  : "#e6f3ba"
+                : theme.paper
+          }
+          stroke={
+            danger
+              ? "#a83929"
+              : selected && variant !== "order"
+                ? theme.id === "city3"
+                  ? theme.primary
+                  : "#36872c"
+                : theme.edge
+          }
+          radius={variant === "order" ? 24 : 36}
           line={selected ? 4 : 3}
         />
         <DesignSurface
           rect={[x + 8, y + 8, w - 16, h - 16]}
           stroke="#fff3d4"
-          radius={29}
+          radius={variant === "order" ? 20 : 29}
         />
         {children && (
           <DesignBox rect={designRect} testID={testID}>

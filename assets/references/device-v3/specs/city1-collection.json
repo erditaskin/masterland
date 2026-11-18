@@ -1,0 +1,5602 @@
+{
+  "id": "city1-collection",
+  "width": 1206,
+  "height": 2622,
+  "commands": [
+    {
+      "kind": "rect",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "fill": "#fff0d1",
+      "end": null,
+      "stroke": null,
+      "radius": 24,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-scene.png",
+      "crop": [
+        0,
+        80,
+        789,
+        1715
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        26,
+        145,
+        140,
+        142
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/level-shield-v11.png",
+      "crop": [
+        161,
+        85,
+        930,
+        1050
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        26,
+        145,
+        140,
+        128
+      ],
+      "text": "12",
+      "size": 65,
+      "bold": true,
+      "fill": "#fff2bf",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        190,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        186,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        290,
+        162,
+        172,
+        92
+      ],
+      "text": "75",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        461,
+        185,
+        42,
+        42
+      ],
+      "fill": "#173e50",
+      "end": null,
+      "stroke": "#d8ae58",
+      "radius": 21,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        461,
+        182,
+        42,
+        48
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        530,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        526,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        630,
+        162,
+        172,
+        92
+      ],
+      "text": "2.480",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        801,
+        185,
+        42,
+        42
+      ],
+      "fill": "#173e50",
+      "end": null,
+      "stroke": "#d8ae58",
+      "radius": 21,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        801,
+        182,
+        42,
+        48
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        870,
+        157,
+        310,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        866,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        970,
+        162,
+        158,
+        92
+      ],
+      "text": "24",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1127,
+        185,
+        42,
+        42
+      ],
+      "fill": "#173e50",
+      "end": null,
+      "stroke": "#d8ae58",
+      "radius": 21,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1127,
+        182,
+        42,
+        48
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        58,
+        674,
+        1090,
+        1640
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": null,
+      "radius": 40,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        664,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        48,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        96,
+        664,
+        1014,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        148,
+        48,
+        727,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        664,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        48,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        712,
+        48,
+        1564
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        176,
+        128,
+        1183
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        712,
+        48,
+        1564
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        176,
+        128,
+        1183
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        1359,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        96,
+        2276,
+        1014,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        148,
+        1359,
+        727,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        1359,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        180,
+        550,
+        846,
+        120
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-chrome.png",
+      "crop": [
+        62,
+        82,
+        1410,
+        232
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        323.82,
+        550,
+        558.36,
+        120
+      ],
+      "text": "Koleksiyon",
+      "size": 64,
+      "bold": true,
+      "fill": "#fff0cc",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1038,
+        558,
+        132,
+        132
+      ],
+      "fill": "#9c6e38",
+      "end": null,
+      "stroke": null,
+      "radius": 66.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1038,
+        552,
+        132,
+        132
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 66.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1044,
+        558,
+        120,
+        120
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff0c5",
+      "radius": 60.0,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1056,
+        556,
+        96,
+        124
+      ],
+      "text": "×",
+      "size": 44,
+      "bold": true,
+      "fill": "#583715",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        735,
+        1026,
+        230
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        730,
+        1026,
+        230
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        738,
+        1010,
+        214
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        126,
+        745,
+        940,
+        80
+      ],
+      "text": "Belenyaka",
+      "size": 62,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        126,
+        825,
+        940,
+        55
+      ],
+      "text": "18 / 46 keşif",
+      "size": 38,
+      "bold": false,
+      "fill": "#34852b",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        126,
+        888,
+        940,
+        52
+      ],
+      "fill": "#dfc397",
+      "end": null,
+      "stroke": "#b87a37",
+      "radius": 26,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        130,
+        892,
+        364.696,
+        44
+      ],
+      "fill": "#83b23e",
+      "end": "#3b851e",
+      "stroke": null,
+      "radius": 22,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        126,
+        888,
+        940,
+        52
+      ],
+      "text": "18 / 46",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff7db",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        995,
+        1026,
+        610
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        990,
+        1026,
+        610
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        998,
+        1010,
+        594
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        112,
+        1011,
+        132,
+        88
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        128.0,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        268,
+        1005,
+        795,
+        92
+      ],
+      "text": "Buğday Tarlası · 4/7",
+      "size": 42,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1115,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1110,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        1118,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        130,
+        1120,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        79,
+        106,
+        309,
+        269
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        284,
+        1278,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1115,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1110,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        1118,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        374,
+        1120,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        506,
+        53,
+        325,
+        347
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        528,
+        1278,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1115,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1110,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        1118,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        618,
+        1120,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        662,
+        21,
+        244,
+        220
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        772,
+        1278,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1115,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1110,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        1118,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        862,
+        1120,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        955,
+        7,
+        279,
+        244
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1016,
+        1278,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1359,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1354,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        1362,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        1354,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1359,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1354,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        1362,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        1354,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1359,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1354,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        1362,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        1354,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        1629,
+        1026,
+        610
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        1624,
+        1026,
+        610
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        1632,
+        1010,
+        594
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        112,
+        1645,
+        132,
+        88
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        258.5,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        268,
+        1639,
+        795,
+        92
+      ],
+      "text": "Değirmen · 3/8",
+      "size": 42,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        1752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        130,
+        1754,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        921,
+        127,
+        369,
+        209
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        284,
+        1912,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        1752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        374,
+        1754,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/flour-packet-v1.png",
+      "crop": [
+        374,
+        132,
+        498,
+        984
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        528,
+        1912,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        1752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        618,
+        1754,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        661,
+        261,
+        246,
+        236
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        772,
+        1912,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        1752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        1744,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1993,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        1988,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        1996,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        1988,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1993,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        1988,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        1996,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        1988,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1993,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        1988,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        1996,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        1988,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1993,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        1988,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        1996,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        1988,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        2263,
+        1026,
+        854
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        2258,
+        1026,
+        854
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        2266,
+        1010,
+        838
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        112,
+        2279,
+        132,
+        88
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        389.0,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        268,
+        2273,
+        795,
+        92
+      ],
+      "text": "Taş Fırın · 4/9",
+      "size": 42,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        2386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        130,
+        2388,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        74,
+        547,
+        293,
+        243
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        284,
+        2546,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        2383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        2378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        2386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        374,
+        2388,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        501,
+        549,
+        334,
+        252
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        528,
+        2546,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        2383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        2378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        2386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        618,
+        2388,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        643,
+        524,
+        281,
+        212
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        772,
+        2546,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        2383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        2378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        2386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        862,
+        2388,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        958,
+        508,
+        280,
+        236
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1016,
+        2546,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        2630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        2622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        2627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        2622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        2630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        2622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        2627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        2622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        2630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        2622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        2627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        2622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        2630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        2622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2871,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        2866,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        2874,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        2866,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        3141,
+        1026,
+        854
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        3136,
+        1026,
+        854
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        3144,
+        1010,
+        838
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        112,
+        3157,
+        132,
+        88
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        519.5,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        268,
+        3151,
+        795,
+        92
+      ],
+      "text": "Süt Çiftliği · 3/10",
+      "size": 42,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3261,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3256,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        3264,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        130,
+        3266,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        1020,
+        497,
+        176,
+        329
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        284,
+        3424,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3261,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3256,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        3264,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        374,
+        3266,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        1385,
+        538,
+        329,
+        271
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        528,
+        3424,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        3261,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        3256,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        3264,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        618,
+        3266,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        651,
+        786,
+        264,
+        217
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        772,
+        3424,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        3261,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        3256,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        3264,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        3256,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3505,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3500,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        3508,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        3500,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3505,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3500,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        3508,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        3500,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        3505,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        3500,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        3508,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        3500,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        3505,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        3500,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        3508,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        3500,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        3744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        3752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        3744,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3749,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        3744,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        3752,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        3744,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        4019,
+        1026,
+        854
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        4014,
+        1026,
+        854
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        4022,
+        1010,
+        838
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        112,
+        4035,
+        132,
+        88
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        650.0,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        268,
+        4029,
+        795,
+        92
+      ],
+      "text": "Meyve Bahçesi · 4/12",
+      "size": 42,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4139,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4134,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        4142,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        130,
+        4144,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        50,
+        1008,
+        214,
+        230
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        284,
+        4302,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4139,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4134,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        4142,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        374,
+        4144,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        340,
+        1003,
+        253,
+        237
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        528,
+        4302,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4139,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4134,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        4142,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        618,
+        4144,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        645,
+        1003,
+        272,
+        236
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        772,
+        4302,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4139,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4134,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        4142,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        862,
+        4144,
+        194,
+        194
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products.png",
+      "crop": [
+        986,
+        1003,
+        221,
+        237
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1016,
+        4302,
+        50,
+        52
+      ],
+      "text": "✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        4386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        4378,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        4386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        4378,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        4386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        4378,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4383,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4378,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        4386,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        4378,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        114,
+        4622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        122,
+        4630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        114,
+        4622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        358,
+        4622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        366,
+        4630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        358,
+        4622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        602,
+        4622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        610,
+        4630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        602,
+        4622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4627,
+        232,
+        232
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        846,
+        4622,
+        232,
+        232
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        854,
+        4630,
+        216,
+        216
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        846,
+        4622,
+        232,
+        232
+      ],
+      "text": "?",
+      "size": 111,
+      "bold": true,
+      "fill": "#92744c",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        42,
+        2360,
+        1122,
+        160
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-chrome.png",
+      "crop": [
+        43,
+        446,
+        1450,
+        191
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        127,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        60,
+        2450,
+        212,
+        51
+      ],
+      "text": "Tahta",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        280,
+        2371,
+        212,
+        137
+      ],
+      "fill": "#ffe6a7",
+      "end": "#df9c24",
+      "stroke": "#ffe6a8",
+      "radius": 27,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        347,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        280,
+        2450,
+        212,
+        51
+      ],
+      "text": "Koleksiyon",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff3cf",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        567,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        500,
+        2450,
+        212,
+        51
+      ],
+      "text": "Şehirler",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        787,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        720,
+        2450,
+        212,
+        51
+      ],
+      "text": "Depo",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1007,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        940,
+        2450,
+        212,
+        51
+      ],
+      "text": "Market",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "system-home-indicator",
+      "rect": [
+        402,
+        2572,
+        402,
+        15
+      ],
+      "fill": "#5d503f",
+      "radius": 8
+    }
+  ]
+}

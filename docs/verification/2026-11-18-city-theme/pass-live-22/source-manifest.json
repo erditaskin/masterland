@@ -1,0 +1,11 @@
+{
+  "status": "not-pixel-accepted",
+  "tests": "Release testLivePagesAtReferenceFixture and testApprovedSevenColumnSquareBoard passed",
+  "sources": {
+    "mobile/src/ui/GameChrome.tsx": "8c44ee052b565f2a7ba3de95690da1b61be27988c6b3dd76f88adf659f377ba1",
+    "mobile/src/ui/BoardChrome.tsx": "44a2a261e478a0361465274c2257118175bd67f71e93430e8298e8b755172653",
+    "mobile/src/ui/CollectionPage.tsx": "d3ba1401e2f3d559aa8ca76a751d0427720a30269ff94dfcda1b4081dd7374fa",
+    "mobile/src/ui/cityArt.ts": "b45058cc55b02b7c1714b1a287d693ca0a3e34e3b3e8f581721177fbb529f2af",
+    "mobile/src/ui/DesignSpace.tsx": "a25e6c9d409434fd1339d5e8f631ce51c5c3e9afb03e7c6a47cda27d8226840d"
+  }
+}

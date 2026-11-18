@@ -1,3 +1,4 @@
+import { cloudHasMoreProgress } from "./cloudProgress";
 import type { EnergyRedemption } from "../ads/verifiedEnergy";
 import type { Save } from "../game/engine";
 import type { CloudSave } from "./cloudProtocol";
@@ -62,6 +63,25 @@ export function createCloudSyncController(deps: {
       });
     return work;
   };
+  async function resolveComparison(token: number, remote: CloudSave | null) {
+    if (!valid(token)) return;
+    if (remote) {
+      await deps.flushLocal();
+      if (!valid(token)) return;
+      const local = deps.local();
+      if (cloudHasMoreProgress(local, remote.payload)) {
+        await deps.adopt(remote);
+        if (!valid(token)) return;
+        uploaded = {
+          owner: remote.user_id,
+          payload: JSON.stringify(deps.local()),
+        };
+        publish({ phase: "synced", remote: null });
+        return;
+      }
+    }
+    publish({ phase: "choice", remote });
+  }
   async function upload(owner: string, token: number, box: Outbox) {
     if (!valid(token)) return;
     await deps.flushLocal();
@@ -78,7 +98,7 @@ export function createCloudSyncController(deps: {
     if (!valid(token)) return;
     if (result === "conflict") {
       const remote = await deps.fetch(owner);
-      if (valid(token)) publish({ phase: "choice", remote });
+      await resolveComparison(token, remote);
     } else {
       uploaded = { owner, payload };
       publish({ phase: "synced", remote: null });
@@ -103,7 +123,7 @@ export function createCloudSyncController(deps: {
         journal.conflictRevision !== null ||
         (remote?.revision ?? 0) !== journal.baseRevision
       ) {
-        publish({ phase: "choice", remote });
+        await resolveComparison(token, remote);
         return;
       }
       await upload(owner, token, box);
@@ -117,7 +137,7 @@ export function createCloudSyncController(deps: {
         await box.resolve(0, deps.local());
         await deps.bind(owner);
         await upload(owner, token, box);
-      } else publish({ phase: "choice", remote });
+      } else await resolveComparison(token, remote);
     }
   }
   return {
@@ -208,7 +228,7 @@ export function createCloudSyncController(deps: {
         const remote = await deps.fetch(owner);
         if (!valid(token)) return;
         if ((remote?.revision ?? 0) !== (selected?.revision ?? 0)) {
-          publish({ phase: "choice", remote });
+          await resolveComparison(token, remote);
           return;
         }
         await deps.flushLocal();

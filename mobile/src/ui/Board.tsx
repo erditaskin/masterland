@@ -1,14 +1,12 @@
+import { BOARD_ROWS } from "../game/grid";
 import { displayText } from "../i18n/display";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import {
-  memo,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-} from "react";
-import { View, StyleSheet } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+  Image,
+  View,
+  StyleSheet,
+  type GestureResponderEvent,
+} from "react-native";
 import Animated, {
   cancelAnimation,
   useAnimatedStyle,
@@ -17,37 +15,98 @@ import Animated, {
   type SharedValue,
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-import { Item } from "./Art";
+import { boardItemArtwork } from "./Art";
+import { standardArtForCity } from "./standardCityArt";
+import { cityArt } from "./cityArt";
 import { ReadyGlow, ReadyIcon } from "./ReadyGlow";
-import { DesignSpace, DesignSurface } from "./DesignSpace";
+import { DesignImage, DesignSpace, DesignSurface } from "./DesignSpace";
 import { MaterialFrame } from "./DesignMaterial";
 import { useCityTheme } from "./CityThemeProvider";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
-interface Drag {
-  id: SharedValue<string>;
-  x: SharedValue<number>;
-  y: SharedValue<number>;
-  epoch: SharedValue<number>;
+function PieceImage({
+  item,
+  width,
+  height,
+}: {
+  item: string;
+  width: number;
+  height: number;
+}) {
+  const artwork = boardItemArtwork(item);
+  const size = Math.min(width, height) * 0.79;
+  return (
+    <DesignSpace scale={1}>
+      <DesignImage
+        source={artwork.source}
+        crop={artwork.crop}
+        rect={[(width - size) / 2, (height - size) / 2, size, size]}
+        fit
+      />
+    </DesignSpace>
+  );
 }
+
+const DragPreview = memo(function DragPreview({
+  item,
+  index,
+  columns,
+  width,
+  height,
+  offset,
+}: {
+  item: string;
+  index: number;
+  columns: number;
+  width: number;
+  height: number;
+  offset: SharedValue<{ x: number; y: number }>;
+}) {
+  const style = useAnimatedStyle(() => {
+    const { x, y } = offset.get();
+    return { transform: [{ translateX: x }, { translateY: y }] };
+  });
+  return (
+    <Animated.View
+      pointerEvents="none"
+      testID="board-drag-preview"
+      style={[
+        {
+          position: "absolute",
+          left: (index % columns) * width,
+          top: Math.floor(index / columns) * height,
+          width,
+          height,
+          zIndex: 10,
+        },
+        style,
+      ]}
+    >
+      <PieceImage item={item} width={width} height={height} />
+    </Animated.View>
+  );
+});
+
 const Piece = memo(
   function Piece({
     tile,
     index,
+    columns,
     cellWidth,
     cellHeight,
     selected,
-    drag,
+    dragID,
     reduced,
     ready,
     readyPulse,
   }: {
     tile: Tile;
     index: number;
+    columns: number;
     cellWidth: number;
     cellHeight: number;
     selected: boolean;
-    drag: Drag;
+    dragID: SharedValue<string>;
     reduced: boolean;
     ready: boolean;
     readyPulse: SharedValue<number>;
@@ -57,20 +116,10 @@ const Piece = memo(
       opacity.set(withTiming(1, { duration: reduced ? 0 : 130 }));
     }, [opacity, reduced]);
     const style = useAnimatedStyle(() => ({
-      opacity: opacity.get(),
-      zIndex: drag.id.get() === tile.id ? 10 : 1,
-      transform: [
-        {
-          translateX:
-            (index % 6) * cellWidth +
-            (drag.id.get() === tile.id ? drag.x.get() : 0),
-        },
-        {
-          translateY:
-            Math.floor(index / 6) * cellHeight +
-            (drag.id.get() === tile.id ? drag.y.get() : 0),
-        },
-      ],
+      opacity: dragID.get() === tile.id ? 0 : opacity.get(),
+    }));
+    const selectionStyle = useAnimatedStyle(() => ({
+      opacity: dragID.get() === tile.id ? 0 : 1,
     }));
     return (
       <Animated.View
@@ -78,44 +127,47 @@ const Piece = memo(
         style={[
           {
             position: "absolute",
+            left: (index % columns) * cellWidth,
+            top: Math.floor(index / columns) * cellHeight,
             width: cellWidth,
             height: cellHeight,
             alignItems: "center",
             justifyContent: "center",
           },
-          style,
         ]}
       >
         {selected && (
-          <View
-            style={{
-              position: "absolute",
-              inset: 3,
-              borderWidth: 1.8,
-              borderColor: "#ffe895",
-              borderRadius: 5,
-              backgroundColor: "#fff0ad40",
-              shadowColor: "#ffd057",
-              shadowOpacity: 0.95,
-              shadowRadius: 6,
-              shadowOffset: { width: 0, height: 0 },
-            }}
+          <Animated.View
+            style={[
+              {
+                position: "absolute",
+                inset: 3,
+                borderWidth: 1.8,
+                borderColor: "#98c86b",
+                borderRadius: 5,
+                backgroundColor: "#dcebb580",
+              },
+              selectionStyle,
+            ]}
           />
         )}
-        <ReadyIcon
-          pulse={readyPulse}
-          testID={`ready-icon-cell-${index}`}
-          active={ready && !reduced}
-          dragID={drag.id}
-          tileID={tile.id}
-        >
-          <Item
-            id={tile.item}
-            size={(cellWidth * 146) / 164}
-            width={(cellWidth * 146) / 164}
-            height={(cellHeight * 146) / 164}
-          />
-        </ReadyIcon>
+        <Animated.View style={style}>
+          <ReadyIcon
+            pulse={readyPulse}
+            active={ready && !reduced}
+            dragID={dragID}
+            tileID={tile.id}
+            testID={`ready-icon-cell-${index}`}
+          >
+            <View style={{ width: cellWidth, height: cellHeight }}>
+              <PieceImage
+                item={tile.item}
+                width={cellWidth}
+                height={cellHeight}
+              />
+            </View>
+          </ReadyIcon>
+        </Animated.View>
       </Animated.View>
     );
   },
@@ -123,18 +175,112 @@ const Piece = memo(
     a.tile.id === b.tile.id &&
     a.tile.item === b.tile.item &&
     a.index === b.index &&
+    a.columns === b.columns &&
     a.cellWidth === b.cellWidth &&
     a.cellHeight === b.cellHeight &&
     a.selected === b.selected &&
     a.reduced === b.reduced &&
     a.ready === b.ready &&
-    a.readyPulse === b.readyPulse,
+    a.readyPulse === b.readyPulse &&
+    a.dragID === b.dragID,
 );
+function OrderHighlight({
+  index,
+  ready,
+  readyPulse,
+  tileID,
+  dragID,
+}: {
+  index: number;
+  ready: boolean;
+  readyPulse: SharedValue<number>;
+  tileID: string;
+  dragID: SharedValue<string>;
+}) {
+  const visibility = useAnimatedStyle(() => ({
+    opacity: dragID.get() === tileID ? 0 : 1,
+  }));
+  return (
+    <Animated.View
+      testID={(ready ? "ready-order-cell-" : "partial-order-cell-") + index}
+      collapsable={false}
+      pointerEvents="none"
+      style={[
+        {
+          position: "absolute",
+          inset: 1.5,
+          borderRadius: 8,
+          backgroundColor: ready
+            ? "rgba(157, 255, 72, 0.33)"
+            : "rgba(29, 72, 37, 0.43)",
+          backgroundImage: ready
+            ? "linear-gradient(135deg, rgba(109, 232, 46, 0.36) 0%, rgba(187, 255, 120, 0.20) 50%, rgba(109, 232, 46, 0.36) 100%)"
+            : undefined,
+          borderWidth: ready ? 1.1 : 0.6,
+          borderColor: ready ? "#96f23b" : "#496e39",
+        },
+        visibility,
+      ]}
+    >
+      {ready && <ReadyGlow pulse={readyPulse} radius={7} />}
+      {[0, 1, 2, 3].map((corner) => (
+        <View
+          key={corner}
+          style={{
+            position: "absolute",
+            width: 12,
+            height: 12,
+            left: corner % 2 === 0 ? 1 : undefined,
+            right: corner % 2 === 1 ? 1 : undefined,
+            top: corner < 2 ? 1 : undefined,
+            bottom: corner >= 2 ? 1 : undefined,
+            transform: [
+              {
+                rotate: ["0deg", "90deg", "270deg", "180deg"][corner]!,
+              },
+            ],
+          }}
+        >
+          <View
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: 10,
+              height: 10,
+              borderTopWidth: 1,
+              borderLeftWidth: 1,
+              borderTopLeftRadius: 7,
+              borderColor: "rgba(71, 112, 34, 0.58)",
+            }}
+          />
+          <View
+            style={{
+              position: "absolute",
+              left: 3,
+              top: 3,
+              width: 3,
+              height: 5,
+              borderTopLeftRadius: 3,
+              borderBottomRightRadius: 3,
+              backgroundColor: "rgba(112, 144, 48, 0.46)",
+              transform: [{ rotate: "-45deg" }],
+            }}
+          />
+        </View>
+      ))}
+    </Animated.View>
+  );
+}
+
 const BoardGrid = memo(function BoardGrid({
   board,
   readyOrderItems,
   partialOrderItems,
   readyPulse,
+  dragID,
+  columns,
+  paintedGrid,
   cellWidth,
   cellHeight,
 }: {
@@ -142,6 +288,9 @@ const BoardGrid = memo(function BoardGrid({
   readyOrderItems: ReadonlySet<string>;
   partialOrderItems: ReadonlySet<string>;
   readyPulse: SharedValue<number>;
+  dragID: SharedValue<string>;
+  columns: number;
+  paintedGrid: boolean;
   cellWidth: number;
   cellHeight: number;
 }) {
@@ -149,112 +298,67 @@ const BoardGrid = memo(function BoardGrid({
   return (
     <View
       pointerEvents="none"
-      style={[StyleSheet.absoluteFill, { backgroundColor: theme.paper }]}
+      style={[
+        StyleSheet.absoluteFill,
+        !paintedGrid && { backgroundColor: theme.paper },
+      ]}
     >
-      {Array.from({ length: 54 }, (_, i) => (
-        <View
-          key={i}
-          style={{
-            position: "absolute",
-            left: (i % 6) * cellWidth,
-            top: Math.floor(i / 6) * cellHeight,
-            width: cellWidth,
-            height: cellHeight,
-          }}
-        >
+      {Array.from({ length: columns * BOARD_ROWS }, (_, i) => {
+        const tile = board[i];
+        const item = tile?.item;
+        const ready = item !== undefined && readyOrderItems.has(item);
+        const partial = item !== undefined && partialOrderItems.has(item);
+        if (paintedGrid && !ready && !partial) return null;
+        return (
           <View
+            key={i}
             style={{
               position: "absolute",
-              inset: 0,
-              borderRadius: (cellWidth * 10) / 164,
-              backgroundColor: theme.paperLight,
-              backgroundImage: `linear-gradient(135deg, ${theme.paperLight} 0%, ${theme.paper} 100%)`,
-              borderWidth: (cellWidth * 2) / 164,
-              borderColor: "#fff2d7",
+              left: (i % columns) * cellWidth,
+              top: Math.floor(i / columns) * cellHeight,
+              width: cellWidth,
+              height: cellHeight,
             }}
-          />
-          {board[i] &&
-            (readyOrderItems.has(board[i]!.item) ||
-              partialOrderItems.has(board[i]!.item)) && (
-              <View
-                testID={
-                  (readyOrderItems.has(board[i]!.item)
-                    ? "ready-order-cell-"
-                    : "partial-order-cell-") + i
-                }
-                collapsable={false}
-                pointerEvents="none"
-                style={{
-                  position: "absolute",
-                  inset: 1.5,
-                  borderRadius: 8,
-                  backgroundColor: readyOrderItems.has(board[i]!.item)
-                    ? "rgba(123, 158, 68, 0.15)"
-                    : "rgba(45, 86, 31, 0.28)",
-                  backgroundImage: readyOrderItems.has(board[i]!.item)
-                    ? "linear-gradient(135deg, rgba(91, 139, 49, 0.24) 0%, rgba(150, 184, 88, 0.08) 50%, rgba(91, 139, 49, 0.24) 100%)"
-                    : undefined,
-                  borderWidth: readyOrderItems.has(board[i]!.item) ? 1.1 : 0.6,
-                  borderColor: readyOrderItems.has(board[i]!.item)
-                    ? "#a3d969"
-                    : "rgba(57, 89, 35, 0.5)",
-                }}
-              >
-                {readyOrderItems.has(board[i]!.item) && (
-                  <ReadyGlow pulse={readyPulse} radius={7} />
-                )}
-                {[0, 1, 2, 3].map((corner) => (
-                  <View
-                    key={corner}
-                    style={{
-                      position: "absolute",
-                      width: 12,
-                      height: 12,
-                      left: corner % 2 === 0 ? 1 : undefined,
-                      right: corner % 2 === 1 ? 1 : undefined,
-                      top: corner < 2 ? 1 : undefined,
-                      bottom: corner >= 2 ? 1 : undefined,
-                      transform: [
-                        {
-                          rotate: ["0deg", "90deg", "270deg", "180deg"][
-                            corner
-                          ]!,
-                        },
-                      ],
-                    }}
-                  >
-                    <View
-                      style={{
-                        position: "absolute",
-                        left: 0,
-                        top: 0,
-                        width: 10,
-                        height: 10,
-                        borderTopWidth: 1,
-                        borderLeftWidth: 1,
-                        borderTopLeftRadius: 7,
-                        borderColor: "rgba(71, 112, 34, 0.58)",
-                      }}
-                    />
-                    <View
-                      style={{
-                        position: "absolute",
-                        left: 3,
-                        top: 3,
-                        width: 3,
-                        height: 5,
-                        borderTopLeftRadius: 3,
-                        borderBottomRightRadius: 3,
-                        backgroundColor: "rgba(112, 144, 48, 0.46)",
-                        transform: [{ rotate: "-45deg" }],
-                      }}
-                    />
-                  </View>
-                ))}
-              </View>
+          >
+            {!paintedGrid &&
+              (cityArt[theme.id]!.board ? (
+                <Image
+                  source={cityArt[theme.id]!.board!.cell}
+                  resizeMode="stretch"
+                  fadeDuration={0}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: cellWidth,
+                    height: cellHeight,
+                  }}
+                />
+              ) : (
+                <View
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: (cellWidth * 10) / 164,
+                    backgroundColor: theme.paperLight,
+                    backgroundImage: `linear-gradient(135deg, ${theme.paperLight} 0%, ${theme.paper} 100%)`,
+                    borderWidth: (cellWidth * 2) / 164,
+                    borderColor: "#fff2d7",
+                  }}
+                />
+              ))}
+            {tile && (ready || partial) && (
+              <OrderHighlight
+                index={i}
+                ready={ready}
+                readyPulse={readyPulse}
+                tileID={tile.id}
+                dragID={dragID}
+              />
             )}
-        </View>
-      ))}
+          </View>
+        );
+      })}
     </View>
   );
 });
@@ -263,6 +367,7 @@ export const Board = memo(function Board({
   readyOrderItems,
   partialOrderItems,
   readyPulse,
+  columns,
   cellWidth,
   cellHeight,
   frameInset,
@@ -274,10 +379,11 @@ export const Board = memo(function Board({
   onInfo,
 }: {
   board: (Tile | null)[];
-  language?: string;
   readyOrderItems: ReadonlySet<string>;
   partialOrderItems: ReadonlySet<string>;
   readyPulse: SharedValue<number>;
+  language?: string;
+  columns: number;
   cellWidth: number;
   cellHeight: number;
   frameInset: number;
@@ -289,166 +395,175 @@ export const Board = memo(function Board({
   onInfo: (i: number) => void;
 }) {
   const theme = useCityTheme();
-  const id = useSharedValue(""),
-    x = useSharedValue(0),
-    y = useSharedValue(0),
-    epoch = useSharedValue(0),
-    origin = useSharedValue(-1),
-    ids = useSharedValue(board.map((t) => t?.id ?? ""));
-  const drag = useMemo(() => ({ id, x, y, epoch }), [id, x, y, epoch]);
-  const current = useRef({ onSelect, onTap, onMove, onInfo });
-  useLayoutEffect(() => {
-    current.current = { onSelect, onTap, onMove, onInfo };
-  }, [onSelect, onTap, onMove, onInfo]);
-  useLayoutEffect(() => {
-    ids.set(board.map((t) => t?.id ?? ""));
-    if (id.get() && !board.some((t) => t?.id === id.get())) {
-      id.set("");
-      x.set(0);
-      y.set(0);
-    }
-  }, [board, id, ids, x, y]);
-  const select = useCallback((i: number) => current.current.onSelect(i), []);
-  const tapCell = useCallback((i: number) => current.current.onTap(i), []);
-  const info = useCallback((i: number) => current.current.onInfo(i), []);
-  const commit = useCallback(
-    (from: number, to: number, expected: string, gestureEpoch: number) => {
-      const result = current.current.onMove(from, to, expected);
-      // A delayed JS settlement must not clear a newer UI-thread drag.
-      if (
-        epoch.get() !== gestureEpoch ||
-        (id.get() !== expected && id.get() !== "")
-      )
-        return;
-      if (result && result.kind !== "blocked") {
-        id.set("");
-        x.set(0);
-        y.set(0);
-      } else {
-        const token = epoch.get();
-        x.set(withTiming(0, { duration: reduced ? 0 : 140 }));
-        y.set(
-          withTiming(0, { duration: reduced ? 0 : 140 }, (finished) => {
-            if (finished && epoch.get() === token) id.set("");
-          }),
-        );
-      }
+  const paintedBoard =
+    columns === 6 ? standardArtForCity(theme.id)?.board : undefined;
+  const paintedGrid = Boolean(paintedBoard);
+  const frameScale =
+    theme.id === "city1" ? (cellWidth * columns) / (7 * 164) : cellWidth / 164;
+  const dragID = useSharedValue("");
+  const offset = useSharedValue({ x: 0, y: 0 });
+  const epoch = useRef(0);
+  const [dragged, setDragged] = useState<{
+    index: number;
+    item: string;
+  } | null>(null);
+  const touch = useRef<{
+    index: number;
+    pageX: number;
+    pageY: number;
+    localX: number;
+    localY: number;
+    startedAt: number;
+    tile: Tile | null;
+    moving: boolean;
+  } | null>(null);
+
+  const clearDrag = useCallback(
+    (token: number) => {
+      if (epoch.current !== token) return;
+      dragID.set("");
+      offset.set({ x: 0, y: 0 });
+      setDragged(null);
     },
-    [id, x, y, epoch, reduced],
+    [dragID, offset],
   );
-  const gestures = useMemo(() => {
-    const pan = Gesture.Pan()
-      .minDistance(5)
-      .maxPointers(1)
-      .onBegin((e) => {
-        "worklet";
-        epoch.set(epoch.get() + 1);
-        cancelAnimation(x);
-        cancelAnimation(y);
-        x.set(0);
-        y.set(0);
-        origin.set(hitCell(e.x, e.y, cellWidth, cellHeight) ?? -1);
-      })
-      .onStart(() => {
-        "worklet";
-        if (origin.get() >= 0 && origin.get() < 54) {
-          const picked = ids.get()[origin.get()] ?? "";
-          id.set(picked);
-          if (picked) scheduleOnRN(select, origin.get());
-        }
-      })
-      .onUpdate((e) => {
-        "worklet";
-        if (id.get()) {
-          x.set(e.translationX);
-          y.set(e.translationY);
-        }
-      })
-      .onEnd((e) => {
-        "worklet";
-        if (!id.get()) return;
-        // The pointer's release position determines the destination. Using the
-        // source cell centre plus translation misroutes off-centre grabs.
-        const target = hitCell(e.x, e.y, cellWidth, cellHeight) ?? -1;
-        scheduleOnRN(commit, origin.get(), target, id.get(), epoch.get());
-      })
-      .onFinalize((_, success) => {
-        "worklet";
-        if (!success) {
-          const token = epoch.get();
-          x.set(withTiming(0, { duration: 140 }));
-          y.set(
-            withTiming(0, { duration: 140 }, (finished) => {
-              if (finished && token === epoch.get()) id.set("");
-            }),
-          );
-        }
-      });
-    const tap = Gesture.Tap()
-      .maxDistance(5)
-      .onEnd((e, success) => {
-        "worklet";
-        if (success) {
-          const i = hitCell(e.x, e.y, cellWidth, cellHeight);
-          if (i !== null) scheduleOnRN(tapCell, i);
-        }
-      });
-    const long = Gesture.LongPress()
-      .minDuration(450)
-      .maxDistance(5)
-      .onEnd((e, success) => {
-        "worklet";
-        const i = hitCell(e.x, e.y, cellWidth, cellHeight);
-        if (success && i !== null && ids.get()[i]) scheduleOnRN(info, i);
-      });
-    // Holding an item must not prevent a subsequent drag. Show details only
-    // after a stationary hold is released; movement cancels the long press.
-    return Gesture.Simultaneous(pan, Gesture.Exclusive(long, tap));
-  }, [
-    cellWidth,
-    cellHeight,
-    commit,
-    select,
-    tapCell,
-    info,
-    id,
-    ids,
-    x,
-    y,
-    epoch,
-    origin,
-  ]);
+
+  const returnToSource = () => {
+    const token = epoch.current;
+    if (reduced) {
+      clearDrag(token);
+      return;
+    }
+    offset.set(
+      withTiming({ x: 0, y: 0 }, { duration: 140 }, (finished) => {
+        if (finished) scheduleOnRN(clearDrag, token);
+      }),
+    );
+  };
+
+  const trackTouchStart = (index: number, event: GestureResponderEvent) => {
+    const token = ++epoch.current;
+    cancelAnimation(offset);
+    clearDrag(token);
+    if (event.nativeEvent.touches.length !== 1) {
+      touch.current = null;
+      return;
+    }
+    const { pageX, pageY, locationX, locationY } = event.nativeEvent;
+    touch.current = {
+      index,
+      pageX,
+      pageY,
+      localX: (index % columns) * cellWidth + locationX,
+      localY: Math.floor(index / columns) * cellHeight + locationY,
+      startedAt: Date.now(),
+      tile: board[index] ?? null,
+      moving: false,
+    };
+  };
+
+  const trackTouchMove = (event: GestureResponderEvent) => {
+    const input = touch.current;
+    if (!input?.tile) return;
+    const x = event.nativeEvent.pageX - input.pageX;
+    const y = event.nativeEvent.pageY - input.pageY;
+    if (!input.moving) {
+      if (x * x + y * y < 25) return;
+      input.moving = true;
+      dragID.set(input.tile.id);
+      setDragged({ index: input.index, item: input.tile.item });
+    }
+    offset.set({ x, y });
+  };
+
+  const trackTouchEnd = (event: GestureResponderEvent) => {
+    const input = touch.current;
+    touch.current = null;
+    if (!input) return;
+    const x = event.nativeEvent.pageX - input.pageX;
+    const y = event.nativeEvent.pageY - input.pageY;
+    if (input.moving || x * x + y * y >= 25) {
+      if (!input.tile) return;
+      const to = hitCell(
+        input.localX + x,
+        input.localY + y,
+        cellWidth,
+        cellHeight,
+        columns,
+      );
+      const result =
+        to !== null && to !== input.index
+          ? onMove(input.index, to, input.tile.id)
+          : null;
+      if (result?.kind === "merge" || result?.kind === "move")
+        clearDrag(epoch.current);
+      else returnToSource();
+    } else if (input.tile && Date.now() - input.startedAt >= 450) {
+      onInfo(input.index);
+    } else {
+      onTap(input.index);
+    }
+  };
+
+  const cancelTouch = () => {
+    touch.current = null;
+    returnToSource();
+  };
+
   return (
     <View
       testID="mergeBoard"
       style={{
-        width: cellWidth * 6 + 2 * frameInset,
-        height: cellHeight * 9 + 2 * frameInset,
+        width: cellWidth * columns + 2 * frameInset,
+        height: cellHeight * BOARD_ROWS + 2 * frameInset,
         padding: frameInset,
         backgroundColor: "transparent",
       }}
     >
-      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-        <DesignSpace scale={cellWidth / 164}>
-          <DesignSurface
-            rect={[0, 0, 1032, 1524]}
-            fill={theme.paper}
-            radius={30}
+      {paintedGrid ? (
+        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+          <Image
+            source={paintedBoard}
+            resizeMode="stretch"
+            fadeDuration={0}
+            accessible={false}
+            style={{
+              width: cellWidth * columns + 2 * frameInset,
+              height: cellHeight * BOARD_ROWS + 2 * frameInset,
+            }}
           />
-        </DesignSpace>
-      </View>
+        </View>
+      ) : (
+        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+          <DesignSpace scale={cellWidth / 164}>
+            <DesignSurface
+              rect={[
+                0,
+                0,
+                ((cellWidth * columns + 2 * frameInset) * 164) / cellWidth,
+                ((cellHeight * BOARD_ROWS + 2 * frameInset) * 164) / cellWidth,
+              ]}
+              fill={theme.paper}
+              radius={30}
+            />
+          </DesignSpace>
+        </View>
+      )}
       <View
         style={{
-          width: cellWidth * 6,
-          height: cellHeight * 9,
+          width: cellWidth * columns,
+          height: cellHeight * BOARD_ROWS,
           backgroundColor: "transparent",
         }}
       >
         <BoardGrid
           board={board}
+          columns={columns}
+          paintedGrid={paintedGrid}
           readyOrderItems={readyOrderItems}
           partialOrderItems={partialOrderItems}
           readyPulse={readyPulse}
+          dragID={dragID}
           cellWidth={cellWidth}
           cellHeight={cellHeight}
         />
@@ -456,51 +571,78 @@ export const Board = memo(function Board({
           t ? (
             <Piece
               key={t.id}
+              ready={readyOrderItems.has(t.item)}
+              readyPulse={readyPulse}
               tile={t}
               index={i}
+              columns={columns}
               cellWidth={cellWidth}
               cellHeight={cellHeight}
               selected={selected === i}
-              drag={drag}
+              dragID={dragID}
               reduced={reduced}
-              ready={readyOrderItems.has(t.item)}
-              readyPulse={readyPulse}
             />
           ) : null,
         )}
-        <GestureDetector gesture={gestures}>
-          <View collapsable={false} style={StyleSheet.absoluteFill}>
-            {board.map((t, i) => (
-              <View
-                key={i}
-                accessible
-                accessibilityRole="button"
-                accessibilityLabel={displayText(
-                  t ? product(t.item).name : "Boş hücre",
-                )}
-                accessibilityValue={{
-                  text: selected === i ? "Seçili" : "",
-                }}
-                testID={"cell-" + i}
-                onAccessibilityTap={() => onTap(i)}
-                onAccessibilityEscape={() => onSelect(-1)}
-                style={{
-                  position: "absolute",
-                  left: (i % 6) * cellWidth,
-                  top: Math.floor(i / 6) * cellHeight,
-                  width: cellWidth,
-                  height: cellHeight,
-                }}
-              />
-            ))}
-          </View>
-        </GestureDetector>
+        <View
+          collapsable={false}
+          style={StyleSheet.absoluteFill}
+          onTouchMove={trackTouchMove}
+          onTouchEnd={trackTouchEnd}
+          onTouchCancel={cancelTouch}
+        >
+          {board.map((t, i) => (
+            <View
+              key={i}
+              accessible
+              accessibilityRole="button"
+              accessibilityLabel={displayText(
+                t ? product(t.item).name : "Boş hücre",
+              )}
+              accessibilityValue={{
+                text: selected === i ? "Seçili" : "",
+              }}
+              testID={"cell-" + i}
+              onTouchStart={(event) => trackTouchStart(i, event)}
+              onAccessibilityTap={() => onTap(i)}
+              onAccessibilityEscape={() => onSelect(-1)}
+              style={{
+                position: "absolute",
+                left: (i % columns) * cellWidth,
+                top: Math.floor(i / columns) * cellHeight,
+                width: cellWidth,
+                height: cellHeight,
+              }}
+            />
+          ))}
+        </View>
+        {dragged && (
+          <DragPreview
+            item={dragged.item}
+            index={dragged.index}
+            columns={columns}
+            width={cellWidth}
+            height={cellHeight}
+            offset={offset}
+          />
+        )}
       </View>
-      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
-        <DesignSpace scale={cellWidth / 164}>
-          <MaterialFrame rect={[0, 0, 1032, 1524]} paper={false} />
-        </DesignSpace>
-      </View>
+      {!paintedGrid && (
+        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+          <DesignSpace scale={frameScale}>
+            <MaterialFrame
+              rect={[
+                0,
+                0,
+                (cellWidth * columns + 2 * frameInset) / frameScale,
+                (cellHeight * BOARD_ROWS + 2 * frameInset) / frameScale,
+              ]}
+              paper={false}
+              purpose="board"
+            />
+          </DesignSpace>
+        </View>
+      )}
     </View>
   );
 });

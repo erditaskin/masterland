@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { View } from "react-native";
-import { cityProducers, name, producers, type Save } from "../game/engine";
+import { cityProducers, name, producerCatalog as producers, type Save } from "../game/engine";
 import { Button } from "./Controls";
 import { PaperCard } from "./PagePrimitives";
 import { useCityTheme } from "./CityThemeProvider";
@@ -26,7 +26,7 @@ export function CollectionPage({
     0,
   );
   const heights = groups.map(
-    (p) => 146 + Math.ceil(p.products.length / 4) * 244,
+    (p) => 178 + Math.ceil(p.products.length / 4) * 260,
   );
   const rows = groups.map((p, index) => ({
     p,
@@ -56,7 +56,7 @@ export function CollectionPage({
                 90,
                 y,
                 1026,
-                122 + Math.ceil(p.products.length / 4) * 244,
+                146 + Math.ceil(p.products.length / 4) * 260,
               ]}
             />
             <ProducerArt index={index} rect={[112, y + 21, 132, 88]} />
@@ -75,20 +75,20 @@ export function CollectionPage({
               </Button>
             </DesignBox>
             {p.products.map((item, i) => {
-              const x = 114 + (i % 4) * 244,
-                yy = y + 120 + Math.floor(i / 4) * 244,
+              const x = 120 + (i % 4) * 246,
+                yy = y + 142 + Math.floor(i / 4) * 260,
                 known = found.has(item.id);
               return (
                 <Fragment key={item.id}>
-                  <PaperCard designRect={[x, yy, 232, 232]} />
+                  <PaperCard designRect={[x, yy, 218, 218]} />
                   {known ? (
                     <>
                       <DesignItem
                         id={item.id}
-                        rect={[x + 16, yy + 10, 194, 194]}
+                        rect={[x + 18, yy + 12, 180, 180]}
                       />
                       <DesignText
-                        rect={[x + 170, yy + 168, 50, 52]}
+                        rect={[x + 158, yy + 160, 50, 52]}
                         size={35}
                         bold
                         color="#34852b"
@@ -99,7 +99,7 @@ export function CollectionPage({
                     </>
                   ) : (
                     <DesignText
-                      rect={[x, yy, 232, 232]}
+                      rect={[x, yy, 218, 218]}
                       size={111}
                       bold
                       color={theme.mutedInk}
@@ -108,7 +108,7 @@ export function CollectionPage({
                       ?
                     </DesignText>
                   )}
-                  <DesignBox rect={[x, yy, 232, 232]}>
+                  <DesignBox rect={[x, yy, 218, 218]}>
                     <Button
                       label={known ? item.name : "Keşfedilmedi"}
                       onPress={() => onProducer(index)}

@@ -1,0 +1,101 @@
+{
+  "approved_source": "assets/references/approved-belenyaka-20261118/source.png",
+  "inpaint": "assets/concepts/device-iphone-v1/candidates/hud-inpaint-v1.png",
+  "inpaint_sha256": "a91a2e967ad14813a3b56ea7f4575005a6a07800e8d60fb9d3c68d58db47f70e",
+  "inpaint_region_ltrb": [
+    90,
+    84,
+    676,
+    162
+  ],
+  "transparent_control_regions_ltrb": [
+    [
+      181,
+      291,
+      601,
+      370
+    ],
+    [
+      22,
+      303,
+      162,
+      365
+    ],
+    [
+      676,
+      301,
+      746,
+      371
+    ],
+    [
+      37,
+      541,
+      174,
+      692
+    ],
+    [
+      179,
+      541,
+      317,
+      692
+    ],
+    [
+      325,
+      541,
+      465,
+      692
+    ],
+    [
+      469,
+      541,
+      610,
+      692
+    ],
+    [
+      614,
+      541,
+      755,
+      692
+    ],
+    [
+      2,
+      705,
+      782,
+      1832
+    ],
+    [
+      8,
+      1860,
+      777,
+      1998
+    ],
+    [
+      4,
+      535,
+      781,
+      706
+    ]
+  ],
+  "transparent_order_regions_ltrb": [
+    [
+      14,
+      383,
+      260,
+      518
+    ],
+    [
+      267,
+      383,
+      514,
+      518
+    ],
+    [
+      519,
+      383,
+      770,
+      518
+    ]
+  ],
+  "order_corner_radius": 18,
+  "policy": "All visible source pixels outside the HUD infill are preserved; control pixels are removed, not used as fake UI."
+}

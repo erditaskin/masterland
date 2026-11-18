@@ -17,6 +17,10 @@ export interface CityTheme {
   readonly navSelected: string;
   readonly navSelectedLight: string;
   readonly navSelectedInk: string;
+  readonly profileFill: string;
+  readonly orderReadyFill: string;
+  readonly orderReadyEnd: string;
+  readonly orderBadgeFill: string;
   readonly selected: string;
   readonly selectedInk: string;
 }
@@ -32,6 +36,10 @@ export const semanticColors = Object.freeze({
 
 const definitions = {
   city1: {
+    orderReadyFill: "#c9d976",
+    orderReadyEnd: "#b2cd5d",
+    orderBadgeFill: "#34852b",
+    profileFill: "#086451",
     navSelected: "#df9c24",
     navSelectedLight: "#ffe6a7",
     navSelectedInk: "#fff3cf",
@@ -52,6 +60,10 @@ const definitions = {
     selectedInk: "#315b26",
   },
   city2: {
+    orderReadyFill: "#fff1d7",
+    orderReadyEnd: "#ffe3b7",
+    orderBadgeFill: "#a33342",
+    profileFill: "#a54149",
     navSelected: "#ffd598",
     navSelectedLight: "#fff3d5",
     navSelectedInk: "#773e29",
@@ -72,6 +84,10 @@ const definitions = {
     selectedInk: "#8a2639",
   },
   city3: {
+    orderReadyFill: "#fff0d4",
+    orderReadyEnd: "#ffe5bb",
+    orderBadgeFill: "#34852b",
+    profileFill: "#087a70",
     navSelected: "#007c75",
     navSelectedLight: "#39b6a7",
     navSelectedInk: "#f4fff1",
@@ -92,6 +108,10 @@ const definitions = {
     selectedInk: "#06675e",
   },
   city4: {
+    orderReadyFill: "#d5df96",
+    orderReadyEnd: "#bbc96d",
+    orderBadgeFill: "#34852b",
+    profileFill: "#176d60",
     navSelected: "#b64d12",
     navSelectedLight: "#ec8b33",
     navSelectedInk: "#fff8e7",
@@ -112,6 +132,10 @@ const definitions = {
     selectedInk: "#8f3c10",
   },
   city5: {
+    orderReadyFill: "#fff0d1",
+    orderReadyEnd: "#ffe5b7",
+    orderBadgeFill: "#34852b",
+    profileFill: "#146e5e",
     navSelected: "#603074",
     navSelectedLight: "#a263aa",
     navSelectedInk: "#fff2ce",

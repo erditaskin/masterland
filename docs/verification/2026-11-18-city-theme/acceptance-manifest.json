@@ -12,216 +12,216 @@
       "id": "city1/board",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-board.png",
-      "actual": "pass-live-5/city1-board.png",
+      "actual": "pass-live-23/city1-board.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 568065,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 19803,
       "art_direction_accepted": false
     },
     {
       "id": "city1/cities",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-cities.png",
-      "actual": "pass-live-5/city1-cities.png",
+      "actual": "pass-live-22/city1-cities.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 10469,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 18502,
       "art_direction_accepted": false
     },
     {
       "id": "city1/account-registered",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-account-registered.png",
-      "actual": "pass-live-5/city1-account-registered.png",
+      "actual": "pass-live-22/city1-account-registered.png",
       "actual_capture_available": true,
       "device_reference_available": true,
       "capture_mode": "local-service-mock-story",
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1342,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5070,
       "art_direction_accepted": false
     },
     {
       "id": "city1/account-guest",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-account-guest.png",
-      "actual": "pass-live-5/city1-account-guest.png",
+      "actual": "pass-live-22/city1-account-guest.png",
       "actual_capture_available": true,
       "capture_mode": "local-service-mock-story",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1426,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5745,
       "art_direction_accepted": false
     },
     {
       "id": "city1/collection",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-collection.png",
-      "actual": "pass-live-5/city1-collection.png",
+      "actual": "pass-live-22/city1-collection.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1189,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 6242,
       "art_direction_accepted": false
     },
     {
       "id": "city1/collection-chain",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-collection-chain.png",
-      "actual": "pass-live-5/city1-collection-chain.png",
+      "actual": "pass-live-22/city1-collection-chain.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 2025,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 6337,
       "art_direction_accepted": false
     },
     {
       "id": "city1/storage",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-storage.png",
-      "actual": "pass-live-5/city1-storage.png",
+      "actual": "pass-live-22/city1-storage.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "passed",
-      "different_pixels": 0,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 4278,
       "art_direction_accepted": false
     },
     {
       "id": "city1/storage-board-full",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-storage-board-full.png",
-      "actual": "pass-live-5/city1-storage-board-full.png",
+      "actual": "pass-live-22/city1-storage-board-full.png",
       "actual_capture_available": true,
       "device_reference_available": true,
       "capture_mode": "local-presentation-fixture",
-      "pixel_comparison_status": "passed",
-      "different_pixels": 0,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 4278,
       "art_direction_accepted": false
     },
     {
       "id": "city1/market",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-market.png",
-      "actual": "pass-live-5/city1-market.png",
+      "actual": "pass-live-22/city1-market.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 24,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5100,
       "art_direction_accepted": false
     },
     {
       "id": "city1/energy",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-energy.png",
-      "actual": "pass-live-5/city1-energy.png",
+      "actual": "pass-live-22/city1-energy.png",
       "actual_capture_available": true,
       "device_reference_available": true,
       "capture_mode": "local-service-mock-story",
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1318,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5076,
       "art_direction_accepted": false
     },
     {
       "id": "city1/producer-cooldown",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-producer-cooldown.png",
-      "actual": "pass-live-5/city1-producer-cooldown.png",
+      "actual": "pass-live-22/city1-producer-cooldown.png",
       "actual_capture_available": true,
       "capture_mode": "local-service-mock-story",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1175,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 4893,
       "art_direction_accepted": false
     },
     {
       "id": "city1/item",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-item.png",
-      "actual": "pass-live-5/city1-item.png",
+      "actual": "pass-live-22/city1-item.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 3766,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 6834,
       "art_direction_accepted": false
     },
     {
       "id": "city1/orders",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-orders.png",
-      "actual": "pass-live-5/city1-orders.png",
+      "actual": "pass-live-22/city1-orders.png",
       "actual_capture_available": true,
       "capture_mode": "local-service-mock-story",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 2116,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5999,
       "art_direction_accepted": false
     },
     {
       "id": "city1/order-guide",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-order-guide.png",
-      "actual": "pass-live-5/city1-order-guide.png",
+      "actual": "pass-live-22/city1-order-guide.png",
       "actual_capture_available": true,
       "capture_mode": "local-service-mock-story",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 3814,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 7639,
       "art_direction_accepted": false
     },
     {
       "id": "city1/achievements",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-achievements.png",
-      "actual": "pass-live-5/city1-achievements.png",
+      "actual": "pass-live-22/city1-achievements.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 21377,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 24517,
       "art_direction_accepted": false
     },
     {
       "id": "city1/achievement",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-achievement.png",
-      "actual": "pass-live-5/city1-achievement.png",
+      "actual": "pass-live-22/city1-achievement.png",
       "actual_capture_available": true,
       "capture_mode": "local-service-mock-story",
       "device_reference_available": true,
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1179,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5068,
       "art_direction_accepted": false
     },
     {
       "id": "city1/cloud-choice",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-cloud-choice.png",
-      "actual": "pass-live-5/city1-cloud-choice.png",
+      "actual": "pass-live-22/city1-cloud-choice.png",
       "actual_capture_available": true,
       "device_reference_available": true,
       "capture_mode": "local-service-mock-story",
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 3224,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 6981,
       "art_direction_accepted": false
     },
     {
       "id": "city1/account-deletion",
       "reference_approved": false,
       "expected": "../../../assets/references/device-v2/native/city1-account-deletion.png",
-      "actual": "pass-live-5/city1-account-deletion.png",
+      "actual": "pass-live-22/city1-account-deletion.png",
       "actual_capture_available": true,
       "device_reference_available": true,
       "capture_mode": "local-service-mock-story",
-      "pixel_comparison_status": "pixel-mismatch",
-      "different_pixels": 1505,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target",
+      "different_pixels": 5732,
       "art_direction_accepted": false
     },
     {
@@ -231,7 +231,8 @@
       "actual": "pass-travel/milestone-haven-board.png",
       "actual_capture_available": true,
       "capture_mode": "playable-city-round-trip",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/cities",
@@ -240,7 +241,8 @@
       "actual": "pass-4/theme-city2-cities.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/account-registered",
@@ -248,7 +250,8 @@
       "expected": "expected/city2-account-registered.png",
       "actual": "actual/city2-account-registered.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/account-guest",
@@ -256,7 +259,8 @@
       "expected": "expected/city2-account-guest.png",
       "actual": "actual/city2-account-guest.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/collection",
@@ -265,7 +269,8 @@
       "actual": "pass-travel/milestone-haven-collection.png",
       "actual_capture_available": true,
       "capture_mode": "playable-city-round-trip",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/collection-chain",
@@ -273,7 +278,8 @@
       "expected": "expected/city2-collection-chain.png",
       "actual": "actual/city2-collection-chain.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/storage",
@@ -282,7 +288,8 @@
       "actual": "pass-4/theme-city2-storage.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/storage-board-full",
@@ -290,7 +297,8 @@
       "expected": "expected/city2-storage-board-full.png",
       "actual": "actual/city2-storage-board-full.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/market",
@@ -299,7 +307,8 @@
       "actual": "pass-4/theme-city2-market.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/energy",
@@ -307,7 +316,8 @@
       "expected": "expected/city2-energy.png",
       "actual": "actual/city2-energy.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/producer-cooldown",
@@ -315,7 +325,8 @@
       "expected": "expected/city2-producer-cooldown.png",
       "actual": "actual/city2-producer-cooldown.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/item",
@@ -323,7 +334,8 @@
       "expected": "expected/city2-item.png",
       "actual": "actual/city2-item.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/orders",
@@ -331,7 +343,8 @@
       "expected": "expected/city2-orders.png",
       "actual": "actual/city2-orders.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/order-guide",
@@ -339,7 +352,8 @@
       "expected": "expected/city2-order-guide.png",
       "actual": "actual/city2-order-guide.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/achievements",
@@ -347,7 +361,8 @@
       "expected": "expected/city2-achievements.png",
       "actual": "actual/city2-achievements.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/achievement",
@@ -355,7 +370,8 @@
       "expected": "expected/city2-achievement.png",
       "actual": "actual/city2-achievement.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/cloud-choice",
@@ -363,7 +379,8 @@
       "expected": "expected/city2-cloud-choice.png",
       "actual": "actual/city2-cloud-choice.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city2/account-deletion",
@@ -371,7 +388,8 @@
       "expected": "expected/city2-account-deletion.png",
       "actual": "actual/city2-account-deletion.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/board",
@@ -380,7 +398,8 @@
       "actual": "pass-4/theme-city3-board.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/cities",
@@ -389,7 +408,8 @@
       "actual": "pass-4/theme-city3-cities.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/account-registered",
@@ -397,7 +417,8 @@
       "expected": "expected/city3-account-registered.png",
       "actual": "actual/city3-account-registered.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/account-guest",
@@ -405,7 +426,8 @@
       "expected": "expected/city3-account-guest.png",
       "actual": "actual/city3-account-guest.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/collection",
@@ -414,7 +436,8 @@
       "actual": "pass-4/theme-city3-collection.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/collection-chain",
@@ -422,7 +445,8 @@
       "expected": "expected/city3-collection-chain.png",
       "actual": "actual/city3-collection-chain.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/storage",
@@ -431,7 +455,8 @@
       "actual": "pass-4/theme-city3-storage.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/storage-board-full",
@@ -439,7 +464,8 @@
       "expected": "expected/city3-storage-board-full.png",
       "actual": "actual/city3-storage-board-full.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/market",
@@ -448,7 +474,8 @@
       "actual": "pass-4/theme-city3-market.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/energy",
@@ -456,7 +483,8 @@
       "expected": "expected/city3-energy.png",
       "actual": "actual/city3-energy.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/producer-cooldown",
@@ -464,7 +492,8 @@
       "expected": "expected/city3-producer-cooldown.png",
       "actual": "actual/city3-producer-cooldown.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/item",
@@ -472,7 +501,8 @@
       "expected": "expected/city3-item.png",
       "actual": "actual/city3-item.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/orders",
@@ -480,7 +510,8 @@
       "expected": "expected/city3-orders.png",
       "actual": "actual/city3-orders.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/order-guide",
@@ -488,7 +519,8 @@
       "expected": "expected/city3-order-guide.png",
       "actual": "actual/city3-order-guide.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/achievements",
@@ -496,7 +528,8 @@
       "expected": "expected/city3-achievements.png",
       "actual": "actual/city3-achievements.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/achievement",
@@ -504,7 +537,8 @@
       "expected": "expected/city3-achievement.png",
       "actual": "actual/city3-achievement.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/cloud-choice",
@@ -512,7 +546,8 @@
       "expected": "expected/city3-cloud-choice.png",
       "actual": "actual/city3-cloud-choice.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city3/account-deletion",
@@ -520,7 +555,8 @@
       "expected": "expected/city3-account-deletion.png",
       "actual": "actual/city3-account-deletion.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/board",
@@ -529,7 +565,8 @@
       "actual": "pass-4/theme-city4-board.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/cities",
@@ -538,7 +575,8 @@
       "actual": "pass-4/theme-city4-cities.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/account-registered",
@@ -546,7 +584,8 @@
       "expected": "expected/city4-account-registered.png",
       "actual": "actual/city4-account-registered.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/account-guest",
@@ -554,7 +593,8 @@
       "expected": "expected/city4-account-guest.png",
       "actual": "actual/city4-account-guest.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/collection",
@@ -563,7 +603,8 @@
       "actual": "pass-4/theme-city4-collection.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/collection-chain",
@@ -571,7 +612,8 @@
       "expected": "expected/city4-collection-chain.png",
       "actual": "actual/city4-collection-chain.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/storage",
@@ -580,7 +622,8 @@
       "actual": "pass-4/theme-city4-storage.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/storage-board-full",
@@ -588,7 +631,8 @@
       "expected": "expected/city4-storage-board-full.png",
       "actual": "actual/city4-storage-board-full.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/market",
@@ -597,7 +641,8 @@
       "actual": "pass-4/theme-city4-market.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/energy",
@@ -605,7 +650,8 @@
       "expected": "expected/city4-energy.png",
       "actual": "actual/city4-energy.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/producer-cooldown",
@@ -613,7 +659,8 @@
       "expected": "expected/city4-producer-cooldown.png",
       "actual": "actual/city4-producer-cooldown.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/item",
@@ -621,7 +668,8 @@
       "expected": "expected/city4-item.png",
       "actual": "actual/city4-item.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/orders",
@@ -629,7 +677,8 @@
       "expected": "expected/city4-orders.png",
       "actual": "actual/city4-orders.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/order-guide",
@@ -637,7 +686,8 @@
       "expected": "expected/city4-order-guide.png",
       "actual": "actual/city4-order-guide.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/achievements",
@@ -645,7 +695,8 @@
       "expected": "expected/city4-achievements.png",
       "actual": "actual/city4-achievements.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/achievement",
@@ -653,7 +704,8 @@
       "expected": "expected/city4-achievement.png",
       "actual": "actual/city4-achievement.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/cloud-choice",
@@ -661,7 +713,8 @@
       "expected": "expected/city4-cloud-choice.png",
       "actual": "actual/city4-cloud-choice.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city4/account-deletion",
@@ -669,7 +722,8 @@
       "expected": "expected/city4-account-deletion.png",
       "actual": "actual/city4-account-deletion.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/board",
@@ -678,7 +732,8 @@
       "actual": "pass-4/theme-city5-board.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/cities",
@@ -687,7 +742,8 @@
       "actual": "pass-4/theme-city5-cities.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": true
+      "device_reference_available": true,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/account-registered",
@@ -695,7 +751,8 @@
       "expected": "expected/city5-account-registered.png",
       "actual": "actual/city5-account-registered.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/account-guest",
@@ -703,7 +760,8 @@
       "expected": "expected/city5-account-guest.png",
       "actual": "actual/city5-account-guest.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/collection",
@@ -712,7 +770,8 @@
       "actual": "pass-4/theme-city5-collection.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/collection-chain",
@@ -720,7 +779,8 @@
       "expected": "expected/city5-collection-chain.png",
       "actual": "actual/city5-collection-chain.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/storage",
@@ -729,7 +789,8 @@
       "actual": "pass-4/theme-city5-storage.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/storage-board-full",
@@ -737,7 +798,8 @@
       "expected": "expected/city5-storage-board-full.png",
       "actual": "actual/city5-storage-board-full.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/market",
@@ -746,7 +808,8 @@
       "actual": "pass-4/theme-city5-market.png",
       "actual_capture_available": true,
       "capture_mode": "local-presentation-fixture",
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/energy",
@@ -754,7 +817,8 @@
       "expected": "expected/city5-energy.png",
       "actual": "actual/city5-energy.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/producer-cooldown",
@@ -762,7 +826,8 @@
       "expected": "expected/city5-producer-cooldown.png",
       "actual": "actual/city5-producer-cooldown.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/item",
@@ -770,7 +835,8 @@
       "expected": "expected/city5-item.png",
       "actual": "actual/city5-item.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/orders",
@@ -778,7 +844,8 @@
       "expected": "expected/city5-orders.png",
       "actual": "actual/city5-orders.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/order-guide",
@@ -786,7 +853,8 @@
       "expected": "expected/city5-order-guide.png",
       "actual": "actual/city5-order-guide.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/achievements",
@@ -794,7 +862,8 @@
       "expected": "expected/city5-achievements.png",
       "actual": "actual/city5-achievements.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/achievement",
@@ -802,7 +871,8 @@
       "expected": "expected/city5-achievement.png",
       "actual": "actual/city5-achievement.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/cloud-choice",
@@ -810,7 +880,8 @@
       "expected": "expected/city5-cloud-choice.png",
       "actual": "actual/city5-cloud-choice.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     },
     {
       "id": "city5/account-deletion",
@@ -818,7 +889,8 @@
       "expected": "expected/city5-account-deletion.png",
       "actual": "actual/city5-account-deletion.png",
       "actual_capture_available": false,
-      "device_reference_available": false
+      "device_reference_available": false,
+      "pixel_comparison_status": "superseded-reference-requires-current-device-target"
     }
   ],
   "app_language": "tr",
@@ -826,5 +898,22 @@
   "note": "Native provider labels follow system language. Final device reference must freeze it explicitly.",
   "target_revision": "device-v2; art direction audit open",
   "accepted_cases": 0,
-  "technical_zero_pixel_matches": 2
+  "technical_zero_pixel_matches": 2,
+  "reference_authority": "Original approved city panoramas and user close-ups from 2026-11-18 15:28\u201315:29; previous device-v2/v3 geometry is diagnostic, not accepted.",
+  "latest_original_source_implementation": "pass-live-16; original board/title/filter artwork, source-ratio producer faces; full art-direction audit still open",
+  "current_authority": {
+    "source": "assets/references/approved-belenyaka-20261118/source.png",
+    "source_size": [
+      784,
+      2007
+    ],
+    "explicit_modifiers": [
+      "existing item atlas unchanged",
+      "7 columns, 9 rows, square cells",
+      "green order highlights retained",
+      "transparent shelf and navigation materials; clean secondary page background"
+    ],
+    "device_reference_approved": false
+  },
+  "superseded_comparisons": "device-v2 counts are historical diagnostics, not current acceptance evidence"
 }

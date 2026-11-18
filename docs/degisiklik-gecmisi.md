@@ -438,6 +438,11 @@ Kullanıcının test videosu sonrasında başarı mesajına rağmen ödül alama
 Kontrollü telefon build’inde test modu kapalı olduğundan reklam yalnız önizleniyordu; buna rağmen düğmede ödül vaadi gösteriliyordu. Önizleme düğmesi ve tamamlanma açıklaması düzeltildi. Test ödülü sonucu kalıcı yazım tamamlandıktan sonra yayımlanır. 165 mobil testi ve üç gerçek Release simülatör video kontrolü geçti: enerji +25 ve yeniden açılışta kalıcılık, yalnız üretici yenileme ve ödülsüz kontrollü önizleme. Canlı SSV kabulü tamamlandı sayılmaz. Ayrıntı: reward-acceptance-20261117.md.
 
 
+## 17 Kasım 2026 — Şehir sanat yönü ve prompt birliği
+
+Önceki genel oyma ahşap kabuk, bütün şehirlerde zorunlu tek malzeme olarak yorumlanmayacaktır. Kullanıcı ilk beş şehir için ayrı görsel malzeme ailelerini onayladı; Belenyaka'nın kıyı yorumunu düzelterek denizin az görünmesini istedi. Bahçe ve yeşil köy baskın kalır; önceki geniş toprak avlusu reddi korunur. Onaylı çevre, arayüz malzemeleri, Belenyaka ürün aileleri ve eş anlamlı TR/EN istem şablonları sehir-gorsel-dili.md dosyasına kaydedildi. Ortak UI yerleşimi ve etkileşim kuralları değiştirilmedi. Eski belgeler tarihçe olarak korundu.
+
+
 ## 17 Kasım 2026 — Canlı doğrulanmış reklam kabulü
 
 Kullanıcının açık talebiyle SSV sunucu kapısı açıldı. Masterland’in kendi Google birimleri, gerçek Google imzası ve canlı ledger/redeem hattıyla enerji ve üretici ödülleri doğrulandı. Kullanıcı telefonda +25 ve arka plan kurtarmasını kabul etti. Release simülatöründe üretici kalıcılığı, ortak 4 ödül sınırı ve tamamlanmadan tamamen terk etmede 100 enerji/0 kullanım doğrulandı. 169 mobil ve 23 API testi geçti. İptal edilen rezervasyonlar geçerli geç ödülü kaybetmeden serbest bırakılır. Yerel test konteyneri ve anonim test DB birimi kullanıcı isteğiyle silindi. Ayrıntı: live-reward-acceptance-20261117.md.
@@ -481,3 +486,35 @@ Kullanıcı, onay panolarının mevcut oyun kuralları korunarak cihaz ölçüs�
 ## 18 Kasım 2026 — Görsel kabulün ve kesintisiz devam kapsamının teyidi
 
 Kullanıcı, iOS simülatöründe ilgili şehrin onaylı tasarımına yüzde yüz uyum doğrulanmadan işin tamamlandı sayılmayacağını tekrar belirtti. Cihaz ölçüsüne uyarlama, onaylı sanat yönünü değiştirme yetkisi değildir. Kullanıcı, uygulama ve doğrulama işinin yeni bir devam komutu beklenmeden sürdürülmesini istedi. iOS dağıtımı önceliklidir; Android için ortak React Native bileşenleri, tema değerleri ve veri/eylem sınırları korunacaktır. Yalnız simülatör görüntüsü veya yüksek bir benzerlik yüzdesi bu kabulün yerine geçmez.
+
+## 18 Kasım 2026 — Belenyaka ahşap arka plan eşlemesi
+
+Üretici rafında bölmesiz kütük, alt menüde beş yuvalı ahşap kullanılıyordu. Kullanıcının düzeltmesiyle iki mevcut görsel yer değiştirdi. Alt menü içeriği ortalandı ve telefonun alt köşeleri için güvenli alan hesaba katıldı.
+
+## 18 Kasım 2026 — Belenyaka prototipinin mobil geçişi
+
+Onaylanan yerel HTML prototipinin boş ve şeffaf yüzeyleri Belenyaka oyun ekranına aktarıldı. Eski konuma bağlı görüntü kompozitleri, canlı metinler ve ikonlarla birleştirilen yüzeylerle değiştirildi. İlan kartları, görünür sıraya sığan kart sayısına ve ürün adedine göre yatayda büyür. Alt menü seçimi canlı durumdan çizilir. Tahtanın dış ölçüsü yeni referansa uyarlandı ve kayıt sözleşmesindeki 63 hücre korundu.
+
+## 18 Kasım 2026 — Belenyaka kenarları ve tahta kapasitesi
+
+iPhone referansındaki kâğıt renkli kenarlar köy manzarasının devamıyla değiştirildi. Belenyaka'nın oynanabilir alanı 54 hücreye indirildi. Çerçeve ölçüsü ve kayıt API’sinin mevcut dizi biçimi korundu.
+
+## 18 Kasım 2026 — Belenyaka bahçe sahnesi
+
+Yerleşik ImageGen ile yeni dikey arka plan üretildi. Belenyaka sahnesi konum ve sanat yönü, Badınca ve Yalıkoru sahneleri kenar eşyalarının yerleşimi için kaynak olarak kullanıldı. İstem, yel değirmeni ve kır evleriyle açılan yeşil bahçenin iki kenarına alçak taş duvar, çiçek saksıları, sepet, çit, tekerlek ve sulama kabı gibi asimetrik öğeler yerleştirmeyi istedi. Yatay tahta zemin kaldırıldı. Tahta, ilanlar ve üretici rafının genişliği arttı ve alt test düğmeleri kaldırıldı.
+
+## 18 Kasım 2026 — Belenyaka üretici ayrıntıları ve üst panel
+
+Yerleşik ImageGen ile iki varlık hazırlandı. Köy sahnesi, önceki kompozisyon ve ahır/elma ağacı üretici resimleri kullanılarak sol kenarda elma dalları, başak demetleri ve saman balyaları, sağ kenarda süt testileri, şişeler, peynir ve meyve kasaları görünür kalacak şekilde düzenlendi. Üst zemin için ahşap üretici rafı malzeme referansı olarak kullanıldı ve ince kenarlı, alçak kontrastlı, boş meşe paneli gerçek alfa kanalıyla üretildi. Panelin saydam dış boşluğu kırpıldı. Üst grup, tahta ve alt menü genişletildi.
+
+## 18 Kasım 2026 — Açık meşe panel ve çok ürünlü Belenyaka örneği
+
+Yerleşik ImageGen aracında mevcut panelin silueti referans alındı. İstem, boş ahşap yüzeyi açık bal meşesi tonuna çekip boyuna damarları ve doğal budakları belirginleştirmeyi, panel dışındaki şeffaflığı korumayı istedi. Dinamik ilan yerleşimi küçük ürün yuvaları ve ayrı ödül alanıyla güncellendi. İki ve üç ürünlü örnek, yerel sunum bağlantısına eklendi. Şehir zemini artık açılan sayfaya göre değiştirilmez.
+
+## 18 Kasım 2026 — Badınca uygulama ve doğrulama
+
+Belenyaka ile Badınca ortak sahne, tahta ve kontrol yerleşimini kendi görsel varlıklarıyla kullanır. Badınca’nın mevcut 34 ürün ikonu korundu. Dört üreticinin ayrı portreleri üretici rafı, koleksiyon ve zincir ayrıntısına bağlandı. Yerel deneme kaydı Badınca’yı dört üretici açık halde yükler.
+
+## 18 Kasım 2026 — Badınca şekerleme zinciri ve tahta hizası
+
+Şekerleme Tezgâhı ve yedi şekerleme, mobil ve yerel API içerik kayıtlarına eklendi. Yerleşik ImageGen istemi, referanstaki sarılı meyveli şekerden başlayıp nane şekeri, lolipop, kâse, kavanoz, hediye kutusu ve bakır şekerleme kulesine ilerleyen yedi ayrı şeffaf oyun ikonu istedi. Kaynak PNG’nin saydam kenarları temizlendi. İki şehrin 87 ürününün görünür sınırları önceden ölçüldü. Tahta ikonlarına iki yönde orta hizalama ve kısa hücre kenarına bağlı boyut uygulandı. İlan rayı sabit 1×, 1,25× ve 1,5× genişlikleri ve dar aralıkları kullanır.

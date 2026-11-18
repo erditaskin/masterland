@@ -1,4 +1,4 @@
-import { product, producers } from "../game/engine";
+import { product, producerCatalog as producers } from "../game/engine";
 import { DesignContent } from "./DesignContent";
 import { DesignText } from "./DesignSpace";
 import { DesignItem } from "./BoardChrome";

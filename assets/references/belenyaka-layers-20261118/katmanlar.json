@@ -1,0 +1,201 @@
+{
+  "canvas": {
+    "width": 1206,
+    "height": 2622
+  },
+  "reference": "ChatGPT Image Nov 17, 2026, 10_53_25 PM.png",
+  "referenceCrop": {
+    "x": 18,
+    "y": 73,
+    "width": 517,
+    "height": 1268
+  },
+  "resizedReferenceSha256": "52e982c7fac52fe159b26bf30f84727ed1143e03cb3bd1a5e0293af7c06e7984",
+  "exactRecompositionDifferentChannels": 0,
+  "background": "00-zemin.png",
+  "cleanBackground": "zemin-temiz.png",
+  "layers": [
+    {
+      "file": "01-seviye.png",
+      "x": 104,
+      "y": 74,
+      "width": 147,
+      "height": 156,
+      "emptyFace": "bos-yuzeyler/01-seviye.png",
+      "emptyFaceRect": {
+        "x": 133,
+        "y": 105,
+        "width": 92,
+        "height": 97
+      }
+    },
+    {
+      "file": "02-enerji.png",
+      "x": 230,
+      "y": 88,
+      "width": 327,
+      "height": 140,
+      "emptyFace": "bos-yuzeyler/02-enerji.png",
+      "emptyFaceRect": {
+        "x": 260,
+        "y": 116,
+        "width": 270,
+        "height": 84
+      }
+    },
+    {
+      "file": "03-altin.png",
+      "x": 521,
+      "y": 88,
+      "width": 322,
+      "height": 140,
+      "emptyFace": "bos-yuzeyler/03-altin.png",
+      "emptyFaceRect": {
+        "x": 550,
+        "y": 116,
+        "width": 266,
+        "height": 85
+      }
+    },
+    {
+      "file": "04-elmas.png",
+      "x": 809,
+      "y": 88,
+      "width": 319,
+      "height": 140,
+      "emptyFace": "bos-yuzeyler/04-elmas.png",
+      "emptyFaceRect": {
+        "x": 837,
+        "y": 117,
+        "width": 264,
+        "height": 83
+      }
+    },
+    {
+      "file": "05-filtre.png",
+      "x": 81,
+      "y": 409,
+      "width": 245,
+      "height": 150,
+      "emptyFace": "bos-yuzeyler/05-filtre.png",
+      "emptyFaceRect": {
+        "x": 108,
+        "y": 437,
+        "width": 193,
+        "height": 96
+      }
+    },
+    {
+      "file": "06-belenyaka-tabelasi.png",
+      "x": 321,
+      "y": 394,
+      "width": 598,
+      "height": 161,
+      "emptyFace": "bos-yuzeyler/06-belenyaka-tabelasi.png",
+      "emptyFaceRect": {
+        "x": 350,
+        "y": 424,
+        "width": 539,
+        "height": 105
+      }
+    },
+    {
+      "file": "07-profil.png",
+      "x": 964,
+      "y": 409,
+      "width": 150,
+      "height": 150,
+      "emptyFace": "bos-yuzeyler/07-profil.png",
+      "emptyFaceRect": {
+        "x": 990,
+        "y": 436,
+        "width": 97,
+        "height": 97
+      }
+    },
+    {
+      "file": "08-ilan-sol.png",
+      "x": 69,
+      "y": 519,
+      "width": 387,
+      "height": 232,
+      "emptyFace": "bos-yuzeyler/08-ilan-sol.png",
+      "emptyFaceRect": {
+        "x": 96,
+        "y": 544,
+        "width": 336,
+        "height": 181
+      }
+    },
+    {
+      "file": "09-ilan-orta.png",
+      "x": 412,
+      "y": 519,
+      "width": 387,
+      "height": 232,
+      "emptyFace": "bos-yuzeyler/09-ilan-orta.png",
+      "emptyFaceRect": {
+        "x": 438,
+        "y": 544,
+        "width": 337,
+        "height": 181
+      }
+    },
+    {
+      "file": "10-ilan-sag.png",
+      "x": 753,
+      "y": 519,
+      "width": 385,
+      "height": 232,
+      "emptyFace": "bos-yuzeyler/10-ilan-sag.png",
+      "emptyFaceRect": {
+        "x": 780,
+        "y": 543,
+        "width": 336,
+        "height": 182
+      }
+    },
+    {
+      "file": "11-uretici-rafi.png",
+      "x": 69,
+      "y": 725,
+      "width": 1069,
+      "height": 258,
+      "emptyFace": "bos-yuzeyler/11-uretici-rafi.png",
+      "emptyFaceRect": {
+        "x": 89,
+        "y": 753,
+        "width": 1037,
+        "height": 203
+      }
+    },
+    {
+      "file": "12-tahta.png",
+      "x": 69,
+      "y": 936,
+      "width": 1069,
+      "height": 1480,
+      "emptyFace": "bos-yuzeyler/12-tahta.png",
+      "emptyFaceRect": {
+        "x": 98,
+        "y": 965,
+        "width": 1016,
+        "height": 1423
+      }
+    },
+    {
+      "file": "13-alt-menu.png",
+      "x": 77,
+      "y": 2402,
+      "width": 1061,
+      "height": 218,
+      "emptyFace": "bos-yuzeyler/13-alt-menu.png",
+      "emptyFaceRect": {
+        "x": 105,
+        "y": 2429,
+        "width": 1007,
+        "height": 161
+      }
+    }
+  ]
+}

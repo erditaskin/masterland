@@ -1,0 +1,198 @@
+{
+  "nav1": {
+    "x": 177,
+    "y": 2441,
+    "width": 80,
+    "height": 81,
+    "file": "on-katmanlar/menu-1.png"
+  },
+  "nav2": {
+    "x": 380,
+    "y": 2441,
+    "width": 85,
+    "height": 81,
+    "file": "on-katmanlar/menu-2.png"
+  },
+  "nav3": {
+    "x": 582,
+    "y": 2441,
+    "width": 78,
+    "height": 81,
+    "file": "on-katmanlar/menu-3.png"
+  },
+  "nav4": {
+    "x": 781,
+    "y": 2441,
+    "width": 81,
+    "height": 81,
+    "file": "on-katmanlar/menu-4.png"
+  },
+  "nav5": {
+    "x": 967,
+    "y": 2441,
+    "width": 92,
+    "height": 81,
+    "file": "on-katmanlar/menu-5.png"
+  },
+  "producer1": {
+    "x": 156,
+    "y": 766,
+    "width": 173,
+    "height": 116,
+    "file": "on-katmanlar/uretici-1.png"
+  },
+  "producer2": {
+    "x": 351,
+    "y": 766,
+    "width": 164,
+    "height": 116,
+    "file": "on-katmanlar/uretici-2.png"
+  },
+  "producer3": {
+    "x": 539,
+    "y": 766,
+    "width": 166,
+    "height": 116,
+    "file": "on-katmanlar/uretici-3.png"
+  },
+  "producer4": {
+    "x": 729,
+    "y": 766,
+    "width": 167,
+    "height": 116,
+    "file": "on-katmanlar/uretici-4.png"
+  },
+  "producer5": {
+    "x": 919,
+    "y": 766,
+    "width": 171,
+    "height": 116,
+    "file": "on-katmanlar/uretici-5.png"
+  },
+  "energy": {
+    "x": 278,
+    "y": 118,
+    "width": 59,
+    "height": 82,
+    "file": "on-katmanlar/energy.png"
+  },
+  "gold": {
+    "x": 560,
+    "y": 118,
+    "width": 77,
+    "height": 80,
+    "file": "on-katmanlar/gold.png"
+  },
+  "gem": {
+    "x": 843,
+    "y": 118,
+    "width": 86,
+    "height": 82,
+    "file": "on-katmanlar/gem.png"
+  },
+  "board0": {
+    "x": 125,
+    "y": 997,
+    "width": 150,
+    "height": 142,
+    "file": "on-katmanlar/tahta-0.png"
+  },
+  "board1": {
+    "x": 289,
+    "y": 997,
+    "width": 147,
+    "height": 142,
+    "file": "on-katmanlar/tahta-1.png"
+  },
+  "board2": {
+    "x": 936,
+    "y": 997,
+    "width": 150,
+    "height": 142,
+    "file": "on-katmanlar/tahta-2.png"
+  },
+  "board3": {
+    "x": 289,
+    "y": 1152,
+    "width": 147,
+    "height": 144,
+    "file": "on-katmanlar/tahta-3.png"
+  },
+  "board4": {
+    "x": 450,
+    "y": 1310,
+    "width": 148,
+    "height": 141,
+    "file": "on-katmanlar/tahta-4.png"
+  },
+  "board5": {
+    "x": 775,
+    "y": 1310,
+    "width": 147,
+    "height": 141,
+    "file": "on-katmanlar/tahta-5.png"
+  },
+  "board6": {
+    "x": 125,
+    "y": 1465,
+    "width": 150,
+    "height": 141,
+    "file": "on-katmanlar/tahta-6.png"
+  },
+  "board7": {
+    "x": 611,
+    "y": 1465,
+    "width": 150,
+    "height": 141,
+    "file": "on-katmanlar/tahta-7.png"
+  },
+  "board8": {
+    "x": 936,
+    "y": 1465,
+    "width": 150,
+    "height": 141,
+    "file": "on-katmanlar/tahta-8.png"
+  },
+  "board9": {
+    "x": 289,
+    "y": 1773,
+    "width": 147,
+    "height": 137,
+    "file": "on-katmanlar/tahta-9.png"
+  },
+  "board10": {
+    "x": 775,
+    "y": 1773,
+    "width": 147,
+    "height": 137,
+    "file": "on-katmanlar/tahta-10.png"
+  },
+  "board11": {
+    "x": 289,
+    "y": 1924,
+    "width": 147,
+    "height": 133,
+    "file": "on-katmanlar/tahta-11.png"
+  },
+  "board12": {
+    "x": 611,
+    "y": 1924,
+    "width": 150,
+    "height": 133,
+    "file": "on-katmanlar/tahta-12.png"
+  },
+  "board13": {
+    "x": 775,
+    "y": 2070,
+    "width": 147,
+    "height": 138,
+    "file": "on-katmanlar/tahta-13.png"
+  },
+  "board14": {
+    "x": 936,
+    "y": 2221,
+    "width": 150,
+    "height": 136,
+    "file": "on-katmanlar/tahta-14.png"
+  }
+}

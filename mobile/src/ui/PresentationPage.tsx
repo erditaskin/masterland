@@ -100,33 +100,32 @@ export function PresentationPage({
         reduced
         routeKey={view}
       >
-        {view === "account-guest" || view === "account-registered" ? (
+        {view === "account-guest" ||
+        view === "account-registered" ||
+        view === "account-error" ? (
           <AccountView
             save={save}
             dispatch={dispatch}
             model={{
               registered: view === "account-registered",
+              name: view === "account-registered" ? "Deniz Kaya" : undefined,
+              email:
+                view === "account-registered" ? "deniz@example.com" : undefined,
+              providers: view === "account-registered" ? "Apple" : undefined,
               appleAvailable: true,
               language: "tr",
               languageError: false,
               blocked: false,
-              cloudPhase: "synced",
               connectionEnabled: true,
-              googleEnabled: true,
-              facebookEnabled: false,
-              facebookVisible: false,
-              deleting: false,
-              busy: false,
+              facebookEnabled: true,
               ready: true,
-              error: false,
+              error: view === "account-error",
             }}
             actions={{
               close,
-              cloud: noop,
               deletion: noop,
               signOut: noop,
               signIn: noop,
-              sync: noop,
               language: noop,
             }}
           />

@@ -1,26 +1,55 @@
 import { Image, Text, View } from "react-native";
+import type { LoginProvider } from "../account/auth";
 import { Button } from "./Controls";
+import { useDesignSpace } from "./DesignSpace";
 
-/** Provider branding stays intact; the parchment page supplies the game's visual identity. */
+const providers = {
+  apple: {
+    testID: "signInApple",
+    image: require("../../assets/brand/masterland-apple.png"),
+    fill: "#cbd2dc",
+    light: "#eef0f4",
+    edge: "#a5aebb",
+    ink: "#272e3b",
+  },
+  google: {
+    testID: "signInGoogle",
+    image: require("../../assets/brand/masterland-google.png"),
+    fill: "#efbbb9",
+    light: "#ffe8df",
+    edge: "#db999c",
+    ink: "#702f3b",
+  },
+  facebook: {
+    testID: "signInFacebook",
+    image: require("../../assets/brand/masterland-facebook.png"),
+    fill: "#afd8ed",
+    light: "#e4f5fb",
+    edge: "#80bad9",
+    ink: "#225171",
+  },
+};
+
 export function ProviderButton({
   provider,
   text,
   disabled,
   onPress,
 }: {
-  provider: "google" | "facebook";
+  provider: LoginProvider;
   text: string;
   disabled: boolean;
   onPress: () => void;
 }) {
-  const facebook = provider === "facebook";
+  const { scale } = useDesignSpace();
+  const { testID, image, fill, light, edge, ink } = providers[provider];
   return (
     <Button
-      testID={facebook ? "signInFacebook" : "signInGoogle"}
+      testID={testID}
       label={text}
       disabled={disabled}
       onPress={onPress}
-      style={{ height: 48, width: "100%" }}
+      style={{ flex: 1 }}
     >
       <View
         pointerEvents="none"
@@ -29,36 +58,41 @@ export function ProviderButton({
           width: "100%",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 8,
-          borderWidth: 1,
-          borderColor: facebook ? "#1877f2" : "#747775",
-          backgroundColor: facebook ? "#1877f2" : "#fff",
-          opacity: disabled ? 0.55 : 1,
+          borderRadius: 28 * scale,
+          borderWidth: 3 * scale,
+          borderColor: edge,
+          backgroundColor: fill,
+          backgroundImage: `linear-gradient(180deg, ${light}, ${fill})`,
+          opacity: disabled ? 0.86 : 1,
         }}
       >
         <Image
-          source={
-            facebook
-              ? require("../../assets/brand/facebook.png")
-              : require("../../assets/brand/google-g.png")
-          }
+          source={image}
           resizeMode="contain"
-          style={{ position: "absolute", left: 16, width: 22, height: 22 }}
-        />
-        <Text
-          allowFontScaling
-          maxFontSizeMultiplier={1.15}
+          accessible={false}
           style={{
-            fontFamily: "System",
-            fontSize: 14,
-            fontWeight: "600",
-            color: facebook ? "#fff" : "#1f1f1f",
-            marginHorizontal: 45,
+            width: 135 * scale,
+            height: 135 * scale,
+            marginLeft: 22 * scale,
           }}
+        />
+        <View
+          style={{ flex: 1, marginLeft: 22 * scale, marginRight: 24 * scale }}
         >
-          {text}
-        </Text>
+          <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            accessible={false}
+            style={{
+              color: ink,
+              fontSize: 54 * scale,
+              fontWeight: "600",
+              textAlign: "left",
+            }}
+          >
+            {text}
+          </Text>
+        </View>
       </View>
     </Button>
   );

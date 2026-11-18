@@ -1,7 +1,7 @@
-import { CONTROLLED_SAVE_KEY } from "./saveNamespace";
+import { CONTROLLED_SAVE_KEY, NORMAL_SAVE_KEY } from "./saveNamespace";
 import { PRE_CLOUD_BACKUP_KEY } from "./localBackup";
 export const DELETION_RESET_KEY = "@masterland/account-deletion-reset/v1";
-export const GAME_SAVE_KEY = "@masterland/save/v2";
+export const GAME_SAVE_KEY = NORMAL_SAVE_KEY;
 type Storage = {
   getItem(key: string): Promise<string | null>;
   setItem(key: string, value: string): Promise<void>;

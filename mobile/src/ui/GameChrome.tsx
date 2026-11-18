@@ -1,6 +1,16 @@
-import { Fragment, memo } from "react";
-import { Image, View } from "react-native";
+import {
+  cityAchievementsTitle,
+  earnedAchievementsLabel,
+  languageStore,
+} from "../i18n/locale";
+import { Fragment, memo, useMemo, useSyncExternalStore } from "react";
+import { Image, PixelRatio, View } from "react-native";
 import { Button } from "./Controls";
+import {
+  approvedDesignRect,
+  approvedLayout,
+  referenceNavigationRect,
+} from "./layout";
 import {
   DesignBox,
   DesignImage,
@@ -9,10 +19,18 @@ import {
   DesignText,
 } from "./DesignSpace";
 import { MaterialTray } from "./DesignMaterial";
+import { belenyakaLayout, belenyakaRect } from "./belenyakaLayout";
+import { standardArtForCity } from "./standardCityArt";
 import { cityArt } from "./cityArt";
 import { art } from "./theme";
 import { useCityTheme } from "./CityThemeProvider";
-import { level, type Save } from "../game/engine";
+import {
+  achievementState,
+  cityAchievements,
+  level,
+  name,
+  type Save,
+} from "../game/engine";
 import type { Page } from "./Pages";
 
 export const CityBackdrop = memo(function CityBackdrop({
@@ -24,6 +42,16 @@ export const CityBackdrop = memo(function CityBackdrop({
 }) {
   const theme = useCityTheme(),
     source = cityArt[theme.id]!.scene;
+  const standardArt = standardArtForCity(theme.id);
+  if (standardArt)
+    return (
+      <DesignSpace scale={width / 1206}>
+        <DesignImage
+          source={standardArt.scene}
+          rect={[0, 0, 1206, (height * 1206) / width]}
+        />
+      </DesignSpace>
+    );
   const m = Image.resolveAssetSource(source);
   if (!m?.width || !m.height) throw Error("Eksik şehir görseli.");
   return (
@@ -45,8 +73,10 @@ export const CityBackdrop = memo(function CityBackdrop({
 export function ChromeSprite({
   index,
   rect,
+  crop,
 }: {
   index: number;
+  crop?: readonly [number, number, number, number];
   rect: readonly [number, number, number, number];
 }) {
   const m = Image.resolveAssetSource(art.icons);
@@ -55,50 +85,91 @@ export function ChromeSprite({
     <DesignImage
       source={art.icons}
       rect={rect}
-      crop={[
-        ((index % 4) * m.width) / 4,
-        (Math.floor(index / 4) * m.height) / 2,
-        m.width / 4,
-        m.height / 2,
-      ]}
+      crop={
+        crop ?? [
+          ((index % 4) * m.width) / 4,
+          (Math.floor(index / 4) * m.height) / 2,
+          m.width / 4,
+          m.height / 2,
+        ]
+      }
       fit
     />
   );
 }
 
+const achievementBadgeCrop = (
+  require("../../assets/art/route-icons-v2-bounds.json") as number[][]
+)[1] as [number, number, number, number];
+
 export const WalletHUD = memo(function WalletHUD({
   save,
   width,
-  top = 0,
+  height,
+  safeTop = 0,
   open,
 }: {
   save: Save;
   width: number;
-  top?: number;
+  height: number;
+  safeTop?: number;
   open: (page: Page) => void;
 }) {
+  const language = useSyncExternalStore(
+    languageStore.subscribe,
+    languageStore.get,
+  );
+  const scale = width / 1206;
+  const standardArt = standardArtForCity(useCityTheme().id);
+  const source = standardArt ? belenyakaLayout : approvedLayout.wallet;
+  const place = standardArt ? belenyakaRect : approvedDesignRect;
+  const levelRect = place(source.level, width, height);
+  const offset = Math.max(0, safeTop + 4 - levelRect[1] * scale) / scale;
+  const rect = (value: readonly number[]) => {
+    const r = place(value, width, height);
+    return [r[0], r[1] + offset, r[2], r[3]] as const;
+  };
+  const [, shieldY, , shieldH] = rect(source.level);
+  const badge = [76, shieldY - 5, 112, shieldH + 10] as const;
+  const earned = useMemo(
+    () =>
+      cityAchievements(save.cityID)
+        .map((a) => achievementState(save, a))
+        .filter((state) => state === "ready" || state === "claimed").length,
+    [save],
+  );
+  const achievementRect = [1000, badge[1], 130, badge[3]] as const;
   return (
-    <View
-      style={{ position: "absolute", inset: 0, top }}
-      pointerEvents="box-none"
-    >
-      <DesignSpace scale={width / 1206}>
+    <View style={{ position: "absolute", inset: 0 }} pointerEvents="box-none">
+      <DesignSpace scale={scale}>
         <DesignImage
-          source={require("../../assets/art/level-shield-v11.png")}
-          rect={[26, 145, 140, 142]}
-          crop={[161, 85, 930, 1050]}
+          source={
+            standardArt
+              ? standardArt.level
+              : require("../../assets/art/level-shield-v11.png")
+          }
+          rect={badge}
+          crop={standardArt ? undefined : [161, 85, 930, 1050]}
           fit
         />
         <DesignText
-          rect={[26, 145, 140, 128]}
-          size={65}
+          rect={badge}
+          size={48}
           bold
           color="#fff2bf"
           align="center"
+          accessible={false}
         >
           {level(save)}
         </DesignText>
-        <DesignBox rect={[26, 145, 140, 142]}>
+        <DesignBox
+          rect={[
+            badge[0] - 10,
+            badge[1] - 8,
+            132,
+            Math.max(132, badge[3] + 16),
+          ]}
+        >
           <Button
             testID="profile"
             label={`Seviye ${level(save)}, profil`}
@@ -110,56 +181,127 @@ export const WalletHUD = memo(function WalletHUD({
         </DesignBox>
         {(
           [
-            ["stamina", String(save.stamina), 5, 190, 324],
-            ["gold", save.gold.toLocaleString("tr-TR"), 6, 530, 324],
-            ["gems", String(save.gems), 7, 870, 310],
+            ["stamina", String(save.stamina), 5, source.energy],
+            [
+              "gold",
+              save.gold.toLocaleString(language === "tr" ? "tr-TR" : "en-US"),
+              6,
+              source.gold,
+            ],
+            ["gems", String(save.gems), 7, source.gems],
           ] as const
-        ).map(([id, value, index, x, w]) => (
-          <View
-            key={id}
-            pointerEvents="box-none"
-            style={{ position: "absolute", inset: 0 }}
-          >
-            <DesignSurface
-              rect={[x, 157, w, 105]}
-              fill="#163749"
-              end="#071f2e"
-              stroke="#d8ae58"
-              radius={46}
-              line={4}
-            />
-            <ChromeSprite index={index} rect={[x - 4, 156, 103, 103]} />
-            <DesignText
-              rect={[x + 100, 162, w - 152, 92]}
-              size={51}
-              bold
-              color="#fff0c2"
-              align="center"
-            >
-              {value}
-            </DesignText>
-            <DesignText
-              rect={[x + w - 48, 166, 44, 80]}
-              size={40}
-              color="#edcb7b"
-              align="center"
-            >
-              +
-            </DesignText>
-            <DesignBox rect={[x, 140, w, 140]}>
-              <Button
-                testID={id}
-                label={value}
-                onPress={() =>
-                  open({ kind: id === "stamina" ? "energy" : "market" })
-                }
-                style={{ flex: 1 }}
+        ).map(([id, value, index, bounds]) => {
+          const [, y, , h] = rect(bounds);
+          const x = 208 + (index - 5) * 264;
+          const w = 249;
+          const diameter = h * 0.54;
+          return (
+            <Fragment key={id}>
+              {standardArt ? (
+                <DesignImage
+                  source={standardArt.wallet[index - 5]}
+                  rect={[x, y, w, h]}
+                />
+              ) : (
+                <DesignSurface
+                  rect={[x, y, w, h]}
+                  fill="#163749"
+                  end="#071f2e"
+                  stroke="#d8ae58"
+                  radius={h * 0.45}
+                  line={2.5}
+                />
+              )}
+              <ChromeSprite
+                index={index}
+                rect={[x + 7, y + h * 0.1, h * 0.8, h * 0.8]}
+              />
+              <DesignText
+                rect={[x + w * 0.29, y, w * 0.46, h]}
+                size={Math.min(34, h * 0.65)}
+                fit
+                bold
+                color="#fff0c2"
+                align="center"
+                accessible={false}
               >
-                <View />
-              </Button>
-            </DesignBox>
-          </View>
-        ))}
+                {value}
+              </DesignText>
+              <DesignSurface
+                rect={[
+                  x + w - diameter - 7,
+                  y + (h - diameter) / 2,
+                  diameter,
+                  diameter,
+                ]}
+                fill="#173e50"
+                stroke="#d8ae58"
+                radius={diameter / 2}
+                line={2}
+              />
+              <DesignText
+                rect={[x + w - diameter - 7, y, diameter, h]}
+                size={28}
+                color="#edcb7b"
+                align="center"
+                accessible={false}
+              >
+                +
+              </DesignText>
+              <DesignBox
+                rect={[x, y - (Math.max(h, 132) - h) / 2, w, Math.max(h, 132)]}
+              >
+                <Button
+                  testID={id}
+                  label={value}
+                  onPress={() =>
+                    open({ kind: id === "stamina" ? "energy" : "market" })
+                  }
+                  style={{ flex: 1 }}
+                >
+                  <View />
+                </Button>
+              </DesignBox>
+            </Fragment>
+          );
+        })}
+        <DesignSurface
+          rect={achievementRect}
+          fill="#163749"
+          end="#071f2e"
+          stroke="#d8ae58"
+          radius={31}
+          line={3}
+        />
+        <DesignImage
+          source={require("../../assets/art/route-icons-v2.png")}
+          crop={achievementBadgeCrop}
+          rect={[1011, badge[1] + 20, 61, badge[3] - 40]}
+          fit
+        />
+        <DesignText
+          rect={[1069, badge[1], 54, badge[3]]}
+          size={42}
+          bold
+          fit
+          align="center"
+          color="#fff0c2"
+          accessible={false}
+        >
+          {earned}
+        </DesignText>
+        <DesignBox
+          rect={[999, badge[1] - 9, 132, Math.max(132, badge[3] + 18)]}
+        >
+          <Button
+            testID="cityAchievementsHUD"
+            label={`${cityAchievementsTitle(name(save.cityID), language)}, ${earnedAchievementsLabel(earned, language)}`}
+            onPress={() => open({ kind: "achievements", cityID: save.cityID })}
+            style={{ flex: 1 }}
+          >
+            <View />
+          </Button>
+        </DesignBox>
       </DesignSpace>
     </View>
   );
@@ -172,6 +314,15 @@ const tabs = [
   ["Depo", "storage"],
   ["Market", "market"],
 ] as const;
+
+const belenyakaTabIcons = [
+  [91, 106, 291, 289],
+  [457, 92, 388, 291],
+  [921, 41, 374, 346],
+  [1384, 85, 327, 316],
+  [50, 511, 370, 320],
+] as const;
+
 export const GameNavigation = memo(function GameNavigation({
   width,
   height,
@@ -189,38 +340,98 @@ export const GameNavigation = memo(function GameNavigation({
 }) {
   const theme = useCityTheme();
   const scale = width / 1206;
-  // The target is 34 pt at @3x. Other safe areas move the whole tray, never its individual controls.
-  const top = height - bottom - 160 * scale;
+  const standardArt = standardArtForCity(theme.id);
+  const [left, top, w, h] = referenceNavigationRect(
+    width,
+    height,
+    bottom,
+    theme.id,
+  );
+  const iconSize = h * 0.34;
+  const labelHeight = h * 0.28;
+  const iconTopMargin = 1 / (PixelRatio.get() * scale);
+  const iconTop = standardArt
+    ? top + (h - iconSize - labelHeight - iconTopMargin) / 2 + iconTopMargin
+    : top + h * 0.08;
+  const labelTop = standardArt
+    ? iconTop + iconSize
+    : Math.min(top + h * 0.78, (height - Math.min(bottom, 20)) / scale) -
+      labelHeight;
   return (
     <View pointerEvents="box-none" style={{ position: "absolute", inset: 0 }}>
-      <DesignSpace scale={scale} y={2360 - top / scale}>
-        <MaterialTray rect={[42, 2360, 1122, 160]} />
+      <DesignSpace scale={scale}>
+        {standardArt ? (
+          <DesignImage
+            rect={[left, top, w, h]}
+            source={standardArt.navigation}
+            crop={standardArt.navigationCrop}
+            radius={standardArt.navigationCrop ? 52 : 0}
+          />
+        ) : cityArt[theme.id]!.navigationFrame ? (
+          <DesignImage
+            rect={[left, top, w, h]}
+            source={cityArt[theme.id]!.navigationFrame!}
+          />
+        ) : (
+          <MaterialTray rect={[left, top, w, h]} />
+        )}
         {tabs.map(([label, id], index) => {
-          const x = 60 + index * 220,
-            selected = active === id;
+          const inset = w * 0.024;
+          const tabWidth = (w - 2 * inset) / tabs.length;
+          const x = left + inset + index * tabWidth;
+          const selected = active === id;
           return (
             <Fragment key={id}>
-              {selected && (
-                <DesignSurface
-                  rect={[x, 2371, 212, 137]}
-                  fill={theme.navSelectedLight}
-                  end={theme.navSelected}
-                  stroke={theme.highlight}
-                  radius={27}
-                  line={4}
-                />
-              )}
-              <ChromeSprite index={index} rect={[x + 67, 2372, 78, 78]} />
+              {standardArt &&
+                !standardArt.navigationBakedDividers &&
+                index > 0 && (
+                  <DesignSurface
+                    rect={[x - 2, top + 14, 4, h - 28]}
+                    fill="#2f130d"
+                    end="#4c2416"
+                  />
+                )}
+              {selected &&
+                (standardArt?.navigationSelected ? (
+                  <DesignImage
+                    source={standardArt.navigationSelected}
+                    rect={[x + 5, top + 7, tabWidth - 10, h - 14]}
+                  />
+                ) : (
+                  <DesignSurface
+                    rect={
+                      standardArt
+                        ? [x + 5, top + 7, tabWidth - 10, h - 14]
+                        : [x + 8, top + 9, tabWidth - 16, h - 24]
+                    }
+                    fill={theme.navSelectedLight}
+                    end={theme.navSelected}
+                    stroke={theme.highlight}
+                    radius={27}
+                    line={4}
+                  />
+                ))}
+              <ChromeSprite
+                index={index}
+                crop={standardArt ? belenyakaTabIcons[index] : undefined}
+                rect={[
+                  x + (tabWidth - iconSize) / 2,
+                  iconTop,
+                  iconSize,
+                  iconSize,
+                ]}
+              />
               <DesignText
-                rect={[x, 2450, 212, 51]}
+                rect={[x, labelTop, tabWidth, labelHeight]}
                 size={34}
                 bold
                 color={selected ? theme.navSelectedInk : "#fff0cb"}
                 align="center"
+                accessible={false}
               >
                 {label}
               </DesignText>
-              <DesignBox rect={[x, 2360, 212, 160]}>
+              <DesignBox rect={[x, top, tabWidth, h]}>
                 <Button
                   testID={"tab-" + id}
                   selected={selected}

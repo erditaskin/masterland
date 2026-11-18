@@ -11,7 +11,7 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:10),.completed)
     }
     func cell(_ i:Int)->XCUIElement {app.descendants(matching:.any).matching(identifier:"cell-\(i)").firstMatch}
-    func cells(named name:String)->[Int] {(0..<54).filter {cell($0).label == name}}
+    func cells(named name:String)->[Int] {(0..<63).filter {cell($0).exists && cell($0).label == name}}
     func mergePair(_ name:String) {
         let pair=cells(named:name);XCTAssertGreaterThanOrEqual(pair.count,2)
         guard pair.count>=2 else {return};drag(pair[0],pair[1])
@@ -70,7 +70,8 @@ final class MasterlandTests:XCTestCase {
                 id == "city1" ? marker.label == "Görsel inceleme" : marker.label.contains(name)
             },object:nil)
             XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:10),.completed)
-            XCTAssertEqual(cell(0).frame.width,cell(53).frame.height,accuracy:0.01)
+            XCTAssertEqual(cell(0).frame.height,cell(53).frame.height,accuracy:0.01)
+            XCTAssertEqual(cell(0).frame.width,cell(53).frame.width,accuracy:0.01)
             XCTAssertTrue(app.buttons["gold"].label.contains("750"))
             shot("theme-"+id+"-board")
             for tab in ["collection","storage","market","cities"] {
@@ -490,10 +491,11 @@ final class MasterlandTests:XCTestCase {
         for _ in 0..<5 {still.append(icon.frame.width)}
         XCTAssertLessThan(still.max()!-still.min()!,0.2)
         app.buttons["tab-cities"].tap()
-        let viewport=app.descendants(matching:.any).matching(identifier:"cityMapViewport").firstMatch
-        XCTAssertTrue(viewport.waitForExistence(timeout:5))
-        XCTAssertEqual(app.buttons["travelCity"].frame.minX,viewport.frame.minX,accuracy:1)
-        XCTAssertEqual(app.buttons["travelCity"].frame.maxX,viewport.frame.maxX,accuracy:1)
+        let firstCity=app.buttons["jump-city1"]
+        XCTAssertTrue(firstCity.waitForExistence(timeout:5))
+        XCTAssertTrue(firstCity.isHittable)
+        XCTAssertGreaterThanOrEqual(firstCity.frame.minX,app.frame.minX)
+        XCTAssertLessThanOrEqual(firstCity.frame.maxX,app.frame.maxX)
         XCTAssertGreaterThanOrEqual(app.buttons["closePage"].frame.width,44)
         shot("map-aligned-return-and-close")
         app.buttons["closePage"].tap();app.buttons["tab-collection"].tap()
@@ -530,7 +532,7 @@ final class MasterlandTests:XCTestCase {
         let initial = cell(0).frame
         for _ in 0..<8 {app.buttons["producer1"].tap()}
         energy("92")
-        let positions=(0..<54).filter {cell($0).label == "Buğday başağı"}
+        let positions=cells(named:"Buğday başağı")
         XCTAssertEqual(positions.count,8)
         for i in positions {
             if i % 6 < 5 {XCTAssertFalse(positions.contains(i+1))}
@@ -571,7 +573,7 @@ final class MasterlandTests:XCTestCase {
         let single=app.buttons.matching(NSPredicate(format:"identifier BEGINSWITH 'order-city1-repeat'" )).allElementsBoundByIndex.first(where: {$0.isHittable})!
         XCTAssertGreaterThan(app.buttons["order-quest28"].frame.width,single.frame.width*1.2)
         shot("multi-product-order-controls")
-        for i in 0..<54 {XCTAssertEqual(cell(i).frame.width,cell(i).frame.height,accuracy:0.5)}
+        for i in 0..<54 {XCTAssertEqual(cell(i).frame.width,cell(0).frame.width,accuracy:0.5);XCTAssertEqual(cell(i).frame.height,cell(0).frame.height,accuracy:0.5)}
         XCTAssertLessThan(app.buttons["profile-menu"].frame.maxY,app.buttons["order-quest28"].frame.minY)
     }
     func testMergeJourneyAndProducerPurchase(){
@@ -598,6 +600,14 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(cell(2).label,"Boş hücre")
         XCTAssertEqual(cell(17).label,"Buğday demeti")
         shot("held-selection-merge")
+    }
+    func testTapMergesNeighboringWheat() {
+        app.open(URL(string:"masterland://review")!)
+        XCTAssertTrue(app.buttons["order-quest26"].waitForExistence(timeout:10))
+        cell(0).tap()
+        cell(1).tap()
+        XCTAssertEqual(cell(0).label,"Boş hücre")
+        XCTAssertEqual(cell(1).label,"Buğday demeti")
     }
     func testTapMergeAndLockedTierExplanation(){
         app.open(URL(string:"masterland://review")!)
@@ -765,7 +775,7 @@ final class MasterlandTests:XCTestCase {
         cell(first).tap()
         XCTAssertEqual(cell(first).value as? String,"Seçili")
         XCTAssertEqual(cell(second).value as? String,"")
-        let frame=cell(first).frame;XCTAssertEqual(frame.width/frame.height,1.0,accuracy:0.015)
+        let frame=cell(first).frame;XCTAssertEqual(frame.width,frame.height,accuracy:0.01)
         cell(first).coordinate(withNormalizedOffset:CGVector(dx:0.5,dy:0.5)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0,dy:0)).withOffset(CGVector(dx:2,dy:frame.midY)))
         XCTAssertEqual(cell(first).label,"Buğday başağı");energy("98");drag(first,second);XCTAssertEqual(cell(second).label,"Buğday demeti");shot("rn-selection-and-merge")
     }
@@ -830,7 +840,7 @@ final class MasterlandTests:XCTestCase {
         XCTAssertFalse(app.buttons["producerRailNext"].exists)
         app.buttons["allOrders"].tap();XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5));app.buttons["closePage"].tap()
         let first=cell(0).frame,last=cell(53).frame
-        XCTAssertEqual(first.width/first.height,1.0,accuracy:0.015);XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
+        XCTAssertEqual(first.width,last.width,accuracy:0.5);XCTAssertEqual(first.height,last.height,accuracy:0.5);XCTAssertLessThan(last.maxY,app.buttons["tab-board"].frame.minY)
         let a=app.buttons["order-quest25"].frame,b=app.buttons["order-city1-repeat-0-0"].frame;XCTAssertEqual(a.width,b.width,accuracy:0.5)
         let end=app.buttons["order-city1-repeat-0-4"];for _ in 0..<3 where !end.isHittable {app.scrollViews.allElementsBoundByIndex.first(where:{$0.frame.minY<=a.midY && $0.frame.maxY>=a.midY})!.swipeLeft()};XCTAssertTrue(end.isHittable);shot("rn-geometry")
     }
@@ -851,10 +861,9 @@ final class MasterlandTests:XCTestCase {
         let data=try JSONSerialization.data(withJSONObject:values,options:[.prettyPrinted,.sortedKeys])
         let attachment=XCTAttachment(data:data,uniformTypeIdentifier:"public.json");attachment.name="visual-measurements.json";attachment.lifetime = .keepAlways;add(attachment)
         shot("masterland-v11-measured")
-        for frame in cellFrames { XCTAssertEqual(frame.width,frame.height,accuracy:0.5); XCTAssertEqual(frame.width,cellFrames[0].width,accuracy:0.5) }
+        for frame in cellFrames { XCTAssertEqual(frame.height,cellFrames[0].height,accuracy:0.5); XCTAssertEqual(frame.width,cellFrames[0].width,accuracy:0.5) }
         XCTAssertEqual(cell(0).frame.width,cell(53).frame.width,accuracy:0.5)
         XCTAssertEqual(cell(0).frame.height,cell(53).frame.height,accuracy:0.5)
-        XCTAssertEqual(cell(0).frame.width/cell(0).frame.height,1.0,accuracy:0.015)
         XCTAssertGreaterThanOrEqual(cell(0).frame.width,44)
         XCTAssertGreaterThanOrEqual(cell(0).frame.height,44)
     }
@@ -1086,6 +1095,7 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertTrue(app.buttons["producer1"].exists)
         app.buttons["producer1"].tap()
         XCTAssertTrue(app.buttons["stamina"].label.contains("74"))
+        capture("city1-all-producers-owned-after-produce")
         app.buttons["tab-market"].tap()
         XCTAssertTrue(app.buttons["exchange-energy25"].waitForExistence(timeout:5))
         app.buttons["exchange-energy25"].tap()
@@ -1102,6 +1112,485 @@ final class MasterlandPresentationTests:XCTestCase {
     func testLivePagesAtReferenceFixture() {
         captureViews(["collection", "storage", "storage-board-full", "market", "board", "cities", "account-guest", "account-registered", "collection-chain", "item", "producer-cooldown", "orders", "order-guide", "achievements", "achievement", "cloud-choice", "account-deletion", "energy"])
     }
+    func testReadableAccountFailureAndDeletionConsent() {
+        app.open(URL(string:"masterland://presentation-review/account-error")!)
+        let status = app.staticTexts["accountConnectionStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout:30))
+        XCTAssertTrue(status.isHittable)
+        app.open(URL(string:"masterland://presentation-review/account-deletion")!)
+        let warning = app.staticTexts["deletionWarning"]
+        XCTAssertTrue(warning.waitForExistence(timeout:10))
+        XCTAssertTrue(warning.label.contains("geri alınamaz"))
+        let deletion = app.buttons["confirmAccountDeletion"]
+        XCTAssertFalse(deletion.isEnabled)
+        let consent = app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
+        XCTAssertTrue(consent.exists)
+        consent.tap()
+        XCTAssertFalse(deletion.isEnabled)
+    }
+    func testApprovedSixColumnBoard() {
+        app.open(URL(string:"masterland://presentation-review/board")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:30))
+        func cellFrame(_ index:Int)->CGRect {
+            app.descendants(matching:.any).matching(identifier:"cell-\(index)").firstMatch.frame
+        }
+        let first = cellFrame(0)
+        for index in 0..<54 {
+            let f = cellFrame(index)
+            XCTAssertEqual(f.width,first.width,accuracy:0.34)
+            XCTAssertEqual(f.height,first.height,accuracy:0.34)
+        }
+        XCTAssertEqual(cellFrame(5).minY,first.minY,accuracy:0.01)
+        XCTAssertEqual(cellFrame(6).minX,first.minX,accuracy:0.01)
+        XCTAssertEqual(cellFrame(6).minY,first.maxY,accuracy:0.01)
+        XCTAssertFalse(app.buttons["cell-54"].exists)
+        let board = app.otherElements["mergeBoard"].frame
+        XCTAssertLessThan(board.minX,34)
+        XCTAssertLessThan(app.frame.maxX-board.maxX,34)
+        XCTAssertLessThan(board.maxY,app.buttons["tab-board"].frame.minY)
+        XCTAssertLessThan(app.buttons["producer1"].frame.maxY,board.minY)
+        let navigationClearance = app.frame.maxY - app.buttons["tab-board"].frame.maxY
+        XCTAssertEqual(navigationClearance, 40.0 / 3, accuracy: 1)
+        capture("city1-six-column-board")
+    }
+    func testBoardPixelCandidate() { captureViews(["board"]) }
+    func testBoardHasNoTestControls() {
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:20))
+        for identifier in ["testEnergyFill", "testGoldAdd", "testGemsAdd", "testLevelUp"] {
+            XCTAssertFalse(app.buttons[identifier].exists)
+        }
+    }
+    func testBelenyakaMultiProductOrdersAndPageBackdrop() {
+        app.open(URL(string:"masterland://presentation-review/board-mixed")!)
+        let one = app.buttons["order-presentation-rail-0"]
+        let two = app.buttons["order-presentation-rail-1"]
+        let three = app.buttons["order-presentation-rail-2"]
+        XCTAssertTrue(three.waitForExistence(timeout:20))
+        XCTAssertTrue(two.label.contains("Elma"))
+        XCTAssertTrue(three.label.contains("Süt"))
+        XCTAssertTrue(three.label.contains("Ekmek"))
+        XCTAssertEqual(two.frame.width / one.frame.width,1.25,accuracy:0.02)
+        XCTAssertEqual(three.frame.width / one.frame.width,1.5,accuracy:0.02)
+        XCTAssertLessThanOrEqual(three.frame.maxX,app.frame.maxX)
+        capture("city1-multi-product-order-rail")
+        app.buttons["allOrders"].tap()
+        XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:10))
+        XCTAssertTrue(app.staticTexts["İlan 2"].waitForExistence(timeout:5))
+        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "city1-repeat-")).firstMatch.exists)
+        capture("city1-all-orders-same-backdrop")
+    }
+
+    func testBelenyakaDragWithoutSelection() {
+        app.open(URL(string:"masterland://presentation-review/board")!)
+        XCTAssertTrue(app.buttons["producer1"].waitForExistence(timeout:20))
+        let from = app.buttons["cell-0"]
+        let to = app.buttons["cell-23"]
+        XCTAssertEqual(from.label,"Buğday başağı")
+        XCTAssertEqual(to.label,"Buğday başağı")
+        from.press(forDuration:0.1,thenDragTo:to)
+        XCTAssertEqual(from.label,"Boş hücre")
+        XCTAssertEqual(to.label,"Buğday demeti")
+    }
+
+    private func checkBoardStandard(_ view:String, readyOrder:String, readyCells:[Int], partialCell:Int,
+                                    from:Int, to:Int, blocked:Int, mergedLabel:String) {
+        app.open(URL(string:"masterland://presentation-review/\(view)")!)
+        let matching = app.descendants(matching:.any)
+        let hint = matching.matching(identifier:"idleMergeMotion").firstMatch
+        let order = app.buttons["order-\(readyOrder)"]
+        XCTAssertTrue(order.waitForExistence(timeout:20))
+        XCTAssertTrue(order.label.contains("Hazır"))
+        XCTAssertEqual(order.frame.minX, matching.matching(identifier:"orderRail").firstMatch.frame.minX, accuracy:1)
+        for index in readyCells {
+            XCTAssertTrue(matching.matching(identifier:"ready-order-cell-\(index)").firstMatch.exists)
+        }
+        XCTAssertTrue(matching.matching(identifier:"partial-order-cell-\(partialCell)").firstMatch.exists)
+        XCTAssertTrue(hint.waitForExistence(timeout:5))
+        capture(view + "-idle-and-order-states")
+        let source = app.buttons["cell-\(from)"]
+        let target = app.buttons["cell-\(to)"]
+        let wrong = app.buttons["cell-\(blocked)"]
+        let original = source.label
+        let unchanged = wrong.label
+        source.tap()
+        XCTAssertEqual(source.value as? String,"Seçili")
+        XCTAssertFalse(hint.exists)
+        let empty = app.buttons["cell-2"]
+        XCTAssertEqual(empty.label,"Boş hücre")
+        source.press(forDuration:0.1,thenDragTo:empty)
+        XCTAssertEqual(source.label,"Boş hücre")
+        XCTAssertEqual(empty.label,original)
+        empty.press(forDuration:0.1,thenDragTo:source)
+        XCTAssertEqual(empty.label,"Boş hücre")
+        source.press(forDuration:0.1,thenDragTo:wrong)
+        XCTAssertEqual(source.label,original)
+        XCTAssertEqual(wrong.label,unchanged)
+        source.press(forDuration:0.1,thenDragTo:target)
+        XCTAssertEqual(source.label,"Boş hücre")
+        XCTAssertEqual(target.label,mergedLabel)
+    }
+
+    func testBelenyakaBoardStandardParity() {
+        checkBoardStandard("board-mixed", readyOrder:"presentation-rail-0", readyCells:[0,5,14,23,34,46],
+                           partialCell:18, from:0, to:23, blocked:5, mergedLabel:"Buğday demeti")
+    }
+
+    func testBadincaBoardStandardParity() {
+        checkBoardStandard("badinca", readyOrder:"quest100", readyCells:[39],
+                           partialCell:0, from:6, to:7, blocked:0, mergedLabel:"Pembe pasta")
+    }
+
+    func testYalikoruBoardStandardParity() {
+        checkBoardStandard("yalikoru", readyOrder:"city3-repeat-0-0", readyCells:[0,5,14,19,20,35,36,48,51],
+                           partialCell:7, from:19, to:20, blocked:0, mergedLabel:"Balık ağı")
+    }
+
+    func testDemirdereAndIpekyoluStandardPreview() {
+        let scenarios = [
+            ("demirdere", "city4", "Demirdere", 18, "Cevher arabası", "profession8"),
+            ("ipekyolu", "city5", "İpekyolu", 23, "İpek topu", "profession10"),
+        ]
+        let elements = app.descendants(matching:.any)
+        for (view, cityID, city, first, merged, profession) in scenarios {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            let start = app.buttons["producer\(first)"]
+            let last = app.buttons["producer\(first+4)"]
+            XCTAssertTrue(start.waitForExistence(timeout:20))
+            for index in first...(first+4) {
+                XCTAssertTrue(app.buttons["producer\(index)"].isHittable)
+            }
+            XCTAssertTrue(elements.matching(identifier:"producer-clock-producer\(first+4)").firstMatch.exists)
+            XCTAssertEqual((start.frame.minX + last.frame.maxX) / 2, app.frame.midX, accuracy:1)
+            XCTAssertTrue(app.buttons["cell-53"].exists)
+            XCTAssertFalse(app.buttons["cell-54"].exists)
+            let board = elements.matching(identifier:"mergeBoard").firstMatch
+            let middleTab = app.buttons["tab-cities"]
+            XCTAssertEqual(middleTab.frame.midX, app.frame.midX, accuracy:1)
+            XCTAssertLessThan(board.frame.maxY, middleTab.frame.minY)
+            let orders = (0..<3).map { app.buttons["order-\(cityID)-repeat-0-\($0)"] }
+            XCTAssertTrue(orders[0].label.contains("Hazır"))
+            XCTAssertTrue(orders[1].label.contains("Hazır"))
+            XCTAssertEqual(orders[1].frame.width / orders[0].frame.width, 1.25, accuracy:0.02)
+            XCTAssertEqual(orders[2].frame.width / orders[0].frame.width, 1.5, accuracy:0.02)
+            XCTAssertTrue(elements.matching(identifier:"ready-order-cell-0").firstMatch.exists)
+            XCTAssertTrue(elements.matching(identifier:"ready-order-cell-1").firstMatch.exists)
+            XCTAssertTrue(elements.matching(identifier:"partial-order-cell-7").firstMatch.exists)
+            XCTAssertTrue(elements.matching(identifier:"idleMergeMotion").firstMatch.waitForExistence(timeout:5))
+            capture(view + "-shared-board")
+            let from = app.buttons["cell-0"]
+            let to = app.buttons["cell-1"]
+            let wrong = app.buttons["cell-5"]
+            let original = from.label
+            from.press(forDuration:0.1,thenDragTo:wrong)
+            XCTAssertEqual(from.label,original)
+            from.press(forDuration:0.1,thenDragTo:to)
+            XCTAssertEqual(from.label,"Boş hücre")
+            XCTAssertEqual(to.label,merged)
+            start.tap()
+            XCTAssertEqual(app.buttons["stamina"].label,"98")
+            app.buttons["allOrders"].tap()
+            XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+            capture(view + "-all-orders")
+            app.buttons["tab-board"].tap()
+            let hud = app.buttons["cityAchievementsHUD"]
+            XCTAssertTrue(hud.label.contains(city))
+            hud.tap()
+            XCTAssertTrue(app.buttons["achievement-\(cityID)-\(profession)-rank0"].waitForExistence(timeout:5))
+        }
+    }
+
+    func testPreviewTravelBetweenDemirdereAndIpekyolu() {
+        app.open(URL(string:"masterland://presentation-review/demirdere")!)
+        XCTAssertTrue(app.buttons["producer18"].waitForExistence(timeout:20))
+        let from = app.buttons["cell-0"]
+        from.press(forDuration:0.1,thenDragTo:app.buttons["cell-1"])
+        XCTAssertEqual(from.label,"Boş hücre")
+        func travel(_ id:String) {
+            app.buttons["tab-cities"].tap()
+            let button = app.buttons["travel-\(id)"]
+            let rail = app.descendants(matching:.any).matching(identifier:"cityRouteScroll").firstMatch
+            XCTAssertTrue(rail.waitForExistence(timeout:5))
+            if !button.isHittable { rail.swipeUp() }
+            XCTAssertTrue(button.isHittable)
+            button.tap()
+        }
+        travel("city5")
+        XCTAssertTrue(app.buttons["producer23"].waitForExistence(timeout:5))
+        travel("city4")
+        XCTAssertTrue(app.buttons["producer18"].waitForExistence(timeout:5))
+        XCTAssertEqual(from.label,"Boş hücre")
+    }
+
+    func testSharedMarketAndAccountLayout() {
+        for view in ["board", "badinca", "yalikoru", "demirdere", "ipekyolu"] {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            let profile = app.buttons["profile-menu"]
+            XCTAssertTrue(profile.waitForExistence(timeout:15))
+            app.buttons["tab-market"].tap()
+            XCTAssertTrue(app.buttons.matching(NSPredicate(format:"identifier BEGINSWITH %@", "exchange-")).firstMatch.waitForExistence(timeout:5))
+            capture(view + "-shared-market")
+            app.buttons["tab-board"].tap()
+            profile.tap()
+            let apple = app.buttons["signInApple"]
+            let google = app.buttons["signInGoogle"]
+            let facebook = app.buttons["signInFacebook"]
+            XCTAssertTrue(apple.waitForExistence(timeout:5))
+            XCTAssertTrue(google.isHittable)
+            XCTAssertTrue(facebook.isHittable)
+            XCTAssertLessThan(apple.frame.minY, google.frame.minY)
+            XCTAssertLessThan(google.frame.minY, facebook.frame.minY)
+            XCTAssertGreaterThan(app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.frame.minY, facebook.frame.maxY)
+            XCTAssertFalse(app.staticTexts["İlerlemeni buluta kaydet"].exists)
+            capture(view + "-shared-account")
+            app.buttons["closePage"].tap()
+        }
+        app.open(URL(string:"masterland://presentation-review/account-registered")!)
+        let signOut = app.buttons["accountSignOut"]
+        XCTAssertTrue(signOut.waitForExistence(timeout:15))
+        XCTAssertTrue(app.staticTexts["Ad soyad · Deniz Kaya"].exists)
+        XCTAssertTrue(app.staticTexts["E-posta · deniz@example.com"].exists)
+        XCTAssertTrue(app.staticTexts["Oturum yöntemi · Apple"].exists)
+        XCTAssertLessThan(signOut.frame.maxY, app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.frame.minY)
+        XCTAssertFalse(app.buttons["signInApple"].exists)
+        capture("shared-account-registered")
+    }
+
+    func testCityAchievementLocalization() {
+        let cities = [
+            ("board-mixed", "city1", "Belenyaka", "Meadowbrook", "profession1", "Çiftçi", "Farmer"),
+            ("badinca", "city2", "Badınca", "Baker’s Market", "profession5", "Pastacı", "Pastry Chef"),
+            ("yalikoru", "city3", "Yalıkoru", "Timberbay", "profession3", "Balıkçı", "Fisherman"),
+            ("demirdere", "city4", "Demirdere", "Ironvale", "profession8", "Madenci", "Miner"),
+            ("ipekyolu", "city5", "İpekyolu", "Silkford", "profession10", "Terzi", "Tailor"),
+        ]
+        func check(_ english:Bool) {
+            for (view, id, tr, en, professionID, professionTR, professionEN) in cities {
+                app.open(URL(string:"masterland://presentation-review/\(view)")!)
+                let hud = app.buttons["cityAchievementsHUD"]
+                XCTAssertTrue(hud.waitForExistence(timeout:15))
+                let title = english ? "\(en) Achievements" : "\(tr) Başarıları"
+                XCTAssertTrue(hud.label.contains(title), hud.label)
+                XCTAssertEqual(app.buttons["tab-board"].label, english ? "Board" : "Tahta")
+                capture(view + (english ? "-board-en" : "-board-tr"))
+                hud.tap()
+                let novice = app.buttons["achievement-\(id)-\(professionID)-rank0"]
+                let apprentice = app.buttons["achievement-\(id)-\(professionID)-rank1"]
+                let journeyman = app.buttons["achievement-\(id)-\(professionID)-rank2"]
+                XCTAssertTrue(novice.waitForExistence(timeout:5))
+                XCTAssertTrue(novice.label.contains(english ? "Novice \(professionEN)" : "Hevesli \(professionTR)"), novice.label)
+                XCTAssertTrue(apprentice.label.contains(english ? "Apprentice" : "Çırak"), apprentice.label)
+                XCTAssertTrue(journeyman.label.contains(english ? "Journeyman" : "Kalfa"), journeyman.label)
+                novice.tap()
+                let claim = app.buttons["claimAchievement"]
+                XCTAssertTrue(claim.waitForExistence(timeout:5))
+                XCTAssertEqual(claim.label, english ? "In progress" : "Devam ediyor")
+                capture(view + (english ? "-achievements-en" : "-achievements-tr"))
+                app.buttons["tab-board"].tap()
+            }
+        }
+        func switchLanguage(_ code:String) {
+            app.buttons["profile-menu"].tap()
+            let language = app.buttons["language-" + code]
+            if !language.isHittable { app.scrollViews.firstMatch.swipeUp() }
+            XCTAssertTrue(language.isHittable)
+            language.tap()
+            app.buttons["closePage"].tap()
+        }
+        app.open(URL(string:"masterland://presentation-review/yalikoru")!)
+        XCTAssertTrue(app.buttons["profile-menu"].waitForExistence(timeout:15))
+        switchLanguage("tr")
+        check(false)
+        switchLanguage("en")
+        check(true)
+        switchLanguage("tr")
+    }
+
+    func testStandardCityLayoutAndAchievementEntry() {
+        let cities = [
+            ("board-mixed", "city1", "Belenyaka", "producer1", "producer7", "profession1"),
+            ("badinca", "city2", "Badınca", "producer10", "producer14", "profession5"),
+            ("yalikoru", "city3", "Yalıkoru", "producer3", "producer17", "profession3"),
+        ]
+        for (view, cityID, cityName, firstID, lastID, professionID) in cities {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            let hud = app.buttons["cityAchievementsHUD"]
+            let first = app.buttons[firstID]
+            XCTAssertTrue(first.waitForExistence(timeout:20))
+            XCTAssertTrue(hud.label.contains(cityName))
+            XCTAssertGreaterThanOrEqual(hud.frame.minX,app.buttons["gems"].frame.maxX)
+            let last = app.buttons[lastID]
+            XCTAssertTrue(last.exists, lastID)
+            XCTAssertEqual((first.frame.minX + last.frame.maxX) / 2, app.frame.midX, accuracy:1)
+            let tabs = ["board","collection","cities","storage","market"].map { app.buttons["tab-" + $0].frame }
+            for frame in tabs {
+                XCTAssertEqual(frame.width,tabs[0].width,accuracy:0.5)
+            }
+            XCTAssertEqual(tabs[2].midX,app.frame.midX,accuracy:1)
+            capture(view + "-shared-navigation")
+            hud.tap()
+            let novice = app.buttons["achievement-\(cityID)-\(professionID)-rank0"]
+            XCTAssertTrue(novice.waitForExistence(timeout:5))
+            XCTAssertTrue(app.buttons["achievement-\(cityID)-\(professionID)-rank1"].exists)
+            XCTAssertTrue(app.buttons["achievement-\(cityID)-\(professionID)-rank2"].exists)
+            capture(view + "-achievements")
+            novice.tap()
+            let claim = app.buttons["claimAchievement"]
+            XCTAssertTrue(claim.waitForExistence(timeout:5))
+            XCTAssertFalse(claim.isEnabled)
+            app.buttons["closePage"].tap()
+            XCTAssertTrue(novice.waitForExistence(timeout:5))
+        }
+    }
+
+    func testYalikoruCombinedAchievementRequiresAllThreeProfessions() {
+        app.open(URL(string:"masterland://presentation-review/yalikoru")!)
+        let carpentry = app.buttons["order-city3-repeat-0-1"]
+        XCTAssertTrue(carpentry.waitForExistence(timeout:20))
+        carpentry.tap()
+        let hud = app.buttons["cityAchievementsHUD"]
+        let combo = app.buttons["achievement-city3-combo3-rank0"]
+        let claim = app.buttons["claimAchievement"]
+        hud.tap()
+        XCTAssertTrue(combo.waitForExistence(timeout:5))
+        XCTAssertTrue(combo.label.contains("Hevesli Denizci"))
+        combo.tap()
+        XCTAssertTrue(claim.waitForExistence(timeout:5))
+        XCTAssertFalse(claim.isEnabled)
+        app.buttons["tab-board"].tap()
+        let shipbuilding = app.buttons["order-city3-repeat-1-1"]
+        XCTAssertTrue(shipbuilding.waitForExistence(timeout:5))
+        shipbuilding.tap()
+        XCTAssertTrue(hud.label.contains("4 kazanım"))
+        hud.tap()
+        combo.tap()
+        XCTAssertTrue(claim.waitForExistence(timeout:5))
+        XCTAssertTrue(claim.isEnabled)
+        capture("yalikoru-combined-achievement-ready")
+        claim.tap()
+        let dismiss = app.buttons["dismissReward"]
+        if dismiss.waitForExistence(timeout:2) { dismiss.tap() }
+        XCTAssertFalse(claim.isEnabled)
+    }
+
+    func testYalikoruClaimLocalRankAndCityCardSpacing() {
+        app.open(URL(string:"masterland://presentation-review/yalikoru")!)
+        let delivery = app.buttons["order-city3-repeat-0-0"]
+        XCTAssertTrue(delivery.waitForExistence(timeout:20))
+        delivery.tap()
+        let hud = app.buttons["cityAchievementsHUD"]
+        XCTAssertTrue(hud.label.contains("1 kazanım"))
+        hud.tap()
+        app.buttons["achievement-city3-profession3-rank0"].tap()
+        let claim = app.buttons["claimAchievement"]
+        XCTAssertTrue(claim.waitForExistence(timeout:5))
+        XCTAssertTrue(claim.isEnabled)
+        claim.tap()
+        let dismiss = app.buttons["dismissReward"]
+        if dismiss.waitForExistence(timeout:2) { dismiss.tap() }
+        XCTAssertFalse(claim.isEnabled)
+        app.buttons["tab-cities"].tap()
+        let first = app.buttons["jump-city1"]
+        XCTAssertTrue(first.waitForExistence(timeout:5))
+        let second = app.buttons["jump-city2"]
+        XCTAssertGreaterThan(second.frame.minY - first.frame.minY, 110)
+        capture("city-card-spacing")
+    }
+
+    func testYalikoruStandardPreview() {
+        app.open(URL(string:"masterland://presentation-review/yalikoru")!)
+        XCTAssertTrue(app.buttons["producer17"].waitForExistence(timeout:20))
+        for id in ["producer3", "producer4", "producer15", "producer16", "producer17"] {
+            XCTAssertTrue(app.buttons[id].isHittable, id)
+        }
+        XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"producer-clock-producer17").firstMatch.exists)
+        let leftProducer = app.buttons["producer3"].frame
+        let rightProducer = app.buttons["producer17"].frame
+        XCTAssertEqual((leftProducer.minX + rightProducer.maxX) / 2, app.frame.midX, accuracy:1)
+        XCTAssertTrue(app.buttons["cell-53"].exists)
+        XCTAssertFalse(app.buttons["cell-54"].exists)
+        capture("yalikoru-board")
+        let rope = app.buttons["cell-19"]
+        let target = app.buttons["cell-20"]
+        XCTAssertTrue(rope.label.contains("Balıkçı ipi"))
+        rope.press(forDuration:0.1,thenDragTo:target)
+        XCTAssertEqual(rope.label,"Boş hücre")
+        XCTAssertEqual(target.label,"Balık ağı")
+        app.buttons["tab-cities"].tap()
+        XCTAssertTrue(app.buttons["jump-city3"].waitForExistence(timeout:5))
+        capture("yalikoru-cities")
+    }
+
+    func testBadincaDragMergesKnownNeighboringPieces() {
+        app.open(URL(string:"masterland://presentation-review/badinca")!)
+        XCTAssertTrue(app.buttons["producer14"].waitForExistence(timeout:20))
+        let source = app.buttons["cell-6"]
+        let target = app.buttons["cell-7"]
+        XCTAssertTrue(source.label.contains("Kremalı pasta"))
+        XCTAssertTrue(target.label.contains("Kremalı pasta"))
+        source.coordinate(withNormalizedOffset:CGVector(dx:0.3,dy:0.5))
+          .press(forDuration:0.12,thenDragTo:target.coordinate(withNormalizedOffset:CGVector(dx:0.7,dy:0.5)),withVelocity:.slow,thenHoldForDuration:0.85)
+        XCTAssertEqual(source.label,"Boş hücre")
+        XCTAssertEqual(target.label,"Pembe pasta")
+        let different = app.buttons["cell-0"]
+        let before = different.label
+        different.press(forDuration:0.1,thenDragTo:target)
+        XCTAssertEqual(different.label,before)
+        XCTAssertEqual(target.label,"Pembe pasta")
+    }
+
+    func testBadincaStandardAndAllProducerProducts() {
+        app.open(URL(string:"masterland://presentation-review/badinca")!)
+        XCTAssertTrue(app.buttons["producer10"].waitForExistence(timeout:20))
+        let chains = [("producer10", 126...132), ("producer11", 133...140), ("producer12", 141...149), ("producer13", 150...159), ("producer14", 160...166)]
+        for (id, _) in chains { XCTAssertTrue(app.buttons[id].isHittable, id) }
+        XCTAssertTrue(app.buttons["cell-53"].exists)
+        XCTAssertFalse(app.buttons["cell-54"].exists)
+        capture("badinca-board")
+        let firstOrder = app.buttons["order-quest100"]
+        let originalX = firstOrder.frame.minX
+        let railY = firstOrder.frame.midY / app.frame.height
+        app.coordinate(withNormalizedOffset:CGVector(dx:0.84,dy:railY)).press(forDuration:0.1,thenDragTo:app.coordinate(withNormalizedOffset:CGVector(dx:0.16,dy:railY)))
+        XCTAssertLessThan(firstOrder.frame.minX, originalX - 20)
+        app.buttons["producer10"].tap()
+        XCTAssertEqual(app.buttons["stamina"].label,"98")
+        for (id, itemIDs) in chains {
+            app.buttons[id].press(forDuration:0.7)
+            let details = app.buttons["powerProductDetails"]
+            XCTAssertTrue(details.waitForExistence(timeout:5), id)
+            details.tap()
+            XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+            for number in itemIDs {
+                let item = app.buttons["product-slot-item" + String(number)]
+                XCTAssertTrue(item.exists, "Missing product slot " + String(number))
+                XCTAssertTrue(item.label.contains("Açık"), "Missing discovered product " + String(number))
+            }
+            capture("badinca-" + id)
+            app.buttons["tab-board"].tap()
+            XCTAssertTrue(app.buttons[id].waitForExistence(timeout:5))
+        }
+        app.buttons["tab-cities"].tap()
+        XCTAssertTrue(app.buttons["jump-city2"].waitForExistence(timeout:5))
+        capture("badinca-cities")
+        app.buttons["tab-board"].tap()
+        XCTAssertTrue(app.buttons["producer10"].waitForExistence(timeout:5))
+    }
+
+    func testBelenyakaOrderWidths() {
+        for count in [3, 2] {
+            let view = count == 3 ? "board" : "board-two"
+            app.open(URL(string:"masterland://presentation-review/" + view)!)
+            let cards = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "order-presentation-rail-"))
+            let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _,_ in cards.count == count }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:20),.completed)
+            let first = cards.element(boundBy:0).frame
+            let last = cards.element(boundBy:count - 1).frame
+            XCTAssertEqual(first.width,last.width,accuracy:1)
+            XCTAssertEqual(last.maxX - first.minX,(Double(count) * 1092.0 / 3.75 + Double(count - 1) * 8) / 3,accuracy:2)
+            XCTAssertTrue(app.buttons["tab-board"].isHittable)
+            capture("city1-" + String(count) + "-orders")
+        }
+    }
+
     func testPixelRevisionCandidates() {
         captureViews(["storage", "market", "collection", "producer-cooldown", "achievement", "collection-chain"])
     }
@@ -1110,7 +1599,7 @@ final class MasterlandPresentationTests:XCTestCase {
             app.open(URL(string:"masterland://presentation-review/" + view)!)
             XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:30))
             let settled = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
-                self.app.buttons["gold"].label.contains("2.480")
+                self.app.buttons["gold"].label == (view == "board" ? "5" : "2.480")
             },object:nil)
             XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:10),.completed)
             if view.hasPrefix("storage") {

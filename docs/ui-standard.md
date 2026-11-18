@@ -1,5 +1,7 @@
 # ultima ana tahta standardı
 
+**Güncel şehir ekranı standardı** 18 Kasım 2026’da onaylanan [Belenyaka uygulama standardıdır](sehir-ekrani-standardi.md). Aşağıdaki eski tasarım sürümleri ve yerleşim kararları tarihçe olarak korunur.
+
 14 Kasım 2026. Güncel ekran standardı sürüm 6'dır. Skara Brae uygulaması `../assets/ui/ui-city1-v6.png` içindedir. Bu çalışma statik arayüz tasarımıdır; düğmeler henüz çalışan oyun koduna bağlı değildir.
 
 ## Kullanıcı tarafından belirlenen değişiklikler
@@ -222,3 +224,8 @@ Ana ekranın üretici rafı ve alt menüsündeki turkuaz zeminler kullanıcı is
 ## 16 Kasım son düzeltmesi
 
 Skara zemin teması canlı yeşil köydür; geniş toprak avlusu reddedilmiştir. Ahşap kabuk ve kare tahta korunur. Raf altı kutuya uygundur, yön okları taşmaya bağlıdır. Alt menü kütüğün içine oturur. Sağ şehir ayracı kaydırılan bölgeyi takip eder. Kısmi hazır koyu yeşil, tam hazır açık yeşil çerçeve ve çok hafif ortak glow ile belirtilir.
+
+
+## 17 Kasım 2026 — Şehre göre arayüz malzemesi
+
+Güncel sanat yönü [şehir görsel dili](sehir-gorsel-dili.md) belgesindedir. Şehir tabelası, ilan panosu, üretici rafı, tahta çerçevesi ve alt menü, onaylı şehir malzeme ailesine uyarlanır; bütün şehirlerde kütük kullanımı zorunlu değildir. Yerleşim, kare hücreler, dokunma alanları ve durum anlamları korunur. Belenyaka'da açık meşe/başak/az pirinç, yeşil köy ve bahçeler baskındır; deniz az ve ikincildir. Bu bölüm önceki genel ahşap kabuk yorumunu şehir bazında sınırlar; uygulamanın değiştirildiği anlamına gelmez.

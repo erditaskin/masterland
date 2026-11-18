@@ -5,6 +5,14 @@ import {
   type Save,
   type Order,
 } from "../game/engine";
+export function readyOrdersFirst<T extends Order>(input: T[], save: Save): T[] {
+  const ready: T[] = [],
+    waiting: T[] = [];
+  for (const order of input)
+    (canDeliver(save, order) ? ready : waiting).push(order);
+  return [...ready, ...waiting];
+}
+
 /** Keep the main order first; expose available production variety before duplicates. */
 export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
   if (input.length < 2) return input;
@@ -27,11 +35,7 @@ export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
     remaining.splice(remaining.indexOf(candidate), 1);
   }
   const ordered = [...result, ...remaining];
-  return save
-    ? ordered.sort(
-        (a, b) => Number(canDeliver(save, b)) - Number(canDeliver(save, a)),
-      )
-    : ordered;
+  return save ? readyOrdersFirst(ordered, save) : ordered;
 }
 
 /** Fulfilled individual requirements stay distinct from fully deliverable orders. */

@@ -2,7 +2,11 @@ import { RouteIcon } from "./Achievements";
 import { useEffect } from "react";
 import { View, useWindowDimensions } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
-import { type RewardNotice } from "../game/engine";
+import {
+  achievementName,
+  achievements,
+  type RewardNotice,
+} from "../game/engine";
 import { ActionButton, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
 import { PagePaper } from "./Skin";
@@ -17,6 +21,11 @@ export function RewardCelebration({
 }) {
   const { width, height } = useWindowDimensions();
   const small = notice.kind === "discovery";
+  const achievement =
+    notice.kind === "achievement"
+      ? achievements.find((entry) => notice.id === `achievement-${entry.id}`)
+      : undefined;
+  const title = achievement ? achievementName(achievement) : notice.title;
   useEffect(() => {
     if (!small) return;
     const timer = setTimeout(dismiss, 2000);
@@ -65,7 +74,7 @@ export function RewardCelebration({
             {notice.itemID && <Item id={notice.itemID} size={55} />}
             <View style={{ flex: 1 }}>
               <Label title size={18}>
-                {notice.title}
+                {title}
               </Label>
               <Label size={12}>{rewards}</Label>
             </View>
@@ -82,7 +91,7 @@ export function RewardCelebration({
               />
             )}
             <Label title size={25} style={{ textAlign: "center" }}>
-              {notice.title}
+              {title}
             </Label>
             {!!notice.message && (
               <Label size={13} style={{ textAlign: "center" }}>

@@ -1,0 +1,6 @@
+{
+  "tool": "built-in image_gen",
+  "alpha": "original RGBA alpha retained; transparent padding cropped at solid silhouette bounds",
+  "navigation_prompt": "One empty five-compartment honey oak navigation tray, rounded golden bevel, dark carved wood face, transparent outside, no icons/text/scenery.",
+  "shelf_prompt": "One empty honey oak tray, no internal divisions, supports five or six live producer controls, transparent outside, no icons/text/scenery."
+}

@@ -1,4 +1,12 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { accountText, languageStore } from "../i18n/locale";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { View } from "react-native";
 import { useIAP, finishTransaction, type Purchase } from "expo-iap";
 import {
@@ -165,13 +173,21 @@ export function Market({
   dispatch: (a: Action) => Result | null;
   onEnergy: () => void;
 }) {
+  const language = useSyncExternalStore(
+    languageStore.subscribe,
+    languageStore.get,
+  );
+  const format = new Intl.NumberFormat(language === "tr" ? "tr-TR" : "en-US");
   return (
     <DesignContent end={storeKitTestEnabled ? 4600 : 2220}>
       <DesignText rect={[90, 740, 1026, 108]} size={66} bold align="center">
         Gezginin Kesesi
       </DesignText>
       <DesignText rect={[90, 860, 1026, 85]} size={44} bold align="center">
-        {`${save.gold.toLocaleString("tr-TR")} altın       ${save.gems} elmas`}
+        {accountText(
+          `${format.format(save.gold)} altın · ${format.format(save.gems)} elmas`,
+          `${format.format(save.gold)} gold · ${format.format(save.gems)} gems`,
+        )}
       </DesignText>
       {exchanges.map((offer, i) => {
         const y = 990 + i * 420;

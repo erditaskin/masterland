@@ -1,10 +1,19 @@
 import { Fragment } from "react";
-import { count, orders, name, type Order, type Save } from "../game/engine";
+import { accountText } from "../i18n/locale";
+import {
+  canDeliver,
+  count,
+  orders,
+  name,
+  type Order,
+  type Save,
+} from "../game/engine";
 import { DesignContent } from "./DesignContent";
 import { DesignText } from "./DesignSpace";
 import { DesignItem } from "./BoardChrome";
 import { PaperCard } from "./PagePrimitives";
 import { AppButton } from "./Controls";
+import { readyOrdersFirst } from "./orderRail";
 
 export function OrdersPage({
   save,
@@ -17,23 +26,31 @@ export function OrdersPage({
   onGuide: (id: string) => void;
   items?: (Order & { title?: string })[];
 }) {
-  const list: (Order & { title?: string })[] = items ?? orders(save);
+  const list: (Order & { title?: string })[] = readyOrdersFirst(
+    items ?? orders(save),
+    save,
+  );
   return (
     <DesignContent end={750 + list.length * 600}>
       {list.map((order, index) => {
         const y = 730 + index * 600;
-        const ready = order.requirements.every(
-          (r) => count(save, r.item_id) >= r.quantity,
-        );
+        const ready = canDeliver(save, order);
         const step = 880 / Math.max(1, order.requirements.length);
+        const orderName = name(order.id);
+        const title =
+          order.title ??
+          (orderName === `${order.id}_name`
+            ? accountText(`İlan ${index + 1}`, `Order ${index + 1}`)
+            : orderName);
         return (
           <Fragment key={order.id}>
-            <PaperCard designRect={[90, y, 1026, 570]} selected={ready} />
+            <PaperCard
+              designRect={[90, y, 1026, 570]}
+              selected={ready}
+              variant="order"
+            />
             <DesignText rect={[125, y + 20, 950, 90]} size={57} bold>
-              {order.title ??
-                (name(order.id) === order.id
-                  ? `İlan ${index + 1}`
-                  : name(order.id))}
+              {title}
             </DesignText>
             {order.requirements.map((r, i) => {
               const x = 220 + i * step,

@@ -1,3 +1,4 @@
+import { playableBoard } from "../game/engine";
 import { View } from "react-native";
 import { Fragment, useState } from "react";
 import {
@@ -30,7 +31,7 @@ export function StoragePage({
   const [selectedID, setSelectedID] = useState<string | null>(null);
   const selectedIndex = c.storage.findIndex((t) => t.id === selectedID),
     selected = c.storage[selectedIndex];
-  const full = !c.board.some((t) => t === null),
+  const full = !playableBoard(save).includes(null),
     factor = 1 + (c.storageCapacity - 12) / 4;
   const extra = Math.max(0, Math.ceil(c.storageCapacity / 4) - 3) * 244;
   return (

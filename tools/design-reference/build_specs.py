@@ -5,7 +5,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "assets/references/device-v2"
+OUT = ROOT / "assets/references/device-v3"
 ART = ROOT / "mobile/assets/art"
 DATA = json.loads((ROOT / "data/content-reference.json").read_text())
 PALETTES = json.loads((OUT / "palettes.json").read_text())
@@ -110,7 +110,11 @@ class Screen:
         art = DATA["item_art"].get(item)
         if art:
             sheet = art["sheet"]
-            self.image(ART / ("skara-items-v2.png" if sheet == "skara" else "haven-items-v1.png"), x, y, size, size, BOUNDS[sheet][art["index"]], True)
+            if sheet == "candy":
+                bounds = json.loads((ART / "badinca/candy-bounds.json").read_text())
+                self.image(ART / "badinca/candy-items.png", x, y, size, size, bounds[art["index"]], True)
+            else:
+                self.image(ART / ("skara-items-v2.png" if sheet == "skara" else "haven-items-v1.png"), x, y, size, size, BOUNDS[sheet][art["index"]], True)
         elif item == "item50":
             self.image(ART / "flour-packet-v1.png", x, y, size, size, json.loads((ART / "flour-packet-v1-bounds.json").read_text()), True)
         else:
@@ -135,7 +139,8 @@ class Screen:
             self.rect(x, 157, width, 105, "#163749", "#071f2e", "#d8ae58", 46, 4)
             self.sprite(index, x - 4, 156, 103)
             self.text(value, x + 100, 162, width - 152, 92, 51, True, "#fff0c2", "center")
-            self.text("+", x + width - 48, 166, 44, 80, 40, False, "#edcb7b", "center")
+            self.rect(x + width - 53, 185, 42, 42, "#173e50", stroke="#d8ae58", radius=21, line=2)
+            self.text("+", x + width - 53, 182, 42, 48, 40, False, "#edcb7b", "center")
 
     def finish(self):
         self.clip = None
@@ -155,8 +160,11 @@ class Screen:
 def board(city):
     s = Screen(city, "board")
     s.plaque(CITY_NAMES[int(city[-1]) - 1], 270, 365, 666, 102)
-    s.button("Tümü", 48, 367, 198, "secondary", 100)
-    s.button("●", 1008, 367, 132, "secondary", 100)
+    s.button("Tümü⌄", 48, 367, 198, "secondary", 100)
+    profile = {"city1":"#086451","city2":"#a54149","city3":"#087a70","city4":"#176d60","city5":"#146e5e"}[city]
+    s.rect(1018, 365, 116, 116, profile, stroke="#e4b65d", radius=58, line=4)
+    s.rect(1060, 385, 33, 35, "#ffe7b0", radius=18)
+    s.rect(1041, 425, 72, 37, "#ffe7b0", radius=28)
     for i in range(3):
         x = 48 + i * 376
         s.card(x, 486, 358, 132, True)
@@ -191,7 +199,14 @@ def board(city):
     if city in ("city1", "city2"):
         ids = [g[t] for g, t in [(GROUPS[0], 0), (GROUPS[1], 0), (GROUPS[0], 1), (GROUPS[4], 0), (GROUPS[2], 0), (GROUPS[3], 0)]] if city == "city1" else [p["item_id"] for g in DATA["city2_opening_plan"]["producers"] for p in g["product_unlocks"][:2]]
         for index, position in enumerate(positions):
-            s.item(ids[index % len(ids)], x + position % 6 * cell + 9, y + position // 6 * cell + 9, 146)
+            item = ids[index % len(ids)]
+            # Explicit user amendment: fully ready order items retain their green cell treatment.
+            # The QA still frame has reduced motion enabled and pulse phase zero.
+            ready = city == "city1" and item in (GROUPS[0][0], GROUPS[2][0], GROUPS[4][0])
+            if ready:
+                hx, hy = x + position % 6 * cell + 4.5, y + position // 6 * cell + 4.5
+                s.add("order-highlight", [hx, hy, 155, 155], state="ready", pulse=0)
+            s.item(item, x + position % 6 * cell + 9, y + position // 6 * cell + 9, 146)
     else:
         reference = ROOT / "assets/concepts/city-refresh-v2" / (CONCEPTS[int(city[-1]) - 1] + "-approval-v1.png")
         original = {"city3": [(0,0),(5,0),(1,1),(3,1),(2,2),(4,2),(2,3),(5,3),(0,4),(4,4),(2,5),(5,5),(0,6),(4,6),(1,7),(0,8),(3,8),(5,8)], "city4": [(0,0),(5,0),(1,1),(4,1),(0,2),(3,2),(1,3),(4,3),(0,4),(3,4),(5,4),(0,5),(2,5),(1,6),(4,6),(3,7),(1,8),(5,8)], "city5": [(0,0),(5,0),(2,1),(1,2),(4,2),(0,3),(5,3),(1,4),(3,4),(0,5),(5,5),(2,6),(1,7),(4,7),(0,8),(2,8),(5,8)]}[city]

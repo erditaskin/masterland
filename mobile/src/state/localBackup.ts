@@ -1,6 +1,6 @@
 import { validateSave } from "../game/engine";
 
-export const PRE_CLOUD_BACKUP_KEY = "@masterland/pre-cloud-backup/v1";
+export const PRE_CLOUD_BACKUP_KEY = "@masterland/pre-cloud-backup/v2";
 
 type LocalStorage = {
   getItem: (key: string) => Promise<string | null>;

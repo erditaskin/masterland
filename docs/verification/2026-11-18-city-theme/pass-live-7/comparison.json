@@ -1,0 +1,15 @@
+{
+  "status": "not-accepted",
+  "target": "device-v2",
+  "results": [
+    {
+      "id": "city1-board",
+      "status": "pixel-mismatch",
+      "different_pixels": 2900,
+      "total_pixels": 3162132,
+      "identical_percent": 99.90828972351565,
+      "expected_sha256": "6dfdad6fb78cf9b2e9eff013b5c06dda8384b7cbafe2efd7391a8a3dcc9e40cc",
+      "actual_sha256": "41e70859dd5af213f57f1843c54321c7351ffc2298842ea9d7537b8227a22fcc"
+    }
+  ]
+}

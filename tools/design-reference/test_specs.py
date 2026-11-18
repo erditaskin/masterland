@@ -4,12 +4,18 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SET = ROOT / "assets/references/device-v2"
+SET = ROOT / "assets/references/device-v3"
 
 
 class DesignTargets(unittest.TestCase):
     def scene(self, name):
         return json.loads((SET / "specs" / (name + ".json")).read_text())
+
+    def test_user_approved_order_highlights_are_part_of_board_target(self):
+        highlights = [c for c in self.scene("city1-board")["commands"] if c["kind"] == "order-highlight"]
+        self.assertEqual(len(highlights), 9)
+        self.assertTrue(all(c["state"] == "ready" and c["pulse"] == 0 for c in highlights))
+        self.assertEqual(len({tuple(c["rect"]) for c in highlights}), 9)
 
     def test_deletion_is_not_a_guest_account_page(self):
         commands = self.scene("city1-account-deletion")["commands"]

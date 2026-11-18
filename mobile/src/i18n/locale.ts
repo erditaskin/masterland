@@ -34,3 +34,19 @@ export function chooseLanguage(
 export function accountText(tr: string, en: string): string {
   return current === "tr" ? tr : en;
 }
+
+export function cityAchievementsTitle(
+  city: string,
+  language = current,
+): string {
+  return language === "tr" ? `${city} Başarıları` : `${city} Achievements`;
+}
+
+export function earnedAchievementsLabel(
+  count: number,
+  language = current,
+): string {
+  return language === "tr"
+    ? `${count} kazanım`
+    : `${count} ${count === 1 ? "achievement" : "achievements"} earned`;
+}

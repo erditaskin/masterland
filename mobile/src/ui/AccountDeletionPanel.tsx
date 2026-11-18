@@ -23,6 +23,8 @@ export function AccountDeletionView({
   onVerify,
   onDelete,
   onCancel,
+  pending = false,
+  onCheck,
 }: {
   anonymous: boolean;
   providers: string[];
@@ -34,8 +36,11 @@ export function AccountDeletionView({
   onVerify: (provider: LoginProvider) => void;
   onDelete: () => void;
   onCancel: () => void;
+  pending?: boolean;
+  onCheck?: () => void;
 }) {
-  const extra = Math.max(0, providers.length - 1) * 160;
+  const shift = pending ? 200 : 0;
+  const extra = Math.max(0, providers.length - 1) * 160 + shift;
   return (
     <DesignContent
       end={message ? 2640 + extra : 2320 + extra}
@@ -53,6 +58,7 @@ export function AccountDeletionView({
       <PaperCard designRect={[90, 950, 1026, 370]} danger />
       <DesignText
         rect={[140, 980, 926, 300]}
+        testID="deletionWarning"
         size={56}
         bold
         color="#a93929"
@@ -62,9 +68,18 @@ export function AccountDeletionView({
           ? "Bu misafir hesabı ve bu cihazdaki ilerlemen kalıcı olarak silinecek.\nBu işlem geri alınamaz."
           : "Bulut hesabın ve bu cihazdaki ilerlemen silinecek.\nBu işlem geri alınamaz."}
       </DesignText>
-      <PaperCard designRect={[90, 1380, 1026, 260]} />
+      {pending && (
+        <AppButton
+          designRect={[90, 1370, 1026, 132]}
+          text="Silme talebi: sonucu kontrol et"
+          tone="secondary"
+          testID="checkDeletionStatus"
+          onPress={() => onCheck?.()}
+        />
+      )}
+      <PaperCard designRect={[90, 1380 + shift, 1026, 260]} />
       <AppCheckbox
-        designRect={[120, 1400, 945, 220]}
+        designRect={[120, 1400 + shift, 945, 220]}
         checkPosition="left"
         label="Hesabımı ve ilerlememi kalıcı olarak silmeyi onaylıyorum."
         testID="confirmAccountDeletionConsent"
@@ -74,7 +89,7 @@ export function AccountDeletionView({
       {providers.map((provider, index) => (
         <AppButton
           key={provider}
-          designRect={[90, 1720 + index * 160, 1026, 132]}
+          designRect={[90, 1720 + shift + index * 160, 1026, 132]}
           text={`${provider === "apple" ? "Apple" : provider === "google" ? "Google" : "Facebook"} ile yeniden doğrula`}
           disabled={!canVerify}
           onPress={() => onVerify(provider as LoginProvider)}
@@ -145,6 +160,10 @@ export function AccountDeletionPanel({ onCancel }: { onCancel: () => void }) {
   return (
     <View>
       <AccountDeletionView
+        pending={deletion.hasJournal}
+        onCheck={() => {
+          void deletionStore.recover();
+        }}
         anonymous={user.is_anonymous}
         providers={providers}
         confirmed={confirmed}
@@ -197,14 +216,6 @@ export function AccountDeletionPanel({ onCancel }: { onCancel: () => void }) {
             .finally(() => setBusy(false));
         }}
       />
-      {deletion.hasJournal && (
-        <AppButton
-          text={tx("Talep durumunu kontrol et", "Check request status")}
-          onPress={() => {
-            void deletionStore.recover();
-          }}
-        />
-      )}
     </View>
   );
 }

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Belenyaka · Katman önizlemesi</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #201b16; color: #f9eddb; font: 15px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 12px; padding: 12px; }
+  fieldset { margin: 0; border: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+  label { padding: 7px 13px; border-radius: 8px; background: #3a3026; cursor: pointer; }
+  label:has(:checked) { background: #79522a; }
+  input { accent-color: #e2b46e; vertical-align: middle; }
+  .phone { width: min(100%, 440px, max(255px, calc((100svh - 78px) * 0.46))); aspect-ratio: 1206 / 2622; position: relative; container-type: inline-size; overflow: hidden; border-radius: 9% / 4%; isolation: isolate; background: #f7eddf; }
+  .layer { position: absolute; pointer-events: none; }
+  .base { inset: 0; width: 100%; height: 100%; }
+  .orders { position: absolute; left: 7.13101%; top: 20.67124%; width: 85.90381%; height: 7.13196%; display: grid; gap: 1.15830%; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  main:has(#two:checked) .orders { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  main:has(#wide:checked) .orders { grid-template-columns: minmax(0, 392fr) minmax(0, 632fr); }
+  main:not(:has(#three:checked)) .order:nth-child(3), main:not(:has(#wide:checked)) .extra { display: none; }
+  .order { position: relative; display: flex; align-items: center; gap: 1cqw; padding: 1.1cqw 1.5cqw; color: #60350c; font: bold 3.25cqw Georgia, serif; }
+  .order::before { content: ""; position: absolute; inset: 0; border-style: solid; border-width: 3.23383cqw 4.06302cqw; border-image: url(uyarlanabilir/ilan-karti.png) 39 49 fill / 1 / 0 stretch; pointer-events: none; }
+  .product, .reward { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .product { width: 10cqw; gap: .2cqw; font-size: 2.85cqw; }
+  .product img { width: 100%; height: 8.8cqw; object-fit: contain; }
+  .reward { margin-left: auto; gap: .3cqw; line-height: 1.05; min-width: 11.45cqw; align-items: center; }
+  .give { display: grid; place-items: center; background: url(uyarlanabilir/ilan-ver-dugmesi.png) center / 100% 100% no-repeat; width: 11.45cqw; height: 3.98cqw; color: #fffde7; }
+  .coin { color: #ed9e0f; text-shadow: 0 .15cqw #ae6201; }
+  .xp { color: #057ebd; }
+  .home { position: absolute; left: 34%; right: 34%; bottom: 1.05%; height: .44%; border-radius: 999px; background: #221d15; opacity:.78; }
+  .live { position:absolute; display:flex; align-items:center; justify-content:center; pointer-events:none; font:bold 3.8cqw Georgia,serif; line-height:1; color:#fff1d5; text-shadow:0 .12cqw .17cqw #562e12; white-space:nowrap; }
+  .title { font-size:5.25cqw; }
+  .filter { font-size:3.05cqw; }
+  .plus { border: .12cqw solid #d3a44e; border-radius:50%; font:normal 3.1cqw system-ui; }
+  .profile::before, .profile::after { content:""; position:absolute; background:#ffebbd; }
+  .profile::before { width:46%; aspect-ratio:1; top:3%; border-radius:50%; }
+  .profile::after { width:96%; height:40%; bottom:8%; border-radius:100% 100% 8% 8%; }
+  .producer { border-radius:3cqw; border:.14cqw solid #dca83d; background:linear-gradient(#74440f,#4e2a08); font-size:2.7cqw; gap:.55cqw; }
+  .lock { display:inline-block; position:relative; width:1.45cqw; height:1.15cqw; margin-top:.35cqw; border-radius:.2cqw; background:#fff1d5; }
+  .lock::before { content:""; position:absolute; left:20%; right:20%; top:-55%; height:62%; border:.16cqw solid #fff1d5; border-radius:.6cqw .6cqw 0 0; }
+  .nav-name { font-size:2.9cqw; }
+  .selected-cell { border:.24cqw solid #83b845; border-radius:1.6cqw; background:#a6bf5366; }
+</style></head>
+<body><main>
+  <fieldset aria-label="İlan görünümü">
+    <label><input type="radio" name="orders" id="three" checked> 3 ilan</label>
+    <label><input type="radio" name="orders" id="two"> 2 ilan</label>
+    <label><input type="radio" name="orders" id="wide"> 2 ilan · geniş kart</label>
+  </fieldset>
+  <section class="phone" aria-label="Belenyaka oyun ekranı">
+    <img class="layer base" src="00-zemin.png" alt="">
+    <img class="layer" src="bos-yuzeyler/01-seviye.png" alt="" style="left:11.02819%;top:4.00458%;width:7.62852%;height:3.69947%">
+    <img class="layer" src="bos-yuzeyler/02-enerji.png" alt="" style="left:21.55887%;top:4.42410%;width:22.38806%;height:3.20366%">
+    <img class="layer" src="bos-yuzeyler/03-altin.png" alt="" style="left:45.60531%;top:4.42410%;width:22.05638%;height:3.24180%">
+    <img class="layer" src="bos-yuzeyler/04-elmas.png" alt="" style="left:69.40299%;top:4.46224%;width:21.89055%;height:3.16552%">
+    <img class="layer" src="bos-yuzeyler/05-filtre.png" alt="" style="left:8.95522%;top:16.66667%;width:16.00332%;height:3.66133%">
+    <img class="layer" src="bos-yuzeyler/06-belenyaka-tabelasi.png" alt="" style="left:29.02156%;top:16.17086%;width:44.69320%;height:4.00458%">
+    <img class="layer" src="bos-yuzeyler/07-profil.png" alt="" style="left:82.08955%;top:16.62853%;width:8.04312%;height:3.69947%">
+    <img class="layer" src="bos-yuzeyler/11-uretici-rafi.png" alt="" style="left:7.37977%;top:28.71854%;width:85.98673%;height:7.74218%">
+    <img class="layer" src="bos-yuzeyler/12-tahta.png" alt="" style="left:8.12604%;top:36.80397%;width:84.24544%;height:54.27155%">
+    <img class="layer" src="on-katmanlar/energy.png" alt="" style="left:23.05141%;top:4.50038%;width:4.89221%;height:3.12738%">
+    <img class="layer" src="on-katmanlar/gold.png" alt="" style="left:46.43449%;top:4.50038%;width:6.38474%;height:3.05111%">
+    <img class="layer" src="on-katmanlar/gem.png" alt="" style="left:69.90050%;top:4.50038%;width:7.13101%;height:3.12738%">
+    <span class="live level" style="left:11.60862%;top:5.03432%;width:3.23383%;height:2.13577%">1</span>
+    <span class="live wallet" style="left:31.34328%;top:4.84363%;width:4.80929%;height:2.25019%">99</span>
+    <span class="live wallet" style="left:56.71642%;top:4.84363%;width:4.80929%;height:2.25019%">5</span>
+    <span class="live wallet" style="left:80.84577%;top:4.84363%;width:4.80929%;height:2.25019%">0</span>
+    <span class="live plus" style="left:38.47430%;top:4.95805%;width:3.98010%;height:1.98322%">+</span>
+    <span class="live plus" style="left:62.27197%;top:4.95805%;width:3.98010%;height:1.98322%">+</span>
+    <span class="live plus" style="left:86.06965%;top:4.95805%;width:3.98010%;height:1.98322%">+</span>
+    <span class="live filter" style="left:9.03814%;top:16.89550%;width:15.33997%;height:3.12738%">Tümü ⌄</span>
+    <span class="live title" style="left:33.66501%;top:16.70481%;width:33.16750%;height:2.55530%">Belenyaka</span>
+    <span class="live profile" role="img" aria-label="Profil" style="left:84.16252%;top:17.27689%;width:4.06302%;height:2.28833%"></span>
+    <img class="layer" src="on-katmanlar/uretici-1.png" alt="" style="left:12.93532%;top:29.21434%;width:14.34494%;height:4.42410%">
+    <span class="live producer" style="left:12.93532%;top:33.48589%;width:14.34494%;height:1.86880%">⚡ 1</span>
+    <img class="layer" src="on-katmanlar/uretici-2.png" alt="" style="left:29.10448%;top:29.21434%;width:13.59867%;height:4.42410%">
+    <span class="live producer" style="left:29.10448%;top:33.48589%;width:13.59867%;height:1.86880%"><span class="lock" aria-label="Kilitli"></span> Lv.2</span>
+    <img class="layer" src="on-katmanlar/uretici-3.png" alt="" style="left:44.69320%;top:29.21434%;width:13.76451%;height:4.42410%">
+    <span class="live producer" style="left:44.69320%;top:33.48589%;width:13.76451%;height:1.86880%"><span class="lock" aria-label="Kilitli"></span> Lv.2</span>
+    <img class="layer" src="on-katmanlar/uretici-4.png" alt="" style="left:60.44776%;top:29.21434%;width:13.84743%;height:4.42410%">
+    <span class="live producer" style="left:60.44776%;top:33.48589%;width:13.84743%;height:1.86880%"><span class="lock" aria-label="Kilitli"></span> Lv.3</span>
+    <img class="layer" src="on-katmanlar/uretici-5.png" alt="" style="left:76.20232%;top:29.21434%;width:14.17910%;height:4.42410%">
+    <span class="live producer" style="left:76.20232%;top:33.48589%;width:14.17910%;height:1.86880%"><span class="lock" aria-label="Kilitli"></span> Lv.4</span>
+    <span class="live selected-cell" style="left:63.59867%;top:78.71854%;width:13.26700%;height:5.75896%" aria-hidden="true"></span>
+    <img class="layer" src="on-katmanlar/tahta-0.png" alt="" style="left:10.36484%;top:38.02441%;width:12.43781%;height:5.41571%">
+    <img class="layer" src="on-katmanlar/tahta-1.png" alt="" style="left:23.96352%;top:38.02441%;width:12.18905%;height:5.41571%">
+    <img class="layer" src="on-katmanlar/tahta-2.png" alt="" style="left:77.61194%;top:38.02441%;width:12.43781%;height:5.41571%">
+    <img class="layer" src="on-katmanlar/tahta-3.png" alt="" style="left:23.96352%;top:43.93593%;width:12.18905%;height:5.49199%">
+    <img class="layer" src="on-katmanlar/tahta-4.png" alt="" style="left:37.31343%;top:49.96186%;width:12.27197%;height:5.37757%">
+    <img class="layer" src="on-katmanlar/tahta-5.png" alt="" style="left:64.26202%;top:49.96186%;width:12.18905%;height:5.37757%">
+    <img class="layer" src="on-katmanlar/tahta-6.png" alt="" style="left:10.36484%;top:55.87338%;width:12.43781%;height:5.37757%">
+    <img class="layer" src="on-katmanlar/tahta-7.png" alt="" style="left:50.66335%;top:55.87338%;width:12.43781%;height:5.37757%">
+    <img class="layer" src="on-katmanlar/tahta-8.png" alt="" style="left:77.61194%;top:55.87338%;width:12.43781%;height:5.37757%">
+    <img class="layer" src="on-katmanlar/tahta-9.png" alt="" style="left:23.96352%;top:67.62014%;width:12.18905%;height:5.22502%">
+    <img class="layer" src="on-katmanlar/tahta-10.png" alt="" style="left:64.26202%;top:67.62014%;width:12.18905%;height:5.22502%">
+    <img class="layer" src="on-katmanlar/tahta-11.png" alt="" style="left:23.96352%;top:73.37910%;width:12.18905%;height:5.07246%">
+    <img class="layer" src="on-katmanlar/tahta-12.png" alt="" style="left:50.66335%;top:73.37910%;width:12.43781%;height:5.07246%">
+    <img class="layer" src="on-katmanlar/tahta-13.png" alt="" style="left:64.26202%;top:78.94737%;width:12.18905%;height:5.26316%">
+    <img class="layer" src="on-katmanlar/tahta-14.png" alt="" style="left:77.61194%;top:84.70633%;width:12.43781%;height:5.18688%">
+    <img class="layer" src="bos-yuzeyler/13-alt-menu.png" alt="" style="left:8.70647%;top:91.95271%;width:83.49917%;height:6.14035%">
+    <img class="layer" src="on-katmanlar/menu-1.png" alt="" style="left:14.67662%;top:92.41037%;width:6.63350%;height:3.08924%">
+    <span class="live nav-name" style="left:10.36484%;top:95.19451%;width:15.25705%;height:1.94508%">Tahta</span>
+    <img class="layer" src="on-katmanlar/menu-2.png" alt="" style="left:31.50912%;top:92.41037%;width:7.04809%;height:3.08924%">
+    <span class="live nav-name" style="left:27.40464%;top:95.19451%;width:15.25705%;height:1.94508%">Koleksiyon</span>
+    <img class="layer" src="on-katmanlar/menu-3.png" alt="" style="left:48.25871%;top:92.41037%;width:6.46766%;height:3.08924%">
+    <span class="live nav-name" style="left:43.86401%;top:95.19451%;width:15.25705%;height:1.94508%">Şehirler</span>
+    <img class="layer" src="on-katmanlar/menu-4.png" alt="" style="left:64.75954%;top:92.41037%;width:6.71642%;height:3.08924%">
+    <span class="live nav-name" style="left:60.48922%;top:95.19451%;width:15.25705%;height:1.94508%">Depo</span>
+    <img class="layer" src="on-katmanlar/menu-5.png" alt="" style="left:80.18242%;top:92.41037%;width:7.62852%;height:3.08924%">
+    <span class="live nav-name" style="left:76.36816%;top:95.19451%;width:15.25705%;height:1.94508%">Market</span>
+    <section class="orders" aria-label="İlanlar"><article class="order" aria-label="1. ilan"><div class="product"><img src="uyarlanabilir/bugday.png" alt="Buğday"><span>1/1</span></div><div class="reward"><span class="give">Ver ✓</span><span><b class="coin">●</b> 13</span><span><b class="xp">XP</b> 3</span></div></article><article class="order" aria-label="2. ilan"><div class="product"><img src="uyarlanabilir/bugday.png" alt="Buğday"><span>1/1</span></div><div class="product extra"><img src="uyarlanabilir/bugday.png" alt="Buğday"><span>1/1</span></div><div class="reward"><span class="give">Ver ✓</span><span><b class="coin">●</b> 13</span><span><b class="xp">XP</b> 3</span></div></article><article class="order" aria-label="3. ilan"><div class="product"><img src="uyarlanabilir/bugday.png" alt="Buğday"><span>1/1</span></div><div class="reward"><span class="give">Ver ✓</span><span><b class="coin">●</b> 13</span><span><b class="xp">XP</b> 3</span></div></article></section>
+    <div class="home" aria-hidden="true"></div>
+  </section>
+</main></body></html>

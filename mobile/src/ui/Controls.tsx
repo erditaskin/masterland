@@ -1,3 +1,4 @@
+import { centeredHitRect } from "./layout";
 import { displayText } from "../i18n/display";
 import { languageStore } from "../i18n/locale";
 import { I18nText as Text } from "./I18nText";
@@ -18,7 +19,6 @@ import { colors, fonts, parchment } from "./theme";
 import { useCityTheme } from "./CityThemeProvider";
 import { semanticColors } from "./cityTheme";
 import {
-  DesignSpace,
   DesignSurface,
   DesignText,
   useDesignRect,
@@ -77,6 +77,7 @@ export function Button({
   selected,
   role = "button",
   checked,
+  feedbackFrame,
 }: {
   children: React.ReactNode;
   onPress: () => void;
@@ -88,6 +89,13 @@ export function Button({
   selected?: boolean;
   role?: AccessibilityRole;
   checked?: boolean;
+  feedbackFrame?: {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    borderRadius: number;
+  };
 }) {
   const language = useSyncExternalStore(
     languageStore.subscribe,
@@ -122,13 +130,29 @@ export function Button({
     >
       <Animated.View
         style={{
-          opacity,
+          opacity: feedbackFrame ? undefined : opacity,
           alignItems: "center",
           justifyContent: "center",
           flex: 1,
         }}
       >
         {children}
+        {feedbackFrame && (
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              { position: "absolute", backgroundColor: "#000000" },
+              feedbackFrame,
+              {
+                opacity: opacity.interpolate({
+                  inputRange: [0.84, 1],
+                  outputRange: [0.16, 0],
+                  extrapolate: "clamp",
+                }),
+              },
+            ]}
+          />
+        )}
       </Animated.View>
     </Pressable>
   );
@@ -212,6 +236,7 @@ export function AppButton({
   style,
   disabled = false,
   designRect,
+  selected,
 }: {
   text: string;
   onPress: () => void;
@@ -220,10 +245,14 @@ export function AppButton({
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
   designRect?: DesignRect;
+  selected?: boolean;
 }) {
   const theme = useCityTheme();
   const space = useDesignSpace();
-  const placement = useDesignRect(designRect ?? [0, 0, 0, 0]);
+  const hit = designRect
+    ? centeredHitRect(designRect, space.scale)
+    : ([0, 0, 0, 0] as const);
+  const placement = useDesignRect(hit);
   const primary = tone === "primary";
   const fill = disabled
     ? semanticColors.disabled
@@ -236,7 +265,7 @@ export function AppButton({
       ? theme.primaryLight
       : theme.paperLight;
   if (designRect) {
-    const [, , w, h] = designRect;
+    const [x, y, w, h] = designRect;
     const ink = disabled
       ? "#f5f4ef"
       : primary
@@ -245,41 +274,49 @@ export function AppButton({
           ? semanticColors.danger
           : theme.ink;
     return (
-      <Button
-        label={text}
-        testID={testID}
-        onPress={onPress}
-        disabled={disabled}
-        style={[placement, style]}
-      >
-        <DesignSpace scale={space.scale}>
-          <View pointerEvents="none" style={{ position: "absolute", inset: 0 }}>
-            <DesignSurface rect={[0, 6, w, h]} fill="#9c6e38" radius={h / 2} />
-            <DesignSurface
-              rect={[0, 0, w, h]}
-              fill={disabled ? "#d0d1cd" : top}
-              end={fill}
-              stroke={theme.edge}
-              radius={h / 2}
-            />
-            <DesignSurface
-              rect={[6, 6, w - 12, h - 12]}
-              stroke="#fff0c5"
-              radius={h / 2 - 6}
-              line={2}
-            />
-            <DesignText
-              rect={[18, 4, w - 36, h - 8]}
-              size={44}
-              bold
-              color={ink}
-              align="center"
-            >
-              {text}
-            </DesignText>
-          </View>
-        </DesignSpace>
-      </Button>
+      <>
+        <DesignSurface rect={[x, y + 6, w, h]} fill="#9c6e38" radius={h / 2} />
+        <DesignSurface
+          rect={designRect}
+          fill={disabled ? "#d0d1cd" : top}
+          end={fill}
+          stroke={theme.edge}
+          radius={h / 2}
+        />
+        <DesignSurface
+          rect={[x + 6, y + 6, w - 12, h - 12]}
+          stroke="#fff0c5"
+          radius={h / 2 - 6}
+          line={2}
+        />
+        <DesignText
+          rect={[x + 18, y + 4, w - 36, h - 8]}
+          size={44}
+          bold
+          color={ink}
+          align="center"
+          accessible={false}
+        >
+          {text}
+        </DesignText>
+        <Button
+          label={text}
+          testID={testID}
+          onPress={onPress}
+          disabled={disabled}
+          selected={selected}
+          style={[placement, style]}
+          feedbackFrame={{
+            left: (x - hit[0]) * space.scale,
+            top: (y - hit[1]) * space.scale,
+            width: w * space.scale,
+            height: h * space.scale,
+            borderRadius: (h * space.scale) / 2,
+          }}
+        >
+          <View />
+        </Button>
+      </>
     );
   }
   return (
@@ -288,6 +325,7 @@ export function AppButton({
       testID={testID}
       onPress={onPress}
       disabled={disabled}
+      selected={selected}
       style={[
         paperButtonSurface,
         {
@@ -344,51 +382,62 @@ export function AppCheckbox({
   checkPosition?: "left" | "right";
 }) {
   const theme = useCityTheme();
-  const space = useDesignSpace(),
-    placement = useDesignRect(designRect ?? [0, 0, 0, 0]);
-  if (designRect)
+  const space = useDesignSpace();
+  const hit = designRect
+    ? centeredHitRect(designRect, space.scale)
+    : ([0, 0, 0, 0] as const);
+  const placement = useDesignRect(hit);
+  if (designRect) {
+    const [x, y] = designRect;
+    const left = checkPosition === "left",
+      box: DesignRect = left ? [x, y + 50, 75, 75] : [x + 830, y + 15, 72, 72];
     return (
-      <Button
-        label={label}
-        role="checkbox"
-        checked={checked}
-        testID={testID}
-        onPress={onChange}
-        style={placement}
-      >
-        <DesignSpace scale={space.scale}>
+      <>
+        <DesignText
+          rect={left ? [x + 115, y, 830, 220] : [x, y, 770, 105]}
+          size={left ? 45 : 44}
+          accessible={false}
+        >
+          {label}
+        </DesignText>
+        <DesignSurface
+          rect={box}
+          fill={theme.paperLight}
+          stroke={theme.edge}
+          radius={10}
+        />
+        {checked && (
           <DesignText
-            rect={
-              checkPosition === "left" ? [115, 0, 830, 220] : [0, 0, 770, 105]
-            }
-            size={checkPosition === "left" ? 45 : 44}
+            rect={left ? [x - 5, y + 45, 84, 84] : [x + 825, y + 10, 84, 84]}
+            size={61}
+            bold
+            color="#34852b"
+            align="center"
+            accessible={false}
           >
-            {label}
+            ✓
           </DesignText>
-          <DesignSurface
-            rect={
-              checkPosition === "left" ? [0, 50, 75, 75] : [830, 15, 72, 72]
-            }
-            fill={theme.paperLight}
-            stroke={theme.edge}
-            radius={10}
-          />
-          {checked && (
-            <DesignText
-              rect={
-                checkPosition === "left" ? [-5, 45, 84, 84] : [825, 10, 84, 84]
-              }
-              size={61}
-              bold
-              color="#34852b"
-              align="center"
-            >
-              ✓
-            </DesignText>
-          )}
-        </DesignSpace>
-      </Button>
+        )}
+        <Button
+          label={label}
+          role="checkbox"
+          checked={checked}
+          testID={testID}
+          onPress={onChange}
+          style={placement}
+          feedbackFrame={{
+            left: (box[0] - hit[0]) * space.scale,
+            top: (box[1] - hit[1]) * space.scale,
+            width: box[2] * space.scale,
+            height: box[3] * space.scale,
+            borderRadius: 10 * space.scale,
+          }}
+        >
+          <View />
+        </Button>
+      </>
     );
+  }
   return (
     <Button
       label={label}

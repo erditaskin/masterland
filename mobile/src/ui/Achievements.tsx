@@ -3,9 +3,11 @@ import { DesignText } from "./DesignSpace";
 import { DesignProgress } from "./DesignProgress";
 import { ChromeSprite } from "./GameChrome";
 import { View } from "react-native";
-import reference from "../../../data/content-reference.json";
 import {
+  achievementName,
   achievementProgress,
+  achievementProfessionNames,
+  achievementRequirementProgress,
   achievementState,
   achievements,
   name,
@@ -14,6 +16,7 @@ import {
   type Result,
   type Save,
 } from "../game/engine";
+import { accountText, contentText } from "../i18n/locale";
 import { Crop } from "./Art";
 import { ActionButton } from "./Controls";
 import { PaperCard } from "./PagePrimitives";
@@ -74,9 +77,34 @@ export function AchievementDetails({
     );
   const state = achievementState(save, a),
     progress = Math.min(a.target, achievementProgress(save, a));
-  const locale: Record<string, string> = reference.locales.tr;
+  const requirementText =
+    a.metric === "city_mastery_combo"
+      ? achievementProfessionNames(a)
+          .map((profession, index) => {
+            const requirement = a.requirements![index]!;
+            return `${profession} ${Math.min(requirement.target, achievementRequirementProgress(save, a, requirement))}/${requirement.target}`;
+          })
+          .join(" · ")
+      : null;
+  const details =
+    a.metric === "city_mastery_profession"
+      ? accountText(
+          `${name(a.city_id)} şehrinde bu mesleğe ait ${a.target} ilan teslim et.`,
+          `Deliver ${a.target} orders for this profession in ${name(a.city_id)}.`,
+        )
+      : a.metric === "city_mastery_combo"
+        ? accountText(
+            "Şehrin tüm mesleklerinde bu seviyeye ulaş.",
+            "Reach this rank in every profession in the city.",
+          )
+        : contentText(a.id + "_description");
   const reward = [
-    a.reward.title ? name(a.reward.title) + " unvanı" : null,
+    a.reward.title
+      ? accountText(
+          `${name(a.reward.title)} unvanı`,
+          `${name(a.reward.title)} title`,
+        )
+      : null,
     a.reward.gold ? `+${a.reward.gold} altın` : null,
     a.reward.gems ? `+${a.reward.gems} elmas` : null,
     a.reward.energy ? `+${a.reward.energy} enerji` : null,
@@ -86,13 +114,24 @@ export function AchievementDetails({
     .join("\n");
   return (
     <DesignContent end={2510}>
-      <ChromeSprite index={6} rect={[375, 760, 456, 456]} />
-      <DesignText rect={[90, 1245, 1026, 135]} size={80} bold align="center">
-        {name(a.id)}
+      <ChromeSprite index={6} rect={[435, 750, 336, 336]} />
+      <DesignText
+        rect={[90, 1110, 1026, 135]}
+        size={80}
+        bold
+        fit
+        align="center"
+      >
+        {achievementName(a)}
       </DesignText>
       <DesignText rect={[130, 1400, 946, 150]} size={45} align="center">
-        {description ?? locale[a.id + "_description_tr"]}
+        {description ?? details}
       </DesignText>
+      {requirementText && (
+        <DesignText rect={[130, 1534, 946, 44]} size={37} fit align="center">
+          {requirementText}
+        </DesignText>
+      )}
       <DesignProgress
         rect={[126, 1580, 954, 52]}
         value={progress}

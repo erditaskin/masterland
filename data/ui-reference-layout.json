@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "authority": "Original user-approved city panoramas, reiterated with close-up screenshots on 2026-11-18. Derived device targets are diagnostic only until audited.",
+  "viewport_policy": {
+    "add_side_letterbox": false,
+    "stretch_artwork": false,
+    "acceptance": "Original art and proportions require visual verification; passing tests is not acceptance."
+  },
+  "base": {
+    "board_cell_pitch": [
+      1,
+      1
+    ],
+    "producer_tile": [
+      84,
+      87
+    ],
+    "grid": [
+      7,
+      9
+    ]
+  },
+  "cities": {
+    "city1": {
+      "source": "assets/concepts/city-refresh-v2/01-belenyaka-approval-v1.png",
+      "source_sha256": "85b43b52f25fc59cd8f31f37cd138d8c06b8ea88ccd111f6e15ccc98c71e32d4",
+      "panel_ltrb": [
+        19,
+        74,
+        535,
+        1340
+      ],
+      "regions_ltrb": {
+        "hud": [
+          47,
+          126,
+          520,
+          172
+        ],
+        "heading": [
+          153,
+          281,
+          420,
+          329
+        ],
+        "orders": [
+          32,
+          337,
+          525,
+          425
+        ],
+        "producer_shelf": [
+          27,
+          436,
+          530,
+          536
+        ],
+        "board": [
+          31,
+          542,
+          523,
+          1226
+        ],
+        "navigation": [
+          34,
+          1246,
+          525,
+          1328
+        ]
+      },
+      "measurement_status": "Initial pixel measurements from original source; full device acceptance remains open."
+    }
+  },
+  "approved_device_design": {
+    "source": "assets/references/approved-belenyaka-20261118/source.png",
+    "source_size": [
+      784,
+      2007
+    ],
+    "board": [
+      4,
+      707,
+      776,
+      1121
+    ],
+    "navigation": [
+      8,
+      1860,
+      769,
+      138
+    ],
+    "city_heading": [
+      181,
+      291,
+      420,
+      79
+    ],
+    "order_filter": [
+      22,
+      303,
+      140,
+      62
+    ],
+    "account": [
+      676,
+      301,
+      70,
+      70
+    ],
+    "orders": [
+      15,
+      384,
+      754,
+      132
+    ],
+    "producer_shelf": [
+      5,
+      536,
+      774,
+      168
+    ],
+    "producer_inner": [
+      37,
+      540,
+      718,
+      152
+    ],
+    "wallet": {
+      "level": [
+        98,
+        91,
+        58,
+        62
+      ],
+      "energy": [
+        165,
+        100,
+        160,
+        48
+      ],
+      "gold": [
+        335,
+        100,
+        161,
+        48
+      ],
+      "gems": [
+        505,
+        100,
+        161,
+        48
+      ]
+    },
+    "frame_inset_source": 20,
+    "grid": [
+      7,
+      9
+    ],
+    "safe_area_policy": "Keep artwork full bleed; keep HUD below top safe inset; navigation labels stay above the home indicator.",
+    "source_grid": [
+      6,
+      9
+    ],
+    "retain_existing_item_atlas": true,
+    "save_policy": "New v3 local namespace; no legacy player-data migration; full launch reset is separate.",
+    "producer_slots": [
+      [
+        37,
+        540,
+        138,
+        152
+      ],
+      [
+        180,
+        540,
+        137,
+        152
+      ],
+      [
+        325,
+        540,
+        140,
+        152
+      ],
+      [
+        469,
+        540,
+        141,
+        152
+      ],
+      [
+        614,
+        540,
+        141,
+        152
+      ]
+    ]
+  }
+}

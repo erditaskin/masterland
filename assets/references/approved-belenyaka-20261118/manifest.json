@@ -1,0 +1,21 @@
+{
+  "source_approved": true,
+  "approval": "User: tamam bro bu tasarım uygun buna koşalım; aynısını istiyorum bro iphoneda",
+  "source_pixel_size": [
+    784,
+    2007
+  ],
+  "source_sha256": "e8cf9f35f926966a7c8dd2c683dfa29c42b837e0bf8b520b3701003c1d77a2a4",
+  "device_target_pixels": [
+    1206,
+    2622
+  ],
+  "device_reference_approved": false,
+  "implementation_accepted": false,
+  "policy": "The approved artwork is immutable. Source-art approval is not a claim of native pixel equivalence. No later generated image silently replaces this source.",
+  "user_amendments": [
+    "Use existing item atlas without changing item artwork",
+    "7 columns, 9 rows, 63 square cells",
+    "No effort preserving or migrating prelaunch saves; clean start"
+  ]
+}

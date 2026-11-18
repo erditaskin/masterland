@@ -69,3 +69,11 @@ Arkadaşlar dış grubu ve bir testçi eklenmiştir. 0.2.0 (2) Apple beta incele
 ## Güncel parşömen kontrolleri
 
 Parşömen içindeki yeni kontrolleri `mobile/src/ui/Controls.tsx` içindeki AppButton/AppCheckbox/AppInput/AppChoice/AppCloseButton/AppProgress ve `theme.ts` parchment tokenlarıyla kurun. Yeni bir native Switch veya farklı renkte kopya eylem butonu eklemeyin. İki ürünlü ilanlar artık daha geniştir; sabit üç eşit kart kararı tarihçedir. Test altın/elmas düğmeleri yalnız test modu içindir, XP veya gerçek satın alma kaydı üretmez.
+
+## Ortak şehir ekranı standardı
+
+Şehir ekranını etkileyen bir davranış veya yerleşim değişikliğini ortak bileşende uygulayın ve tüm oynanabilir şehirlerde doğrulayın. Şehre özel kod, şehir verisi ve görsel varlıklarla sınırlıdır. Üretici rafı ölçüleri, eşit ve ortalanmış alt menü yuvaları, şehir kartı aralığı, cüzdan ve Başarılar girişi ortak kalır. Yeni şehir aynı tahta, ilan ve başarı akışını kullanır. Bir şehrin gerektirdiği düzeltmeyi diğer oynanabilir şehirlerde simülatörde kontrol etmeden tamamlandı olarak bildirmeyin. Ölçüler ve kabul adımları için `docs/sehir-ekrani-standardi.md` dosyasını kullanın.
+
+Yeni şehirde metinleri ve erişilebilirlik etiketlerini Türkçe ve İngilizce simülatör kontrollerinden geçirin. Onaylı şehir, üretici, ürün ve başarı adlarını atlasın TR/EN kaynak verisiyle karşılaştırın. Başarı basamakları, ödüller, tahta durumları ve üretici etiketleri ortak bileşenlerin yerelleştirmesinden gelir. Üretici durum bandı kartın altına sabitlenir ve portrenin en fazla küçük bir alt bölümünü örter. Bu maddeler yeni şehir için tekrar talep beklenmeden uygulanır.
+
+Şehir ustalığında meslek, üretici ve birleşik unvan eşlemeleri `data/content-reference.json` içindeki ortak şehir uzmanlığı verisinden gelir. Her yerel mesleği, yedi seviyeyi ve her seviyedeki birleşik unvanı yeni şehir için doğrulayın. Aynı şehrin tüm meslekleri eşiğe gelmeden birleşik ödül açılamaz.

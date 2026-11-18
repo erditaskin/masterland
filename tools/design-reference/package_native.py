@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / "assets/references/device-v2"
+SOURCE = ROOT / "assets/references/device-v3"
 OUT = ROOT / "mobile/qa/reference"
 OUT.mkdir(parents=True, exist_ok=True)
 assets = json.loads((SOURCE / "source-assets.json").read_text())

@@ -31,6 +31,8 @@ interface Command {
   crop?: Rect;
   fit?: boolean;
   previewOnly?: boolean;
+  state?: "ready" | "partial";
+  pulse?: number;
 }
 interface Scene {
   id: string;
@@ -78,6 +80,22 @@ function Layer({
         ]}
       />
     );
+  } else if (c.kind === "order-highlight") {
+    const ready = c.state === "ready";
+    const unit = 3 * scale;
+    content = <View style={[style, {
+      borderRadius: 8 * unit,
+      backgroundColor: ready ? "rgba(123, 158, 68, 0.15)" : "rgba(45, 86, 31, 0.28)",
+      backgroundImage: ready ? "linear-gradient(135deg, rgba(91, 139, 49, 0.24) 0%, rgba(150, 184, 88, 0.08) 50%, rgba(91, 139, 49, 0.24) 100%)" : undefined,
+      borderWidth: (ready ? 1.1 : 0.6) * unit,
+      borderColor: ready ? "#a3d969" : "rgba(57, 89, 35, 0.5)",
+    }]}>
+      {ready && <View style={{position:"absolute",inset:0,borderRadius:7*unit,borderWidth:2*unit,borderColor:"#bfff8e",shadowColor:"#9bdd65",shadowOpacity:0.28,shadowRadius:3*unit,shadowOffset:{width:0,height:0},opacity:0.25+(c.pulse??0)*0.5}} />}
+      {[0,1,2,3].map(corner=><View key={corner} style={{position:"absolute",width:12*unit,height:12*unit,left:corner%2===0?unit:undefined,right:corner%2===1?unit:undefined,top:corner<2?unit:undefined,bottom:corner>=2?unit:undefined,transform:[{rotate:["0deg","90deg","270deg","180deg"][corner]!}]}}>
+        <View style={{position:"absolute",left:0,top:0,width:10*unit,height:10*unit,borderTopWidth:unit,borderLeftWidth:unit,borderTopLeftRadius:7*unit,borderColor:"rgba(71, 112, 34, 0.58)"}} />
+        <View style={{position:"absolute",left:3*unit,top:3*unit,width:3*unit,height:5*unit,borderTopLeftRadius:3*unit,borderBottomRightRadius:3*unit,backgroundColor:"rgba(112, 144, 48, 0.46)",transform:[{rotate:"-45deg"}]}} />
+      </View>)}
+    </View>;
   } else if (c.kind === "image") {
     const source = sources[c.file!]!;
     const meta = Image.resolveAssetSource(source);

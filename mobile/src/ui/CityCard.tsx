@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { View, type ImageSourcePropType } from "react-native";
 import { AppButton, Button } from "./Controls";
+import { standardArtForCity } from "./standardCityArt";
 import { PaperCard } from "./PagePrimitives";
 import { useCityTheme } from "./CityThemeProvider";
 import {
@@ -43,9 +44,9 @@ export const CityCard = memo(function CityCard({
       <DesignSpace scale={scale} x={72} y={712}>
         <PaperCard designRect={[90, 716, 1026, 312]} selected={current} />
         <DesignImage
-          source={scene}
+          source={(id === "city2" && standardArtForCity(id)?.scene) || scene}
           rect={[105, 731, 540, 282]}
-          crop={[0, 130, 789, 430]}
+          crop={id === "city2" ? [0, 130, 1206, 630] : [0, 130, 789, 430]}
           radius={25}
         />
         <DesignBox rect={[105, 731, 540, 282]}>
@@ -65,7 +66,13 @@ export const CityCard = memo(function CityCard({
         <DesignText
           rect={[670, 816, 415, 48]}
           size={36}
-          color={current ? "#34852b" : theme.mutedInk}
+          color={
+            current
+              ? id !== "city1"
+                ? theme.primary
+                : "#34852b"
+              : theme.mutedInk
+          }
         >
           {status}
         </DesignText>

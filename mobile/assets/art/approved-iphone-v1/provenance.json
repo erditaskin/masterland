@@ -1,0 +1,68 @@
+{
+  "source": "assets/references/approved-belenyaka-20261118/source.png",
+  "source_sha256": "e8cf9f35f926966a7c8dd2c683dfa29c42b837e0bf8b520b3701003c1d77a2a4",
+  "operation": "unchanged source crops",
+  "regions_ltrb": {
+    "city1-cell": [
+      273,
+      731,
+      391,
+      849
+    ],
+    "city1-frame": [
+      4,
+      707,
+      780,
+      1828
+    ],
+    "city1-heading": [
+      181,
+      291,
+      601,
+      370
+    ],
+    "city1-filter-tr": [
+      22,
+      303,
+      162,
+      365
+    ],
+    "city1-account": [
+      676,
+      301,
+      746,
+      371
+    ],
+    "city1-producer-field": [
+      46,
+      549,
+      167,
+      641
+    ],
+    "city1-producer-mill": [
+      187,
+      549,
+      310,
+      641
+    ],
+    "city1-producer-oven": [
+      334,
+      549,
+      457,
+      641
+    ],
+    "city1-producer-barn": [
+      479,
+      549,
+      601,
+      641
+    ],
+    "city1-producer-orchard": [
+      623,
+      549,
+      746,
+      641
+    ]
+  },
+  "frame_cap_source_pixels": 22
+}

@@ -1,4 +1,11 @@
 import {
+  BOARD_COLUMNS,
+  BOARD_CAPACITY,
+  BOARD_LAYOUT_VERSION,
+  boardCapacity,
+  boardColumns,
+} from "./grid";
+import {
   recordDelivery,
   deliveryProgress,
   validDeliveryProgress,
@@ -58,7 +65,12 @@ const data = reference as unknown as {
   city1_opening_plan: { producers: PlanRow[]; intro_quests: QuestRow[] };
   city2_opening_plan: { producers: PlanRow[]; intro_quests: QuestRow[] };
 };
-export const name = contentName;
+export function name(id: string): string {
+  const rank = rankedTitleNames.get(id);
+  return rank
+    ? `${contentName(rank.rankID)} ${contentName(rank.subjectID)}`
+    : contentName(id);
+}
 const plans = [data.city1_opening_plan, data.city2_opening_plan];
 export const producers: Producer[] = plans
   .flatMap((plan, cityIndex) =>
@@ -83,8 +95,39 @@ export const producers: Producer[] = plans
       price: a.gold_cost,
     })),
   }));
+// Preview producers run the normal engine and live only in isolated review saves.
+const previewPlans = Object.entries(reference.city_preview_producers).flatMap(
+  ([cityID, chains]) => chains.map((chain) => ({ cityID, chain })),
+);
+const previewProducers: Producer[] = previewPlans.map(
+  ({ cityID, chain: [id, ...items] }, index) => ({
+    id: id!,
+    get name() {
+      return name(id!);
+    },
+    cityID,
+    level: 1,
+    price: 0,
+    products: items.map((item, tier) => ({
+      id: item,
+      get name() {
+        return name(item);
+      },
+      producer: producers.length + index,
+      tier: tier + 1,
+      level: 1,
+      price: 0,
+    })),
+  }),
+);
+export const producerCatalog = [...producers, ...previewProducers];
 export const products = producers.flatMap((p) => p.products);
-export const product = (id: string) => products.find((p) => p.id === id)!;
+const productCatalog = new Map(
+  producerCatalog.flatMap((p) =>
+    p.products.map((item) => [item.id, item] as const),
+  ),
+);
+export const product = (id: string) => productCatalog.get(id)!;
 const mapQuest = (q: QuestRow): Order => ({
   id: q.id,
   requirements: q.requirements,
@@ -97,7 +140,7 @@ export const intro: Order[] =
 export const cityIntro = (s: Save) =>
   plans[Number(s.cityID.slice(4)) - 1]?.intro_quests.map(mapQuest) ?? [];
 export const cityProducers = (s: Save) =>
-  producers.filter((p) => p.cityID === s.cityID);
+  producerCatalog.filter((p) => p.cityID === s.cityID);
 export const cityRules = reference.city_economy;
 export const cityRule = (id: string) => cityRules.find((r) => r.id === id);
 export interface RewardNotice {
@@ -113,9 +156,9 @@ export interface RewardNotice {
   xp: number;
 }
 export function newCity(id: string): City {
-  const first = producers.find((p) => p.cityID === id)!;
+  const first = producerCatalog.find((p) => p.cityID === id)!;
   return {
-    board: Array(54).fill(null),
+    board: Array(BOARD_CAPACITY).fill(null),
     storage: [],
     storageCapacity: 12,
     owned: [first.id],
@@ -142,6 +185,7 @@ export interface City {
 }
 export interface Save {
   schema: 2;
+  boardLayoutVersion?: 2;
   progressionVersion?: 2;
   testOnly?: boolean;
   xp: number;
@@ -188,6 +232,7 @@ export const levelRange = (s: Save) => {
 export function fresh(now: number): Save {
   return {
     schema: 2,
+    boardLayoutVersion: BOARD_LAYOUT_VERSION,
     progressionVersion: 2,
     ...(testModeEnabled ? { testOnly: true } : {}),
     xp: 0,
@@ -203,7 +248,7 @@ export function fresh(now: number): Save {
     cityID: "city1",
     cities: {
       city1: {
-        board: Array(54).fill(null),
+        board: Array(BOARD_CAPACITY).fill(null),
         storage: [],
         storageCapacity: 12,
         owned: [producers[0]!.id],
@@ -221,8 +266,12 @@ export function fresh(now: number): Save {
 function tile(s: Save, item: string): Tile {
   return { id: "tile-" + ++s.serial, item };
 }
+// The serialized board keeps its existing width for compatibility with the save API.
+export const playableBoard = (s: Save): City["board"] =>
+  city(s).board.slice(0, boardCapacity(s.cityID));
 export const count = (s: Save, id: string) =>
-  [...city(s).board, ...city(s).storage].filter((t) => t?.item === id).length;
+  [...playableBoard(s), ...city(s).storage].filter((t) => t?.item === id)
+    .length;
 export function orders(s: Save): Order[] {
   const c = city(s),
     l = level(s),
@@ -231,7 +280,7 @@ export function orders(s: Save): Order[] {
   if (
     opening &&
     opening.requirements.every((r) =>
-      c.owned.includes(producers[product(r.item_id).producer]!.id),
+      c.owned.includes(producerCatalog[product(r.item_id).producer]!.id),
     )
   )
     result.push(opening);
@@ -259,7 +308,7 @@ export function orders(s: Save): Order[] {
       )!,
       m =
         s.mastery[
-          p.producer === 0 || p.producer === 4 ? "profession1" : "profession2"
+          producerProfession.get(producerCatalog[p.producer]!.id) ?? ""
         ] ?? 0,
       q = 1 + Math.min(2, Math.floor(l / 5));
     const different = available.filter((item) => item.producer !== p.producer);
@@ -465,20 +514,125 @@ export interface Achievement {
     title?: string;
   };
 }
-export const achievements = reference.achievements as Achievement[];
+const producerProfession = new Map(
+  reference.city_specialties.flatMap((city) =>
+    city.professions.flatMap((profession) =>
+      profession.producer_ids.map(
+        (producer) => [producer, profession.id] as const,
+      ),
+    ),
+  ),
+);
+const rankedTitleNames = new Map<
+  string,
+  { rankID: string; subjectID: string }
+>();
+const legacyCityRanks = cityRules.flatMap((city) =>
+  reference.city_delivery_ranks.map((rank): Achievement => ({
+    id: `${city.id}-delivery-${rank.id}`,
+    city_id: city.id,
+    enabled: false,
+    kind: "title",
+    metric: "retired",
+    target: rank.target,
+    subject_id: null,
+    reward: rank.reward,
+  })),
+);
+const specialtyAchievements = reference.city_specialties.flatMap((city) =>
+  reference.city_delivery_ranks.flatMap((rank) => {
+    const requirements: DeliveryRequirement[] = city.professions.map(
+      (profession) => ({
+        metric: "delivery_orders",
+        producer_ids: profession.producer_ids,
+        match: "any",
+        target: rank.target,
+      }),
+    );
+    return [
+      ...city.professions.map((profession, index) => ({
+        id: profession.id,
+        requirements: [requirements[index]!],
+        combined: false,
+      })),
+      { id: city.combo_id, requirements, combined: true },
+    ].map((subject): Achievement => {
+      const id = `${city.city_id}-${subject.id}-${rank.id}`;
+      rankedTitleNames.set(id, { rankID: rank.id, subjectID: subject.id });
+      return {
+        id,
+        city_id: city.city_id,
+        enabled: true,
+        kind: "title",
+        metric: subject.combined
+          ? "city_mastery_combo"
+          : "city_mastery_profession",
+        target: subject.combined ? requirements.length : rank.target,
+        subject_id: subject.id,
+        profession_id: subject.combined ? undefined : subject.id,
+        rank_id: rank.id,
+        requirements: subject.requirements,
+        reward: { ...rank.reward, title: id },
+      };
+    });
+  }),
+);
+export const achievements: Achievement[] = [
+  ...(reference.achievements as Achievement[]),
+  ...specialtyAchievements,
+  ...legacyCityRanks,
+];
+
+export function achievementName(a: Achievement) {
+  return name(a.id);
+}
+
+export function cityAchievements(cityID: string) {
+  return achievements.filter(
+    (entry) => entry.city_id === cityID && entry.enabled,
+  );
+}
+
+export function achievementRequirementProgress(
+  s: Save,
+  a: Achievement,
+  requirement: DeliveryRequirement,
+) {
+  return deliveryProgress(
+    s.deliveryProgress,
+    a.city_id,
+    requirement,
+    (id) => producerCatalog[product(id)?.producer]?.id,
+  );
+}
+
+export function achievementProfessionNames(a: Achievement): string[] {
+  return (
+    reference.city_specialties.find((city) => city.city_id === a.city_id)
+      ?.professions ?? []
+  ).map((profession) => name(profession.id));
+}
+
 export function achievementProgress(s: Save, a: Achievement): number {
   const c = s.cities[a.city_id];
   if (!c) return 0;
   if (a.requirements?.length) {
+    if (a.metric === "city_mastery_combo")
+      return a.requirements.filter(
+        (requirement) =>
+          achievementRequirementProgress(s, a, requirement) >=
+          requirement.target,
+      ).length;
+    if (a.metric === "city_mastery_profession")
+      return Math.min(
+        a.target,
+        achievementRequirementProgress(s, a, a.requirements[0]!),
+      );
     const ratio = Math.min(
       ...a.requirements.map((requirement) =>
         requirement.target > 0
-          ? deliveryProgress(
-              s.deliveryProgress,
-              a.city_id,
-              requirement,
-              (id) => producers[product(id)?.producer]?.id,
-            ) / requirement.target
+          ? achievementRequirementProgress(s, a, requirement) /
+            requirement.target
           : 0,
       ),
     );
@@ -492,12 +646,12 @@ export function achievementProgress(s: Save, a: Achievement): number {
     case "discoveries":
       return s.discoveries.filter(
         (id) =>
-          producers[product(id).producer] &&
-          c.owned.includes(producers[product(id).producer]!.id),
+          producerCatalog[product(id).producer] &&
+          c.owned.includes(producerCatalog[product(id).producer]!.id),
       ).length;
     case "producer_discoveries":
       return s.discoveries.filter(
-        (id) => producers[product(id).producer]?.id === a.subject_id,
+        (id) => producerCatalog[product(id).producer]?.id === a.subject_id,
       ).length;
     case "item":
       return a.subject_id && s.discoveries.includes(a.subject_id) ? 1 : 0;
@@ -527,7 +681,8 @@ export function achievementState(s: Save, a: Achievement) {
         r.target < 1 ||
         !r.producer_ids.length ||
         r.producer_ids.some(
-          (id) => producers.find((p) => p.id === id)?.cityID !== a.city_id,
+          (id) =>
+            producerCatalog.find((p) => p.id === id)?.cityID !== a.city_id,
         ),
     )
   )
@@ -535,12 +690,7 @@ export function achievementState(s: Save, a: Achievement) {
   if (a.requirements?.length)
     return a.requirements.every(
       (requirement) =>
-        deliveryProgress(
-          s.deliveryProgress,
-          a.city_id,
-          requirement,
-          (id) => producers[product(id)?.producer]?.id,
-        ) >= requirement.target,
+        achievementRequirementProgress(s, a, requirement) >= requirement.target,
     )
       ? "ready"
       : "progress";
@@ -591,15 +741,16 @@ export function advance(s: Save, now: number): Save {
 export function productionCell(
   board: City["board"],
   random = Math.random,
+  columns = BOARD_COLUMNS,
 ): number {
   const empty = board.flatMap((tile, i) => (tile ? [] : [i]));
   const spaced = empty.filter(
     (i) =>
       ![
-        i - 6,
-        i + 6,
-        ...(i % 6 ? [i - 1] : []),
-        ...(i % 6 < 5 ? [i + 1] : []),
+        i - columns,
+        i + columns,
+        ...(i % columns ? [i - 1] : []),
+        ...(i % columns < columns - 1 ? [i + 1] : []),
       ].some((n) => n >= 0 && n < board.length && board[n] !== null),
   );
   const candidates = spaced.length ? spaced : empty;
@@ -612,11 +763,13 @@ export function transition(
   action: Action,
   now: number,
   diamond = () => Math.random() < 0.1,
+  allowPreviewTravel = false,
 ): Result {
   const base = advance(original, now);
   if (action.type === "tick") return { state: base, kind: "none", message: "" };
   const s = copySave(base),
     c = city(s);
+  const capacity = boardCapacity(s.cityID);
   const blocked = (message: string): Result => ({
     state: base,
     kind: "blocked",
@@ -671,7 +824,11 @@ export function transition(
     }
     case "travel": {
       const rule = cityRule(action.id);
-      if (!rule?.enabled) return blocked("Bu şehir hazırlanıyor.");
+      if (
+        !rule ||
+        (!rule.enabled && !(allowPreviewTravel && s.cities[action.id]))
+      )
+        return blocked("Bu şehir hazırlanıyor.");
       if (action.id === s.cityID) return blocked("");
       if (!s.cities[action.id]) {
         if (level(s) < rule.level)
@@ -727,7 +884,7 @@ export function transition(
         return blocked("Bugünkü reklam ödüllerin tamamlandı.");
       s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
       if (action.producerID) {
-        const p = producers.find(
+        const p = producerCatalog.find(
           (p) => p.id === action.producerID && p.cityID === action.cityID,
         );
         const target = action.cityID ? s.cities[action.cityID] : null;
@@ -763,12 +920,16 @@ export function transition(
       );
     }
     case "produce": {
-      const p = producers.find((p) => p.id === action.id);
+      const p = producerCatalog.find((p) => p.id === action.id);
       if (!p || !c.owned.includes(p.id))
         return blocked("Önce bu üreticiyi aç.");
       if ((c.batches[p.id]?.readyAt ?? 0) > now)
         return blocked("Üretici hazırlanıyor.");
-      const i = productionCell(c.board);
+      const i = productionCell(
+        playableBoard(s),
+        Math.random,
+        boardColumns(s.cityID),
+      );
       if (i < 0) return blocked("Tahta dolu. Birleştir veya depoya gönder.");
       const plan = productionPlan(s, p);
       if (
@@ -792,7 +953,7 @@ export function transition(
       return done("produce", plan.product.name, undefined, i);
     }
     case "power": {
-      const p = producers.find((p) => p.id === action.id);
+      const p = producerCatalog.find((p) => p.id === action.id);
       if (
         !p ||
         !c.owned.includes(p.id) ||
@@ -814,7 +975,7 @@ export function transition(
       );
     }
     case "producer-refill": {
-      const p = producers.find((p) => p.id === action.id);
+      const p = producerCatalog.find((p) => p.id === action.id);
       if (
         !p ||
         !c.owned.includes(p.id) ||
@@ -848,7 +1009,7 @@ export function transition(
       s.rewardQueue!.push({
         id: "achievement-" + a.id,
         kind: "achievement",
-        title: name(a.id),
+        title: achievementName(a),
         message: a.celebration?.message,
         ornament: a.celebration?.ornament,
         gold: a.reward.gold ?? 0,
@@ -856,7 +1017,7 @@ export function transition(
         energy: a.reward.energy ?? 0,
         xp: a.reward.xp ?? 0,
       });
-      return done("reward", `${name(a.id)}: Ödüller alındı.`);
+      return done("reward", `${achievementName(a)}: Ödüller alındı.`);
     }
     case "move": {
       const { from, to } = action;
@@ -866,8 +1027,8 @@ export function transition(
         from === to ||
         from < 0 ||
         to < 0 ||
-        from >= 54 ||
-        to >= 54 ||
+        from >= capacity ||
+        to >= capacity ||
         !c.board[from]
       )
         return blocked("");
@@ -880,7 +1041,7 @@ export function transition(
       }
       if (a.item !== b.item) return blocked("Yalnızca iki aynı ürün birleşir.");
       const p = product(a.item),
-        next = producers[p.producer]!.products[p.tier];
+        next = producerCatalog[p.producer]!.products[p.tier];
       if (!next) return blocked("Bu zincirin son ürünü.");
       if (!c.opened.includes(next.id)) c.opened.push(next.id);
       c.board[from] = null;
@@ -894,7 +1055,7 @@ export function transition(
         return blocked("İlanın ürünleri henüz hazır değil.");
       for (const r of o.requirements) {
         let n = r.quantity;
-        for (let i = 0; i < 54 && n; i++)
+        for (let i = 0; i < capacity && n; i++)
           if (c.board[i]?.item === r.item_id) {
             c.board[i] = null;
             n--;
@@ -912,26 +1073,27 @@ export function transition(
         s.cityID,
         o.requirements.map((r) => ({
           itemID: r.item_id,
-          producerID: producers[product(r.item_id).producer]!.id,
+          producerID: producerCatalog[product(r.item_id).producer]!.id,
           quantity: r.quantity,
         })),
       );
       s.gold += o.gold;
       s.xp += o.xp;
       s.titles = Array.from(new Set([...s.titles, ...o.titles]));
-      for (const id of new Set(
-        o.requirements.map((r) => {
-          const p = product(r.item_id);
-          return p.producer === 0 || p.producer === 4
-            ? "profession1"
-            : "profession2";
-        }),
-      ))
-        s.mastery[id] = (s.mastery[id] ?? 0) + o.xp;
+      for (const profession of new Set(
+        o.requirements.map((r) =>
+          producerProfession.get(
+            producerCatalog[product(r.item_id).producer]!.id,
+          ),
+        ),
+      )) {
+        if (profession)
+          s.mastery[profession] = (s.mastery[profession] ?? 0) + o.xp;
+      }
       return done("reward", `+${o.gold} altın  ·  +${o.xp} XP`);
     }
     case "buy": {
-      const p = producers.find((p) => p.id === action.id);
+      const p = producerCatalog.find((p) => p.id === action.id);
       if (!p || p.cityID !== s.cityID || c.owned.includes(p.id))
         return blocked("");
       if (level(s) < p.level) return blocked(`${p.level}. seviye gerekiyor.`);
@@ -952,7 +1114,7 @@ export function transition(
       if (
         !Number.isInteger(action.index) ||
         action.index < 0 ||
-        action.index >= 54
+        action.index >= capacity
       )
         return blocked("");
       const t = c.board[action.index];
@@ -970,7 +1132,7 @@ export function transition(
       )
         return blocked("");
       const t = c.storage[action.index],
-        i = c.board.indexOf(null);
+        i = playableBoard(s).indexOf(null);
       if (action.expectedID !== undefined && t?.id !== action.expectedID)
         return blocked("Seçtiğin eşya artık depoda değil.");
       if (!t || i < 0) return blocked("Tahta dolu.");
@@ -1028,6 +1190,8 @@ export function validateSave(value: unknown): value is Save {
       )) ||
     s.schema !== 2 ||
     (s.progressionVersion !== undefined && s.progressionVersion !== 2) ||
+    (s.boardLayoutVersion !== undefined &&
+      s.boardLayoutVersion !== BOARD_LAYOUT_VERSION) ||
     ![s.xp, s.gold, s.gems, s.stamina, s.serial].every(nonNegative) ||
     (s.staminaCapacity !== undefined &&
       (!nonNegative(s.staminaCapacity) || s.staminaCapacity < 100)) ||
@@ -1072,7 +1236,7 @@ export function validateSave(value: unknown): value is Save {
     if (
       !c ||
       !Array.isArray(c.board) ||
-      c.board.length !== 54 ||
+      c.board.length !== BOARD_CAPACITY ||
       !c.board.every((t) => t === null || tileValid(t)) ||
       !Array.isArray(c.storage) ||
       !c.storage.every(tileValid) ||

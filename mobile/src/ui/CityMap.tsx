@@ -1,13 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactElement } from "react";
 import { FlatList, View } from "react-native";
 import { cityThemes } from "./cityTheme";
 import { PaperCard } from "./PagePrimitives";
 import {
   cityRule,
   level,
+  achievementName,
+  cityAchievements,
   achievementProgress,
   achievementState,
-  achievements,
   name,
   type Achievement,
   type Save,
@@ -23,6 +24,7 @@ import {
 } from "./DesignSpace";
 import { DesignProgress } from "./DesignProgress";
 import { ChromeSprite } from "./GameChrome";
+import { rewardText } from "./Achievements";
 
 function RoutePin({
   a,
@@ -35,17 +37,23 @@ function RoutePin({
 }) {
   const state = achievementState(save, a),
     progress = Math.min(a.target, achievementProgress(save, a));
+  const status = {
+    ready: "Ödül hazır",
+    claimed: "✓ Alındı",
+    locked: "Şehir kilitli",
+    progress: "Devam ediyor",
+  }[state];
   const { scale } = useDesignSpace();
   return (
-    <View style={{ width: 1062 * scale, height: 390 * scale }}>
+    <View style={{ width: 1062 * scale, height: 420 * scale }}>
       <DesignSpace scale={scale} x={72} y={712}>
         <PaperCard
           designRect={[90, 730, 1026, 360]}
           selected={state === "ready"}
         />
         <ChromeSprite index={6} rect={[115, 800, 210, 210]} />
-        <DesignText rect={[360, 760, 710, 98]} size={56} bold>
-          {name(a.id)}
+        <DesignText rect={[360, 760, 710, 98]} size={56} bold fit>
+          {achievementName(a)}
         </DesignText>
         <DesignProgress
           rect={[365, 885, 700, 52]}
@@ -53,25 +61,22 @@ function RoutePin({
           total={a.target}
         />
         <DesignText
-          rect={[360, 960, 710, 90]}
+          rect={[360, 945, 710, 62]}
           size={42}
           bold
           color={
             state === "ready" || state === "claimed" ? "#34852b" : undefined
           }
         >
-          {state === "ready"
-            ? "Ödül hazır"
-            : state === "claimed"
-              ? "✓ Alındı"
-              : state === "locked"
-                ? "Şehir kilitli"
-                : "Devam ediyor"}
+          {status}
+        </DesignText>
+        <DesignText rect={[360, 1011, 710, 59]} size={33} fit>
+          {rewardText(a)}
         </DesignText>
         <DesignBox rect={[90, 730, 1026, 360]}>
           <Button
             testID={"achievement-" + a.id}
-            label={`${name(a.id)}, ${state}`}
+            label={`${achievementName(a)}, ${status}`}
             onPress={press}
             style={{ flex: 1 }}
           >
@@ -80,6 +85,42 @@ function RoutePin({
         </DesignBox>
       </DesignSpace>
     </View>
+  );
+}
+
+export function CityAchievementsList({
+  cityID,
+  save,
+  onAchievement,
+  footer,
+  legacyFirst = false,
+}: {
+  cityID: string;
+  save: Save;
+  onAchievement: (id: string) => void;
+  footer?: ReactElement;
+  legacyFirst?: boolean;
+}) {
+  const nodes = useMemo(() => {
+    const entries = cityAchievements(cityID);
+    if (legacyFirst) return entries;
+    return entries.sort(
+      (a, b) =>
+        Number(b.metric.startsWith("city_mastery_")) -
+        Number(a.metric.startsWith("city_mastery_")),
+    );
+  }, [cityID, legacyFirst]);
+  return (
+    <FlatList
+      testID="cityAchievementList"
+      data={nodes}
+      keyExtractor={(a) => a.id}
+      showsVerticalScrollIndicator={false}
+      renderItem={({ item }) => (
+        <RoutePin a={item} save={save} press={() => onAchievement(item.id)} />
+      )}
+      ListFooterComponent={footer}
+    />
   );
 }
 
@@ -120,21 +161,6 @@ export function CityMap({
     () => initialView?.().achievements ?? false,
   );
   const stops = useMemo(() => Object.keys(cityThemes), []);
-  const previewOrder = [
-    "achievement1",
-    "achievement2",
-    "achievement3",
-    "achievement5",
-  ];
-  const nodes = achievements
-    .filter((a) => a.city_id === active)
-    .sort((a, b) => {
-      const rank = (id: string) => {
-        const index = previewOrder.indexOf(id);
-        return index < 0 ? previewOrder.length : index;
-      };
-      return rank(a.id) - rank(b.id);
-    });
   const rule = cityRule(active)!,
     here = active === currentCity,
     visited = !!save.cities[active];
@@ -148,20 +174,12 @@ export function CityMap({
   return (
     <View style={{ width: 1062 * scale, height }}>
       {showAchievements ? (
-        <FlatList
-          key="achievements"
-          testID="cityRouteScroll"
-          data={nodes}
-          keyExtractor={(a) => a.id}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <RoutePin
-              a={item}
-              save={save}
-              press={() => onAchievement(item.id)}
-            />
-          )}
-          ListFooterComponent={
+        <CityAchievementsList
+          cityID={active}
+          legacyFirst
+          save={save}
+          onAchievement={onAchievement}
+          footer={
             <AppButton
               text="Şehirlere dön"
               tone="secondary"
@@ -172,13 +190,13 @@ export function CityMap({
               }}
             />
           }
-          ListEmptyComponent={<Label>Bu şehrin başarıları yakında.</Label>}
         />
       ) : (
         <FlatList
           key="cities"
           testID="cityRouteScroll"
           data={stops}
+          ItemSeparatorComponent={() => <View style={{ height: 28 * scale }} />}
           keyExtractor={(id) => id}
           contentOffset={{ x: 0, y: initialOffset?.() ?? 0 }}
           onScroll={(e) => onOffsetChange(e.nativeEvent.contentOffset.y)}

@@ -1,3 +1,4 @@
+import { cityAchievementsTitle } from "../i18n/locale";
 import { CloudSyncPanel } from "./CloudSyncPanel";
 import { AccountDeletionPanel } from "./AccountDeletionPanel";
 import { ItemDetails } from "./ItemDetails";
@@ -14,7 +15,7 @@ import { Label } from "./Controls";
 import {
   city,
   name,
-  producers,
+  producerCatalog as producers,
   product,
   type Action,
   type Save,
@@ -22,7 +23,7 @@ import {
 } from "../game/engine";
 import { AchievementDetails } from "./Achievements";
 import { ProducerDetails } from "./ProducerDetails";
-import { CityMap } from "./CityMap";
+import { CityAchievementsList, CityMap } from "./CityMap";
 export type Page = {
   kind:
     | "cloud"
@@ -37,10 +38,12 @@ export type Page = {
     | "producer"
     | "info"
     | "energy"
-    | "achievement";
+    | "achievement"
+    | "achievements";
   variant?: "producer" | "collection";
   index?: number;
   id?: string;
+  cityID?: string;
 };
 const titles = {
   cloud: "Bulut kaydı",
@@ -56,6 +59,7 @@ const titles = {
   info: "Eşya",
   energy: "Enerji hediyesi",
   achievement: "Başarı",
+  achievements: "Başarılar",
 };
 export function Pages({
   page,
@@ -88,6 +92,12 @@ export function Pages({
     c = city(save),
     p = producers[page.index ?? 0]!;
   const act = (a: Action) => dispatch(a);
+  const backToAchievements = () =>
+    open(
+      page.cityID
+        ? { kind: "achievements", cityID: page.cityID }
+        : { kind: "cities" },
+    );
   return (
     <PageShell
       title={
@@ -97,17 +107,19 @@ export function Pages({
             : p.name
           : page.kind === "cities" &&
               (cityHeading || presentationView === "achievements")
-            ? (cityHeading ?? `${name(save.cityID)} Başarıları`)
-            : titles[page.kind]
+            ? (cityHeading ?? cityAchievementsTitle(name(save.cityID)))
+            : page.kind === "achievements"
+              ? cityAchievementsTitle(name(page.cityID ?? save.cityID))
+              : titles[page.kind]
       }
       width={width}
       height={height}
       reduced={reduced}
       onClose={() =>
-        page.kind === "achievement" ? open({ kind: "cities" }) : close()
+        page.kind === "achievement" ? backToAchievements() : close()
       }
       routeKey={`${page.kind}:${page.variant ?? ""}:${page.id ?? page.index ?? ""}`}
-      scroll={page.kind !== "cities"}
+      scroll={page.kind !== "cities" && page.kind !== "achievements"}
       onBodyHeight={setBodyHeight}
     >
       {page.kind === "cloud" && (
@@ -171,7 +183,9 @@ export function Pages({
           }
           onViewChange={(cityID, achievements) => {
             cityView.current = { cityID, achievements };
-            setCityHeading(achievements ? `${name(cityID)} Başarıları` : null);
+            setCityHeading(
+              achievements ? cityAchievementsTitle(name(cityID)) : null,
+            );
           }}
           initialOffset={() => routeOffset.current}
           onOffsetChange={(y) => {
@@ -187,12 +201,25 @@ export function Pages({
           reduced={reduced}
         />
       )}
+      {page.kind === "achievements" && (
+        <CityAchievementsList
+          cityID={page.cityID ?? save.cityID}
+          save={save}
+          onAchievement={(id) =>
+            open({
+              kind: "achievement",
+              id,
+              cityID: page.cityID ?? save.cityID,
+            })
+          }
+        />
+      )}
       {page.kind === "achievement" && page.id && (
         <AchievementDetails
           id={page.id}
           save={save}
           dispatch={dispatch}
-          onReturn={() => open({ kind: "cities" })}
+          onReturn={backToAchievements}
         />
       )}
       {page.kind === "profile" && (
@@ -200,7 +227,6 @@ export function Pages({
           onClose={close}
           save={save}
           dispatch={dispatch}
-          onCloud={() => open({ kind: "cloud" })}
           onDeletion={() => open({ kind: "account-deletion" })}
         />
       )}

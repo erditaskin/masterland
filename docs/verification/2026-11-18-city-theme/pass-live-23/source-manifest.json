@@ -1,0 +1,11 @@
+{
+  "status": "not-pixel-accepted",
+  "tests": "Release testBoardPixelCandidate passed",
+  "sources": {
+    "mobile/src/ui/GameChrome.tsx": "2ede2c64e564e2409b548e8ca2ceb03baabdd5d51625a4fae5a92fa945786547",
+    "mobile/src/ui/BoardChrome.tsx": "102e5ece525c983f69bf45da4870c09d179fed5e70b079d3603f4d0cc2c18efa",
+    "mobile/src/ui/CollectionPage.tsx": "d3ba1401e2f3d559aa8ca76a751d0427720a30269ff94dfcda1b4081dd7374fa",
+    "mobile/src/ui/DesignMaterial.tsx": "3c133407529a669f75583d4bf8aeb54ddfe5f85bbb71b6253804ddb62edf2af9",
+    "mobile/src/ui/cityArt.ts": "b45058cc55b02b7c1714b1a287d693ca0a3e34e3b3e8f581721177fbb529f2af"
+  }
+}

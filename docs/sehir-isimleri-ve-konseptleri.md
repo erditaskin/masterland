@@ -41,3 +41,8 @@ Türkçe ve İngilizce görünen adlar ayrı yerelleştirme değerlerinde tutulu
 Bu kayıt bir belge güncellemesidir. Uygulama kodu, data/content-reference.json ve data/locales/en.json değiştirilmemiştir. Bu dosyalardaki eski adlar henüz uygulanmamış görünen ad değişikliklerini ifade eder; yeni isim kararı için bu tablo kullanılır.
 
 İsimlerin belirgin oyun ve marka çakışma araştırması henüz yapılmamıştır. İsim onayı, benzersizlik veya hukuki uygunluk garantisi değildir.
+
+
+## 17 Kasım 2026 — Ayrıntılı sanat yönü referansı
+
+Arka plan, tabela/çerçeve malzemeleri, üretici ve ürün görsel aileleri için [şehir görsel dili](sehir-gorsel-dili.md) kullanılır. Belenyaka'nın kıyı atmosferi baskın deniz manzarası olarak yorumlanmaz: deniz detayı azdır; bahçe ve canlı yeşil köy dokusu öndedir. Bu açıklama adları, üretim temasını, sabit kimlikleri veya geliştirme kapsamını değiştirmez.

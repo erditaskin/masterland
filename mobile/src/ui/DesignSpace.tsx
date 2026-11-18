@@ -111,6 +111,9 @@ export const DesignText = memo(function DesignText({
   color,
   align = "left",
   font,
+  accessible = true,
+  testID,
+  fit = false,
 }: {
   rect: DesignRect;
   children: ReactNode;
@@ -119,6 +122,9 @@ export const DesignText = memo(function DesignText({
   color?: string;
   align?: "left" | "center" | "right";
   font?: string;
+  accessible?: boolean;
+  testID?: string;
+  fit?: boolean;
 }) {
   const { scale } = useDesignSpace();
   const theme = useCityTheme();
@@ -131,7 +137,11 @@ export const DesignText = memo(function DesignText({
       ]}
     >
       <I18nText
-        accessible={false}
+        numberOfLines={fit ? 1 : undefined}
+        adjustsFontSizeToFit={fit}
+        minimumFontScale={fit ? 0.45 : undefined}
+        accessible={accessible}
+        testID={testID}
         allowFontScaling={false}
         style={{
           fontFamily: font ?? (bold ? fonts.title : fonts.body),

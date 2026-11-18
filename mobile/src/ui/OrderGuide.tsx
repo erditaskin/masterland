@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import {
   orders,
-  producers,
+  producerCatalog as producers,
   product,
   type Order,
   type Save,

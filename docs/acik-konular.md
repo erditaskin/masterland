@@ -179,6 +179,11 @@ Kullanıcı son gerçek cihaz denemesinde test reklam videosunun açıldığın�
 Kontrollü test modu kapalı build’in ödül vermeyen önizleme yolu doğrulandı; yanıltıcı düğme metni ve uygulama sonucu düzeltildi. Google test reklamının kendi “Reward granted” yazısı uygulamanın sunucu ödeme onayı değildir. Test modunda enerji +25/kalıcılık ve üretici ödülü Release simülatöründe geçti. İlk madde canlı SSV/gerçek cihaz kabulü tamamlanana kadar açık kalır; sıradaki hesap silme işine henüz geçilmedi. Ayrıntı: reward-acceptance-20261117.md.
 
 
+## 17 Kasım 2026 — Görsel içerik ayrıntılandırması
+
+İlk beş şehrin çevre ve arayüz malzeme aileleri ile Belenyaka ürün gruplarının görsel dili onaylandı; bunlar artık açık öneri değildir. Referans sehir-gorsel-dili.md dosyasıdır. Kalan şehirlerin malzemeleri, diğer şehirlerin ürün grubu görsel aileleri, kesin kompozisyon/palet/asset ölçüleri ve tekil ürün istemleri birlikte çalışılıp onaylanacaktır. Atlas görsellerindeki önceki öneriler bu kayıtla kendiliğinden onaylanmaz.
+
+
 ## 17 Kasım 2026 — Reklam kabulünün kapanışı
 
 Reklam maddesi uygulama/sunucu kabulüyle tamamlandı. Fiziksel +25 ve arka plan, gerçek Google imzalı enerji/üretici ödülü, Release kalıcılık, ortak günlük sınır ve temiz simülatörde terk etmede sıfır ödeme doğrulandı. Fiziksel negatif tekrar günlük kota nedeniyle yapılamadı; simülatör kontrolü telefon kontrolü gibi raporlanmaz. Sonraki iş hesap silme/Apple yetki iptali kabulüdür. AdMob 0.2.0 sürümüne özel test modu yayından önce kaldırılacak veya yayın sürümü ayrılacaktır; genel mağaza/AdMob onayı reklam geliri için ayrıca gereklidir. Ayrıntı: live-reward-acceptance-20261117.md.
@@ -214,3 +219,15 @@ Panoların üretilmiş yazı ve örnek sayaçları oyun kurallarının kaynağı
 Orijinal beş şehir ve sekiz ikincil pano sanat yönü referansıdır. Bunların cihaz ölçüsünde referanslara dönüştürülmesi kullanıcı tarafından onaylanmıştır. İlk 26 bağımsız iOS türetiminde sanat yönü ve silme gövdesi hataları bulunmuş, bu paket kabul hedefinden çıkarılmıştır. İkinci bağımsız türetim ayrı referans cihazında yakalanmıştır; sanat yönü denetimi, eş durumlu uygulama karşılaştırması ve nihai görsel kabul açıktır. Üretilmiş yeni manzara, malzeme ve avatar katmanları uygulama adayıdır; özgün referansla piksel eşitliği veya ayrı nihai onay sayılmaz. Katı görsel kabul bütün ekran/şehir durumları için açık kalır.
 
 Beş temanın aynı Belenyaka test kaydı üzerinde gösterilmesi diğer üç şehrin oynanabilir içerik kabulü değildir. Kanonik çalışma zamanı yalnız ilk iki şehrin üretici planlarını içerir. Kalan şehirlerin üretici/eşya zinciri, denge ve oynanış kabulü ayrıca tamamlanmalıdır; bu görsel turda kilitleri açılmaz. Gerçek kayıtlı hesap, bulut seçim/silme durumları, reklamın tüm görsel durumları ve kompakt cihaz kabulü de ayrıca izlenir.
+
+## 18 Kasım 2026 — Tahta vurgusunun yeni panoya uyumu
+
+Toplu hazır/eksik ilan ürünü vurgusu eski arayüzde vardır; son onay panosunda yalnız seçili eşya çerçevesi görünür. Kullanıcıya tercih sorulmuştur. Yanıt gelmeyince, kullanıcının son “panoya yüzde yüz uy” talebi esas alınarak görsel uygulamada yalnız seçili eşya çerçevesiyle ilerlenmiştir. Bu, kesin kullanıcı yanıtı olarak kaydedilmez. İlan kartlarındaki hazır/eksik bilgisi, teslim, filtreleme, üretim rehberi ve oyun kuralları korunur. Kullanıcı diğer seçeneği belirtirse yalnız sunum tercihi yeniden ele alınır.
+
+
+18 Kasım güncellemesi: İlan ürünlerinin yeşil vurgusuna ilişkin çalışma varsayımı kapandı. Kullanıcı vurgunun korunmasını ve cihaz referansına eklenmesini istedi. Kesin karar `docs/kararlar.md` içinde kayıtlıdır. Görsel kabul hâlâ açıktır.
+
+
+## 18 Kasım — Önce iPhone ölçüsünde beş şehir referansı
+
+Kullanıcı, önce beş şehrin referanslarının iPhone boyutuna getirilmesini, kaydedilmesini ve kendisine gösterilmesini istedi. Tahta yan kenarlara yaklaşmalı; alt menü aşağı taşınmalı ve menü altında gereksiz boşluk bırakılmamalıdır. Kullanıcı bu yeni cihaz referanslarını onayladıktan sonra uygulama bunlara göre sürdürülecektir. Kodlama bu aşamada bekletilir. Önceki yan boşluk ve dikey kaydırma seçenekleri kesin kabul hedefi yapılmaz. Yeni referanslar onay bekleyen görsel adaylardır.

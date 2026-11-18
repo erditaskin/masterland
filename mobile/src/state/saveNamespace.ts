@@ -1,5 +1,5 @@
-export const NORMAL_SAVE_KEY = "@masterland/save/v2";
-export const CONTROLLED_SAVE_KEY = "@masterland/save/controlled-testflight/v1";
+export const NORMAL_SAVE_KEY = "@masterland/save/v3";
+export const CONTROLLED_SAVE_KEY = "@masterland/save/controlled-testflight/v2";
 export function resolveSaveNamespace(input: {
   channel?: string;
   testMode?: string;

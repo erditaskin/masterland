@@ -30,7 +30,6 @@ import {
   type Result,
   type Save,
 } from "../game/engine";
-import { decodeLegacy } from "../game/migrate";
 const namespace = resolveSaveNamespace({
   channel: process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
   testMode: process.env.EXPO_PUBLIC_TEST_MODE,
@@ -139,10 +138,7 @@ async function load(mode: LocalMode = "normal", presentationView?: string) {
         save.stamina = 90;
       }
     } else {
-      const reset = await resumeDeletionReset(
-        AsyncStorage,
-        removeLegacyImports,
-      );
+      await resumeDeletionReset(AsyncStorage, removeLegacyImports);
       await resumeCloudAdoption(AsyncStorage, KEY, Crypto.randomUUID);
       const stored = await AsyncStorage.getItem(KEY);
       if (stored) {
@@ -151,31 +147,7 @@ async function load(mode: LocalMode = "normal", presentationView?: string) {
         await preservePreCloudSave(AsyncStorage, stored);
         save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
       } else {
-        const v2Path = FS.documentDirectory + "migration-v2.json";
-        const imported =
-          reset || namespace.controlled
-            ? { exists: false }
-            : await FS.getInfoAsync(v2Path);
-        if (imported.exists) {
-          const parsed: unknown = JSON.parse(
-            await FS.readAsStringAsync(v2Path),
-          );
-          if (!validateSave(parsed))
-            throw Error("Aktarılan kayıt doğrulanamadı.");
-          save = advance(migrateCurrentSave(parsed, Date.now()), Date.now());
-        } else {
-          const path = FS.documentDirectory + "legacy-save.json";
-          const exists =
-            reset || namespace.controlled
-              ? { exists: false }
-              : await FS.getInfoAsync(path);
-          save = exists.exists
-            ? decodeLegacy(
-                JSON.parse(await FS.readAsStringAsync(path)),
-                Date.now(),
-              )
-            : fresh(Date.now());
-        }
+        save = fresh(Date.now());
       }
     }
     if (token !== loadEpoch) return;
@@ -211,7 +183,10 @@ export const gameStore = {
   dispatch: (action: Action) => {
     if (!snapshot.ready) return null;
     const previous = snapshot.save;
-    const result = transition(previous, action, Date.now());
+    const previewTravel =
+      snapshot.review && activeMode === "presentation" &&
+      testModeEnabled && process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL === "local";
+    const result = transition(previous, action, Date.now(), undefined, previewTravel);
     if (result.state === snapshot.save && result.kind === "none") return result;
     publish({
       ...snapshot,

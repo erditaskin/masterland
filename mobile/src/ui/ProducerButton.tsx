@@ -74,7 +74,7 @@ export function ProducerButton({
       });
     return Gesture.Exclusive(hold, tap);
   }, [opacity, press, long]);
-  const feedback = useAnimatedStyle(() => ({ opacity: opacity.get() }));
+  const feedback = useAnimatedStyle(() => ({ opacity: 1 - opacity.get() }));
   return (
     <GestureDetector gesture={gesture}>
       <Animated.View
@@ -91,10 +91,10 @@ export function ProducerButton({
         style={[
           style,
           { alignItems: "center", justifyContent: "center" },
-          feedback,
         ]}
       >
         {children}
+        <Animated.View pointerEvents="none" style={[{ position: "absolute", inset: 0, borderRadius: 8, backgroundColor: "#000000" }, feedback]} />
       </Animated.View>
     </GestureDetector>
   );

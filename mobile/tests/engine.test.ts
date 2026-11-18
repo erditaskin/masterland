@@ -23,7 +23,6 @@ import {
   type Action,
 } from "../src/game/engine";
 import { hitCell } from "../src/game/boardInput";
-import { decodeLegacy } from "../src/game/migrate";
 const now = 1700000000000,
   p = producers[0]!,
   a = p.products[0]!,
@@ -36,12 +35,12 @@ function twice() {
   s = run(s, { type: "produce", id: p.id }).state;
   // Merge/storage cases use a deliberate adjacent fixture, independently of spawn placement.
   const tiles = city(s).board.filter((t) => t !== null);
-  city(s).board = [...tiles, ...Array(54 - tiles.length).fill(null)];
+  city(s).board = [...tiles, ...Array(63 - tiles.length).fill(null)];
   return s;
 }
 test("fresh board and first two product areas", () => {
   const s = fresh(now);
-  assert.equal(city(s).board.length, 54);
+  assert.equal(city(s).board.length, 63);
   assert.equal(city(s).opened.length, 2);
   assert.equal(s.stamina, 100);
   assert.equal(level(s), 1);
@@ -72,7 +71,7 @@ test("simple move preserves tile identity", () => {
 });
 test("outside board and same-cell releases preserve state", () => {
   const s = twice();
-  for (const to of [-1, 54, 100, 0])
+  for (const to of [-1, 54, 63, 100, 0])
     assert.equal(run(s, { type: "move", from: 0, to }).state, s);
 });
 test("different item and maximum-tier merge preserve both tiles", () => {
@@ -123,10 +122,9 @@ test("producer purchase is level gated and idempotent", () => {
 });
 test("full board does not spend energy", () => {
   const s = fresh(now);
-  city(s).board = Array.from({ length: 54 }, (_, i) => ({
-    id: String(i),
-    item: a.id,
-  }));
+  city(s).board = Array.from({ length: 63 }, (_, i) =>
+    i < 54 ? { id: String(i), item: a.id } : null,
+  );
   const r = run(s, { type: "produce", id: p.id });
   assert.equal(r.kind, "blocked");
   assert.equal(r.state.stamina, 100);
@@ -225,57 +223,22 @@ test("serialised save validates without losing progress", () => {
   assert(!validateSave({ schema: 2 }));
   assert(validateSave({ ...s, stamina: 101 }));
 });
-test("Swift save migration preserves XP, items, storage, and time base", () => {
-  const s = decodeLegacy(
-    {
-      schema: 1,
-      xp: 172,
-      gold: 750,
-      gems: 12,
-      stamina: 86,
-      energyAt: now / 1000 - 978307200,
-      sound: true,
-      reducedMotion: false,
-      discoveries: [a.id],
-      titles: [],
-      mastery: { profession1: 12 },
-      cityID: "city1",
-      cities: {
-        city1: {
-          board: [a.id, ...Array(53).fill(null)],
-          storage: [b.id],
-          storageCapacity: 12,
-          owned: [p.id],
-          opened: [a.id, b.id],
-          batches: {},
-          introIndex: 1,
-          repeatIndex: 0,
-        },
-      },
-    },
-    now,
-  );
-  assert.equal(s.xp, 172);
-  assert.equal(s.energyAt, now);
-  assert.equal(city(s).board[0]!.item, a.id);
-  assert.equal(city(s).storage[0]!.item, b.id);
-  assert.notEqual(city(s).storage[0]!.id, city(s).board[0]!.id);
-  assert(validateSave(s));
+test("the clean-start board rejects old 54-cell payloads", () => {
+  const s = fresh(now);
+  city(s).board = Array(54).fill(null);
+  assert.equal(validateSave(s), false);
 });
-test("corrupt legacy save is rejected instead of reset", () => {
-  assert.throws(() => decodeLegacy({ schema: 1 }, now));
-});
-test("all 54 stationary input cells map correctly", () => {
-  for (let i = 0; i < 54; i++)
+test("all 63 stationary input cells map correctly", () => {
+  for (let i = 0; i < 63; i++)
     assert.equal(
-      hitCell(((i % 6) + 0.5) * 51, (Math.floor(i / 6) + 0.5) * 51, 51),
+      hitCell(((i % 7) + 0.5) * 51, (Math.floor(i / 7) + 0.5) * 51, 51),
       i,
     );
 });
 test("no row wrapping or off-board hit", () => {
   for (const [x, y] of [
     [-1, 0],
-    [306, 0],
+    [357, 0],
     [0, -1],
     [0, 459],
     [NaN, 0],
@@ -317,13 +280,13 @@ test("duplicate identities and malformed storage are rejected", () => {
   assert(!validateSave({ ...twice(), gold: Infinity }));
 });
 
-test("near-square reference cells keep all 54 input targets and reject row wrapping", () => {
-  for (let i = 0; i < 54; i++)
+test("near-square reference cells keep all 63 input targets and reject row wrapping", () => {
+  for (let i = 0; i < 63; i++)
     assert.equal(
-      hitCell(((i % 6) + 0.5) * 62, (Math.floor(i / 6) + 0.5) * 50, 62, 50),
+      hitCell(((i % 7) + 0.5) * 62, (Math.floor(i / 7) + 0.5) * 50, 62, 50),
       i,
     );
-  assert.equal(hitCell(372, 25, 62, 50), null);
+  assert.equal(hitCell(434, 25, 62, 50), null);
   assert.equal(hitCell(31, 450, 62, 50), null);
 });
 
@@ -374,7 +337,7 @@ test("every upper-tier pair merges after unlocking, with no lost items on final 
         item = producer.products[tier]!;
       city(s).owned = producers.map((p) => p.id);
       city(s).opened = producers.flatMap((p) => p.products.map((i) => i.id));
-      city(s).board = Array(54).fill(null);
+      city(s).board = Array(63).fill(null);
       city(s).board[0] = { id: "a", item: item.id };
       city(s).board[1] = { id: "b", item: item.id };
       const r = run(s, { type: "move", from: 0, to: 1 });
@@ -551,16 +514,16 @@ test("production chooses scattered random cells without row wrapping and fills c
   );
   assert.equal(
     productionCell(board, () => 0.999),
-    53,
+    62,
   );
-  board[5] = { id: "edge", item: a.id };
+  board[6] = { id: "edge", item: a.id };
   const picks = Array.from({ length: 1000 }, (_, i) =>
     productionCell(board, () => i / 1000),
   );
-  assert(!picks.includes(4));
-  assert(!picks.includes(11));
-  assert(picks.includes(6)); // Next row is not the previous row's right neighbour.
-  for (let i = 0; i < 54; i++) board[i] = { id: String(i), item: a.id };
+  assert(!picks.includes(5));
+  assert(!picks.includes(13));
+  assert(picks.includes(7)); // Next row is not the previous row's right neighbour.
+  for (let i = 0; i < 63; i++) board[i] = { id: String(i), item: a.id };
   board[12] = null;
   assert.equal(productionCell(board), 12);
   const produced = run(s, { type: "produce", id: p.id });
@@ -571,4 +534,10 @@ test("production chooses scattered random cells without row wrapping and fills c
     run(produced.state, { type: "produce", id: p.id }).kind,
     "blocked",
   );
+});
+
+test("Belenyaka six-column input keeps the seventh column outside the board", () => {
+  assert.equal(hitCell(239, 199, 40, 38, 6), 35);
+  assert.equal(hitCell(240, 199, 40, 38, 6), null);
+  assert.equal(hitCell(0, 342, 40, 38, 6), null);
 });

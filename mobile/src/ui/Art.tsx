@@ -1,5 +1,10 @@
+import ironBounds from "../../assets/art/demirdere/item-bounds.json";
+import silkBounds from "../../assets/art/ipekyolu/item-bounds.json";
+import harborBounds from "../../assets/art/yalikoru/item-bounds.json";
 import reference from "../../../data/content-reference.json";
 import skaraBounds from "../../assets/art/skara-items-v2-bounds.json";
+import candyBounds from "../../assets/art/badinca/candy-bounds.json";
+import boardBounds from "../../assets/art/board-item-bounds.json";
 import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { memo } from "react";
 import { Image, View, type ImageSourcePropType } from "react-native";
@@ -73,20 +78,55 @@ export const Sprite = memo(function Sprite({
     <Crop source={source} x={x} y={y} w={w} h={h} width={size} height={size} />
   );
 });
+const badincaItemIDs = new Set(
+  reference.city2_opening_plan.producers.flatMap(
+    (producer) => producer.chain_item_ids,
+  ),
+);
+const previewItemArtwork = [
+  {
+    bounds: harborBounds,
+    source: require("../../assets/art/yalikoru/items.png"),
+  },
+  {
+    bounds: ironBounds,
+    source: require("../../assets/art/demirdere/items.png"),
+  },
+  {
+    bounds: silkBounds,
+    source: require("../../assets/art/ipekyolu/items.png"),
+  },
+].reduce((entries, atlas) => {
+  for (const [id, crop] of Object.entries(atlas.bounds))
+    entries.set(id, {
+      source: atlas.source,
+      crop: crop as [number, number, number, number],
+    });
+  return entries;
+}, new Map<string, { source: ImageSourcePropType; crop: [number, number, number, number] }>());
 /** One measured crop per canonical item; both board and page views use these layers. */
 export function itemArtwork(id: string): {
   source: ImageSourcePropType;
   crop: readonly [number, number, number, number];
 } {
+  const preview = previewItemArtwork.get(id);
+  if (preview) return preview;
   const custom = (
     reference.item_art as Record<string, { sheet: string; index: number }>
   )[id];
+  if (custom?.sheet === "candy")
+    return {
+      source: require("../../assets/art/badinca/candy-items.png"),
+      crop: candyBounds[custom.index]! as [number, number, number, number],
+    };
   if (custom)
     return {
       source:
         custom.sheet === "skara"
           ? require("../../assets/art/skara-items-v2.png")
-          : require("../../assets/art/haven-items-v1.png"),
+          : badincaItemIDs.has(id)
+            ? require("../../assets/art/badinca/items.png")
+            : require("../../assets/art/haven-items-v1.png"),
       crop: (custom.sheet === "skara" ? skaraBounds : havenBounds)[
         custom.index
       ]! as [number, number, number, number],
@@ -109,6 +149,13 @@ export function itemArtwork(id: string): {
       number,
     ],
   };
+}
+export function boardItemArtwork(id: string): ReturnType<typeof itemArtwork> {
+  const artwork = itemArtwork(id);
+  const crop = (boardBounds as Record<string, number[]>)[id];
+  return crop
+    ? { source: artwork.source, crop: crop as [number, number, number, number] }
+    : artwork;
 }
 /** Trim metadata is measured offline; objects keep their native aspect and soft edge. */
 export const Item = memo(function Item({
