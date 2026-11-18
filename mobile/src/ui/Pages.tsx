@@ -1,3 +1,6 @@
+import { CloudSyncPanel } from "./CloudSyncPanel";
+import { AccountDeletionPanel } from "./AccountDeletionPanel";
+import { ItemDetails } from "./ItemDetails";
 import { OrdersPage } from "./OrdersPage";
 import { CollectionPage } from "./CollectionPage";
 import { StoragePage } from "./StoragePage";
@@ -7,14 +10,9 @@ import { AccountPanel } from "./AccountPanel";
 import { OrderGuide } from "./OrderGuide";
 import { Market } from "./Market";
 import { useRef, useState } from "react";
-import { View } from "react-native";
-import { ActionButton, AppCheckbox, Divider, Label } from "./Controls";
-import { Item, Sprite } from "./Art";
+import { Label } from "./Controls";
 import {
-  energyCapacityStep,
-  energyUpgradeCost,
   city,
-  level,
   name,
   producers,
   product,
@@ -27,6 +25,8 @@ import { ProducerDetails } from "./ProducerDetails";
 import { CityMap } from "./CityMap";
 export type Page = {
   kind:
+    | "cloud"
+    | "account-deletion"
     | "collection"
     | "cities"
     | "storage"
@@ -43,6 +43,8 @@ export type Page = {
   id?: string;
 };
 const titles = {
+  cloud: "Bulut kaydı",
+  "account-deletion": "Hesabımı sil",
   collection: "Koleksiyon",
   cities: "Şehirler",
   storage: "Depo",
@@ -53,7 +55,7 @@ const titles = {
   producer: "Üretici",
   info: "Eşya",
   energy: "Enerji hediyesi",
-  achievement: "Özel Başarı",
+  achievement: "Başarı",
 };
 export function Pages({
   page,
@@ -65,6 +67,7 @@ export function Pages({
   open,
   reduced,
   onInteract,
+  presentationView,
 }: {
   page: Page;
   save: Save;
@@ -75,10 +78,12 @@ export function Pages({
   open: (p: Page) => void;
   reduced: boolean;
   onInteract: () => void;
+  presentationView?: string | null;
 }) {
   const routeOffset = useRef(0);
   const cityView = useRef({ cityID: save.cityID, achievements: false });
   const [bodyHeight, setBodyHeight] = useState(0);
+  const [cityHeading, setCityHeading] = useState<string | null>(null);
   const w = width - 16,
     c = city(save),
     p = producers[page.index ?? 0]!;
@@ -90,7 +95,10 @@ export function Pages({
           ? page.variant === "collection"
             ? "Ürün zinciri"
             : p.name
-          : titles[page.kind]
+          : page.kind === "cities" &&
+              (cityHeading || presentationView === "achievements")
+            ? (cityHeading ?? `${name(save.cityID)} Başarıları`)
+            : titles[page.kind]
       }
       width={width}
       height={height}
@@ -102,6 +110,12 @@ export function Pages({
       scroll={page.kind !== "cities"}
       onBodyHeight={setBodyHeight}
     >
+      {page.kind === "cloud" && (
+        <CloudSyncPanel onCancel={() => open({ kind: "profile" })} />
+      )}
+      {page.kind === "account-deletion" && (
+        <AccountDeletionPanel onCancel={() => open({ kind: "profile" })} />
+      )}
       {page.kind === "collection" && (
         <CollectionPage
           save={save}
@@ -112,7 +126,7 @@ export function Pages({
         />
       )}
       {page.kind === "order-guide" && page.id && (
-        <OrderGuide key={page.id} id={page.id} save={save} />
+        <OrderGuide key={page.id} id={page.id} save={save} onBoard={close} />
       )}
       {page.kind === "producer" && (
         <ProducerDetails
@@ -150,9 +164,14 @@ export function Pages({
           save={save}
           height={Math.max(1, bodyHeight)}
           onAchievement={(id) => open({ kind: "achievement", id })}
-          initialView={() => cityView.current}
+          initialView={() =>
+            presentationView === "achievements"
+              ? { cityID: save.cityID, achievements: true }
+              : cityView.current
+          }
           onViewChange={(cityID, achievements) => {
             cityView.current = { cityID, achievements };
+            setCityHeading(achievements ? `${name(cityID)} Başarıları` : null);
           }}
           initialOffset={() => routeOffset.current}
           onOffsetChange={(y) => {
@@ -179,73 +198,26 @@ export function Pages({
       {page.kind === "profile" && (
         <AccountPanel
           onClose={close}
-          summary={
-            <>
-              <Label>
-                Seviye {level(save)} · {name(save.cityID)}
-              </Label>
-              <Label size={12}>
-                {save.xp} XP · {save.gold} altın
-              </Label>
-            </>
-          }
-          settings={
-            <>
-              {[
-                ["Ses", save.sound, "sound"],
-                ["Hareketi azalt", save.reducedMotion, "motion"],
-              ].map(([label, value, kind]) => (
-                <AppCheckbox
-                  key={String(kind)}
-                  testID={"setting-" + kind}
-                  label={String(label)}
-                  checked={Boolean(value)}
-                  onChange={() => act({ type: kind as "sound" | "motion" })}
-                />
-              ))}
-            </>
-          }
+          save={save}
+          dispatch={dispatch}
+          onCloud={() => open({ kind: "cloud" })}
+          onDeletion={() => open({ kind: "account-deletion" })}
         />
       )}
       {page.kind === "info" &&
         (() => {
           const t = c.board[page.index ?? -1];
           return t ? (
-            <View style={{ alignItems: "center" }}>
-              <Item id={t.item} size={115} />
-              <Label title size={25}>
-                {product(t.item).name}
-              </Label>
-              <Label tone="muted">Basamak {product(t.item).tier}</Label>
-              {!producers[product(t.item).producer]!.products[
-                product(t.item).tier
-              ] && (
-                <Label size={14} tone="muted">
-                  Bu zincirin son ürünü. İlanlarda teslim edebilirsin.
-                </Label>
-              )}
-              <Divider />
-              <ActionButton
-                text="Depoya gönder"
-                testID="storeSelected"
-                onPress={() => {
-                  const result = act({
-                    type: "store",
-                    index: page.index!,
-                  });
-                  if (result?.kind === "tap") close();
-                }}
-              />
-              <ActionButton
-                text="Üreticiyi gör"
-                onPress={() =>
-                  open({
-                    kind: "producer",
-                    index: product(t.item).producer,
-                  })
-                }
-              />
-            </View>
+            <ItemDetails
+              itemID={t.item}
+              onStore={() => {
+                const result = act({ type: "store", index: page.index! });
+                if (result?.kind === "tap") close();
+              }}
+              onProducer={() =>
+                open({ kind: "producer", index: product(t.item).producer })
+              }
+            />
           ) : (
             <Label>
               Eşyayı seçmek için dokun. Birleştirmek için aynı eşyanın üzerine
@@ -254,30 +226,15 @@ export function Pages({
           );
         })()}
       {page.kind === "energy" && (
-        <View style={{ alignItems: "center", paddingTop: 25 }}>
-          <Sprite kind="icons" index={5} size={80} />
-          <Label title size={32}>
-            {save.stamina}
-          </Label>
-          <Label style={{ marginTop: 12, textAlign: "center" }}>
-            Her iki dakikada 1 enerji, yalnızca 100’e kadar dolar. Ödül enerjisi
-            100’ün üzerine eklenir. 100 ve altında üretim 1x olur.
-          </Label>
-          <ActionButton
-            text={`+${energyCapacityStep} enerji · ${energyUpgradeCost(save)} elmas`}
-            testID="upgradeEnergyCapacity"
-            onPress={() => {
-              act({ type: "energy-capacity" });
-            }}
-          />
-          <EnergyAdPanel save={save} />
-          <ActionButton
-            text="Başarı hediyelerine git"
-            onPress={() => open({ kind: "cities" })}
-          />
-        </View>
+        <EnergyAdPanel save={save} page onCancel={close} />
       )}
-      {page.kind === "market" && <Market save={save} dispatch={dispatch} />}
+      {page.kind === "market" && (
+        <Market
+          save={save}
+          dispatch={dispatch}
+          onEnergy={() => open({ kind: "energy" })}
+        />
+      )}
     </PageShell>
   );
 }

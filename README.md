@@ -2,7 +2,7 @@
 
 ## Şehir teması refaktörü — 18 Kasım 2026
 
-Beş şehir için ortak tema ve bileşik ekran çalışması sürüyor. Son ekran çizimleri uygulama yönüdür; cihaz ölçülü nihai referans kararı ve %100 piksel kabulü henüz yoktur. Apple/TestFlight gönderimi kullanıcının son kararıyla beklemededir. Kod, kanıtlar ve açık sınırlar [şehir teması refaktörü](docs/city-theme-composites-20261118.md) belgesindedir.
+Beş şehir için ortak tema ve bileşik ekran çalışması sürüyor. Son ekran çizimleri uygulama yönüdür; cihaz ölçülü referansların hazırlanması onaylandı; %100 piksel kabulü henüz yoktur. Apple/TestFlight gönderimi kullanıcının son kararıyla beklemededir. İlk cihaz türetimindeki sanat yönü/dal hataları ayrıca kaydedilmiş ve o paket kabul hedefinden çıkarılmıştır. Kod, kanıtlar ve açık sınırlar [şehir teması refaktörü](docs/city-theme-composites-20261118.md) belgesindedir.
 
 ## Güncel TestFlight hazırlığı — 17 Kasım 2026
 

@@ -4,6 +4,7 @@ import { I18nText as Text } from "./I18nText";
 import React, { useMemo, useSyncExternalStore } from "react";
 import {
   Animated,
+  Platform,
   Pressable,
   TextInput,
   type TextInputProps,
@@ -16,6 +17,14 @@ import {
 import { colors, fonts, parchment } from "./theme";
 import { useCityTheme } from "./CityThemeProvider";
 import { semanticColors } from "./cityTheme";
+import {
+  DesignSpace,
+  DesignSurface,
+  DesignText,
+  useDesignRect,
+  useDesignSpace,
+  type DesignRect,
+} from "./DesignSpace";
 export function Label({
   children,
   title = false,
@@ -39,6 +48,7 @@ export function Label({
       style={[
         {
           fontFamily: title ? fonts.title : fonts.body,
+          fontWeight: Platform.OS === "android" && title ? "700" : undefined,
           fontSize: size,
           color:
             color ??
@@ -201,6 +211,7 @@ export function AppButton({
   tone = "primary",
   style,
   disabled = false,
+  designRect,
 }: {
   text: string;
   onPress: () => void;
@@ -208,8 +219,11 @@ export function AppButton({
   tone?: "primary" | "secondary" | "muted" | "danger";
   style?: StyleProp<ViewStyle>;
   disabled?: boolean;
+  designRect?: DesignRect;
 }) {
   const theme = useCityTheme();
+  const space = useDesignSpace();
+  const placement = useDesignRect(designRect ?? [0, 0, 0, 0]);
   const primary = tone === "primary";
   const fill = disabled
     ? semanticColors.disabled
@@ -221,6 +235,53 @@ export function AppButton({
     : primary
       ? theme.primaryLight
       : theme.paperLight;
+  if (designRect) {
+    const [, , w, h] = designRect;
+    const ink = disabled
+      ? "#f5f4ef"
+      : primary
+        ? theme.onPrimary
+        : tone === "danger"
+          ? semanticColors.danger
+          : theme.ink;
+    return (
+      <Button
+        label={text}
+        testID={testID}
+        onPress={onPress}
+        disabled={disabled}
+        style={[placement, style]}
+      >
+        <DesignSpace scale={space.scale}>
+          <View pointerEvents="none" style={{ position: "absolute", inset: 0 }}>
+            <DesignSurface rect={[0, 6, w, h]} fill="#9c6e38" radius={h / 2} />
+            <DesignSurface
+              rect={[0, 0, w, h]}
+              fill={disabled ? "#d0d1cd" : top}
+              end={fill}
+              stroke={theme.edge}
+              radius={h / 2}
+            />
+            <DesignSurface
+              rect={[6, 6, w - 12, h - 12]}
+              stroke="#fff0c5"
+              radius={h / 2 - 6}
+              line={2}
+            />
+            <DesignText
+              rect={[18, 4, w - 36, h - 8]}
+              size={44}
+              bold
+              color={ink}
+              align="center"
+            >
+              {text}
+            </DesignText>
+          </View>
+        </DesignSpace>
+      </Button>
+    );
+  }
   return (
     <Button
       label={text}
@@ -272,13 +333,62 @@ export function AppCheckbox({
   checked,
   onChange,
   testID,
+  designRect,
+  checkPosition = "right",
 }: {
   label: string;
   checked: boolean;
   onChange: () => void;
   testID?: string;
+  designRect?: DesignRect;
+  checkPosition?: "left" | "right";
 }) {
   const theme = useCityTheme();
+  const space = useDesignSpace(),
+    placement = useDesignRect(designRect ?? [0, 0, 0, 0]);
+  if (designRect)
+    return (
+      <Button
+        label={label}
+        role="checkbox"
+        checked={checked}
+        testID={testID}
+        onPress={onChange}
+        style={placement}
+      >
+        <DesignSpace scale={space.scale}>
+          <DesignText
+            rect={
+              checkPosition === "left" ? [115, 0, 830, 220] : [0, 0, 770, 105]
+            }
+            size={checkPosition === "left" ? 45 : 44}
+          >
+            {label}
+          </DesignText>
+          <DesignSurface
+            rect={
+              checkPosition === "left" ? [0, 50, 75, 75] : [830, 15, 72, 72]
+            }
+            fill={theme.paperLight}
+            stroke={theme.edge}
+            radius={10}
+          />
+          {checked && (
+            <DesignText
+              rect={
+                checkPosition === "left" ? [-5, 45, 84, 84] : [825, 10, 84, 84]
+              }
+              size={61}
+              bold
+              color="#34852b"
+              align="center"
+            >
+              ✓
+            </DesignText>
+          )}
+        </DesignSpace>
+      </Button>
+    );
   return (
     <Button
       label={label}

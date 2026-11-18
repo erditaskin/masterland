@@ -73,6 +73,43 @@ export const Sprite = memo(function Sprite({
     <Crop source={source} x={x} y={y} w={w} h={h} width={size} height={size} />
   );
 });
+/** One measured crop per canonical item; both board and page views use these layers. */
+export function itemArtwork(id: string): {
+  source: ImageSourcePropType;
+  crop: readonly [number, number, number, number];
+} {
+  const custom = (
+    reference.item_art as Record<string, { sheet: string; index: number }>
+  )[id];
+  if (custom)
+    return {
+      source:
+        custom.sheet === "skara"
+          ? require("../../assets/art/skara-items-v2.png")
+          : require("../../assets/art/haven-items-v1.png"),
+      crop: (custom.sheet === "skara" ? skaraBounds : havenBounds)[
+        custom.index
+      ]! as [number, number, number, number],
+    };
+  const p = product(id),
+    approved = p.producer < 4 && p.tier <= 2;
+  const kind = approved ? "approved" : "products",
+    index = approved
+      ? p.producer * 2 + p.tier - 1
+      : p.producer * 4 + p.tier - 1;
+  return {
+    source:
+      id === "item50"
+        ? require("../../assets/art/flour-packet-v1.png")
+        : art[kind],
+    crop: (id === "item50" ? flourBounds : itemBounds[kind][index]!) as [
+      number,
+      number,
+      number,
+      number,
+    ],
+  };
+}
 /** Trim metadata is measured offline; objects keep their native aspect and soft edge. */
 export const Item = memo(function Item({
   id,
@@ -85,68 +122,23 @@ export const Item = memo(function Item({
   width?: number;
   height?: number;
 }) {
-  const custom = (
-    reference.item_art as Record<string, { sheet: string; index: number }>
-  )[id];
-  if (custom) {
-    const rect = (custom.sheet === "skara" ? skaraBounds : havenBounds)[
-      custom.index
-    ]!;
-    const side = Math.min(width, height);
-    return (
-      <View
-        pointerEvents="none"
-        style={{
-          width,
-          height,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Crop
-          source={
-            custom.sheet === "skara"
-              ? require("../../assets/art/skara-items-v2.png")
-              : require("../../assets/art/haven-items-v1.png")
-          }
-          x={rect[0]!}
-          y={rect[1]!}
-          w={rect[2]!}
-          h={rect[3]!}
-          width={side}
-          height={side}
-        />
-      </View>
-    );
-  }
-  const p = product(id),
-    approved = p.producer < 4 && p.tier <= 2;
-  const kind = approved ? "approved" : "products";
-  const index = approved
-    ? p.producer * 2 + p.tier - 1
-    : p.producer * 4 + p.tier - 1;
-  const flourPacket = id === "item50";
-  const rect = flourPacket ? flourBounds : itemBounds[kind][index]!;
-  const ratio = rect[2]! / rect[3]!,
-    drawWidth = Math.min(width, height * ratio),
-    drawHeight = drawWidth / ratio;
+  const { source, crop } = itemArtwork(id),
+    ratio = crop[2] / crop[3];
+  const w = Math.min(width, height * ratio),
+    h = w / ratio;
   return (
     <View
       pointerEvents="none"
       style={{ width, height, alignItems: "center", justifyContent: "center" }}
     >
       <Crop
-        source={
-          flourPacket
-            ? require("../../assets/art/flour-packet-v1.png")
-            : art[kind]
-        }
-        x={rect[0]!}
-        y={rect[1]!}
-        w={rect[2]!}
-        h={rect[3]!}
-        width={drawWidth}
-        height={drawHeight}
+        source={source}
+        x={crop[0]}
+        y={crop[1]}
+        w={crop[2]}
+        h={crop[3]}
+        width={w}
+        height={h}
       />
     </View>
   );

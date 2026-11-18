@@ -1,0 +1,293 @@
+{
+  "status": "independent-device-targets; art-direction audit remains open",
+  "device": "Masterland-Design-Reference-QA / iPhone 16 Pro / iOS 18.6",
+  "application_screenshots_used_as_input": false,
+  "rows": [
+    {
+      "id": "city5-cities",
+      "file": "city5-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "d946cc5f16e30c217d0343fd6c5e6114332f9fc18f3608d89a1aec5e43ddc522",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city5-board",
+      "file": "city5-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "7673195e7258ac9943ae33b168b7a55bdbc2944805ffb3c5b384434bd4f7b675",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city4-cities",
+      "file": "city4-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "47c20b4854fd2d9c0c1e1fe17f9a029cd06ba76ae0a0e123a4ddf6f0378ac318",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city4-board",
+      "file": "city4-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "f5e39b482f24228e69a0da263409e707fdf6559481cad6264e83534ccc48ab8c",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city3-cities",
+      "file": "city3-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "1e9e99fa2a68084af6c78f6fcb19464bdff49a8ce3a093348b21ea8522bb7a55",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city3-board",
+      "file": "city3-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "1ccf35449bb2497c5039cebad3b3c03e67b2c28cab8edd749257fb5671680a1c",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city2-cities",
+      "file": "city2-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "22a756736e52da91ad4fea355140f51d1f368e641d19a7bca3a8af1b91cfb5b5",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city2-board",
+      "file": "city2-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "5ed2d4bec0af52f80f555f418588bffc1dbdd347e24df7177678600be470c78b",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-storage-board-full",
+      "file": "city1-storage-board-full.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "108072482b91ee196cff8d22e05da2a781955b718b49e1c95757eac7545548b8",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-storage",
+      "file": "city1-storage.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "5c55370c2825727b1ad0b17dcaba2bd1db5cbee0e6acdaad304031311a00cea0",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-producer-cooldown",
+      "file": "city1-producer-cooldown.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "e47346acc73e010fc9a6154ed226fb829e0b677b0cd66daf46c3c3741ba127dc",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-orders",
+      "file": "city1-orders.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "180526628595973c3613256fdd73632fb1aeb38678d704419bf85b4a557cc797",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-order-guide",
+      "file": "city1-order-guide.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "36851096c628c9a1b8c8aa4c75a74685df193f5b3e937a2196f7fd04790bc52e",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-market",
+      "file": "city1-market.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "6afc6a24c7f8a01cce678a331516240a7c4207e39ee1f66dc74f5c020653d95f",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-item",
+      "file": "city1-item.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "d003a49bbb0d8c271431f7e4e4a283da63f8adfbe29e2f2610ede4ada26ce510",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-energy",
+      "file": "city1-energy.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "70f2b9204e845f851b884762f3d3e2785af5a7385444f31f341150ff235c633a",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-collection-chain",
+      "file": "city1-collection-chain.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "1d03846f9dddc6984e672540ce2b65c2556b2dc01517f1d1aa7d12280ea173a7",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-collection",
+      "file": "city1-collection.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "a0d16f7f7357403f46d72f356cff21a08e4a3bfadff34ba1f4a4ce3c4328ef7d",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-cloud-choice",
+      "file": "city1-cloud-choice.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "1ca94b492ed7f80df6463c3e8e502643200a9405e49178619157b41cf57adf5e",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-cities",
+      "file": "city1-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "d92a56d9753a51bce48f528d1d96c825472bfb109d72b45c172c05b047fb738d",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-board",
+      "file": "city1-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "6dfdad6fb78cf9b2e9eff013b5c06dda8384b7cbafe2efd7391a8a3dcc9e40cc",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-achievements",
+      "file": "city1-achievements.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "ab4fa772851e0f0af283fd88591544dc98d0531a5dd8c15e81a2fc9385d93286",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-achievement",
+      "file": "city1-achievement.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "dc5515a4b975f7d477366401f10b5f4f80db9aa550224dadee7166dcf4556cf0",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-account-registered",
+      "file": "city1-account-registered.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "48617da39e7f11abd644e3e3595b735bfdb7a9c21557da330985fb87f6fe203e",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-account-guest",
+      "file": "city1-account-guest.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "0c398ca810830abe79478832e6baacbe12682c10f291114cb0b4d86ad4f046a3",
+      "srgb": 0,
+      "icc": false
+    },
+    {
+      "id": "city1-account-deletion",
+      "file": "city1-account-deletion.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "sha256": "db141cb880047260ae836b37ded0ed6e3e0337fda7fbfc2fa4ba5c10dd9d0a7d",
+      "srgb": 0,
+      "icc": false
+    }
+  ]
+}

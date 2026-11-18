@@ -1,16 +1,21 @@
 import { memo } from "react";
 import { View, type ImageSourcePropType } from "react-native";
-import { AppButton, Button, Label } from "./Controls";
-import { Crop } from "./Art";
+import { AppButton, Button } from "./Controls";
 import { PaperCard } from "./PagePrimitives";
 import { useCityTheme } from "./CityThemeProvider";
+import {
+  DesignBox,
+  DesignImage,
+  DesignSpace,
+  DesignText,
+  useDesignSpace,
+} from "./DesignSpace";
 
 /** Selection and travel are separate actions; an illustrated stamp is never a fake button. */
 export const CityCard = memo(function CityCard({
   id,
   title,
   scene,
-  width,
   status,
   current,
   selected,
@@ -31,60 +36,47 @@ export const CityCard = memo(function CityCard({
   onSelect: () => void;
   onAction: () => void;
 }) {
-  const theme = useCityTheme();
+  const theme = useCityTheme(),
+    { scale } = useDesignSpace();
   return (
-    <PaperCard selected={current} style={{ padding: 5, marginBottom: 9 }}>
-      <View style={{ flexDirection: "row", gap: 10, minHeight: 122 }}>
-        <Button
-          testID={`jump-${id}`}
-          label={title}
-          selected={selected}
-          onPress={onSelect}
-          style={{
-            width: "51%",
-            height: 122,
-            borderRadius: 12,
-            overflow: "hidden",
-          }}
+    <View style={{ width: 1062 * scale, height: 318 * scale }}>
+      <DesignSpace scale={scale} x={72} y={712}>
+        <PaperCard designRect={[90, 716, 1026, 312]} selected={current} />
+        <DesignImage
+          source={scene}
+          rect={[105, 731, 540, 282]}
+          crop={[0, 130, 789, 430]}
+          radius={25}
+        />
+        <DesignBox rect={[105, 731, 540, 282]}>
+          <Button
+            testID={`jump-${id}`}
+            label={title}
+            selected={selected}
+            onPress={onSelect}
+            style={{ flex: 1 }}
+          >
+            <View />
+          </Button>
+        </DesignBox>
+        <DesignText rect={[670, 734, 418, 83]} size={58} bold>
+          {title}
+        </DesignText>
+        <DesignText
+          rect={[670, 816, 415, 48]}
+          size={36}
+          color={current ? "#34852b" : theme.mutedInk}
         >
-          <Crop
-            source={scene}
-            x={0}
-            y={100}
-            w={789}
-            h={480}
-            width={(width - 16) * 0.51}
-            height={122}
-          />
-        </Button>
-        <View
-          style={{
-            flex: 1,
-            paddingVertical: 4,
-            paddingRight: 4,
-            justifyContent: "space-between",
-          }}
-        >
-          <Label title size={21}>
-            {title}
-          </Label>
-          <Label size={12} color={current ? "#34852b" : theme.mutedInk}>
-            {status}
-          </Label>
-          <AppButton
-            testID={`travel-${id}`}
-            text={action}
-            disabled={disabled}
-            onPress={onAction}
-            style={{
-              minHeight: 38,
-              marginVertical: 0,
-              paddingHorizontal: 5,
-              paddingVertical: 6,
-            }}
-          />
-        </View>
-      </View>
-    </PaperCard>
+          {status}
+        </DesignText>
+        <AppButton
+          designRect={[670, 882, 414, 132]}
+          text={action}
+          testID={`travel-${id}`}
+          disabled={disabled}
+          onPress={onAction}
+        />
+      </DesignSpace>
+    </View>
   );
 });

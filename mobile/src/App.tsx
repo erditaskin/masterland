@@ -1,5 +1,8 @@
-import { visualReviewCity } from "./ui/visualReview";
-import { CityThemeProvider, useCityTheme } from "./ui/CityThemeProvider";
+import { PresentationPage } from "./ui/PresentationPage";
+import { BoardChrome } from "./ui/BoardChrome";
+import { CityBackdrop, WalletHUD, GameNavigation } from "./ui/GameChrome";
+import { presentationReview, visualReviewCity } from "./ui/visualReview";
+import { CityThemeProvider } from "./ui/CityThemeProvider";
 import { startCloudSync } from "./account/cloudSync";
 import { IdleHint } from "./ui/IdleHint";
 import { cityScenes } from "./ui/cityScenes";
@@ -9,17 +12,13 @@ import { energyAds } from "./ads/service";
 import { I18nText as Text } from "./ui/I18nText";
 import { languageStore } from "./i18n/locale";
 import { loadLanguage } from "./i18n/preferences";
-import { EnergyTimer } from "./ui/EnergyTimer";
 import { RewardCelebration } from "./ui/RewardCelebration";
-import { ProducerPortrait } from "./ui/ProducerDetails";
 import {
   testModeEnabled,
   testFlightBeta,
   productionRelease,
 } from "./game/testMode";
 import {
-  memo,
-  type ComponentRef,
   useCallback,
   useEffect,
   useMemo,
@@ -31,10 +30,8 @@ import {
   AccessibilityInfo,
   AppState,
   BackHandler,
-  ImageBackground,
   PixelRatio,
   Linking,
-  ScrollView,
   StyleSheet,
   View,
   useWindowDimensions,
@@ -50,47 +47,46 @@ import { LaunchScreen } from "./ui/LaunchScreen";
 import * as SplashScreen from "expo-splash-screen";
 import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
-import { ReadyGlow, ReadyIcon, useReadyPulse } from "./ui/ReadyGlow";
+import { useReadyPulse } from "./ui/ReadyGlow";
 import { orderItemHighlights, prioritizeOrderRail } from "./ui/orderRail";
 import { fitSquareBoard } from "./ui/layout";
-import { StatusIcon } from "./ui/StatusIcon";
-import { CityWoodSign, WoodTray } from "./ui/Skin";
 import { PowerMenu, type PowerAnchor } from "./ui/PowerMenu";
-import { ProducerButton } from "./ui/ProducerButton";
 import { Button, Label, ActionButton } from "./ui/Controls";
-import { Crop, Item, Sprite } from "./ui/Art";
 import { Pages, type Page } from "./ui/Pages";
 import { art, colors, fonts } from "./ui/theme";
 import { gameStore } from "./state/store";
 import {
-  achievements,
-  achievementState,
   energyCap,
   energyIntervalMs,
-  productionPlan,
   city,
   count,
-  level,
-  levelRange,
   name,
   orders,
   producers,
-  cityProducers,
   product,
   type Action,
-  type Producer,
   type Result,
-  type Save,
 } from "./game/engine";
+function presentationPage(view: string): Page | null {
+  if (view === "board") return null;
+  if (view === "item") return { kind: "info", index: 7 };
+  if (view.startsWith("storage")) return { kind: "storage" };
+  if (view.startsWith("account-")) return { kind: "profile" };
+  if (view === "cloud-choice") return { kind: "cloud" };
+  if (view === "collection-chain")
+    return { kind: "producer", index: 0, variant: "collection" };
+  if (view === "producer-cooldown") return { kind: "producer", index: 0 };
+  if (view === "achievements") return { kind: "cities" };
+  if (view === "order-guide")
+    return { kind: "order-guide", id: "presentation-order" };
+  if (view === "achievement")
+    return { kind: "achievement", id: "achievement3" };
+  return {
+    kind: view as "collection" | "market" | "cities" | "energy" | "orders",
+  };
+}
 void SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({ fade: true, duration: 180 });
-const navigation = [
-  ["Tahta", "board"],
-  ["Koleksiyon", "collection"],
-  ["Şehirler", "cities"],
-  ["Depo", "storage"],
-  ["Market", "market"],
-] as const;
 const startupAssets = [
   cityScenes.city1!.source,
   require("../assets/art/skara-items-v2.png"),
@@ -104,302 +100,6 @@ const startupAssets = [
   require("../assets/art/route-icons-v2.png"),
   require("../assets/art/skara-field-hero-v2.png"),
 ];
-const ProducerCard = memo(
-  function ProducerCard({
-    p,
-    index,
-    size,
-    save,
-    dispatch,
-    open,
-    onPowerOpen,
-  }: {
-    onPowerOpen: (anchor: PowerAnchor) => void;
-    language: string;
-    p: Producer;
-    index: number;
-    size: number;
-    save: Save;
-    dispatch: (a: Action) => void;
-    open: (p: Page) => void;
-  }) {
-    const anchor = useRef<ComponentRef<typeof View>>(null);
-    const c = city(save),
-      owned = c.owned.includes(p.id),
-      readyAt = c.batches[p.id]?.readyAt ?? 0,
-      [now, setNow] = useState(Date.now);
-    useEffect(() => {
-      if (readyAt <= Date.now()) return;
-      const timer = setInterval(() => setNow(Date.now()), 1000);
-      return () => clearInterval(timer);
-    }, [readyAt]);
-    const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000));
-    const plan = productionPlan(save, p);
-    return (
-      <View
-        ref={anchor}
-        collapsable={false}
-        style={{ width: size, height: size }}
-      >
-        <ProducerButton
-          testID={p.id}
-          label={`${p.name}, ${2 ** (plan.selected - 1)}x seçili, ${plan.cost}x etkin, ${plan.cost} enerji, güç için basılı tut`}
-          onPress={() =>
-            owned
-              ? seconds > 0
-                ? open({ kind: "producer", index })
-                : save.stamina < plan.cost
-                  ? open({ kind: "energy" })
-                  : dispatch({ type: "produce", id: p.id })
-              : open({ kind: "producer", index })
-          }
-          onLongPress={() => {
-            if (!owned) {
-              open({ kind: "producer", index });
-              return;
-            }
-            anchor.current?.measureInWindow((x, y, width, height) =>
-              onPowerOpen({ index, x, y, width, height }),
-            );
-          }}
-          style={{
-            width: size,
-            height: size,
-            borderRadius: 10,
-            overflow: "hidden",
-            backgroundColor: "#482711",
-            borderWidth: 2,
-            borderTopColor: "#43210f",
-            borderBottomColor: "#d19a56",
-            borderColor: owned ? "#a56d32" : "#72502d",
-          }}
-        >
-          <View
-            pointerEvents="none"
-            style={{
-              position: "absolute",
-              inset: 2,
-              overflow: "hidden",
-              borderRadius: 6,
-            }}
-          >
-            {index >= 5 ? (
-              <ProducerPortrait index={index} size={size - 4} />
-            ) : (
-              <Crop
-                source={art.concept}
-                x={143 + index * 130.5}
-                y={400}
-                w={68}
-                h={68}
-                width={size - 4}
-                height={size - 4}
-              />
-            )}
-          </View>
-          {owned && (
-            <View
-              pointerEvents="none"
-              style={{
-                position: "absolute",
-                top: 3,
-                left: 3,
-                borderRadius: 6,
-                paddingHorizontal: 4,
-                backgroundColor: plan.effective > 1 ? "#a35d13" : "#482714",
-                borderWidth: 0.6,
-                borderColor: colors.gold,
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: fonts.number,
-                  fontSize: 9,
-                  color: colors.goldLight,
-                }}
-              >
-                {2 ** (plan.selected - 1)}x
-              </Text>
-            </View>
-          )}
-          <View
-            pointerEvents="none"
-            style={{
-              position: "absolute",
-              bottom: 2,
-              left: 3,
-              right: 3,
-              height: 15,
-              flexDirection: "row",
-              gap: 2,
-              borderRadius: 9,
-              backgroundColor: "#412512",
-              borderWidth: 0.7,
-              borderColor: colors.gold,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <StatusIcon
-              kind={
-                !owned
-                  ? level(save) >= p.level
-                    ? "gold"
-                    : "lock"
-                  : seconds > 0
-                    ? "clock"
-                    : "energy"
-              }
-            />
-            <Text
-              numberOfLines={1}
-              adjustsFontSizeToFit
-              minimumFontScale={0.85}
-              style={{
-                fontFamily: fonts.number,
-                color: colors.goldLight,
-                fontSize: 10,
-                flexShrink: 1,
-              }}
-            >
-              {!owned
-                ? level(save) >= p.level
-                  ? `${p.price}`
-                  : `Lv.${p.level}`
-                : seconds > 0
-                  ? `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`
-                  : String(plan.cost)}
-            </Text>
-          </View>
-        </ProducerButton>
-      </View>
-    );
-  },
-  (a, b) =>
-    a.p === b.p &&
-    a.index === b.index &&
-    a.size === b.size &&
-    a.language === b.language &&
-    a.dispatch === b.dispatch &&
-    a.open === b.open &&
-    a.onPowerOpen === b.onPowerOpen &&
-    level(a.save) === level(b.save) &&
-    a.save.stamina > 100 === b.save.stamina > 100 &&
-    (city(a.save).powers?.[a.p.id] ?? 1) ===
-      (city(b.save).powers?.[b.p.id] ?? 1) &&
-    city(a.save).owned.includes(a.p.id) ===
-      city(b.save).owned.includes(b.p.id) &&
-    (city(a.save).batches[a.p.id]?.readyAt ?? 0) ===
-      (city(b.save).batches[b.p.id]?.readyAt ?? 0),
-);
-const Navigation = memo(function Navigation({
-  width,
-  open,
-  onBoard,
-  readyCount,
-  active,
-}: {
-  active: string;
-  readyCount: number;
-  width: number;
-  open: (p: Page) => void;
-  onBoard: () => void;
-}) {
-  const theme = useCityTheme();
-  return (
-    <View
-      style={{
-        width: width - 20,
-        height: 55,
-        flexDirection: "row",
-        paddingHorizontal: 11,
-        paddingVertical: 6,
-        borderRadius: 12,
-        backgroundColor: "transparent",
-      }}
-    >
-      <WoodTray width={width - 20} height={55} />
-      {navigation.map(([label, target], i) => (
-        <Button
-          key={target}
-          testID={"tab-" + target}
-          selected={active === target}
-          label={
-            target === "cities" && readyCount
-              ? `${label}, ${readyCount} ödül hazır`
-              : label
-          }
-          onPress={() =>
-            target === "board" ? onBoard() : open({ kind: target })
-          }
-          style={{
-            flex: 1,
-            marginHorizontal: 2,
-            borderRadius: 8,
-            backgroundColor: active === target ? theme.primary : theme.heading,
-            backgroundImage:
-              active === target
-                ? `linear-gradient(180deg, ${theme.primaryLight} 0%, ${theme.primary} 100%)`
-                : "linear-gradient(180deg, rgba(31, 15, 5, 0.32) 0%, rgba(108, 58, 24, 0.12) 100%)",
-            shadowColor: active === target ? "#ffbd39" : "transparent",
-            shadowOpacity: active === target ? 0.55 : 0,
-            shadowRadius: 5,
-            shadowOffset: { width: 0, height: 0 },
-            borderWidth: 1,
-            borderColor: active === target ? "#f0ca86" : "#71401f",
-            borderTopColor: active === target ? "#f0ca86" : "#3f200d",
-            borderBottomColor: active === target ? "#e3ab63" : "#bc8044",
-          }}
-        >
-          {target === "cities" && readyCount > 0 && (
-            <View
-              pointerEvents="none"
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 4,
-                minWidth: 14,
-                height: 14,
-                borderRadius: 7,
-                backgroundColor: "#b96716",
-                borderWidth: 1,
-                borderColor: colors.goldLight,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.goldLight,
-                  fontSize: 9,
-                  fontFamily: fonts.number,
-                }}
-              >
-                {readyCount}
-              </Text>
-            </View>
-          )}
-          <Sprite kind="icons" index={i} size={29} />
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.82}
-            style={{
-              fontFamily: fonts.title,
-              fontSize: 12,
-              color: colors.goldLight,
-              textAlign: "center",
-              width: "100%",
-              marginTop: -1,
-            }}
-          >
-            {label}
-          </Text>
-        </Button>
-      ))}
-    </View>
-  );
-});
 function Game({
   themeCityID,
   onPreviewTheme,
@@ -409,6 +109,7 @@ function Game({
 }) {
   useEffect(() => startCloudSync(), []);
   const [deletionPreview, setDeletionPreview] = useState(false);
+  const [presentation, setPresentation] = useState<string | null>(null);
   const language = useSyncExternalStore(
     languageStore.subscribe,
     languageStore.get,
@@ -445,17 +146,20 @@ function Game({
         uiSound();
         setPowerMenu(null);
         setPage(p);
+        setPresentation((value) => (value ? "board" : null));
       },
       [uiSound],
     ),
     close = useCallback(() => {
       uiSound();
       setPage(null);
+      setPresentation((value) => (value ? "board" : null));
     }, [uiSound]),
     boardTab = useCallback(() => {
       uiSound();
       setPage(null);
       setSelected(null);
+      setPresentation((value) => (value ? "board" : null));
     }, [uiSound]);
   const dismissReward = useCallback(() => {
     const notice = gameStore.get().save.rewardQueue?.[0];
@@ -504,6 +208,22 @@ function Game({
           !productionRelease &&
           Boolean(url?.includes("deletion-recovery-review")),
       );
+      const presentation = presentationReview(
+        incoming,
+        testModeEnabled,
+        process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
+      );
+      setPresentation(presentation);
+      if (presentation) {
+        setSelected(null);
+        setPage(presentationPage(presentation));
+        return gameStore.load(
+          presentation === "storage-board-full"
+            ? "presentation-full"
+            : "presentation",
+          presentation,
+        );
+      }
       const mode =
         testFlightBeta || productionRelease
           ? "normal"
@@ -530,6 +250,24 @@ function Game({
         url.startsWith("masterland://auth/")
       )
         return;
+      const presentation = presentationReview(
+        incoming,
+        testModeEnabled,
+        process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
+      );
+      setPresentation(presentation);
+      if (presentation) {
+        onPreviewTheme(null);
+        setSelected(null);
+        setPage(presentationPage(presentation));
+        void gameStore.load(
+          presentation === "storage-board-full"
+            ? "presentation-full"
+            : "presentation",
+          presentation,
+        );
+        return;
+      }
       onPreviewTheme(
         visualReviewCity(
           incoming,
@@ -667,9 +405,7 @@ function Game({
     },
     [selected, move, select],
   );
-  const top = Math.max(insets.top, 20),
-    scale = width / 390,
-    sx = width / 800;
+  const top = Math.max(insets.top, 20);
   const layout = fitSquareBoard(
     width,
     height,
@@ -677,26 +413,13 @@ function Game({
     insets.bottom,
     PixelRatio.get(),
   );
-  const { navTop, frameInset, boardTop } = layout,
+  const { frameInset, boardTop } = layout,
     cellWidth = layout.cell,
     cellHeight = layout.cell,
-    bw = layout.boardWidth,
-    noticeWidth = width - 16 * scale,
-    noticeHeight = 58 * scale,
-    cardWidth = (noticeWidth - 24 * scale) / 3,
-    cardHeight = 48 * scale,
-    producerSize = 58 * scale;
+    bw = layout.boardWidth;
   const activeOrders = useMemo(
     () => prioritizeOrderRail(orders(save), save),
     [save],
-  );
-  const orderWidths = activeOrders.map(
-    (o) => cardWidth + 32 * scale * (o.requirements.length - 1),
-  );
-  const orderOffsets = orderWidths.map((_, index) =>
-    orderWidths
-      .slice(0, index)
-      .reduce((offset, w) => offset + w + 6 * scale, 0),
   );
   const { ready: readyOrderItems, partial: partialOrderItems } = useMemo(
     () => orderItemHighlights(activeOrders, save),
@@ -706,27 +429,6 @@ function Game({
     !page && readyOrderItems.size > 0,
     reduced || save.reducedMotion,
   );
-  const producerRail = useRef<ComponentRef<typeof ScrollView>>(null),
-    railOffset = useRef(0),
-    railMax = useRef(0),
-    railViewport = useRef(0),
-    railContent = useRef(0);
-  const [producerEdges, setProducerEdges] = useState({
-    left: false,
-    right: false,
-  });
-  const syncProducerEdges = useCallback(() => {
-    railMax.current = Math.max(0, railContent.current - railViewport.current);
-    const next = {
-      left: railOffset.current > 1,
-      right: railOffset.current < railMax.current - 1,
-    };
-    setProducerEdges((previous) =>
-      previous.left === next.left && previous.right === next.right
-        ? previous
-        : next,
-    );
-  }, []);
   if (
     !ready ||
     loadedAssets < startupAssets.length ||
@@ -752,16 +454,13 @@ function Game({
         }}
       />
     );
-  const [start, next] = levelRange(save),
-    progress = Math.max(0, Math.min(1, (save.xp - start) / (next - start))),
-    c = city(save);
+  const c = city(save);
   return (
-    <ImageBackground
-      source={cityScenes[themeCityID]?.source ?? art.city}
-      resizeMode="cover"
-      onLoadEnd={() => requestAnimationFrame(() => SplashScreen.hide())}
+    <View
       style={{ flex: 1 }}
+      onLayout={() => requestAnimationFrame(() => SplashScreen.hide())}
     >
+      <CityBackdrop width={width} height={height} />
       <View
         pointerEvents="auto"
         style={StyleSheet.absoluteFill}
@@ -775,606 +474,32 @@ function Game({
         }}
         onTouchCancel={() => setTouching(false)}
       >
-        <View
-          style={{
-            position: "absolute",
-            left: 12,
-            right: 12,
-            top,
-            height: 34,
-            flexDirection: "row",
-            gap: 4,
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Button
-            testID="profile"
-            label={`Seviye ${level(save)}, profil`}
-            onPress={() => open({ kind: "profile" })}
-            style={{ width: 56 * scale, height: 34 }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <View
-                style={{
-                  height: 31,
-                  width: 29,
-                  zIndex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  pointerEvents="none"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    width: 29,
-                    height: 31,
-                    alignItems: "center",
-                  }}
-                >
-                  <Crop
-                    source={require("../assets/art/level-shield-v11.png")}
-                    x={161}
-                    y={85}
-                    w={930}
-                    h={1050}
-                    width={(31 * 930) / 1050}
-                    height={31}
-                  />
-                </View>
-                <Text
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: 29,
-                    height: 31,
-                    lineHeight: 31,
-                    textAlign: "center",
-                    fontFamily: fonts.number,
-                    fontSize: 15,
-                    color: colors.goldLight,
-                  }}
-                >
-                  {level(save)}
-                </Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  height: 12,
-                  marginLeft: -2,
-                  borderRadius: 7,
-                  borderWidth: 1,
-                  borderColor: colors.gold,
-                  backgroundColor: "#102437",
-                  padding: 1,
-                }}
-              >
-                <View
-                  style={{
-                    width: `${progress * 100}%`,
-                    height: "100%",
-                    backgroundColor: "#60c8df",
-                    backgroundImage:
-                      "linear-gradient(180deg, #b5fbff 0%, #26b8ff 45%, #218cd1 100%)",
-                    borderRadius: 5,
-                  }}
-                />
-              </View>
-            </View>
-          </Button>
-          {(
-            [
-              {
-                id: "stamina",
-                value: String(save.stamina),
-                icon: 5,
-              },
-              {
-                id: "gold",
-                value: save.gold.toLocaleString("tr-TR"),
-                icon: 6,
-              },
-              { id: "gems", value: String(save.gems), icon: 7 },
-            ] as const
-          ).map((a) => (
-            <Button
-              key={a.id}
-              testID={a.id}
-              label={String(a.value)}
-              onPress={() =>
-                open({ kind: a.id === "stamina" ? "energy" : "market" })
-              }
-              style={{ flex: 1, height: 34 * scale }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  height: 30 * scale,
-                  borderRadius: 12 * scale,
-                  backgroundColor: colors.navy,
-                  backgroundImage:
-                    "linear-gradient(180deg, #273d60 0%, #0c1b32 100%)",
-                  borderColor: colors.gold,
-                  borderWidth: 1,
-                  width: "100%",
-                  paddingRight: 4 * scale,
-                }}
-              >
-                <View style={{ width: 28 * scale, alignItems: "center" }}>
-                  <Sprite kind="icons" index={a.icon} size={30 * scale} />
-                </View>
-                <Text
-                  numberOfLines={1}
-                  adjustsFontSizeToFit
-                  minimumFontScale={0.65}
-                  maxFontSizeMultiplier={1}
-                  style={{
-                    fontFamily: fonts.number,
-                    color: colors.goldLight,
-                    fontSize: 15 * scale,
-                    lineHeight: 20 * scale,
-                    includeFontPadding: false,
-                    fontVariant: ["tabular-nums"],
-                    flex: 1,
-                    textAlign: "center",
-                  }}
-                >
-                  {a.value}
-                </Text>
-                <View
-                  style={{
-                    marginLeft: 3,
-                    width: 16 * scale,
-                    height: 16 * scale,
-                    borderRadius: 8 * scale,
-                    borderWidth: 1,
-                    borderColor: colors.gold,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundImage:
-                      "linear-gradient(180deg, #35557f 0%, #12233c 100%)",
-                  }}
-                >
-                  <Label
-                    color={colors.goldLight}
-                    size={12 * scale}
-                    style={{ lineHeight: 16 * scale, textAlign: "center" }}
-                  >
-                    +
-                  </Label>
-                </View>
-              </View>
-              {a.id === "stamina" && (
-                <View
-                  style={{ position: "absolute", top: 34, left: 0, right: 0 }}
-                >
-                  <EnergyTimer save={save} />
-                </View>
-              )}
-            </Button>
-          ))}
-        </View>
-        <Button
-          testID="profile-menu"
-          label="Profil"
-          onPress={() => open({ kind: "profile" })}
-          style={{
-            position: "absolute",
-            right: 12,
-            top: top + 32 * scale,
-            width: 29,
-            height: 29,
-            borderRadius: 15,
-            backgroundColor: colors.navy,
-            borderWidth: 1,
-            borderColor: colors.gold,
-          }}
-        >
-          <View
-            style={{
-              width: 7,
-              height: 7,
-              borderRadius: 4,
-              backgroundColor: colors.goldLight,
-              marginBottom: 2,
-            }}
-          />
-          <View
-            style={{
-              width: 14,
-              height: 7,
-              borderTopLeftRadius: 7,
-              borderTopRightRadius: 7,
-              backgroundColor: colors.goldLight,
-            }}
-          />
-        </Button>
+        <WalletHUD save={save} width={width} open={open} />
         {!page && (
           <>
-            <View
-              style={{
-                position: "absolute",
-                top: top + 35 * scale,
-                alignSelf: "center",
-                height: 26 * scale,
-                width: 180 * scale,
-                alignItems: "center",
-                justifyContent: "center",
+            <BoardChrome
+              width={width}
+              save={save}
+              orders={activeOrders}
+              dispatch={dispatch}
+              open={open}
+              onPowerOpen={showPowerMenu}
+              onDeliver={(id) => {
+                const current = gameStore.get().save;
+                const order = orders(current).find((o) => o.id === id);
+                if (!order) return;
+                if (
+                  order.requirements.every(
+                    (r) => count(current, r.item_id) >= r.quantity,
+                  )
+                ) {
+                  const outcome = dispatch({ type: "deliver", id });
+                  if (outcome?.kind === "reward")
+                    lastOrderDeliveryAt.current = Date.now();
+                } else if (Date.now() - lastOrderDeliveryAt.current > 400)
+                  open({ kind: "order-guide", id });
               }}
-            >
-              <CityWoodSign width={180 * scale} height={26 * scale} />
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 5 * scale,
-                }}
-              >
-                <Label title size={17 * scale} color={colors.goldLight}>
-                  {name(save.cityID)}
-                </Label>
-              </View>
-            </View>
-            <Button
-              testID="allOrders"
-              label="Tüm ilanlar"
-              onPress={() => open({ kind: "orders" })}
-              style={{
-                position: "absolute",
-                top: top + 35 * scale,
-                left: 10,
-                width: 44,
-                height: 26 * scale,
-              }}
-            >
-              <WoodTray width={44} height={26 * scale} />
-              <Label title size={9 * scale} color={colors.goldLight}>
-                Tümü ›
-              </Label>
-            </Button>
-            <View
-              style={{
-                position: "absolute",
-                top: top + 62 * scale,
-                left: 8 * scale,
-                width: noticeWidth,
-                height: noticeHeight,
-                paddingTop: 5 * scale,
-                borderRadius: 6,
-                backgroundColor: "transparent",
-                shadowColor: "#4e301e",
-                shadowOpacity: 0.15,
-                shadowRadius: 2,
-                shadowOffset: { width: 0, height: 1 },
-              }}
-            >
-              <WoodTray
-                width={noticeWidth}
-                height={noticeHeight}
-                variant="producer"
-              />
-              <ScrollView
-                testID="orderRail"
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                snapToOffsets={orderOffsets}
-                decelerationRate="fast"
-                contentContainerStyle={{ gap: 6 * scale }}
-                style={{
-                  marginLeft: 6 * scale,
-                  marginRight: 6 * scale,
-                  marginBottom: 4,
-                }}
-              >
-                {activeOrders.map((o, orderIndex) => {
-                  const currentCardWidth = orderWidths[orderIndex]!;
-                  const ready = o.requirements.every(
-                    (r) => count(save, r.item_id) >= r.quantity,
-                  );
-                  const partial =
-                    !ready &&
-                    o.requirements.some(
-                      (r) => count(save, r.item_id) >= r.quantity,
-                    );
-                  return (
-                    <Button
-                      testID={"order-" + o.id}
-                      key={o.id}
-                      label={
-                        o.requirements
-                          .map(
-                            (r) => `${r.quantity} ${product(r.item_id).name}`,
-                          )
-                          .join(", ") +
-                        `, ${o.gold} altın, ${o.xp} XP${ready ? ", Hazır, Ver" : ""}`
-                      }
-                      onPress={() => {
-                        const current = gameStore.get().save;
-                        const live = orders(current).find(
-                          (order) => order.id === o.id,
-                        );
-                        if (!live) return;
-                        if (
-                          live.requirements.every(
-                            (r) => count(current, r.item_id) >= r.quantity,
-                          )
-                        ) {
-                          const result = dispatch({
-                            type: "deliver",
-                            id: live.id,
-                          });
-                          if (result?.kind === "reward")
-                            lastOrderDeliveryAt.current = Date.now();
-                        } else if (
-                          Date.now() - lastOrderDeliveryAt.current >
-                          400
-                        ) {
-                          open({ kind: "order-guide", id: live.id });
-                        }
-                      }}
-                      style={{
-                        width: currentCardWidth,
-                        height: cardHeight,
-                        borderRadius: 5,
-                        backgroundColor: "transparent",
-                      }}
-                    >
-                      <WoodTray width={currentCardWidth} height={cardHeight} />
-                      {(ready || partial) && (
-                        <View
-                          pointerEvents="none"
-                          style={{
-                            position: "absolute",
-                            inset: 3,
-                            borderRadius: 5,
-                            borderWidth: 2,
-                            borderColor: ready ? "#9cdb68" : "#42652d",
-                            backgroundColor: ready ? "#91ad4e" : "#476a34",
-                            backgroundImage: ready
-                              ? "linear-gradient(180deg, #b4ce78 0%, #86a847 100%)"
-                              : undefined,
-                          }}
-                        />
-                      )}
-                      {ready && (
-                        <ReadyGlow pulse={readyPulse} inset={3} radius={5} />
-                      )}
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          alignItems: "center",
-                          width: "100%",
-                          height: "100%",
-                          paddingHorizontal: 3,
-                        }}
-                      >
-                        <View
-                          style={{
-                            width:
-                              o.requirements.length > 1
-                                ? (o.requirements.length * 34 + 8) * scale
-                                : currentCardWidth * 0.42,
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: 4 * scale,
-                          }}
-                        >
-                          {o.requirements.map((requirement) => (
-                            <View
-                              key={requirement.item_id}
-                              style={{ alignItems: "center" }}
-                            >
-                              <ReadyIcon pulse={readyPulse} active={ready}>
-                                <Item
-                                  id={requirement.item_id}
-                                  size={
-                                    (o.requirements.length > 1 ? 34 : 32) *
-                                    scale
-                                  }
-                                />
-                              </ReadyIcon>
-                              <Label
-                                size={8 * scale}
-                                color={ready ? colors.ink : colors.goldLight}
-                              >
-                                {Math.min(
-                                  count(save, requirement.item_id),
-                                  requirement.quantity,
-                                )}
-                                /{requirement.quantity}
-                              </Label>
-                            </View>
-                          ))}
-                        </View>
-                        <View style={{ flex: 1, alignItems: "center" }}>
-                          {ready && (
-                            <View
-                              style={{
-                                backgroundColor: "#377b46",
-                                borderRadius: 8,
-                                paddingHorizontal: 7,
-                                paddingVertical: 1,
-                              }}
-                            >
-                              <Text
-                                style={{
-                                  fontFamily: fonts.number,
-                                  fontSize: 11 * scale,
-                                  color: "#fff4d5",
-                                }}
-                              >
-                                Ver ✓
-                              </Text>
-                            </View>
-                          )}
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              alignItems: "center",
-                              gap: 2,
-                            }}
-                          >
-                            <Sprite kind="icons" index={6} size={32 * sx} />
-                            <Text
-                              style={{
-                                fontFamily: fonts.number,
-                                fontSize: 11 * scale,
-                                color: ready ? colors.ink : colors.goldLight,
-                              }}
-                            >
-                              {o.gold}
-                            </Text>
-                          </View>
-                          <Text
-                            style={{
-                              fontFamily: fonts.number,
-                              fontSize: 11.3 * scale,
-                              color: ready ? "#178cc4" : "#8cddf0",
-                              textShadowColor: ready ? "#fff5d9" : "#39200f",
-                              textShadowOffset: { width: 0, height: 0.5 },
-                              textShadowRadius: 0.5,
-                            }}
-                          >
-                            XP{" "}
-                            <Text
-                              style={{
-                                color: ready ? colors.ink : colors.goldLight,
-                              }}
-                            >
-                              {o.xp}
-                            </Text>
-                          </Text>
-                        </View>
-                      </View>
-                    </Button>
-                  );
-                })}
-              </ScrollView>
-            </View>
-            <View
-              style={{
-                position: "absolute",
-                top: top + 122 * scale,
-                left: 8 * scale,
-                right: 8 * scale,
-                height: 62 * scale,
-                borderRadius: 12,
-                backgroundColor: "transparent",
-                justifyContent: "center",
-                paddingHorizontal: 0,
-              }}
-            >
-              <WoodTray
-                width={width - 16 * scale}
-                height={62 * scale}
-                variant="producer"
-              />
-              {producerEdges.left && (
-                <Button
-                  testID="producerRailPrev"
-                  label="Önceki üreticiler"
-                  onPress={() => {
-                    uiSound();
-                    producerRail.current?.scrollTo({
-                      x: Math.max(0, railOffset.current - producerSize * 3),
-                      animated: true,
-                    });
-                  }}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: 24,
-                  }}
-                >
-                  <Label title size={30} color={colors.goldLight}>
-                    ‹
-                  </Label>
-                </Button>
-              )}
-              {producerEdges.right && (
-                <Button
-                  testID="producerRailNext"
-                  label="Sonraki üreticiler"
-                  onPress={() => {
-                    uiSound();
-                    producerRail.current?.scrollTo({
-                      x: Math.min(
-                        railMax.current,
-                        railOffset.current + producerSize * 3,
-                      ),
-                      animated: true,
-                    });
-                  }}
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: 24,
-                  }}
-                >
-                  <Label title size={30} color={colors.goldLight}>
-                    ›
-                  </Label>
-                </Button>
-              )}
-              <ScrollView
-                ref={producerRail}
-                horizontal
-                onScroll={(e) => {
-                  railOffset.current = e.nativeEvent.contentOffset.x;
-                  syncProducerEdges();
-                }}
-                scrollEventThrottle={32}
-                bounces={false}
-                onLayout={(e) => {
-                  railViewport.current = e.nativeEvent.layout.width;
-                  syncProducerEdges();
-                }}
-                onContentSizeChange={(w) => {
-                  railContent.current = w;
-                  syncProducerEdges();
-                }}
-                style={{ marginHorizontal: 24 * scale }}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{
-                  gap: 5 * scale,
-                  flexGrow: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingHorizontal: 4 * scale,
-                }}
-              >
-                {cityProducers(save).map((p) => (
-                  <ProducerCard
-                    key={p.id}
-                    language={language}
-                    p={p}
-                    onPowerOpen={showPowerMenu}
-                    index={producers.indexOf(p)}
-                    size={producerSize}
-                    save={save}
-                    dispatch={dispatch}
-                    open={open}
-                  />
-                ))}
-              </ScrollView>
-            </View>
+            />
             <View
               style={{
                 position: "absolute",
@@ -1415,29 +540,25 @@ function Game({
             </View>
           </>
         )}
-        <View style={{ position: "absolute", top: navTop, left: 10 }}>
-          <Navigation
-            active={
-              page?.kind === "producer" && page.variant === "collection"
-                ? "collection"
-                : page?.kind === "achievement"
-                  ? "cities"
-                  : page &&
-                      ["collection", "cities", "storage", "market"].includes(
-                        page.kind,
-                      )
-                    ? page.kind
-                    : "board"
-            }
-            width={width}
-            open={open}
-            onBoard={boardTab}
-            readyCount={
-              achievements.filter((a) => achievementState(save, a) === "ready")
-                .length
-            }
-          />
-        </View>
+        <GameNavigation
+          active={
+            page?.kind === "producer" && page.variant === "collection"
+              ? "collection"
+              : page?.kind === "achievement"
+                ? "cities"
+                : page &&
+                    ["collection", "cities", "storage", "market"].includes(
+                      page.kind,
+                    )
+                  ? page.kind
+                  : "board"
+          }
+          width={width}
+          height={height}
+          bottom={insets.bottom}
+          open={open}
+          onBoard={boardTab}
+        />
       </View>
       {powerMenu && !page && (
         <PowerMenu
@@ -1450,18 +571,42 @@ function Game({
           details={() => open({ kind: "producer", index: powerMenu.index })}
         />
       )}
-      {page && (
-        <Pages
-          page={page}
+      {presentation &&
+      [
+        "account-guest",
+        "account-registered",
+        "cloud-choice",
+        "account-deletion",
+        "energy",
+        "orders",
+        "order-guide",
+        "producer-cooldown",
+        "achievement",
+      ].includes(presentation) ? (
+        <PresentationPage
+          key={presentation}
+          view={presentation}
           save={save}
           width={width}
           height={height}
           close={close}
           dispatch={dispatch}
-          open={open}
-          reduced={reduced || save.reducedMotion}
-          onInteract={uiSound}
         />
+      ) : (
+        page && (
+          <Pages
+            page={page}
+            save={save}
+            width={width}
+            height={height}
+            close={close}
+            dispatch={dispatch}
+            open={open}
+            reduced={reduced || save.reducedMotion}
+            onInteract={uiSound}
+            presentationView={presentation}
+          />
+        )
       )}
       {!!toast && (
         <View
@@ -1508,7 +653,7 @@ function Game({
           <ActionButton text="Tekrar dene" onPress={gameStore.retry} />
         </View>
       )}
-      {testModeEnabled && !page && (
+      {testModeEnabled && !page && !presentation && (
         <View
           style={{
             position: "absolute",
@@ -1582,7 +727,7 @@ function Game({
         />
       )}
       <DeletionRecovery preview={deletionPreview} />
-      {review && (
+      {review && !presentation && (
         <Text
           testID="visualReviewMarker"
           pointerEvents="none"
@@ -1600,7 +745,7 @@ function Game({
             : `${name(themeCityID)} · Tema önizlemesi`}
         </Text>
       )}
-    </ImageBackground>
+    </View>
   );
 }
 const currentThemeCity = () => gameStore.get().save.cityID;

@@ -557,3 +557,11 @@ Kullanıcı son ekran çizimleriyle birlikte beş şehir panosunu uygulama yön�
 Kullanıcı, Device Hub simülatör kanıtı ve onaylı referanslarla %100 piksel eşitliği olmadan işin tamamlandı olarak işaretlenmemesini açıkça istedi. Birim ve etkileşim testlerinin geçmesi görsel kabul yerine geçmez. Aynı cihaz ölçüsü ve renk profili, sabit durum ve yerel ayar ile sıfır farklı piksel kabulü aranacaktır. Yeni referanslar mevcut çıktılardan kendiliğinden üretilip onaylı ilan edilmeyecektir.
 
 Onay panoları cihaz ölçüsünde olmadığından ve bazı örnek sayaç/depo çizimleri oyun kurallarıyla tutarsız olduğundan, cihaz ölçülü nihai referansa dönüşüm için kullanıcıya ayrı soru gönderilmiştir. Yanıt henüz gelmemiştir. Mimari ve bileşen çalışması ilerleyebilir; nihai görsel referans dondurma ve %100 kabul bu yanıt gelmeden yapılmaz. Apple/TestFlight ve production gönderimi beklemede kalır.
+
+## 18 Kasım 2026 — Cihaz referanslarının hazırlanması ve Android devamlılığı
+
+Kullanıcı, onay panolarının mevcut oyun kuralları korunarak cihaz ölçüsünde referanslara dönüştürülmesini açıkça onayladı. Bu hazırlık için önceki yanıt bekleme durumu kapanmıştır; hazırlanan görüntülerin simülatörle piksel eşitliği ayrıca doğrulanacaktır. Kullanıcı iOS dağıtımının önce yapılacağını, Android uygulamasının da ileride geleceğini belirtti. Ortak bileşen/tema/veri yapıları platformdan bağımsız tutulacak; güvenli alan, sistem sağlayıcı kontrolleri ve font ölçümü platform sınırında ele alınacaktır. iOS görsel kabulü Android kabulü sayılmaz.
+
+## 18 Kasım 2026 — Görsel kabulün ve kesintisiz devam kapsamının teyidi
+
+Kullanıcı, iOS simülatöründe ilgili şehrin onaylı tasarımına yüzde yüz uyum doğrulanmadan işin tamamlandı sayılmayacağını tekrar belirtti. Cihaz ölçüsüne uyarlama, onaylı sanat yönünü değiştirme yetkisi değildir. Kullanıcı, uygulama ve doğrulama işinin yeni bir devam komutu beklenmeden sürdürülmesini istedi. iOS dağıtımı önceliklidir; Android için ortak React Native bileşenleri, tema değerleri ve veri/eylem sınırları korunacaktır. Yalnız simülatör görüntüsü veya yüksek bir benzerlik yüzdesi bu kabulün yerine geçmez.

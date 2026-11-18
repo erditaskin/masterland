@@ -19,7 +19,8 @@ import Animated, {
 import { scheduleOnRN } from "react-native-worklets";
 import { Item } from "./Art";
 import { ReadyGlow, ReadyIcon } from "./ReadyGlow";
-import { BoardFrame } from "./Skin";
+import { DesignSpace, DesignSurface } from "./DesignSpace";
+import { MaterialFrame } from "./DesignMaterial";
 import { useCityTheme } from "./CityThemeProvider";
 import { hitCell } from "../game/boardInput";
 import { product, type Tile, type Result } from "../game/engine";
@@ -110,9 +111,9 @@ const Piece = memo(
         >
           <Item
             id={tile.item}
-            size={Math.min(cellWidth, cellHeight) * 0.9}
-            width={cellWidth * 0.9}
-            height={cellHeight * 0.94}
+            size={(cellWidth * 146) / 164}
+            width={(cellWidth * 146) / 164}
+            height={(cellHeight * 146) / 164}
           />
         </ReadyIcon>
       </Animated.View>
@@ -148,10 +149,7 @@ const BoardGrid = memo(function BoardGrid({
   return (
     <View
       pointerEvents="none"
-      style={[
-        StyleSheet.absoluteFill,
-        { borderRadius: 7, overflow: "hidden", backgroundColor: theme.paper },
-      ]}
+      style={[StyleSheet.absoluteFill, { backgroundColor: theme.paper }]}
     >
       {Array.from({ length: 54 }, (_, i) => (
         <View
@@ -168,11 +166,11 @@ const BoardGrid = memo(function BoardGrid({
             style={{
               position: "absolute",
               inset: 0,
-              borderRadius: 5,
-              backgroundColor: theme.paper,
+              borderRadius: (cellWidth * 10) / 164,
+              backgroundColor: theme.paperLight,
               backgroundImage: `linear-gradient(135deg, ${theme.paperLight} 0%, ${theme.paper} 100%)`,
-              borderWidth: 0.5,
-              borderColor: theme.edge,
+              borderWidth: (cellWidth * 2) / 164,
+              borderColor: "#fff2d7",
             }}
           />
           {board[i] &&
@@ -255,15 +253,6 @@ const BoardGrid = memo(function BoardGrid({
                 ))}
               </View>
             )}
-          <View
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderWidth: 0.5,
-              borderColor: "#ffedcd",
-              borderRadius: 5,
-            }}
-          />
         </View>
       ))}
     </View>
@@ -299,6 +288,7 @@ export const Board = memo(function Board({
   onMove: (from: number, to: number, expected: string) => Result | null;
   onInfo: (i: number) => void;
 }) {
+  const theme = useCityTheme();
   const id = useSharedValue(""),
     x = useSharedValue(0),
     y = useSharedValue(0),
@@ -435,12 +425,18 @@ export const Board = memo(function Board({
         width: cellWidth * 6 + 2 * frameInset,
         height: cellHeight * 9 + 2 * frameInset,
         padding: frameInset,
-        shadowColor: "#51321c",
-        shadowOpacity: 0.16,
-        shadowRadius: 2,
-        shadowOffset: { width: 0, height: 2 },
+        backgroundColor: "transparent",
       }}
     >
+      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+        <DesignSpace scale={cellWidth / 164}>
+          <DesignSurface
+            rect={[0, 0, 1032, 1524]}
+            fill={theme.paper}
+            radius={30}
+          />
+        </DesignSpace>
+      </View>
       <View
         style={{
           width: cellWidth * 6,
@@ -500,11 +496,11 @@ export const Board = memo(function Board({
           </View>
         </GestureDetector>
       </View>
-      <BoardFrame
-        inset={frameInset}
-        width={cellWidth * 6 + 2 * frameInset}
-        height={cellHeight * 9 + 2 * frameInset}
-      />
+      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+        <DesignSpace scale={cellWidth / 164}>
+          <MaterialFrame rect={[0, 0, 1032, 1524]} paper={false} />
+        </DesignSpace>
+      </View>
     </View>
   );
 });

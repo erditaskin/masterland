@@ -1,0 +1,1182 @@
+{
+  "id": "city1-order-guide",
+  "width": 1206,
+  "height": 2622,
+  "commands": [
+    {
+      "kind": "rect",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "fill": "#fff0d1",
+      "end": null,
+      "stroke": null,
+      "radius": 24,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-scene.png",
+      "crop": [
+        0,
+        80,
+        789,
+        1715
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        26,
+        145,
+        140,
+        142
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/level-shield-v11.png",
+      "crop": [
+        161,
+        85,
+        930,
+        1050
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        26,
+        145,
+        140,
+        128
+      ],
+      "text": "12",
+      "size": 65,
+      "bold": true,
+      "fill": "#fff2bf",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        190,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        186,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        290,
+        162,
+        172,
+        92
+      ],
+      "text": "75",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        466,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        530,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        526,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        630,
+        162,
+        172,
+        92
+      ],
+      "text": "2.480",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        806,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        870,
+        157,
+        310,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        866,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        970,
+        162,
+        158,
+        92
+      ],
+      "text": "24",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1132,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        58,
+        674,
+        1090,
+        1640
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": null,
+      "radius": 40,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        664,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        48,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        96,
+        664,
+        1014,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        148,
+        48,
+        727,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        664,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        48,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        712,
+        48,
+        1564
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        176,
+        128,
+        1183
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        712,
+        48,
+        1564
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        176,
+        128,
+        1183
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        20,
+        1359,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        96,
+        2276,
+        1014,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        148,
+        1359,
+        727,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1110,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-frame.png",
+      "crop": [
+        875,
+        1359,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        180,
+        550,
+        846,
+        120
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-chrome.png",
+      "crop": [
+        62,
+        82,
+        1410,
+        232
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        323.82,
+        550,
+        558.36,
+        120
+      ],
+      "text": "Üretim Rehberi",
+      "size": 64,
+      "bold": true,
+      "fill": "#fff0cc",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1038,
+        558,
+        132,
+        132
+      ],
+      "fill": "#9c6e38",
+      "end": null,
+      "stroke": null,
+      "radius": 66.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1038,
+        552,
+        132,
+        132
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 66.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1044,
+        558,
+        120,
+        120
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff0c5",
+      "radius": 60.0,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1056,
+        556,
+        96,
+        124
+      ],
+      "text": "×",
+      "size": 44,
+      "bold": true,
+      "fill": "#583715",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        735,
+        1026,
+        250
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        730,
+        1026,
+        250
+      ],
+      "fill": "#fff2d9",
+      "end": "#e6f3ba",
+      "stroke": "#36872c",
+      "radius": 36,
+      "line": 4,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        738,
+        1010,
+        234
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        120,
+        760,
+        195,
+        195
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        506,
+        53,
+        325,
+        347
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        350,
+        750,
+        700,
+        78
+      ],
+      "text": "Hedef ürün",
+      "size": 39,
+      "bold": false,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        350,
+        835,
+        700,
+        103
+      ],
+      "text": "Buğday demeti",
+      "size": 59,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        90,
+        1020,
+        440,
+        270
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/skara-ui-chrome-v1.png",
+      "crop": [
+        128.0,
+        400,
+        98,
+        68
+      ],
+      "fit": false,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        570,
+        1030,
+        510,
+        120
+      ],
+      "text": "Buğday Tarlası",
+      "size": 48,
+      "bold": true,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        570,
+        1165,
+        510,
+        130
+      ],
+      "text": "Dokunarak ilk ürünü çıkar.",
+      "size": 39,
+      "bold": false,
+      "fill": "#583715",
+      "align": "left",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        1365,
+        1026,
+        370
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        1360,
+        1026,
+        370
+      ],
+      "fill": "#fff2d9",
+      "end": "#ffe7bd",
+      "stroke": "#b87a37",
+      "radius": 36,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        98,
+        1368,
+        1010,
+        354
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        135,
+        1430,
+        230,
+        230
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        79,
+        106,
+        309,
+        269
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        380,
+        1470,
+        105,
+        120
+      ],
+      "text": "+",
+      "size": 66,
+      "bold": true,
+      "fill": "#583715",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        490,
+        1430,
+        230,
+        230
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        79,
+        106,
+        309,
+        269
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        728,
+        1470,
+        105,
+        120
+      ],
+      "text": "=",
+      "size": 66,
+      "bold": true,
+      "fill": "#583715",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        850,
+        1430,
+        230,
+        230
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/products-approved.png",
+      "crop": [
+        506,
+        53,
+        325,
+        347
+      ],
+      "fit": true,
+      "radius": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        90,
+        1810,
+        1026,
+        110
+      ],
+      "text": "Yalnız iki aynı ürün birleşir.",
+      "size": 43,
+      "bold": false,
+      "fill": "#583715",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        2046,
+        1026,
+        132
+      ],
+      "fill": "#9c6e38",
+      "end": null,
+      "stroke": null,
+      "radius": 66.0,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        90,
+        2040,
+        1026,
+        132
+      ],
+      "fill": "#78b83a",
+      "end": "#367c19",
+      "stroke": "#b87a37",
+      "radius": 66.0,
+      "line": 3,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        96,
+        2046,
+        1014,
+        120
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff0c5",
+      "radius": 60.0,
+      "line": 2,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "text",
+      "rect": [
+        108,
+        2044,
+        990,
+        124
+      ],
+      "text": "Tahtaya dön",
+      "size": 44,
+      "bold": true,
+      "fill": "#fff8e3",
+      "align": "center",
+      "font": null,
+      "clip": [
+        72,
+        712,
+        1062,
+        1596
+      ]
+    },
+    {
+      "kind": "image",
+      "rect": [
+        42,
+        2360,
+        1122,
+        160
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city1-chrome.png",
+      "crop": [
+        43,
+        446,
+        1450,
+        191
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        60,
+        2371,
+        212,
+        137
+      ],
+      "fill": "#78b83a",
+      "end": "#367c19",
+      "stroke": "#ffe6a8",
+      "radius": 27,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        127,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        60,
+        2450,
+        212,
+        51
+      ],
+      "text": "Tahta",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff8e3",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        347,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        280,
+        2450,
+        212,
+        51
+      ],
+      "text": "Koleksiyon",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        567,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        500,
+        2450,
+        212,
+        51
+      ],
+      "text": "Şehirler",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        787,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        720,
+        2450,
+        212,
+        51
+      ],
+      "text": "Depo",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1007,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        940,
+        2450,
+        212,
+        51
+      ],
+      "text": "Market",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "system-home-indicator",
+      "rect": [
+        402,
+        2572,
+        402,
+        15
+      ],
+      "fill": "#5d503f",
+      "radius": 8
+    }
+  ]
+}

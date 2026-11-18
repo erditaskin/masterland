@@ -1,4 +1,5 @@
 import * as Crypto from "expo-crypto";
+import { presentationFixture } from "../game/presentationFixture";
 import {
   recordCloudAdoption,
   resumeCloudAdoption,
@@ -56,7 +57,14 @@ const listeners = new Set<() => void>();
 let pending: string | null = null,
   writing = false,
   loadEpoch = 0;
-let activeMode: "normal" | "review" | "qa" | "milestone" = "normal";
+type LocalMode =
+  | "normal"
+  | "review"
+  | "qa"
+  | "milestone"
+  | "presentation"
+  | "presentation-full";
+let activeMode: LocalMode = "normal";
 function publish(value: Snapshot) {
   snapshot = value;
   listeners.forEach((f) => f());
@@ -99,10 +107,16 @@ async function removeLegacyImports() {
     await FS.deleteAsync(FS.documentDirectory + file, { idempotent: true });
   }
 }
-async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
+async function load(mode: LocalMode = "normal", presentationView?: string) {
   // TestFlight sessions always use the tester's persistent normal save.
   // Production likewise rejects transient QA/preview saves, including direct store calls.
   if (testFlightBeta || productionRelease) mode = "normal";
+  if (
+    mode.startsWith("presentation") &&
+    (!testModeEnabled ||
+      process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL !== "local")
+  )
+    mode = "normal";
   const token = ++loadEpoch;
   activeMode = mode;
   try {
@@ -110,8 +124,13 @@ async function load(mode: "normal" | "review" | "qa" | "milestone" = "normal") {
     if (mode !== "normal") {
       if (mode === "milestone" && !testModeEnabled)
         throw Error("Test modu kapalı.");
-      save =
-        mode === "review" || mode === "milestone"
+      save = mode.startsWith("presentation")
+        ? presentationFixture(
+            Date.now(),
+            mode === "presentation-full",
+            presentationView,
+          )
+        : mode === "review" || mode === "milestone"
           ? visualFixture(Date.now())
           : fresh(Date.now());
       if (mode === "milestone") {

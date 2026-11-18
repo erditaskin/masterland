@@ -1,3 +1,5 @@
+import { Platform } from "react-native";
+
 export const colors = {
   navy: "#08434b",
   navyLight: "#17636b",
@@ -13,9 +15,9 @@ export const colors = {
   outline: "rgba(110,73,38,0.12)",
 };
 export const fonts = {
-  title: "Georgia-Bold",
-  body: "Georgia",
-  number: "Georgia-Bold",
+  title: Platform.OS === "ios" ? "Georgia-Bold" : "serif",
+  body: Platform.OS === "ios" ? "Georgia" : "serif",
+  number: Platform.OS === "ios" ? "Georgia-Bold" : "serif",
 };
 export const motion = { press: 80, appear: 140, settle: 160, merge: 220 };
 export const art = {

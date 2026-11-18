@@ -1,0 +1,178 @@
+{
+  "status": "not-accepted",
+  "target": "device-v2",
+  "reference_art_direction_audit_complete": false,
+  "results": [
+    {
+      "id": "city1-energy",
+      "status": "pixel-mismatch",
+      "different_pixels": 1494,
+      "total_pixels": 3162132,
+      "identical_percent": 99.95275339549393,
+      "expected_sha256": "70f2b9204e845f851b884762f3d3e2785af5a7385444f31f341150ff235c633a",
+      "actual_sha256": "21551ce9aaa34472885de35109b846e565220877e9ed36566f8ac20b82bf5160"
+    },
+    {
+      "id": "city1-account-deletion",
+      "status": "pixel-mismatch",
+      "different_pixels": 1774,
+      "total_pixels": 3162132,
+      "identical_percent": 99.9438986101782,
+      "expected_sha256": "db141cb880047260ae836b37ded0ed6e3e0337fda7fbfc2fa4ba5c10dd9d0a7d",
+      "actual_sha256": "bd1b710c014828e0b50e8e414770f03bb25a5d24682e945e337ba3f329183871"
+    },
+    {
+      "id": "city1-cloud-choice",
+      "status": "pixel-mismatch",
+      "different_pixels": 3407,
+      "total_pixels": 3162132,
+      "identical_percent": 99.89225623724752,
+      "expected_sha256": "1ca94b492ed7f80df6463c3e8e502643200a9405e49178619157b41cf57adf5e",
+      "actual_sha256": "94e90ea3ef9e00bee94e13527016ae7f54200b95864f95f909b2a18cedf656c9"
+    },
+    {
+      "id": "city1-achievement",
+      "status": "pixel-mismatch",
+      "different_pixels": 38854,
+      "total_pixels": 3162132,
+      "identical_percent": 98.77127204050937,
+      "expected_sha256": "dc5515a4b975f7d477366401f10b5f4f80db9aa550224dadee7166dcf4556cf0",
+      "actual_sha256": "8ca1fbbaccae1451998602a55fc4173d03382d079275b1bb492c58ae93e107f5"
+    },
+    {
+      "id": "city1-achievements",
+      "status": "pixel-mismatch",
+      "different_pixels": 21713,
+      "total_pixels": 3162132,
+      "identical_percent": 99.31334302299841,
+      "expected_sha256": "ab4fa772851e0f0af283fd88591544dc98d0531a5dd8c15e81a2fc9385d93286",
+      "actual_sha256": "9e9de5aa86fc9a5f30f668ed7dc5cd6ec982a7237576856c0b4db4bcb0887f4d"
+    },
+    {
+      "id": "city1-order-guide",
+      "status": "pixel-mismatch",
+      "different_pixels": 4069,
+      "total_pixels": 3162132,
+      "identical_percent": 99.87132099482248,
+      "expected_sha256": "36851096c628c9a1b8c8aa4c75a74685df193f5b3e937a2196f7fd04790bc52e",
+      "actual_sha256": "28fea910376e08ea1f84eae3f8a75ee651826b057d5bc7ac63d5b8a5e747c9fc"
+    },
+    {
+      "id": "city1-orders",
+      "status": "pixel-mismatch",
+      "different_pixels": 2431,
+      "total_pixels": 3162132,
+      "identical_percent": 99.9231214889195,
+      "expected_sha256": "180526628595973c3613256fdd73632fb1aeb38678d704419bf85b4a557cc797",
+      "actual_sha256": "d7d3b6019da7fae15c212ae03d847dc5ebf2dae8ed6790254982af5a495a34a6"
+    },
+    {
+      "id": "city1-producer-cooldown",
+      "status": "pixel-mismatch",
+      "different_pixels": 255411,
+      "total_pixels": 3162132,
+      "identical_percent": 91.92282295615743,
+      "expected_sha256": "e47346acc73e010fc9a6154ed226fb829e0b677b0cd66daf46c3c3741ba127dc",
+      "actual_sha256": "66fabe02a142b7ae23dad257ebe1bd79d399db612c8cc58d013932a6b3dac21d"
+    },
+    {
+      "id": "city1-item",
+      "status": "pixel-mismatch",
+      "different_pixels": 2499,
+      "total_pixels": 3162132,
+      "identical_percent": 99.92097104105711,
+      "expected_sha256": "d003a49bbb0d8c271431f7e4e4a283da63f8adfbe29e2f2610ede4ada26ce510",
+      "actual_sha256": "a97b945b2eae062e7f616abf0f8198ed8cb98a1fc0e3206f45af46851c165630"
+    },
+    {
+      "id": "city1-collection-chain",
+      "status": "pixel-mismatch",
+      "different_pixels": 2334,
+      "total_pixels": 3162132,
+      "identical_percent": 99.92618903954674,
+      "expected_sha256": "1d03846f9dddc6984e672540ce2b65c2556b2dc01517f1d1aa7d12280ea173a7",
+      "actual_sha256": "7afc1f0c0271fe595dca9b938b15584b0e2fde74d656e2fe84976f79788e932c"
+    },
+    {
+      "id": "city1-account-registered",
+      "status": "pixel-mismatch",
+      "different_pixels": 1528,
+      "total_pixels": 3162132,
+      "identical_percent": 99.95167817156273,
+      "expected_sha256": "48617da39e7f11abd644e3e3595b735bfdb7a9c21557da330985fb87f6fe203e",
+      "actual_sha256": "71e05c17a61c2424af0c42adc0608c2363dc853e732c3b0cf5bf597bc4001016"
+    },
+    {
+      "id": "city1-account-guest",
+      "status": "pixel-mismatch",
+      "different_pixels": 1796,
+      "total_pixels": 3162132,
+      "identical_percent": 99.94320287704625,
+      "expected_sha256": "0c398ca810830abe79478832e6baacbe12682c10f291114cb0b4d86ad4f046a3",
+      "actual_sha256": "252741883e737152560b4f4e665c9e5e2668b17c46450088d7d117b67bca1df3"
+    },
+    {
+      "id": "city1-cities",
+      "status": "pixel-mismatch",
+      "different_pixels": 13984,
+      "total_pixels": 3162132,
+      "identical_percent": 99.55776672194582,
+      "expected_sha256": "d92a56d9753a51bce48f528d1d96c825472bfb109d72b45c172c05b047fb738d",
+      "actual_sha256": "b98e162ddb4f4e67f152072bb3b5d096e15fdd26db48520d95b1739448a5fbfb"
+    },
+    {
+      "id": "city1-board",
+      "status": "pixel-mismatch",
+      "different_pixels": 547543,
+      "total_pixels": 3162132,
+      "identical_percent": 82.68437244239013,
+      "expected_sha256": "6dfdad6fb78cf9b2e9eff013b5c06dda8384b7cbafe2efd7391a8a3dcc9e40cc",
+      "actual_sha256": "03afedde4ea45eaf7d383eaf264917ed1fd8d45a3785537ef3f4f58665d5e49b"
+    },
+    {
+      "id": "city1-market-repeat",
+      "status": "pixel-mismatch",
+      "different_pixels": 8458,
+      "total_pixels": 3162132,
+      "identical_percent": 99.73252223499841,
+      "expected_sha256": "6afc6a24c7f8a01cce678a331516240a7c4207e39ee1f66dc74f5c020653d95f",
+      "actual_sha256": "e854db9c7ed815fc2ab43b92f4656c73882e2fc6fc89359771160afb92bc3212"
+    },
+    {
+      "id": "city1-market",
+      "status": "pixel-mismatch",
+      "different_pixels": 8458,
+      "total_pixels": 3162132,
+      "identical_percent": 99.73252223499841,
+      "expected_sha256": "6afc6a24c7f8a01cce678a331516240a7c4207e39ee1f66dc74f5c020653d95f",
+      "actual_sha256": "e854db9c7ed815fc2ab43b92f4656c73882e2fc6fc89359771160afb92bc3212"
+    },
+    {
+      "id": "city1-storage-board-full",
+      "status": "pixel-mismatch",
+      "different_pixels": 612,
+      "total_pixels": 3162132,
+      "identical_percent": 99.98064596923848,
+      "expected_sha256": "108072482b91ee196cff8d22e05da2a781955b718b49e1c95757eac7545548b8",
+      "actual_sha256": "99eb261af2ce2b832bce4f75f691a6ae20d742d1af1e95082ae2280238647699"
+    },
+    {
+      "id": "city1-storage",
+      "status": "pixel-mismatch",
+      "different_pixels": 612,
+      "total_pixels": 3162132,
+      "identical_percent": 99.98064596923848,
+      "expected_sha256": "5c55370c2825727b1ad0b17dcaba2bd1db5cbee0e6acdaad304031311a00cea0",
+      "actual_sha256": "83adcf76bbff582e3f570915800f80e27861674deeeb8ff1abb095c90a419af3"
+    },
+    {
+      "id": "city1-collection",
+      "status": "pixel-mismatch",
+      "different_pixels": 1615,
+      "total_pixels": 3162132,
+      "identical_percent": 99.9489268632682,
+      "expected_sha256": "a0d16f7f7357403f46d72f356cff21a08e4a3bfadff34ba1f4a4ce3c4328ef7d",
+      "actual_sha256": "4008d92a6e6e2919fb392662f53e15c424b15889d32892c4e56f13da9dfbb9ac"
+    }
+  ]
+}

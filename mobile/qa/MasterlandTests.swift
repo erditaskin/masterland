@@ -1008,3 +1008,122 @@ final class MasterlandTests:XCTestCase {
     }
 
 }
+
+
+// Separate read-only reference entry; never runs game-store or account actions.
+final class MasterlandReferenceTests:XCTestCase {
+    let app=XCUIApplication(bundleIdentifier:"com.erditaskin.masterland")
+    override func setUpWithError() throws {
+        continueAfterFailure=false
+        app.terminate()
+        app.launchArguments=["-AppleLanguages","(tr)","-AppleLocale","tr_TR"]
+        app.launch()
+    }
+    func testCaptureDeviceDesignReferences() {
+        let ids=[
+            "city1-account-deletion",
+            "city1-account-guest",
+            "city1-account-registered",
+            "city1-achievement",
+            "city1-achievements",
+            "city1-board",
+            "city1-cities",
+            "city1-cloud-choice",
+            "city1-collection",
+            "city1-collection-chain",
+            "city1-energy",
+            "city1-item",
+            "city1-market",
+            "city1-order-guide",
+            "city1-orders",
+            "city1-producer-cooldown",
+            "city1-storage",
+            "city1-storage-board-full",
+            "city2-board",
+            "city2-cities",
+            "city3-board",
+            "city3-cities",
+            "city4-board",
+            "city4-cities",
+            "city5-board",
+            "city5-cities"]
+        XCTAssertEqual(app.frame.width,402,accuracy:0.01)
+        XCTAssertEqual(app.frame.height,874,accuracy:0.01)
+        for id in ids {
+            app.open(URL(string:"masterland://design-reference/"+id)!)
+            let marker=app.descendants(matching:.any).matching(identifier:"referenceReady").firstMatch
+            let ready=XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in marker.exists && marker.label == id },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:20),.completed,"Unsettled reference: "+id)
+            let attachment=XCTAttachment(screenshot:app.screenshot())
+            attachment.name="reference-"+id;attachment.lifetime = .keepAlways;add(attachment)
+        }
+    }
+}
+
+final class MasterlandPresentationTests:XCTestCase {
+    let app = XCUIApplication(bundleIdentifier:"com.erditaskin.masterland")
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app.terminate()
+        app.launchArguments = ["-AppleLanguages", "(tr)", "-AppleLocale", "tr_TR"]
+        app.launch()
+    }
+    func capture(_ name:String) {
+        let image = XCTAttachment(screenshot:app.screenshot())
+        image.name = "presentation-" + name
+        image.lifetime = .keepAlways
+        add(image)
+    }
+    func testConnectedActionsKeepTheirGameState() {
+        app.open(URL(string:"masterland://presentation-review/storage")!)
+        XCTAssertTrue(app.buttons["storage-1"].waitForExistence(timeout:30))
+        app.buttons["storage-1"].tap()
+        app.buttons["restoreSelected"].tap()
+        XCTAssertFalse(app.buttons["restoreSelected"].exists)
+        app.buttons["tab-board"].tap()
+        let board = app.otherElements["mergeBoard"]
+        XCTAssertTrue(board.waitForExistence(timeout:5))
+        XCTAssertTrue(app.buttons["producer1"].exists)
+        app.buttons["producer1"].tap()
+        XCTAssertTrue(app.buttons["stamina"].label.contains("74"))
+        app.buttons["tab-market"].tap()
+        XCTAssertTrue(app.buttons["exchange-energy25"].waitForExistence(timeout:5))
+        app.buttons["exchange-energy25"].tap()
+        XCTAssertTrue(app.buttons["stamina"].label.contains("99"))
+        XCTAssertTrue(app.buttons["gems"].label.contains("21"))
+        app.buttons["closePage"].tap()
+        app.buttons["profile-menu"].tap()
+        let sound = app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch
+        XCTAssertTrue(sound.waitForExistence(timeout:5))
+        let before = sound.value as? String
+        sound.tap()
+        XCTAssertNotEqual(sound.value as? String,before)
+    }
+    func testLivePagesAtReferenceFixture() {
+        captureViews(["collection", "storage", "storage-board-full", "market", "board", "cities", "account-guest", "account-registered", "collection-chain", "item", "producer-cooldown", "orders", "order-guide", "achievements", "achievement", "cloud-choice", "account-deletion", "energy"])
+    }
+    func testPixelRevisionCandidates() {
+        captureViews(["storage", "market", "collection", "producer-cooldown", "achievement", "collection-chain"])
+    }
+    func captureViews(_ views:[String]) {
+        for view in views {
+            app.open(URL(string:"masterland://presentation-review/" + view)!)
+            XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:30))
+            let settled = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+                self.app.buttons["gold"].label.contains("2.480")
+            },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[settled],timeout:10),.completed)
+            if view.hasPrefix("storage") {
+                XCTAssertTrue(app.buttons["storage-1"].waitForExistence(timeout:10))
+                app.buttons["storage-1"].tap()
+                XCTAssertTrue(app.buttons["restoreSelected"].waitForExistence(timeout:5))
+                XCTAssertEqual(app.buttons["restoreSelected"].isEnabled,view != "storage-board-full")
+            }
+            // Wait for painted layers and the page entrance to settle, not for an arbitrary pixel match.
+            let stable = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in self.app.buttons["tab-board"].isHittable },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[stable],timeout:5),.completed)
+            capture("city1-" + view)
+            if view == "market" { capture("city1-market-repeat") }
+        }
+    }
+}

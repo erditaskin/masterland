@@ -1,3 +1,7 @@
+import { DesignContent } from "./DesignContent";
+import { DesignText } from "./DesignSpace";
+import { DesignProgress } from "./DesignProgress";
+import { ChromeSprite } from "./GameChrome";
 import { View } from "react-native";
 import reference from "../../../data/content-reference.json";
 import {
@@ -11,9 +15,7 @@ import {
   type Save,
 } from "../game/engine";
 import { Crop } from "./Art";
-import { ActionButton, AppProgress, Label } from "./Controls";
-import { colors } from "./theme";
-import { useCityTheme } from "./CityThemeProvider";
+import { ActionButton } from "./Controls";
 import { PaperCard } from "./PagePrimitives";
 export function AchievementIcon({
   kind,
@@ -53,104 +55,79 @@ export function AchievementDetails({
   save,
   dispatch,
   onReturn,
+  description,
 }: {
+  description?: string;
   id: string;
   save: Save;
   dispatch: (a: Action) => Result | null;
   onReturn: () => void;
 }) {
-  const theme = useCityTheme();
-  const a = achievements.find((a) => a.id === id)!;
+  const a = achievements.find((entry) => entry.id === id);
+  if (!a)
+    return (
+      <DesignContent end={1300}>
+        <DesignText rect={[90, 750, 1026, 200]} size={54}>
+          Başarı bulunamadı.
+        </DesignText>
+      </DesignContent>
+    );
   const state = achievementState(save, a),
     progress = Math.min(a.target, achievementProgress(save, a));
   const locale: Record<string, string> = reference.locales.tr;
+  const reward = [
+    a.reward.title ? name(a.reward.title) + " unvanı" : null,
+    a.reward.gold ? `+${a.reward.gold} altın` : null,
+    a.reward.gems ? `+${a.reward.gems} elmas` : null,
+    a.reward.energy ? `+${a.reward.energy} enerji` : null,
+    a.reward.xp ? `+${a.reward.xp} XP` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
   return (
-    <View style={{ alignItems: "center", paddingVertical: 12 }}>
-      <View
-        style={{
-          width: 132,
-          height: 132,
-          borderRadius: 66,
-          backgroundColor: theme.paperLight,
-          borderWidth: 2,
-          borderColor: theme.edge,
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 18,
-        }}
-      >
-        <AchievementIcon kind={a.kind} size={106} />
-      </View>
-      <Label title size={24} style={{ textAlign: "center" }}>
+    <DesignContent end={2510}>
+      <ChromeSprite index={6} rect={[375, 760, 456, 456]} />
+      <DesignText rect={[90, 1245, 1026, 135]} size={80} bold align="center">
         {name(a.id)}
-      </Label>
-      <Label
-        size={13}
-        tone="muted"
-        style={{ textAlign: "center", marginVertical: 12 }}
-      >
-        {locale[a.id + "_description_tr"]}
-      </Label>
-      {state === "locked" ? (
-        <Label size={14}>
-          {reference.cities.find((c) => c.id === a.city_id)?.unlock_level}.
-          seviyede açılacak.
-        </Label>
-      ) : (
-        <>
-          <Label size={14}>
-            {progress} / {a.target} ·{" "}
-            {state === "claimed"
-              ? "Ödül alındı"
-              : state === "ready"
-                ? "Ödülün hazır"
-                : "Devam ediyor"}
-          </Label>
-          <View style={{ marginVertical: 12, width: "100%" }}>
-            <AppProgress value={progress} total={a.target} />
-          </View>
-          <PaperCard style={{ width: "100%", marginVertical: 12 }}>
-            <Label title size={17} style={{ marginBottom: 8 }}>
-              Ödül
-            </Label>
-            <Label size={14}>{rewardText(a)}</Label>
-            {a.reward.capacity && (
-              <Label size={11} tone="muted" style={{ marginTop: 8 }}>
-                100 enerjiyi geçince üreticiye basılı tutarak 2x–4x gücü
-                seçebilirsin.
-              </Label>
-            )}
-          </PaperCard>
-          {state === "ready" && (
-            <ActionButton
-              text="Ödülü al"
-              testID="claimAchievement"
-              onPress={() => {
-                dispatch({ type: "claim-achievement", id: a.id });
-              }}
-            />
-          )}
-          {state === "claimed" && (
-            <View
-              style={{
-                minHeight: 54,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Label title size={18} color={colors.green}>
-                Alındı ✓
-              </Label>
-            </View>
-          )}
-        </>
-      )}
+      </DesignText>
+      <DesignText rect={[130, 1400, 946, 150]} size={45} align="center">
+        {description ?? locale[a.id + "_description_tr"]}
+      </DesignText>
+      <DesignProgress
+        rect={[126, 1580, 954, 52]}
+        value={progress}
+        total={a.target}
+      />
+      <PaperCard designRect={[90, 1690, 1026, 300]} />
+      <DesignText rect={[126, 1700, 954, 80]} size={52} bold align="center">
+        Ödül
+      </DesignText>
+      <DesignText rect={[126, 1790, 954, 170]} size={49} bold align="center">
+        {reward}
+      </DesignText>
       <ActionButton
+        designRect={[90, 2060, 1026, 132]}
+        text={
+          state === "claimed"
+            ? "✓ Alındı"
+            : state === "locked"
+              ? "Şehir kilitli"
+              : state === "ready"
+                ? "Ödülü al"
+                : "Devam ediyor"
+        }
+        testID="claimAchievement"
+        disabled={state !== "ready"}
+        onPress={() => dispatch({ type: "claim-achievement", id: a.id })}
+      />
+      <ActionButton
+        designRect={[90, 2340, 1026, 132]}
         text="Başarılara dön"
+        tone="secondary"
         testID="returnToRoute"
         onPress={onReturn}
       />
-    </View>
+    </DesignContent>
   );
 }
 

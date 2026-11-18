@@ -1,0 +1,68 @@
+{
+  "level": 12,
+  "xp": 5500,
+  "gold": 2480,
+  "gems": 24,
+  "energy": 75,
+  "discovered_item_ids": [
+    "item1",
+    "item2",
+    "item27",
+    "item49",
+    "item29",
+    "item50",
+    "item51",
+    "item53",
+    "item6",
+    "item54",
+    "item7",
+    "item33",
+    "item34",
+    "item35",
+    "item37",
+    "item55",
+    "item56",
+    "item57"
+  ],
+  "storage_item_ids": [
+    "item1",
+    "item2",
+    "item50",
+    "item7",
+    "item33",
+    "item37",
+    "item53",
+    "item29"
+  ],
+  "storage_capacity": 12,
+  "ad_daily_used": 2,
+  "ad_daily_limit": 4,
+  "real_money_enabled": false,
+  "gender_fields": [],
+  "account_art": "shared-back-to-back-pair",
+  "owned_producer_ids": [
+    "producer1",
+    "producer5",
+    "producer8",
+    "producer6",
+    "producer7"
+  ],
+  "state_overrides": {
+    "storage-board-full": {
+      "board_count": 54
+    },
+    "producer-cooldown": {
+      "ready_in_seconds": 134
+    },
+    "cloud-choice": {
+      "remote_level": 10,
+      "remote_gold": 1920,
+      "remote_gems": 18
+    },
+    "account-deletion": {
+      "consent": false,
+      "reauthenticated": false
+    }
+  },
+  "future_cities": "concept-only; not an engine save"
+}

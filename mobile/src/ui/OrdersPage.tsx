@@ -1,94 +1,74 @@
-import { View } from "react-native";
-import { canDeliver, count, name, orders, type Save } from "../game/engine";
-import { Item, Sprite } from "./Art";
-import { AppButton, Label } from "./Controls";
+import { Fragment } from "react";
+import { count, orders, name, type Order, type Save } from "../game/engine";
+import { DesignContent } from "./DesignContent";
+import { DesignText } from "./DesignSpace";
+import { DesignItem } from "./BoardChrome";
 import { PaperCard } from "./PagePrimitives";
-import { semanticColors } from "./cityTheme";
+import { AppButton } from "./Controls";
 
 export function OrdersPage({
   save,
   onDeliver,
   onGuide,
+  items,
 }: {
   save: Save;
   onDeliver: (id: string) => void;
   onGuide: (id: string) => void;
+  items?: (Order & { title?: string })[];
 }) {
+  const list: (Order & { title?: string })[] = items ?? orders(save);
   return (
-    <>
-      {orders(save).map((order) => {
-        const ready = canDeliver(save, order);
-        const title = name(order.id);
+    <DesignContent end={750 + list.length * 600}>
+      {list.map((order, index) => {
+        const y = 730 + index * 600;
+        const ready = order.requirements.every(
+          (r) => count(save, r.item_id) >= r.quantity,
+        );
+        const step = 880 / Math.max(1, order.requirements.length);
         return (
-          <PaperCard
-            key={order.id}
-            style={
-              ready
-                ? {
-                    borderColor: semanticColors.success,
-                    borderWidth: 2,
-                    backgroundImage: `linear-gradient(135deg, #f4fad8 0%, ${semanticColors.successLight} 100%)`,
-                  }
-                : undefined
-            }
-          >
-            <Label title size={20}>
-              {title === order.id ? "Şehir siparişi" : title}
-            </Label>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-                gap: 8,
-              }}
-            >
-              {order.requirements.map((requirement) => (
-                <View
-                  key={requirement.item_id}
-                  style={{ alignItems: "center", flex: 1, gap: 5 }}
-                >
-                  <Item id={requirement.item_id} size={62} />
-                  <Label
-                    title
-                    size={16}
-                    color={
-                      count(save, requirement.item_id) >= requirement.quantity
-                        ? semanticColors.success
-                        : semanticColors.danger
-                    }
+          <Fragment key={order.id}>
+            <PaperCard designRect={[90, y, 1026, 570]} selected={ready} />
+            <DesignText rect={[125, y + 20, 950, 90]} size={57} bold>
+              {order.title ??
+                (name(order.id) === order.id
+                  ? `İlan ${index + 1}`
+                  : name(order.id))}
+            </DesignText>
+            {order.requirements.map((r, i) => {
+              const x = 220 + i * step,
+                available = Math.min(count(save, r.item_id), r.quantity);
+              return (
+                <Fragment key={r.item_id}>
+                  <DesignItem id={r.item_id} rect={[x, y + 115, 170, 170]} />
+                  <DesignText
+                    rect={[x, y + 292, 170, 60]}
+                    size={40}
+                    bold
+                    color={available >= r.quantity ? "#34852b" : "#a93929"}
+                    align="center"
                   >
-                    {Math.min(
-                      count(save, requirement.item_id),
-                      requirement.quantity,
-                    )}
-                    /{requirement.quantity}
-                  </Label>
-                </View>
-              ))}
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-              }}
-            >
-              <Sprite kind="icons" index={6} size={24} />
-              <Label title>{order.gold}</Label>
-              <Label title color="#178cc4">
-                XP {order.xp}
-              </Label>
-            </View>
+                    {available}/{r.quantity}
+                  </DesignText>
+                </Fragment>
+              );
+            })}
+            <DesignText
+              rect={[120, y + 352, 956, 58]}
+              size={39}
+              bold
+              align="center"
+            >{`${order.gold} altın  ·  XP ${order.xp}`}</DesignText>
             <AppButton
-              testID={`order-detail-${order.id}`}
+              designRect={[120, y + 410, 966, 132]}
               text={ready ? "✓ Ver" : "Nasıl elde edilir?"}
               tone={ready ? "primary" : "secondary"}
+              testID={"order-detail-" + order.id}
               onPress={() => (ready ? onDeliver(order.id) : onGuide(order.id))}
             />
-          </PaperCard>
+          </Fragment>
         );
       })}
-    </>
+    </DesignContent>
   );
 }

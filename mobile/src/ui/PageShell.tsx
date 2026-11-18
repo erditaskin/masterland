@@ -1,10 +1,11 @@
-import { useEffect, useMemo, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { Animated, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { PagePaper } from "./Skin";
-import { PageHeading } from "./PagePrimitives";
+import { AppButton } from "./Controls";
+import { DesignSpace } from "./DesignSpace";
+import { MaterialFrame, MaterialPlaque } from "./DesignMaterial";
 
-/** Header, safe-area geometry and material are shared; screens supply only content. */
+/** The same material, viewport and scroll origin serve every live page. */
 export function PageShell({
   title,
   width,
@@ -26,19 +27,22 @@ export function PageShell({
   routeKey: string;
   onBodyHeight?: (height: number) => void;
 }) {
-  const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets(),
+    scale = width / 1206;
+  const [settled, setSettled] = useState(reduced);
   const opacity = useMemo(() => new Animated.Value(reduced ? 1 : 0), [reduced]);
   useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
       duration: reduced ? 0 : 130,
       useNativeDriver: true,
-    }).start();
+    }).start(({ finished }) => {
+      if (finished) setSettled(true);
+    });
     return () => opacity.stopAnimation();
   }, [opacity, reduced]);
-  const top = Math.max(insets.top, 20) + (118 * width) / 390;
-  const panelWidth = width - 16;
-  const panelHeight = Math.max(1, height - insets.bottom - 67 - top);
+  const panelEnd = (height - insets.bottom) / scale - 196;
+  const bodyHeight = Math.max(1, panelEnd - 728) * scale;
   return (
     <Animated.View
       testID="fullScreenPage"
@@ -46,42 +50,48 @@ export function PageShell({
       style={{
         position: "absolute",
         inset: 0,
-        opacity,
-        paddingTop: top,
-        paddingHorizontal: 8,
+        opacity: settled ? undefined : opacity,
       }}
     >
+      <DesignSpace scale={scale}>
+        <MaterialFrame rect={[48, 664, 1110, Math.max(200, panelEnd - 664)]} />
+        <MaterialPlaque rect={[180, 550, 846, 120]} title={title} />
+        <AppButton
+          text="×"
+          tone="secondary"
+          designRect={[1038, 552, 132, 132]}
+          testID="closePage"
+          onPress={onClose}
+        />
+      </DesignSpace>
       <View
+        testID="pageContent"
+        collapsable={false}
         style={{
-          width: panelWidth,
-          height: panelHeight,
-          paddingHorizontal: 16,
-          paddingTop: 10,
-          paddingBottom: 12,
+          position: "absolute",
+          left: 72 * scale,
+          top: 712 * scale,
+          width: 1062 * scale,
+          height: bodyHeight,
+          overflow: "hidden",
         }}
+        onLayout={(event) => onBodyHeight?.(event.nativeEvent.layout.height)}
       >
-        <PagePaper width={panelWidth} height={panelHeight} />
-        <PageHeading title={title} width={panelWidth - 32} onClose={onClose} />
-        <View
-          testID="pageContent"
-          collapsable={false}
-          style={{ flex: 1 }}
-          onLayout={(e) => onBodyHeight?.(e.nativeEvent.layout.height)}
-        >
+        <DesignSpace scale={scale} x={72} y={712}>
           {scroll ? (
             <ScrollView
               key={routeKey}
               testID="pageScroll"
               showsVerticalScrollIndicator={false}
               style={{ flex: 1 }}
-              contentContainerStyle={{ paddingTop: 8, paddingBottom: 12 }}
+              contentContainerStyle={{ padding: 0 }}
             >
               {children}
             </ScrollView>
           ) : (
             children
           )}
-        </View>
+        </DesignSpace>
       </View>
     </Animated.View>
   );

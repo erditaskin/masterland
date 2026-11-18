@@ -329,7 +329,7 @@ export type Action =
   | { type: "buy"; id: string }
   | { type: "unlock"; id: string }
   | { type: "store"; index: number }
-  | { type: "restore"; index: number }
+  | { type: "restore"; index: number; expectedID?: string }
   | { type: "expand"; gems: boolean }
   | { type: "tick" }
   | { type: "sound" }
@@ -971,6 +971,8 @@ export function transition(
         return blocked("");
       const t = c.storage[action.index],
         i = c.board.indexOf(null);
+      if (action.expectedID !== undefined && t?.id !== action.expectedID)
+        return blocked("Seçtiğin eşya artık depoda değil.");
       if (!t || i < 0) return blocked("Tahta dolu.");
       c.storage.splice(action.index, 1);
       c.board[i] = t;

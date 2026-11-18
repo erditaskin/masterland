@@ -1,0 +1,2417 @@
+{
+  "id": "city2-board",
+  "width": 1206,
+  "height": 2622,
+  "commands": [
+    {
+      "kind": "rect",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "fill": "#fff0d1",
+      "end": null,
+      "stroke": null,
+      "radius": 24,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        0,
+        0,
+        1206,
+        2622
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-scene.png",
+      "crop": [
+        0,
+        80,
+        789,
+        1715
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        26,
+        145,
+        140,
+        142
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/level-shield-v11.png",
+      "crop": [
+        161,
+        85,
+        930,
+        1050
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        26,
+        145,
+        140,
+        128
+      ],
+      "text": "12",
+      "size": 65,
+      "bold": true,
+      "fill": "#fff2bf",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        190,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        186,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        290,
+        162,
+        172,
+        92
+      ],
+      "text": "75",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        466,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        530,
+        157,
+        324,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        526,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        630,
+        162,
+        172,
+        92
+      ],
+      "text": "2.480",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        806,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        870,
+        157,
+        310,
+        105
+      ],
+      "fill": "#163749",
+      "end": "#071f2e",
+      "stroke": "#d8ae58",
+      "radius": 46,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        866,
+        156,
+        103,
+        103
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        970,
+        162,
+        158,
+        92
+      ],
+      "text": "24",
+      "size": 51,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1132,
+        166,
+        44,
+        80
+      ],
+      "text": "+",
+      "size": 40,
+      "bold": false,
+      "fill": "#edcb7b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        270,
+        365,
+        666,
+        102
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-chrome.png",
+      "crop": [
+        83,
+        91,
+        1370,
+        228
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        383.22,
+        365,
+        439.56,
+        102
+      ],
+      "text": "Badınca",
+      "size": 64,
+      "bold": true,
+      "fill": "#fff3d9",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        48,
+        373,
+        198,
+        100
+      ],
+      "fill": "#9c6e38",
+      "end": null,
+      "stroke": null,
+      "radius": 50.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        48,
+        367,
+        198,
+        100
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#bd7653",
+      "radius": 50.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        54,
+        373,
+        186,
+        88
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff0c5",
+      "radius": 44.0,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        66,
+        371,
+        162,
+        92
+      ],
+      "text": "Tümü",
+      "size": 44,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1008,
+        373,
+        132,
+        100
+      ],
+      "fill": "#9c6e38",
+      "end": null,
+      "stroke": null,
+      "radius": 50.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1008,
+        367,
+        132,
+        100
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#bd7653",
+      "radius": 50.0,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        1014,
+        373,
+        120,
+        88
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff0c5",
+      "radius": 44.0,
+      "line": 2
+    },
+    {
+      "kind": "text",
+      "rect": [
+        1026,
+        371,
+        96,
+        92
+      ],
+      "text": "●",
+      "size": 44,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        48,
+        491,
+        358,
+        132
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        48,
+        486,
+        358,
+        132
+      ],
+      "fill": "#fff5e4",
+      "end": "#e6f3ba",
+      "stroke": "#36872c",
+      "radius": 36,
+      "line": 4
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        56,
+        494,
+        342,
+        116
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        62,
+        496,
+        101,
+        101
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        176,
+        485,
+        212,
+        47
+      ],
+      "text": "Ver ✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        72,
+        577,
+        100,
+        32
+      ],
+      "text": "1/1",
+      "size": 26,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        180,
+        532,
+        200,
+        37
+      ],
+      "text": "13 altın",
+      "size": 30,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        180,
+        574,
+        200,
+        36
+      ],
+      "text": "XP 3",
+      "size": 29,
+      "bold": true,
+      "fill": "#178cc4",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        424,
+        491,
+        358,
+        132
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        424,
+        486,
+        358,
+        132
+      ],
+      "fill": "#fff5e4",
+      "end": "#e6f3ba",
+      "stroke": "#36872c",
+      "radius": 36,
+      "line": 4
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        432,
+        494,
+        342,
+        116
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        438,
+        496,
+        101,
+        101
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        552,
+        485,
+        212,
+        47
+      ],
+      "text": "Ver ✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        448,
+        577,
+        100,
+        32
+      ],
+      "text": "1/1",
+      "size": 26,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        556,
+        532,
+        200,
+        37
+      ],
+      "text": "13 altın",
+      "size": 30,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        556,
+        574,
+        200,
+        36
+      ],
+      "text": "XP 3",
+      "size": 29,
+      "bold": true,
+      "fill": "#178cc4",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        800,
+        491,
+        358,
+        132
+      ],
+      "fill": "#c99a59",
+      "end": null,
+      "stroke": null,
+      "radius": 36,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        800,
+        486,
+        358,
+        132
+      ],
+      "fill": "#fff5e4",
+      "end": "#e6f3ba",
+      "stroke": "#36872c",
+      "radius": 36,
+      "line": 4
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        808,
+        494,
+        342,
+        116
+      ],
+      "fill": null,
+      "end": null,
+      "stroke": "#fff3d4",
+      "radius": 29,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        814,
+        496,
+        101,
+        101
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        928,
+        485,
+        212,
+        47
+      ],
+      "text": "Ver ✓",
+      "size": 35,
+      "bold": true,
+      "fill": "#34852b",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        824,
+        577,
+        100,
+        32
+      ],
+      "text": "1/1",
+      "size": 26,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        932,
+        532,
+        200,
+        37
+      ],
+      "text": "13 altın",
+      "size": 30,
+      "bold": true,
+      "fill": "#63351f",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        932,
+        574,
+        200,
+        36
+      ],
+      "text": "XP 3",
+      "size": 29,
+      "bold": true,
+      "fill": "#178cc4",
+      "align": "left",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        48,
+        632,
+        1110,
+        150
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-chrome.png",
+      "crop": [
+        52,
+        443,
+        1431,
+        193
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        84,
+        644,
+        192,
+        125
+      ],
+      "fill": "#a33342",
+      "end": null,
+      "stroke": "#bd7653",
+      "radius": 23,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        124,
+        645,
+        112,
+        100
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        793,
+        794,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        89,
+        728,
+        182,
+        36
+      ],
+      "text": "1 enerji",
+      "size": 28,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        294,
+        644,
+        192,
+        125
+      ],
+      "fill": "#a33342",
+      "end": null,
+      "stroke": "#bd7653",
+      "radius": 23,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        334,
+        645,
+        112,
+        100
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        991,
+        794,
+        199,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        299,
+        728,
+        182,
+        36
+      ],
+      "text": "1 enerji",
+      "size": 28,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        504,
+        644,
+        192,
+        125
+      ],
+      "fill": "#a33342",
+      "end": null,
+      "stroke": "#bd7653",
+      "radius": 23,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        544,
+        645,
+        112,
+        100
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1190,
+        794,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        509,
+        728,
+        182,
+        36
+      ],
+      "text": "1 enerji",
+      "size": 28,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        714,
+        644,
+        192,
+        125
+      ],
+      "fill": "#a33342",
+      "end": null,
+      "stroke": "#bd7653",
+      "radius": 23,
+      "line": 3
+    },
+    {
+      "kind": "image",
+      "rect": [
+        754,
+        645,
+        112,
+        100
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1388,
+        794,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        719,
+        728,
+        182,
+        36
+      ],
+      "text": "1 enerji",
+      "size": 28,
+      "bold": true,
+      "fill": "#fff0c2",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        87,
+        800,
+        1032,
+        1524
+      ],
+      "fill": "#ffe8c8",
+      "end": null,
+      "stroke": null,
+      "radius": 30,
+      "line": 3
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        824,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        988,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1152,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1316,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1480,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1644,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1808,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        1972,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        111,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        275,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        439,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        603,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        767,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        931,
+        2136,
+        164,
+        164
+      ],
+      "fill": "#fff5e4",
+      "end": "#ffe8c8",
+      "stroke": "#fff2d7",
+      "radius": 10,
+      "line": 2
+    },
+    {
+      "kind": "image",
+      "rect": [
+        120,
+        833,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        940,
+        833,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        198,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        284,
+        997,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1388,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        776,
+        997,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        198,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        448,
+        1161,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1388,
+        198,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        776,
+        1161,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        397,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        448,
+        1325,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        595,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        940,
+        1325,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        198,
+        595,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        120,
+        1489,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        776,
+        1489,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        198,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        448,
+        1653,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1388,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        940,
+        1653,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        198,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        120,
+        1817,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        1388,
+        198,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        776,
+        1817,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        397,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        284,
+        1981,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        595,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        120,
+        2145,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        198,
+        595,
+        198,
+        199
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        612,
+        2145,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        0,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        940,
+        2145,
+        146,
+        146
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/haven-items-v1.png",
+      "crop": [
+        198,
+        0,
+        198,
+        198
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        87,
+        800,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        21,
+        38,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        135,
+        800,
+        936,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        149,
+        38,
+        726,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1071,
+        800,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        875,
+        38,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        87,
+        848,
+        48,
+        1428
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        21,
+        166,
+        128,
+        1202
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1071,
+        848,
+        48,
+        1428
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        875,
+        166,
+        128,
+        1202
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        87,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        21,
+        1368,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        135,
+        2276,
+        936,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        149,
+        1368,
+        726,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1071,
+        2276,
+        48,
+        48
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-frame.png",
+      "crop": [
+        875,
+        1368,
+        128,
+        128
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        42,
+        2360,
+        1122,
+        160
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/cities-v1/city2-chrome.png",
+      "crop": [
+        52,
+        443,
+        1431,
+        193
+      ],
+      "fit": false,
+      "radius": null
+    },
+    {
+      "kind": "rect",
+      "rect": [
+        60,
+        2371,
+        212,
+        137
+      ],
+      "fill": "#fff3d5",
+      "end": "#ffd598",
+      "stroke": "#ffe7bb",
+      "radius": 27,
+      "line": 4
+    },
+    {
+      "kind": "image",
+      "rect": [
+        127,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        60,
+        2450,
+        212,
+        51
+      ],
+      "text": "Tahta",
+      "size": 34,
+      "bold": true,
+      "fill": "#773e29",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        347,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        443.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        280,
+        2450,
+        212,
+        51
+      ],
+      "text": "Koleksiyon",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        567,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        887.0,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        500,
+        2450,
+        212,
+        51
+      ],
+      "text": "Şehirler",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        787,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        1330.5,
+        0.0,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        720,
+        2450,
+        212,
+        51
+      ],
+      "text": "Depo",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "image",
+      "rect": [
+        1007,
+        2372,
+        78,
+        78
+      ],
+      "file": "/Users/erdi/masterland/masterland-mobile/mobile/assets/art/icons.png",
+      "crop": [
+        0.0,
+        443.5,
+        443.5,
+        443.5
+      ],
+      "fit": true,
+      "radius": null
+    },
+    {
+      "kind": "text",
+      "rect": [
+        940,
+        2450,
+        212,
+        51
+      ],
+      "text": "Market",
+      "size": 34,
+      "bold": true,
+      "fill": "#fff0cb",
+      "align": "center",
+      "font": null
+    },
+    {
+      "kind": "system-home-indicator",
+      "rect": [
+        402,
+        2572,
+        402,
+        15
+      ],
+      "fill": "#5d503f",
+      "radius": 8
+    }
+  ]
+}

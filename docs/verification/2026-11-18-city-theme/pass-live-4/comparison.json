@@ -1,0 +1,70 @@
+{
+  "status": "not-accepted",
+  "target": "device-v2",
+  "reference_art_direction_audit_complete": false,
+  "results": [
+    {
+      "id": "city1-collection-chain",
+      "status": "pixel-mismatch",
+      "different_pixels": 1245,
+      "total_pixels": 3162132,
+      "identical_percent": 99.96062782957827,
+      "expected_sha256": "1d03846f9dddc6984e672540ce2b65c2556b2dc01517f1d1aa7d12280ea173a7",
+      "actual_sha256": "fbf5e497e89782d047a69f5e15272b309ba5ffcbf90a8e120f3b397c70fb36e8"
+    },
+    {
+      "id": "city1-achievement",
+      "status": "pixel-mismatch",
+      "different_pixels": 790,
+      "total_pixels": 3162132,
+      "identical_percent": 99.97501685571633,
+      "expected_sha256": "dc5515a4b975f7d477366401f10b5f4f80db9aa550224dadee7166dcf4556cf0",
+      "actual_sha256": "b2b4fbd510fd26178c1330f6e2b6050bbe3f98f4b13456a4c6d0528da553d30c"
+    },
+    {
+      "id": "city1-producer-cooldown",
+      "status": "pixel-mismatch",
+      "different_pixels": 10783,
+      "total_pixels": 3162132,
+      "identical_percent": 99.65899589264458,
+      "expected_sha256": "e47346acc73e010fc9a6154ed226fb829e0b677b0cd66daf46c3c3741ba127dc",
+      "actual_sha256": "067ef90f43ffb7bc35a9731cd723bce18eb6bde7643dc8b8aa05d0e8bfe5ba37"
+    },
+    {
+      "id": "city1-collection",
+      "status": "pixel-mismatch",
+      "different_pixels": 1773,
+      "total_pixels": 3162132,
+      "identical_percent": 99.94393023441147,
+      "expected_sha256": "a0d16f7f7357403f46d72f356cff21a08e4a3bfadff34ba1f4a4ce3c4328ef7d",
+      "actual_sha256": "46e2df25980a3f9ce6b5360a631295e6a3fd5792a41efe2916d814025fce7588"
+    },
+    {
+      "id": "city1-market-repeat",
+      "status": "pixel-mismatch",
+      "different_pixels": 822,
+      "total_pixels": 3162132,
+      "identical_percent": 99.97400488025168,
+      "expected_sha256": "6afc6a24c7f8a01cce678a331516240a7c4207e39ee1f66dc74f5c020653d95f",
+      "actual_sha256": "9c455a04c6e86fd59d3e801cdff87215baa46cd5d5ebecc4e99a2dc7a2d7dc04"
+    },
+    {
+      "id": "city1-market",
+      "status": "pixel-mismatch",
+      "different_pixels": 822,
+      "total_pixels": 3162132,
+      "identical_percent": 99.97400488025168,
+      "expected_sha256": "6afc6a24c7f8a01cce678a331516240a7c4207e39ee1f66dc74f5c020653d95f",
+      "actual_sha256": "9c455a04c6e86fd59d3e801cdff87215baa46cd5d5ebecc4e99a2dc7a2d7dc04"
+    },
+    {
+      "id": "city1-storage",
+      "status": "passed",
+      "different_pixels": 0,
+      "total_pixels": 3162132,
+      "identical_percent": 100.0,
+      "expected_sha256": "5c55370c2825727b1ad0b17dcaba2bd1db5cbee0e6acdaad304031311a00cea0",
+      "actual_sha256": "5c55370c2825727b1ad0b17dcaba2bd1db5cbee0e6acdaad304031311a00cea0"
+    }
+  ]
+}

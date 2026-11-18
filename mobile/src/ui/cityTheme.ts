@@ -14,6 +14,9 @@ export interface CityTheme {
   readonly primary: string;
   readonly primaryLight: string;
   readonly onPrimary: string;
+  readonly navSelected: string;
+  readonly navSelectedLight: string;
+  readonly navSelectedInk: string;
   readonly selected: string;
   readonly selectedInk: string;
 }
@@ -29,6 +32,9 @@ export const semanticColors = Object.freeze({
 
 const definitions = {
   city1: {
+    navSelected: "#df9c24",
+    navSelectedLight: "#ffe6a7",
+    navSelectedInk: "#fff3cf",
     material: "oak",
     ink: "#583715",
     mutedInk: "#92744c",
@@ -46,6 +52,9 @@ const definitions = {
     selectedInk: "#315b26",
   },
   city2: {
+    navSelected: "#ffd598",
+    navSelectedLight: "#fff3d5",
+    navSelectedInk: "#773e29",
     material: "ceramic",
     ink: "#63351f",
     mutedInk: "#966a57",
@@ -63,6 +72,9 @@ const definitions = {
     selectedInk: "#8a2639",
   },
   city3: {
+    navSelected: "#007c75",
+    navSelectedLight: "#39b6a7",
+    navSelectedInk: "#f4fff1",
     material: "timber",
     ink: "#5a3a22",
     mutedInk: "#8a7054",
@@ -80,6 +92,9 @@ const definitions = {
     selectedInk: "#06675e",
   },
   city4: {
+    navSelected: "#b64d12",
+    navSelectedLight: "#ec8b33",
+    navSelectedInk: "#fff8e7",
     material: "stone",
     ink: "#58371e",
     mutedInk: "#877462",
@@ -97,6 +112,9 @@ const definitions = {
     selectedInk: "#8f3c10",
   },
   city5: {
+    navSelected: "#603074",
+    navSelectedLight: "#a263aa",
+    navSelectedInk: "#fff2ce",
     material: "textile",
     ink: "#603c20",
     mutedInk: "#917152",

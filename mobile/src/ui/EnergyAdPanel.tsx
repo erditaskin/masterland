@@ -5,12 +5,19 @@ import { energyAds, adsConfig } from "../ads/service";
 import { accountText as tx, languageStore } from "../i18n/locale";
 import type { Save } from "../game/engine";
 import { AppButton, Divider, Label } from "./Controls";
+import { EnergyGiftView } from "./EnergyGiftView";
 export function EnergyAdPanel({
   save,
   producerID,
+  compact = false,
+  page = false,
+  onCancel = () => {},
 }: {
   save: Save;
   producerID?: string;
+  compact?: boolean;
+  page?: boolean;
+  onCancel?: () => void;
 }) {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
@@ -29,9 +36,95 @@ export function EnergyAdPanel({
     !ad.enabled ||
     (producerID && !adsConfig.testAds && !adsConfig.producerRewardedUnit)
   )
-    return null;
+    return page ? (
+      <EnergyGiftView
+        used={used}
+        text="Reklam şu an kullanılamıyor"
+        disabled
+        onWatch={() => {}}
+        onCancel={onCancel}
+      />
+    ) : compact ? (
+      <AppButton
+        designRect={[0, 0, 966, 132]}
+        text="Reklam şu an kullanılamıyor"
+        tone="secondary"
+        disabled
+        onPress={() => {}}
+      />
+    ) : null;
   const previewOnly = adsConfig.testAds && !testModeEnabled;
   const showing = ad.phase === "showing" || ad.phase === "earned";
+  if (page)
+    return (
+      <EnergyGiftView
+        used={used}
+        text={
+          used >= 4
+            ? "Bugünkü hediyeler tamamlandı"
+            : showing
+              ? "Reklam gösteriliyor…"
+              : ad.phase === "loading" || ad.consentBusy
+                ? "Hazırlanıyor…"
+                : previewOnly
+                  ? "Test reklamını önizle · ödülsüz"
+                  : "Reklamı izle · +25 enerji"
+        }
+        disabled={
+          used >= 4 ||
+          ad.rewardPending ||
+          ad.consentBusy ||
+          showing ||
+          ad.phase === "loading"
+        }
+        message={
+          ad.rewardPending
+            ? "Ödülün doğrulanıyor. Bağlantı geldiğinde yeniden kontrol edilecek."
+            : ad.error
+              ? "Reklam hazırlanamadı. Hakkın korunuyor."
+              : ad.rewardOutcome === "verified"
+                ? "Ödül doğrulandı ve hesabına eklendi."
+                : ad.rewardOutcome === "preview"
+                  ? "Test reklamı tamamlandı. Bu önizleme ödül vermez."
+                  : undefined
+        }
+        onWatch={() => {
+          void energyAds.watch();
+        }}
+        onCancel={onCancel}
+      />
+    );
+  if (compact)
+    return (
+      <AppButton
+        designRect={[0, 0, 966, 132]}
+        testID="watchProducerAd"
+        tone="secondary"
+        text={
+          used >= 4
+            ? "Bugünkü hediyeler tamamlandı"
+            : showing
+              ? "Reklam gösteriliyor…"
+              : ad.phase === "loading" || ad.consentBusy
+                ? "Hazırlanıyor…"
+                : previewOnly
+                  ? "Test reklamını önizle · ödülsüz"
+                  : "Reklamla hazırla"
+        }
+        disabled={
+          used >= 4 ||
+          ad.rewardPending ||
+          ad.consentBusy ||
+          showing ||
+          ad.phase === "loading"
+        }
+        onPress={() => {
+          void energyAds.watch(
+            producerID ? { producerID, cityID: save.cityID } : undefined,
+          );
+        }}
+      />
+    );
   return (
     <View testID="energyAdPanel" style={{ width: "100%" }}>
       <Divider />

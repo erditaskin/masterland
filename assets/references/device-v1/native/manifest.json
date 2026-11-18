@@ -1,0 +1,347 @@
+{
+  "kind": "independent-native-design-reference",
+  "device": "iPhone 16 Pro / iOS 18.6",
+  "app_language": "tr",
+  "launch_locale": "tr_TR",
+  "capture_test_passed": true,
+  "rows": [
+    {
+      "id": "city5-cities",
+      "file": "city5-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "0801ad42676201082e2043c71b3bf0690aa1c2e04032674b249867c3453a2cb3"
+    },
+    {
+      "id": "city5-board",
+      "file": "city5-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "3546a2303ce125281e3a055f6421d405a2b243a22ee5a75ba5ffed357862c21c"
+    },
+    {
+      "id": "city4-cities",
+      "file": "city4-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "47c20b4854fd2d9c0c1e1fe17f9a029cd06ba76ae0a0e123a4ddf6f0378ac318"
+    },
+    {
+      "id": "city4-board",
+      "file": "city4-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "1f3c4d4c1249dc306b0ec2ab6699d164c76bead93dfb2685c66f0906190a2b15"
+    },
+    {
+      "id": "city3-cities",
+      "file": "city3-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "739fd88545a6e52704d608941b598edd7d1e8c886afecb6c6e9d81479e7d9a81"
+    },
+    {
+      "id": "city3-board",
+      "file": "city3-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "0d6a17772178ad5529938d4199dc0842df8bbc9682c67e492ea4a63abae7d958"
+    },
+    {
+      "id": "city2-cities",
+      "file": "city2-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "6c6ffe23df7d86b302af7779371d02fc69351dd08211ca403263d8b0229effdc"
+    },
+    {
+      "id": "city2-board",
+      "file": "city2-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "b01c1ce2338aea446e31e63abc9424ee55233a47b85ffc72c98680cb7c6d428f"
+    },
+    {
+      "id": "city1-storage-board-full",
+      "file": "city1-storage-board-full.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "a6476e58b31985c40e988fcf7bd4a29138f3546047c93687569b17e3659c487e"
+    },
+    {
+      "id": "city1-storage",
+      "file": "city1-storage.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "d227e87224b6e7762be99471ee468dd530433a915f09e93362b53c1ce9f6b323"
+    },
+    {
+      "id": "city1-producer-cooldown",
+      "file": "city1-producer-cooldown.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "1cf1d8eac4681b3403bb2122599ec7e6a105ac9c6323166d32b66570022b8e27"
+    },
+    {
+      "id": "city1-orders",
+      "file": "city1-orders.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "f3bd59bde13998201810f522af3ffee2c505555d64752e3d2518d5ee43ac330d"
+    },
+    {
+      "id": "city1-order-guide",
+      "file": "city1-order-guide.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "3906cdb5748ddc210d66e741087698b1a584143854559afce854be94b0fd4700"
+    },
+    {
+      "id": "city1-market",
+      "file": "city1-market.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "ba63b4ed6b47bcc34e3de898c9b07e57c3a6df07f3870693d17fd512c744203c"
+    },
+    {
+      "id": "city1-item",
+      "file": "city1-item.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "045e562535f04dfd822259c1801e708365955d7fb9b8ce03325855f479828259"
+    },
+    {
+      "id": "city1-energy",
+      "file": "city1-energy.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "ef7b2d7118ae8222c54ddf508099525d85c55282edaa187143dac16e733c6f94"
+    },
+    {
+      "id": "city1-collection-chain",
+      "file": "city1-collection-chain.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "fb0b0ce16f83e1c9b4079572341b3cbacc092a7fcdf897dd4c3dfb6727246735"
+    },
+    {
+      "id": "city1-collection",
+      "file": "city1-collection.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "9b710a5a0bfc445bbc807fbedca8bf67cea1e30d487b6a4c63810d16a14b71e1"
+    },
+    {
+      "id": "city1-cloud-choice",
+      "file": "city1-cloud-choice.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "e38a88d9f2c2b63fabda1a461504f5da569afe0d77027f16e367ae81d33136f6"
+    },
+    {
+      "id": "city1-cities",
+      "file": "city1-cities.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "09dca56eb971b2c6ab25a184c62d52da81e2497bda332730856c8378e30be007"
+    },
+    {
+      "id": "city1-board",
+      "file": "city1-board.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "167c76cb8837feea6dafea5f5827b68658cfda9cdcc13d719af1cfe37a3b3f02"
+    },
+    {
+      "id": "city1-achievements",
+      "file": "city1-achievements.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "3cc68e2a602486595499d47ad4165b210626c5fd7faea3fc13d58545672e8ea5"
+    },
+    {
+      "id": "city1-achievement",
+      "file": "city1-achievement.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "47b8b83fb3fe457ccea702c9885b707cce27a9195814456fb7ec019be0ec15e1"
+    },
+    {
+      "id": "city1-account-registered",
+      "file": "city1-account-registered.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "c3ab7deb3c57d32a3d881fda5bbf58033c30d808bc9f1fd70091510400ec74ed"
+    },
+    {
+      "id": "city1-account-guest",
+      "file": "city1-account-guest.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "169d3ae34804aae83ba48e79297ec7f85b7363875988a4705fbbf81b9a7e7f65"
+    },
+    {
+      "id": "city1-account-deletion",
+      "file": "city1-account-deletion.png",
+      "size": [
+        1206,
+        2622
+      ],
+      "color_metadata": {
+        "srgb": 0,
+        "icc": false
+      },
+      "sha256": "180a041223809f16fd62aca9449c1605a6fc467d9c9e33f13a3de43217136c7e"
+    }
+  ]
+}

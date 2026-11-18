@@ -1,76 +1,34 @@
-import { useCityTheme } from "./CityThemeProvider";
-import { squareTileSize } from "./PagePrimitives";
-import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
-import { EnergyAdPanel } from "./EnergyAdPanel";
-import { useEffect, useState } from "react";
-import { Image, View } from "react-native";
-import { Crop, Item } from "./Art";
-import { ActionButton, AppChoice, Label } from "./Controls";
-import { colors, art } from "./theme";
+import { View } from "react-native";
+import { Fragment, useEffect, useState, type ReactNode } from "react";
 import {
   city,
-  name,
   productionPlan,
   type Save,
   type Producer,
   type Action,
   type Result,
 } from "../game/engine";
-export function ProducerPortrait({
-  index,
-  size,
-}: {
-  index: number;
-  size: number;
-}) {
-  if (index >= 5) {
-    const b = havenBounds[36 + index - 5]!;
-    return (
-      <View style={{ width: size, height: size, overflow: "hidden" }}>
-        <Crop
-          source={require("../../assets/art/haven-items-v1.png")}
-          x={b[0]!}
-          y={b[1]!}
-          w={b[2]!}
-          h={b[3]!}
-          width={size}
-          height={size}
-        />
-      </View>
-    );
-  }
-  return (
-    <View
-      style={{
-        width: size,
-        height: size * 0.72,
-        borderRadius: size * 0.2,
-        overflow: "hidden",
-        borderWidth: 1,
-        borderColor: colors.gold,
-      }}
-    >
-      <Crop
-        source={art.concept}
-        x={128 + index * 130.5}
-        y={400}
-        w={98}
-        h={68}
-        width={size}
-        height={size * 0.72}
-      />
-    </View>
-  );
-}
+import { EnergyAdPanel } from "./EnergyAdPanel";
+import { AppButton, Button } from "./Controls";
+import { useCityTheme } from "./CityThemeProvider";
+import { DesignContent } from "./DesignContent";
+import { DesignBox, DesignImage, DesignText } from "./DesignSpace";
+import { PaperCard } from "./PagePrimitives";
+import { DesignItem, ProducerArt } from "./BoardChrome";
+export { ProducerPortrait } from "./ProducerPortrait";
+
 export function ProducerDetails({
   producer: p,
   index,
   save,
   dispatch,
-  width,
   variant = "producer",
   onProducer,
+  displayNow,
+  adControl,
 }: {
+  displayNow?: number;
+  adControl?: ReactNode;
   width: number;
   variant?: "producer" | "collection";
   onProducer: () => void;
@@ -79,164 +37,165 @@ export function ProducerDetails({
   save: Save;
   dispatch: (a: Action) => Result | null;
 }) {
-  const theme = useCityTheme();
-  const side = squareTileSize(width, 4, 6);
-  const c = city(save);
-  const [selected, setSelected] = useState(
-    () =>
-      (variant === "collection"
-        ? p.products[0]?.id
-        : p.products.find((a) => !c.opened.includes(a.id))?.id) ??
-      p.products.at(-1)!.id,
-  );
-  const a = p.products.find((a) => a.id === selected)!;
+  const theme = useCityTheme(),
+    c = city(save);
+  const [selected, setSelected] = useState(() => p.products[0]!.id);
+  const item = p.products.find((a) => a.id === selected) ?? p.products[0]!;
   const owned = c.owned.includes(p.id),
-    opened = save.discoveries.includes(a.id);
-  const [now, setNow] = useState(Date.now);
-  const readyAt = c.batches[p.id]?.readyAt ?? 0;
+    known = save.discoveries.includes(item.id);
+  const [now, setNow] = useState(Date.now),
+    readyAt = c.batches[p.id]?.readyAt ?? 0;
   useEffect(() => {
-    if (readyAt <= Date.now()) return;
+    if (displayNow !== undefined || readyAt <= Date.now()) return;
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
-  }, [readyAt]);
-  const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000));
+  }, [readyAt, displayNow]);
+  const seconds = Math.max(
+    0,
+    Math.ceil((readyAt - (displayNow ?? now)) / 1000),
+  );
+  const cooldown = variant === "producer" && owned && seconds > 0;
+  const gridY = cooldown ? 1700 : 1120,
+    gridHeight = Math.ceil(p.products.length / 4) * 244;
+  const detailY = gridY + Math.max(cooldown ? 720 : 520, gridHeight + 32);
   return (
-    <View style={{ gap: 8 }}>
-      {variant === "producer" && owned && seconds > 0 && (
-        <View
-          testID="producerCooldown"
-          style={{
-            padding: 14,
-            backgroundColor: theme.paperLight,
-            borderRadius: 12,
-            gap: 8,
-          }}
-        >
-          <Label title size={22}>
+    <DesignContent end={detailY + 1450}>
+      {index === 0 ? (
+        <DesignImage
+          source={require("../../assets/art/skara-field-hero-v2.png")}
+          rect={[110, 730, 986, 360]}
+          fit
+        />
+      ) : (
+        <ProducerArt index={index} rect={[110, 730, 986, 360]} />
+      )}
+      {cooldown && (
+        <>
+          <PaperCard designRect={[90, 1120, 1026, 550]} />
+          <DesignText rect={[120, 1135, 966, 90]} size={54} bold align="center">
             Üretici hazırlanıyor
-          </Label>
-          <Label size={20}>
-            {Math.floor(seconds / 60)}:{String(seconds % 60).padStart(2, "0")}{" "}
-            sonra hazır
-          </Label>
-          <ActionButton
-            testID="refillProducerGems"
+          </DesignText>
+          <DesignText
+            rect={[120, 1225, 966, 110]}
+            size={70}
+            bold
+            align="center"
+          >
+            {String(Math.floor(seconds / 60)).padStart(2, "0")}:
+            {String(seconds % 60).padStart(2, "0")}
+          </DesignText>
+          <AppButton
+            designRect={[120, 1350, 966, 132]}
             text="Şimdi hazırla · 3 elmas"
+            testID="refillProducerGems"
             onPress={() => dispatch({ type: "producer-refill", id: p.id })}
           />
-          <EnergyAdPanel save={save} producerID={p.id} />
-        </View>
-      )}
-      <Label size={12} tone="muted" style={{ textAlign: "center" }}>
-        {name(save.cityID)} · Ürün alanları
-      </Label>
-      <View style={{ alignItems: "center", paddingVertical: 4 }}>
-        {index === 0 ? (
-          <Image
-            source={require("../../assets/art/skara-field-hero-v2.png")}
-            resizeMode="contain"
-            style={{ width: 280, height: 130 }}
-          />
-        ) : (
-          <ProducerPortrait index={index} size={125} />
-        )}
-      </View>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6 }}>
-        {p.products.map((item) => (
-          <AppChoice
-            key={item.id}
-            selected={item.id === selected}
-            testID={"product-slot-" + item.id}
-            label={
-              item.name +
-              (save.discoveries.includes(item.id) ? ", Açık" : ", Kilitli")
-            }
-            onPress={() => setSelected(item.id)}
-            style={{
-              width: side,
-              height: side,
-            }}
-          >
-            {save.discoveries.includes(item.id) ? (
-              <Item id={item.id} size={side * 0.7} />
-            ) : (
-              <Label title size={side * 0.48} color={theme.mutedInk}>
-                ?
-              </Label>
+          <DesignBox rect={[120, 1510, 966, 132]} local>
+            {adControl ?? (
+              <EnergyAdPanel save={save} producerID={p.id} compact />
             )}
-            <Label
-              size={11}
-              color={
-                save.discoveries.includes(item.id) ? colors.green : colors.muted
-              }
-            >
-              {save.discoveries.includes(item.id) ? "✓" : "Kilitli"}
-            </Label>
-          </AppChoice>
-        ))}
-      </View>
-      <Label title size={24} style={{ textAlign: "center", marginTop: 6 }}>
-        {a.name}
-      </Label>
-      <Label size={12} tone="muted" style={{ textAlign: "center" }}>
-        Basamak {a.tier}
-      </Label>
+          </DesignBox>
+        </>
+      )}
+      {p.products.map((a, i) => {
+        const x = 114 + (i % 4) * 244,
+          y = gridY + Math.floor(i / 4) * 244,
+          found = save.discoveries.includes(a.id);
+        return (
+          <Fragment key={a.id}>
+            <PaperCard
+              designRect={[x, y, 232, 232]}
+              selected={a.id === selected}
+            />
+            {found ? (
+              <DesignItem id={a.id} rect={[x + 15, y + 15, 202, 202]} />
+            ) : (
+              <DesignText
+                rect={[x, y, 232, 232]}
+                size={111}
+                bold
+                color={theme.mutedInk}
+                align="center"
+              >
+                ?
+              </DesignText>
+            )}
+            <DesignBox rect={[x, y, 232, 232]}>
+              <Button
+                label={a.name + (found ? ", Açık" : ", Kilitli")}
+                testID={"product-slot-" + a.id}
+                selected={a.id === selected}
+                onPress={() => setSelected(a.id)}
+                style={{ flex: 1 }}
+              >
+                <View />
+              </Button>
+            </DesignBox>
+          </Fragment>
+        );
+      })}
+      <DesignText rect={[90, detailY, 1026, 100]} size={62} bold align="center">
+        {item.name}
+      </DesignText>
+      <DesignText
+        rect={[90, detailY + 105, 1026, 90]}
+        size={42}
+        align="center"
+      >{`Basamak ${item.tier} · ${known ? "Keşfedildi" : "Keşfedilmedi"}`}</DesignText>
+      <DesignText
+        rect={[120, detailY + 225, 966, 160]}
+        size={44}
+        align="center"
+      >
+        İki aynı ürünü birleştirerek zincirde ilerle.
+      </DesignText>
       {variant === "collection" ? (
-        <ActionButton
-          testID="viewProducerFromCollection"
+        <AppButton
+          designRect={[220, detailY + 430, 766, 132]}
           text="Üreticiyi gör"
           tone="secondary"
+          testID="viewProducerFromCollection"
           onPress={onProducer}
         />
       ) : !owned ? (
-        <ActionButton
+        <AppButton
+          designRect={[90, detailY + 430, 1026, 132]}
           testID="buyProducer"
           text={`Aç · ${p.price} altın · Seviye ${p.level}`}
           onPress={() => dispatch({ type: "buy", id: p.id })}
         />
-      ) : (
-        <Label
-          title
-          color={opened ? colors.green : colors.muted}
-          style={{ textAlign: "center", padding: 12 }}
-        >
-          {opened
-            ? "Keşfedildi ✓"
-            : "İki aynı ürünü birleştirerek keşfet. İlk keşif XP ve altın verir."}
-        </Label>
-      )}
-      {p.products[a.tier] && (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 12,
-            borderRadius: 14,
-            backgroundColor: "#ecd5a880",
-            gap: 8,
-          }}
-        >
-          <Item id={p.products[a.tier]!.id} size={56} />
-          <View style={{ flex: 1 }}>
-            <Label size={11} tone="muted">
-              Sonraki ürün
-            </Label>
-            <Label title size={16}>
-              {p.products[a.tier]!.name}
-            </Label>
-          </View>
-        </View>
+      ) : null}
+      {variant === "producer" && p.products[item.tier] && (
+        <>
+          <PaperCard designRect={[90, detailY + 620, 1026, 260]} />
+          <DesignItem
+            id={p.products[item.tier]!.id}
+            rect={[120, detailY + 650, 190, 190]}
+          />
+          <DesignText rect={[350, detailY + 630, 700, 80]} size={38}>
+            Sonraki ürün
+          </DesignText>
+          <DesignText rect={[350, detailY + 730, 700, 120]} size={48} bold>
+            {p.products[item.tier]!.name}
+          </DesignText>
+        </>
       )}
       {owned && (
-        <Label
-          size={11}
-          tone="muted"
-          style={{ textAlign: "center", marginTop: 8 }}
+        <DesignText
+          rect={[120, detailY + 940, 966, 180]}
+          size={38}
+          color={theme.mutedInk}
+          align="center"
         >
           Üretim gücü {2 ** (productionPlan(save, p).selected - 1)}x.
           Değiştirmek için tahtadaki üreticiye basılı tut.
-        </Label>
+        </DesignText>
       )}
-    </View>
+      {variant === "producer" && owned && !cooldown && (
+        <DesignBox rect={[120, detailY + 1150, 966, 300]}>
+          <EnergyAdPanel save={save} producerID={p.id} />
+        </DesignBox>
+      )}
+    </DesignContent>
   );
 }

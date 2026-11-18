@@ -9,6 +9,7 @@ import {
 import { useCityTheme } from "./CityThemeProvider";
 import { TitlePlaque } from "./Skin";
 import { AppCloseButton, Label } from "./Controls";
+import { DesignBox, DesignSurface, type DesignRect } from "./DesignSpace";
 
 /** Composition slots keep data and actions outside the visual material layer. */
 export const PaperCard = memo(function PaperCard({
@@ -18,6 +19,8 @@ export const PaperCard = memo(function PaperCard({
   selected = false,
   style,
   testID,
+  designRect,
+  danger = false,
 }: {
   children?: ReactNode;
   header?: ReactNode;
@@ -25,8 +28,38 @@ export const PaperCard = memo(function PaperCard({
   selected?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
+  designRect?: DesignRect;
+  danger?: boolean;
 }) {
   const theme = useCityTheme();
+  if (designRect) {
+    const [x, y, w, h] = designRect;
+    return (
+      <>
+        <DesignSurface rect={[x, y + 5, w, h]} fill="#c99a59" radius={36} />
+        <DesignSurface
+          rect={designRect}
+          fill={theme.paperLight}
+          end={selected ? "#e6f3ba" : theme.paper}
+          stroke={danger ? "#a83929" : selected ? "#36872c" : theme.edge}
+          radius={36}
+          line={selected ? 4 : 3}
+        />
+        <DesignSurface
+          rect={[x + 8, y + 8, w - 16, h - 16]}
+          stroke="#fff3d4"
+          radius={29}
+        />
+        {children && (
+          <DesignBox rect={designRect} testID={testID}>
+            {header}
+            {children}
+            {footer}
+          </DesignBox>
+        )}
+      </>
+    );
+  }
   return (
     <View
       testID={testID}

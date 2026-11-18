@@ -473,3 +473,11 @@ Sabit şehir ID'leriyle çözülen değişmez tema değerleri ve bir tema sağla
 Tahtadaki 54 hücre başına eski büyük doku Crop katmanı kaldırıldı; UI runtime üzerindeki sürükleme ve üretim tanıma akışları korundu. Kullanılmayan eski görsel ön yüklemeleri çıkarıldı. Yalnız açık local test kanalına izin veren, kaydı/şehir kilidini değiştirmeyen tema önizlemesi ve bunun yayın kanalı sınır testi eklendi. Görsel doğrulama aracı eksik kanıtı, ölçü/renk profili farkını ve tek piksel farkını reddeder; otomatik baseline üretmez. Bu kayıt nihai piksel kabulü veya dağıtım değildir.
 
 Son kaynakta 171 birim testi, görsel kapı testi ve seçili beş Release testi geçti. Son görsel turda 41, gerçek Belenyaka–Badınca seyahat turunda iki kayıpsız cihaz görüntüsü alındı. Çerçeve taşması ve koleksiyon zincirinin yanlış seçili sekmesi inceleme sırasında giderildi. 90 görsel durumdan 33'ünün cihaz görüntüsü vardır; 0/90 piksel kabulü vardır. Cihaz ölçülü nihai referans kararı ve kalan görsel durumlar açıkken çalışma tamamlandı olarak işaretlenmedi.
+
+## 18 Kasım 2026 — Cihaz referanslarının hazırlanması ve Android devamlılığı
+
+Kullanıcı, onay panolarının mevcut oyun kuralları korunarak cihaz ölçüsünde referanslara dönüştürülmesini açıkça onayladı. Bu hazırlık için önceki yanıt bekleme durumu kapanmıştır; hazırlanan görüntülerin simülatörle piksel eşitliği ayrıca doğrulanacaktır. Kullanıcı iOS dağıtımının önce yapılacağını, Android uygulamasının da ileride geleceğini belirtti. Ortak bileşen/tema/veri yapıları platformdan bağımsız tutulacak; güvenli alan, sistem sağlayıcı kontrolleri ve font ölçümü platform sınırında ele alınacaktır. iOS görsel kabulü Android kabulü sayılmaz.
+
+## 18 Kasım 2026 — Görsel kabulün ve kesintisiz devam kapsamının teyidi
+
+Kullanıcı, iOS simülatöründe ilgili şehrin onaylı tasarımına yüzde yüz uyum doğrulanmadan işin tamamlandı sayılmayacağını tekrar belirtti. Cihaz ölçüsüne uyarlama, onaylı sanat yönünü değiştirme yetkisi değildir. Kullanıcı, uygulama ve doğrulama işinin yeni bir devam komutu beklenmeden sürdürülmesini istedi. iOS dağıtımı önceliklidir; Android için ortak React Native bileşenleri, tema değerleri ve veri/eylem sınırları korunacaktır. Yalnız simülatör görüntüsü veya yüksek bir benzerlik yüzdesi bu kabulün yerine geçmez.

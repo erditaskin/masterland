@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import ts from "typescript";
 import * as engine from "../src/game/engine";
+import { presentationFixture } from "../src/game/presentationFixture";
 function setup() {
   let fail = false,
     stored: string | null = null;
@@ -31,6 +32,7 @@ function setup() {
       getInfoAsync: async () => ({ exists: false }),
     },
     "../game/engine": engine,
+    "../game/presentationFixture": { presentationFixture },
     "../game/migrate": {},
   };
   const code = ts.transpileModule(
@@ -77,4 +79,12 @@ test("the newest local snapshot wins after multiple failed writes", async () => 
   await f.store.flush();
   assert.equal(JSON.stringify(f.saved()), expected);
   assert.equal(f.store.get().error, null);
+});
+
+test("disabled test mode rejects presentation fixtures at the store boundary", async () => {
+  const f = setup();
+  await f.store.load("presentation", "account-deletion");
+  assert.equal(f.store.get().review, false);
+  assert.equal(f.store.get().save.xp, 0);
+  assert.equal(f.store.get().save.gold, 0);
 });

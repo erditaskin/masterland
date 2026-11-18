@@ -12,75 +12,77 @@ import {
   type Achievement,
   type Save,
 } from "../game/engine";
-import {
-  AppButton,
-  AppButtonStamp,
-  AppProgress,
-  Button,
-  Label,
-} from "./Controls";
-import { RouteIcon, rewardText } from "./Achievements";
+import { AppButton, Button, Label } from "./Controls";
 import { CityCard } from "./CityCard";
-import { accountText as tx } from "../i18n/locale";
 import { cityScenes } from "./cityScenes";
+import {
+  DesignBox,
+  DesignSpace,
+  DesignText,
+  useDesignSpace,
+} from "./DesignSpace";
+import { DesignProgress } from "./DesignProgress";
+import { ChromeSprite } from "./GameChrome";
+
 function RoutePin({
   a,
   save,
-  width,
   press,
 }: {
   a: Achievement;
   save: Save;
-  width: number;
   press: () => void;
 }) {
   const state = achievementState(save, a),
     progress = Math.min(a.target, achievementProgress(save, a));
+  const { scale } = useDesignSpace();
   return (
-    <Button
-      testID={"achievement-" + a.id}
-      label={`${name(a.id)}, ${state === "ready" ? "Ödül hazır" : state === "claimed" ? "Alındı" : state === "locked" ? "Kilitli" : progress + "/" + a.target}`}
-      onPress={press}
-      style={{ width, minHeight: 138, marginBottom: 10 }}
-    >
-      <PaperCard
-        selected={state === "ready"}
-        style={{
-          width,
-          marginBottom: 0,
-          ...(state === "ready"
-            ? { borderColor: "#34852b", backgroundColor: "#e1f2b3" }
-            : {}),
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-          <RouteIcon kind={a.kind} size={76} />
-          <View style={{ flex: 1, gap: 8 }}>
-            <Label title size={20}>
-              {name(a.id)}
-            </Label>
-            {state === "ready" ? (
-              <AppButtonStamp text="Ödül hazır" />
-            ) : state === "claimed" ? (
-              <Label title color="#34852b">
-                ✓ Alındı
-              </Label>
-            ) : state === "locked" ? (
-              <Label size={12}>Şehir kilitli</Label>
-            ) : (
-              <AppProgress
-                value={progress}
-                total={a.target}
-                label={`${progress}/${a.target}`}
-              />
-            )}
-            <Label size={12}>{rewardText(a)}</Label>
-          </View>
-        </View>
-      </PaperCard>
-    </Button>
+    <View style={{ width: 1062 * scale, height: 390 * scale }}>
+      <DesignSpace scale={scale} x={72} y={712}>
+        <PaperCard
+          designRect={[90, 730, 1026, 360]}
+          selected={state === "ready"}
+        />
+        <ChromeSprite index={6} rect={[115, 800, 210, 210]} />
+        <DesignText rect={[360, 760, 710, 98]} size={56} bold>
+          {name(a.id)}
+        </DesignText>
+        <DesignProgress
+          rect={[365, 885, 700, 52]}
+          value={progress}
+          total={a.target}
+        />
+        <DesignText
+          rect={[360, 960, 710, 90]}
+          size={42}
+          bold
+          color={
+            state === "ready" || state === "claimed" ? "#34852b" : undefined
+          }
+        >
+          {state === "ready"
+            ? "Ödül hazır"
+            : state === "claimed"
+              ? "✓ Alındı"
+              : state === "locked"
+                ? "Şehir kilitli"
+                : "Devam ediyor"}
+        </DesignText>
+        <DesignBox rect={[90, 730, 1026, 360]}>
+          <Button
+            testID={"achievement-" + a.id}
+            label={`${name(a.id)}, ${state}`}
+            onPress={press}
+            style={{ flex: 1 }}
+          >
+            <View />
+          </Button>
+        </DesignBox>
+      </DesignSpace>
+    </View>
   );
 }
+
 /** City selection is explicit; scrolling achievements never changes the selected city. */
 export function CityMap({
   currentCity,
@@ -110,6 +112,7 @@ export function CityMap({
   onInteract: () => void;
   reduced: boolean;
 }) {
+  const { scale } = useDesignSpace();
   const [active, setActive] = useState(
     () => initialView?.().cityID ?? currentCity,
   );
@@ -117,143 +120,153 @@ export function CityMap({
     () => initialView?.().achievements ?? false,
   );
   const stops = useMemo(() => Object.keys(cityThemes), []);
-  const nodes = useMemo(
-    () => achievements.filter((a) => a.city_id === active),
-    [active],
-  );
-  const rule = cityRule(active)!;
-  const here = active === currentCity;
-  const visited = !!save.cities[active];
-  const text = here
-    ? tx("Tahtaya dön", "Back to board")
+  const previewOrder = [
+    "achievement1",
+    "achievement2",
+    "achievement3",
+    "achievement5",
+  ];
+  const nodes = achievements
+    .filter((a) => a.city_id === active)
+    .sort((a, b) => {
+      const rank = (id: string) => {
+        const index = previewOrder.indexOf(id);
+        return index < 0 ? previewOrder.length : index;
+      };
+      return rank(a.id) - rank(b.id);
+    });
+  const rule = cityRule(active)!,
+    here = active === currentCity,
+    visited = !!save.cities[active];
+  const travelText = here
+    ? "Tahtaya dön"
     : visited
-      ? tx("Bu şehre geç", "Travel here")
+      ? "Bu şehre geç"
       : !rule.enabled
-        ? tx("Yakında", "Coming soon")
-        : level(save) < rule.level
-          ? tx(
-              `Seviye ${rule.level} · ${rule.gold} altın`,
-              `Level ${rule.level} · ${rule.gold} gold`,
-            )
-          : tx(`${rule.gold} altınla şehri aç`, `Unlock for ${rule.gold} gold`);
+        ? "Yakında"
+        : `${rule.gold} altınla şehri aç`;
   return (
-    <View style={{ width, height, paddingHorizontal: 2 }}>
-      <FlatList
-        testID="cityRouteScroll"
-        contentOffset={{ x: 0, y: initialOffset?.() ?? 0 }}
-        onScroll={(e) => onOffsetChange(e.nativeEvent.contentOffset.y)}
-        scrollEventThrottle={32}
-        data={showAchievements ? [] : stops}
-        keyExtractor={(id) => id}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 8 }}
-        renderItem={({ item: id }) => {
-          const r = cityRule(id)!;
-          const current = id === currentCity;
-          const open = !!save.cities[id];
-          const selected = active === id;
-          const status = current
-            ? "Mevcut Şehir"
-            : open
-              ? "Açık"
-              : r.enabled
-                ? `Seviye ${r.level}`
-                : "Önizleme";
-          return (
-            <CityCard
-              id={id}
-              title={name(id)}
-              scene={cityScenes[id]!.source}
-              width={width}
-              status={status}
-              current={current}
-              selected={selected}
-              action={
-                current
-                  ? "✓ Buradasın"
-                  : open
-                    ? "Git"
-                    : r.enabled
-                      ? "Şehri aç"
-                      : "Yakında"
-              }
-              disabled={
-                !current && !open && (!r.enabled || level(save) < r.level)
-              }
-              onSelect={() => {
-                onInteract();
-                setActive(id);
-                onViewChange?.(id, false);
-              }}
-              onAction={() => {
-                onInteract();
-                if (current) onReturn();
-                else onTravel(id);
-              }}
+    <View style={{ width: 1062 * scale, height }}>
+      {showAchievements ? (
+        <FlatList
+          key="achievements"
+          testID="cityRouteScroll"
+          data={nodes}
+          keyExtractor={(a) => a.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <RoutePin
+              a={item}
+              save={save}
+              press={() => onAchievement(item.id)}
             />
-          );
-        }}
-        ListHeaderComponent={
-          showAchievements ? (
-            <View>
-              <AppButton
-                text="Şehirlere dön"
-                tone="secondary"
-                onPress={() => {
-                  setShowAchievements(false);
-                  onViewChange?.(active, false);
-                  onOffsetChange(0);
-                }}
-              />
-              <Label title size={22}>
-                {name(active)} · Başarılar
-              </Label>
-            </View>
-          ) : undefined
-        }
-        ListFooterComponent={
-          showAchievements ? (
-            <View>
-              {nodes.map((a) => (
-                <RoutePin
-                  key={a.id}
-                  a={a}
-                  save={save}
-                  width={width - 4}
-                  press={() => onAchievement(a.id)}
-                />
-              ))}
-              {!nodes.length && <Label>Bu şehrin başarıları yakında.</Label>}
-            </View>
-          ) : (
+          )}
+          ListFooterComponent={
             <AppButton
-              testID="openCityAchievements"
-              text={`${name(active)} · Başarılar`}
+              text="Şehirlere dön"
               tone="secondary"
               onPress={() => {
-                setShowAchievements(true);
-                onViewChange?.(active, true);
+                setShowAchievements(false);
+                onViewChange?.(active, false);
                 onOffsetChange(0);
               }}
             />
-          )
-        }
-      />
-      {!here && !visited && (
-        <View testID={`map-lock-${active}`}>
-          <Label size={12}>{text}</Label>
-        </View>
+          }
+          ListEmptyComponent={<Label>Bu şehrin başarıları yakında.</Label>}
+        />
+      ) : (
+        <FlatList
+          key="cities"
+          testID="cityRouteScroll"
+          data={stops}
+          keyExtractor={(id) => id}
+          contentOffset={{ x: 0, y: initialOffset?.() ?? 0 }}
+          onScroll={(e) => onOffsetChange(e.nativeEvent.contentOffset.y)}
+          scrollEventThrottle={32}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item: id }) => {
+            const r = cityRule(id)!,
+              current = id === currentCity,
+              open = !!save.cities[id];
+            const canUnlock =
+              r.enabled && level(save) >= r.level && save.gold >= r.gold;
+            return (
+              <CityCard
+                id={id}
+                title={name(id)}
+                scene={cityScenes[id]!.source}
+                width={width}
+                status={
+                  current
+                    ? "Mevcut Şehir"
+                    : open
+                      ? "Açık"
+                      : r.enabled
+                        ? `Seviye ${r.level}`
+                        : "Önizleme"
+                }
+                current={current}
+                selected={active === id}
+                action={
+                  current
+                    ? "✓ Buradasın"
+                    : open
+                      ? "Git"
+                      : r.enabled
+                        ? canUnlock
+                          ? "Şehri aç"
+                          : "Kilitli"
+                        : "Yakında"
+                }
+                disabled={!current && !open && !canUnlock}
+                onSelect={() => {
+                  onInteract();
+                  setActive(id);
+                  onViewChange?.(id, false);
+                }}
+                onAction={() => {
+                  onInteract();
+                  if (current) onReturn();
+                  else onTravel(id);
+                }}
+              />
+            );
+          }}
+          ListFooterComponent={
+            <View>
+              <AppButton
+                testID="openCityAchievements"
+                text={`${name(active)} · Başarılar`}
+                tone="secondary"
+                onPress={() => {
+                  setShowAchievements(true);
+                  onViewChange?.(active, true);
+                  onOffsetChange(0);
+                }}
+              />
+              {!here && !visited && (
+                <View testID={`map-lock-${active}`}>
+                  <Label size={12}>
+                    {!rule.enabled
+                      ? "Yakında"
+                      : `Seviye ${rule.level} · ${rule.gold} altın`}
+                  </Label>
+                </View>
+              )}
+              <AppButton
+                testID="travelCity"
+                text={travelText}
+                disabled={!rule.enabled}
+                onPress={() => {
+                  onInteract();
+                  if (here) onReturn();
+                  else onTravel(active);
+                }}
+              />
+            </View>
+          }
+        />
       )}
-      <AppButton
-        testID="travelCity"
-        text={text}
-        disabled={!rule.enabled}
-        onPress={() => {
-          onInteract();
-          if (here) onReturn();
-          else onTravel(active);
-        }}
-      />
     </View>
   );
 }

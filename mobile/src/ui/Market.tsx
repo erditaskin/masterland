@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { useIAP, finishTransaction, type Purchase } from "expo-iap";
 import {
@@ -8,12 +8,13 @@ import {
   type Action,
   type Result,
 } from "../game/engine";
-import { storeKitTestEnabled, testFlightBeta } from "../game/testMode";
+import { storeKitTestEnabled } from "../game/testMode";
 import { gameStore } from "../state/store";
 import { PaperCard } from "./PagePrimitives";
-import { useCityTheme } from "./CityThemeProvider";
+import { DesignContent } from "./DesignContent";
+import { DesignBox, DesignText } from "./DesignSpace";
+import { ChromeSprite } from "./GameChrome";
 import { ActionButton, Label } from "./Controls";
-import { Sprite } from "./Art";
 function TestStore() {
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
@@ -158,63 +159,55 @@ function TestStore() {
 export function Market({
   save,
   dispatch,
+  onEnergy,
 }: {
   save: Save;
   dispatch: (a: Action) => Result | null;
+  onEnergy: () => void;
 }) {
-  const theme = useCityTheme();
   return (
-    <View style={{ gap: 12 }}>
-      <Label title size={23}>
+    <DesignContent end={storeKitTestEnabled ? 4600 : 2220}>
+      <DesignText rect={[90, 740, 1026, 108]} size={66} bold align="center">
         Gezginin Kesesi
-      </Label>
-      <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-        <Sprite kind="icons" index={6} size={36} />
-        <Label title>{save.gold}</Label>
-        <Sprite kind="icons" index={7} size={34} />
-        <Label title>{save.gems}</Label>
-      </View>
-      {exchanges.map((offer) => (
-        <PaperCard key={offer.id}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
-            <View
-              style={{
-                width: 88,
-                height: 88,
-                borderRadius: 18,
-                backgroundColor: theme.paperLight,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Sprite
-                kind="icons"
-                index={offer.id === exchanges[0]?.id ? 5 : 6}
-                size={65}
-              />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Label title size={22}>
-                {offer.title}
-              </Label>
-              <ActionButton
-                testID={"exchange-" + offer.id}
-                text={`${offer.gems ? offer.gems + " elmas" : offer.gold + " altın"} · Al`}
-                onPress={() => dispatch({ type: "exchange", id: offer.id })}
-              />
-            </View>
-          </View>
-        </PaperCard>
-      ))}
-      {storeKitTestEnabled ? (
-        <TestStore />
-      ) : (
-        <Label size={12}>
-          {testFlightBeta
-            ? "Bu betada gerçek para ile satın alma kapalıdır. Altın ve elmasla oyun içi paketleri deneyebilirsin."
-            : "Gerçek para paketleri yakında."}
-        </Label>
+      </DesignText>
+      <DesignText rect={[90, 860, 1026, 85]} size={44} bold align="center">
+        {`${save.gold.toLocaleString("tr-TR")} altın       ${save.gems} elmas`}
+      </DesignText>
+      {exchanges.map((offer, i) => {
+        const y = 990 + i * 420;
+        return (
+          <Fragment key={offer.id}>
+            <PaperCard designRect={[90, y, 1026, 380]} />
+            <ChromeSprite
+              index={offer.energy ? 5 : 6}
+              rect={[125, y + 65, 250, 250]}
+            />
+            <DesignText rect={[410, y + 45, 660, 120]} size={68} bold>
+              {offer.title}
+            </DesignText>
+            <ActionButton
+              designRect={[410, y + 210, 660, 132]}
+              testID={"exchange-" + offer.id}
+              text={`${offer.gems ? offer.gems + " elmas" : offer.gold + " altın"} · Al`}
+              onPress={() => dispatch({ type: "exchange", id: offer.id })}
+            />
+          </Fragment>
+        );
+      })}
+      <DesignText rect={[114, 1850, 990, 120]} size={38} align="center">
+        Gerçek para satışı bu sürümde kapalı.
+      </DesignText>
+      <ActionButton
+        designRect={[90, 2030, 1026, 132]}
+        text="Enerji hediyesi"
+        tone="secondary"
+        onPress={onEnergy}
+      />
+      {storeKitTestEnabled && (
+        <DesignBox rect={[90, 2300, 1026, 2200]}>
+          <TestStore />
+        </DesignBox>
       )}
-    </View>
+    </DesignContent>
   );
 }

@@ -12,3 +12,10 @@ mobile/android/
 !.env.example
 # Repeated full-resolution QA captures stay local; manifests and selected samples are versioned.
 docs/verification/2026-11-18-city-theme/pass-*/*.png
+
+# Offline previews and invalid v1 target captures are local audit artifacts.
+assets/references/device-v*/png/
+assets/references/device-v1/native/*.png
+# Recreated from versioned approved sources by tools/design-reference/package_native.py.
+mobile/qa/reference/inputs/
+**/__pycache__/

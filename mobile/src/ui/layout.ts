@@ -6,14 +6,18 @@ export function fitSquareBoard(
   bottom: number,
   pixels: number,
 ) {
-  const scale = width / 390;
-  const navTop = height - bottom - 59;
-  const frameInset = Math.round(7 * scale * pixels) / pixels;
+  const scale = width / 1206;
+  const navTop = height - bottom - 160 * scale;
+  const frameInset = Math.round(24 * scale * pixels) / pixels;
   const cell =
     Math.floor(
       Math.min(
-        (width - 24 * scale - 2 * frameInset) / 6,
-        (navTop - 8 - top - 184 * scale - 2 * frameInset) / 9,
+        164 * scale,
+        (navTop -
+          36 * scale -
+          Math.max(800 * scale, top + 180 * scale) -
+          2 * frameInset) /
+          9,
       ) * pixels,
     ) / pixels;
   const boardWidth = cell * 6 + frameInset * 2;
@@ -21,7 +25,7 @@ export function fitSquareBoard(
     cell,
     frameInset,
     boardWidth,
-    boardTop: navTop - 8 - (cell * 9 + frameInset * 2),
+    boardTop: navTop - 36 * scale - (cell * 9 + frameInset * 2),
     navTop,
   };
 }
