@@ -27,7 +27,7 @@ export const cloudSync = createCloudSyncController({
     gameStore.get().ready &&
     !gameStore.get().review &&
     !gameStore.get().save.testOnly &&
-    !deletionStore.get().hasJournal,
+    !deletionStore.get(),
   isGuest: (owner) =>
     accountStore.get().user?.id === owner &&
     accountStore.get().user?.is_anonymous === true,
@@ -92,7 +92,7 @@ export function startCloudSync() {
   const accountChanged = () => {
     const account = accountStore.get();
     const next =
-      account.ready && !account.busy && !deletionStore.get().hasJournal
+      account.ready && !account.busy && !deletionStore.get()
         ? (account.user?.id ?? null)
         : null;
     if (next !== owner) {
@@ -102,8 +102,14 @@ export function startCloudSync() {
   };
   const unsubAccount = accountStore.subscribe(accountChanged);
   const unsubDeletion = deletionStore.subscribe(accountChanged);
+  let observed = gameStore.get();
   const unsubGame = gameStore.subscribe(() => {
-    dirty = true;
+    const next = gameStore.get();
+    const changed = next.save !== observed.save;
+    const becameReady = next.ready && !observed.ready;
+    observed = next;
+    if (!changed && !becameReady) return;
+    if (changed) dirty = true;
     if (
       gameStore.get().ready &&
       owner &&
@@ -111,7 +117,7 @@ export function startCloudSync() {
       !cloudSync.get().busy
     )
       void cloudSync.retry();
-    else schedule();
+    else if (dirty) schedule();
   });
   const unsubNetwork = NetInfo.addEventListener((network) => {
     if (

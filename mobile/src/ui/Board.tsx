@@ -449,14 +449,14 @@ export const Board = memo(function Board({
       touch.current = null;
       return;
     }
-    const { pageX, pageY, locationX, locationY } = event.nativeEvent;
+    const { pageX, pageY, locationX, locationY, timestamp } = event.nativeEvent;
     touch.current = {
       index,
       pageX,
       pageY,
       localX: (index % columns) * cellWidth + locationX,
       localY: Math.floor(index / columns) * cellHeight + locationY,
-      startedAt: Date.now(),
+      startedAt: timestamp,
       tile: board[index] ?? null,
       moving: false,
     };
@@ -498,7 +498,7 @@ export const Board = memo(function Board({
       if (result?.kind === "merge" || result?.kind === "move")
         clearDrag(epoch.current);
       else returnToSource();
-    } else if (input.tile && Date.now() - input.startedAt >= 450) {
+    } else if (input.tile && event.nativeEvent.timestamp - input.startedAt >= 450) {
       onInfo(input.index);
     } else {
       onTap(input.index);

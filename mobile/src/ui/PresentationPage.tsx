@@ -35,7 +35,6 @@ export function PresentationPage({
   dispatch: (a: Action) => Result | null;
 }) {
   const [choice, setChoice] = useState<"device" | "cloud" | null>("device");
-  const [consent, setConsent] = useState(false);
   const noop = () => {};
   const product = (group: number, tier: number) =>
     producers[group]!.products[tier]!.id;
@@ -108,6 +107,7 @@ export function PresentationPage({
             dispatch={dispatch}
             model={{
               registered: view === "account-registered",
+              guestDeletionAvailable: false,
               name: view === "account-registered" ? "Deniz Kaya" : undefined,
               email:
                 view === "account-registered" ? "deniz@example.com" : undefined,
@@ -116,8 +116,10 @@ export function PresentationPage({
               language: "tr",
               languageError: false,
               blocked: false,
+              accountBusy: false,
               connectionEnabled: true,
               facebookEnabled: true,
+              facebookVisible: true,
               ready: true,
               error: view === "account-error",
             }}
@@ -185,12 +187,7 @@ export function PresentationPage({
         ) : view === "account-deletion" ? (
           <AccountDeletionView
             anonymous={false}
-            providers={["apple"]}
-            confirmed={consent}
-            canVerify={consent}
             canDelete={false}
-            onConsent={() => setConsent(!consent)}
-            onVerify={noop}
             onDelete={noop}
             onCancel={close}
           />

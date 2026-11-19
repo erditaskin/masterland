@@ -91,7 +91,7 @@ test("Yalıkoru exercises the harbor board in a transient preview", () => {
   );
   const result = transition(fixture, { type: "move", from: 19, to: 20 }, now);
   assert.equal(result.kind, "merge");
-  assert.equal(city(result.state).board[20]?.item, "item168");
+  assert.equal(city(result.state).board[20]?.item, "item199");
 });
 
 test("all three standard city boards suggest their nearest mergeable pair", () => {
@@ -234,4 +234,57 @@ test("new town review boards share five producer chains and retain their boards 
       delivery.state.cities[cityID]?.board,
     );
   }
+});
+
+test("Atlas cities ship all 113 product slots and every adjacent merge tier", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { contentText } = await import("../src/i18n/locale");
+  const scenarios = [
+    ["yalikoru", [8, 8, 7, 8, 8]],
+    ["demirdere", [7, 7, 7, 8, 8]],
+    ["ipekyolu", [8, 7, 8, 7, 7]],
+  ] as const;
+  const productIDs = new Set<string>();
+  const now = 1794996000000;
+  for (const [view, tiers] of scenarios) {
+    const save = presentationFixture(now, false, view);
+    const groups = cityProducers(save);
+    const artwork = JSON.parse(
+      readFileSync(
+        new URL(`../assets/art/${view}/item-bounds.json`, import.meta.url),
+        "utf8",
+      ),
+    ) as Record<string, number[]>;
+    assert.deepEqual(
+      groups.map((group) => group.products.length),
+      tiers,
+    );
+    for (const producer of groups) {
+      assert.notEqual(
+        contentText(producer.id + "_name", "tr"),
+        producer.id + "_name",
+      );
+      assert.notEqual(
+        contentText(producer.id + "_name", "en"),
+        producer.id + "_name",
+      );
+      for (const [index, item] of producer.products.entries()) {
+        assert(!productIDs.has(item.id), item.id);
+        productIDs.add(item.id);
+        const key = item.id + "_name";
+        assert.notEqual(contentText(key, "tr"), key);
+        assert.notEqual(contentText(key, "en"), key);
+        assert(artwork[item.id]?.[2] && artwork[item.id]?.[3], item.id);
+        const fresh = structuredClone(save);
+        city(fresh).board.fill(null);
+        city(fresh).board[0] = { id: "a", item: item.id };
+        city(fresh).board[1] = { id: "b", item: item.id };
+        const result = transition(fresh, { type: "move", from: 0, to: 1 }, now);
+        const next = producer.products[index + 1];
+        assert.equal(result.kind, next ? "merge" : "blocked", item.id);
+        assert.equal(city(result.state).board[1]?.item, next?.id ?? item.id);
+      }
+    }
+  }
+  assert.equal(productIDs.size, 113);
 });

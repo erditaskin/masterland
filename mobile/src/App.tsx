@@ -9,9 +9,8 @@ import { useCloudSyncPrompt } from "./ui/useCloudSyncPrompt";
 import { startCloudSync } from "./account/cloudSync";
 import { IdleHint } from "./ui/IdleHint";
 import { cityScenes } from "./ui/cityScenes";
-import { DeletionRecovery } from "./ui/DeletionRecovery";
-import { deletionStore } from "./account/deletion";
-import { energyAds } from "./ads/service";
+import { accountStore } from "./account/auth";
+import { adsConfig, energyAds } from "./ads/service";
 import { I18nText as Text } from "./ui/I18nText";
 import { languageStore } from "./i18n/locale";
 import { loadLanguage } from "./i18n/preferences";
@@ -127,7 +126,6 @@ function Game({
 }) {
   useEffect(() => startCloudSync(), []);
   useCloudSyncPrompt();
-  const [deletionPreview, setDeletionPreview] = useState(false);
   const [presentation, setPresentation] = useState<string | null>(null);
   const language = useSyncExternalStore(
     languageStore.subscribe,
@@ -138,10 +136,16 @@ function Game({
   }, []);
   const snapshot = useSyncExternalStore(gameStore.subscribe, gameStore.get),
     { save, ready, error, result, revision, review } = snapshot;
+  const guestInitialized = useRef(false);
   useEffect(() => {
-    if (ready && !review) {
+    if (!ready) return;
+    if (!review || (testModeEnabled && adsConfig.testAds))
       void energyAds.start();
-      void deletionStore.recover();
+    if (!review && !guestInitialized.current) {
+      guestInitialized.current = true;
+      void accountStore.start().then(async () => {
+        if (!accountStore.get().user) await accountStore.ensureGuest();
+      });
     }
   }, [ready, review]);
   const { width, height } = useWindowDimensions(),
@@ -221,12 +225,6 @@ function Game({
           process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
         ),
       );
-      setDeletionPreview(
-        testModeEnabled &&
-          !testFlightBeta &&
-          !productionRelease &&
-          Boolean(url?.includes("deletion-recovery-review")),
-      );
       const presentation = presentationReview(
         incoming,
         testModeEnabled,
@@ -294,9 +292,6 @@ function Game({
           process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL,
         ),
       );
-      setDeletionPreview(
-        testModeEnabled && url.includes("deletion-recovery-review"),
-      );
       if (testModeEnabled && url.includes("milestone-review")) {
         setPage(null);
         setSelected(null);
@@ -326,8 +321,6 @@ function Game({
     const sub = AppState.addEventListener("change", (state) => {
       if (state === "active") {
         gameStore.dispatch({ type: "tick" });
-        if (gameStore.get().ready && !gameStore.get().review)
-          void deletionStore.recover();
       }
     });
     return () => sub.remove();
@@ -424,6 +417,24 @@ function Game({
     },
     [selected, move, select],
   );
+  const deliverOrder = useCallback(
+    (id: string) => {
+      const current = gameStore.get().save;
+      const order = orders(current).find((o) => o.id === id);
+      if (!order) return;
+      if (
+        order.requirements.every(
+          (r) => count(current, r.item_id) >= r.quantity,
+        )
+      ) {
+        const outcome = dispatch({ type: "deliver", id });
+        if (outcome?.kind === "reward")
+          lastOrderDeliveryAt.current = Date.now();
+      } else if (Date.now() - lastOrderDeliveryAt.current > 400)
+        open({ kind: "order-guide", id });
+    },
+    [dispatch, open],
+  );
   const top = Math.max(insets.top, 20);
   const layout = fitReferenceBoard(
     width,
@@ -515,6 +526,7 @@ function Game({
         {!page && (
           <>
             <BoardChrome
+              language={language}
               producerOffset={layout.producerOffset}
               height={height}
               width={width}
@@ -523,21 +535,7 @@ function Game({
               dispatch={dispatch}
               open={open}
               onPowerOpen={showPowerMenu}
-              onDeliver={(id) => {
-                const current = gameStore.get().save;
-                const order = orders(current).find((o) => o.id === id);
-                if (!order) return;
-                if (
-                  order.requirements.every(
-                    (r) => count(current, r.item_id) >= r.quantity,
-                  )
-                ) {
-                  const outcome = dispatch({ type: "deliver", id });
-                  if (outcome?.kind === "reward")
-                    lastOrderDeliveryAt.current = Date.now();
-                } else if (Date.now() - lastOrderDeliveryAt.current > 400)
-                  open({ kind: "order-guide", id });
-              }}
+              onDeliver={deliverOrder}
             />
             <View
               style={{
@@ -638,6 +636,7 @@ function Game({
       ) : (
         page && (
           <Pages
+            language={language}
             page={page}
             save={save}
             width={width}
@@ -703,7 +702,6 @@ function Game({
           reduced={reduced || save.reducedMotion}
         />
       )}
-      <DeletionRecovery preview={deletionPreview} />
       {review && !presentation && (
         <Text
           testID="visualReviewMarker"

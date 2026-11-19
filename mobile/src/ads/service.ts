@@ -289,6 +289,7 @@ export const energyAds = {
     if (!snapshot.canRequestAds) await updateConsent();
     await recoverVerifiedRewards();
   },
+  refreshConsent: () => updateConsent(),
   privacy: () => updateConsent(true),
   load: (target?: { cityID: string; producerID: string }) => {
     if (loadJob) return loadJob;

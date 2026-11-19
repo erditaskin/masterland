@@ -206,3 +206,12 @@ test("OAuth return requires exact state and rejects duplicates, fragments and cr
   ])
     assert.throws(() => oauthCode(url, base, "expected"));
 });
+
+test("sign-out succeeds when the server has already invalidated the session", async () => {
+  const f = setup();
+  await f.client.createGuest("request");
+  f.respond(async () => Response.json({}, { status: 401 }));
+  await f.client.signOut();
+  assert.equal(await f.client.getSession(), null);
+  assert.equal(f.values.has("session"), false);
+});

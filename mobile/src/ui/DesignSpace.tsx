@@ -164,12 +164,14 @@ export const DesignImage = memo(function DesignImage({
   rect,
   crop,
   fit = false,
+  testID,
   radius = 0,
 }: {
   source: ImageSourcePropType;
   rect: DesignRect;
   crop?: DesignRect;
   fit?: boolean;
+  testID?: string;
   radius?: number;
 }) {
   const { scale } = useDesignSpace();
@@ -188,6 +190,7 @@ export const DesignImage = memo(function DesignImage({
       style={[style, { overflow: "hidden", borderRadius: radius * scale }]}
     >
       <View
+        testID={testID}
         style={{
           position: "absolute",
           left: ((w - dw) * scale) / 2,

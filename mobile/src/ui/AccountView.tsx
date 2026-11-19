@@ -10,6 +10,7 @@ import { AdPrivacyControl } from "./EnergyAdPanel";
 
 export interface AccountViewModel {
   registered: boolean;
+  guestDeletionAvailable: boolean;
   name?: string;
   providers?: string;
   email?: string;
@@ -17,8 +18,11 @@ export interface AccountViewModel {
   language: "tr" | "en";
   languageError: boolean;
   blocked: boolean;
+  accountDeleted?: boolean;
+  accountBusy: boolean;
   connectionEnabled: boolean;
   facebookEnabled: boolean;
+  facebookVisible: boolean;
   ready: boolean;
   error: boolean;
 }
@@ -64,7 +68,9 @@ export function AccountView({
       model.facebookEnabled,
     ],
   ] as const;
-  const status = model.error
+  const status = model.accountDeleted
+    ? tx("Hesabın başarıyla silindi.", "Your account was deleted.")
+    : model.error
     ? tx(
         "Bağlantı tamamlanamadı. Tekrar deneyebilirsin.",
         "Could not connect. Try again.",
@@ -94,12 +100,19 @@ export function AccountView({
           })}
           <AppButton
             designRect={[90, 1092, 1026, 108]}
-            text={tx("Oturumu kapat", "Sign out")}
+            text={model.accountBusy
+              ? tx("Oturum işleniyor…", "Updating session…")
+              : tx("Oturumu kapat", "Sign out")}
             tone="secondary"
             testID="accountSignOut"
-            disabled={model.blocked}
+            disabled={model.accountBusy}
             onPress={actions.signOut}
           />
+          {model.error && (
+            <DesignText rect={[90, 1203, 1026, 43]} size={32} fit align="center">
+              {status}
+            </DesignText>
+          )}
         </>
       ) : (
         <>
@@ -115,7 +128,7 @@ export function AccountView({
           >
             {status}
           </DesignText>
-          {providers.map(([id, label, enabled], index) => (
+          {providers.filter(([id]) => id !== "facebook" || model.facebookVisible).map(([id, label, enabled], index) => (
             <DesignBox key={id} rect={[90, 867 + index * 160, 1026, 146]}>
               <ProviderButton
                 provider={id}
@@ -176,7 +189,7 @@ export function AccountView({
         <AdPrivacyControl />
         {model.languageError && <Label>Dil tercihi kaydedilemedi.</Label>}
       </DesignBox>
-      {model.registered && (
+      {(model.registered || model.guestDeletionAvailable) && (
         <AppButton
           designRect={[90, settingsY + 744, 1026, 112]}
           text={tx("Hesabımı sil", "Delete my account")}

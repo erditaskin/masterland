@@ -179,17 +179,6 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(cell(0).frame,board)
         shot("belenyaka-board-refresh")
     }
-    func testDeletionRecoveryKeepsRetryInsideParchment() {
-        app.open(URL(string:"masterland://deletion-recovery-review")!)
-        let panel=app.descendants(matching:.any).matching(identifier:"deletionRecovery").firstMatch
-        XCTAssertTrue(panel.waitForExistence(timeout:10))
-        let retry=app.buttons["retryDeletionRecovery"]
-        XCTAssertTrue(retry.isHittable)
-        XCTAssertTrue(panel.frame.contains(retry.frame))
-        shot("deletion-offline-recovery-parchment")
-        app.open(URL(string:"masterland://qa-reset")!)
-        XCTAssertFalse(panel.exists)
-    }
     func testControlledAcceptanceHasNoCheatsAndOnlyPreviewAds() {
         for id in ["testEnergyFill","testGoldAdd","testGemsAdd","testLevelUp"] { XCTAssertFalse(app.buttons[id].exists) }
         app.buttons["stamina"].tap()
@@ -300,13 +289,13 @@ final class MasterlandTests:XCTestCase {
     }
     func testPrepareGuestDeletionConfirmation() {
         openGuestDeletionConfirmation()
-        let consent=app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
-        XCTAssertTrue(consent.exists)
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch.exists)
+        XCTAssertFalse(app.buttons["checkDeletionStatus"].exists)
         let erase=app.buttons["confirmAccountDeletion"]
         for _ in 0..<3 where !erase.isHittable {app.scrollViews.firstMatch.swipeUp()}
         XCTAssertTrue(erase.exists)
-        XCTAssertFalse(erase.isEnabled)
-        shot("guest-deletion-awaiting-explicit-approval")
+        XCTAssertTrue(erase.isEnabled)
+        shot("guest-deletion-ready")
     }
     func testApprovedGuestDeletionEndToEnd() throws {
         guard ProcessInfo.processInfo.environment["MASTERLAND_APPROVED_GUEST_DELETION"] == "true" else {
@@ -317,16 +306,16 @@ final class MasterlandTests:XCTestCase {
         XCTAssertEqual(app.buttons["stamina"].label,"99")
         if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()}
         openGuestDeletionConfirmation()
-        let consent=app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
-        for _ in 0..<3 where !consent.isHittable {app.scrollViews.firstMatch.swipeUp()}
-        XCTAssertTrue(consent.isHittable);consent.tap()
         let erase=app.buttons["confirmAccountDeletion"]
         for _ in 0..<3 where !erase.isHittable {app.scrollViews.firstMatch.swipeUp()}
         XCTAssertTrue(erase.isEnabled);erase.tap()
-        let deleted=app.staticTexts.containing(NSPredicate(format:"label CONTAINS %@","Hesabın silindi")).firstMatch
-        XCTAssertTrue(deleted.waitForExistence(timeout:40))
+        let status=app.staticTexts["accountConnectionStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout:40))
+        XCTAssertTrue(status.label.contains("başarıyla silindi"))
+        for provider in ["signInApple","signInGoogle","signInFacebook"] {
+            XCTAssertTrue(app.buttons[provider].exists)
+        }
         shot("approved-guest-deletion-completed")
-        if app.buttons["dismissReward"].exists {app.buttons["dismissReward"].tap()}
         if app.buttons["closeAccount"].exists {app.buttons["closeAccount"].tap()}
         XCTAssertEqual(app.buttons["stamina"].label,"100")
         app.terminate();app.launch()
@@ -335,7 +324,8 @@ final class MasterlandTests:XCTestCase {
         XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"deletionRecovery").firstMatch.exists)
         app.buttons["profile-menu"].tap()
         XCTAssertTrue(app.descendants(matching:.any).matching(identifier:"accountPanel").firstMatch.waitForExistence(timeout:10))
-        XCTAssertFalse(app.buttons["openAccountDeletion"].exists)
+        XCTAssertTrue(app.buttons["signInGoogle"].exists)
+        XCTAssertFalse(app.buttons["accountSignOut"].exists)
         shot("approved-guest-deletion-persists-after-relaunch")
     }
     func testVerifiedAbandonedAdNeverCredits() {
@@ -968,7 +958,7 @@ final class MasterlandTests:XCTestCase {
         let scroll=app.scrollViews.firstMatch;scroll.swipeUp();scroll.swipeUp()
         XCTAssertFalse(app.buttons["com.erditaskin.masterland.gems30"].exists)
         XCTAssertFalse(app.buttons["com.erditaskin.masterland.gold2500"].exists)
-        XCTAssertTrue(app.staticTexts["Gerçek para paketleri yakında."].exists)
+        XCTAssertTrue(app.staticTexts["Gerçek para satışı bu sürümde kapalı."].exists)
         shot("production-market-real-purchases-disabled")
         app.buttons["tab-board"].tap()
         app.buttons["profile-menu"].tap()
@@ -1083,6 +1073,21 @@ final class MasterlandPresentationTests:XCTestCase {
         image.lifetime = .keepAlways
         add(image)
     }
+    func testPhysicalReleaseNavigationSmoke() {
+        let board = app.descendants(matching: .any).matching(identifier: "mergeBoard").firstMatch
+        XCTAssertTrue(board.waitForExistence(timeout: 25))
+        for route in ["tab-collection", "tab-cities", "tab-market", "allOrders", "profile-menu"] {
+            let entry = app.buttons[route]
+            XCTAssertTrue(entry.isHittable, route)
+            entry.tap()
+            let close = app.buttons["closePage"]
+            XCTAssertTrue(close.waitForExistence(timeout: 8), route)
+            close.tap()
+            XCTAssertTrue(board.waitForExistence(timeout: 8), route)
+        }
+        let first = app.buttons["cell-0"], last = app.buttons["cell-53"]
+        XCTAssertTrue(first.isHittable && last.isHittable)
+    }
     func testConnectedActionsKeepTheirGameState() {
         app.open(URL(string:"masterland://presentation-review/storage")!)
         XCTAssertTrue(app.buttons["storage-1"].waitForExistence(timeout:30))
@@ -1112,7 +1117,7 @@ final class MasterlandPresentationTests:XCTestCase {
     func testLivePagesAtReferenceFixture() {
         captureViews(["collection", "storage", "storage-board-full", "market", "board", "cities", "account-guest", "account-registered", "collection-chain", "item", "producer-cooldown", "orders", "order-guide", "achievements", "achievement", "cloud-choice", "account-deletion", "energy"])
     }
-    func testReadableAccountFailureAndDeletionConsent() {
+    func testReadableAccountFailureAndDeletionAction() {
         app.open(URL(string:"masterland://presentation-review/account-error")!)
         let status = app.staticTexts["accountConnectionStatus"]
         XCTAssertTrue(status.waitForExistence(timeout:30))
@@ -1123,10 +1128,7 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertTrue(warning.label.contains("geri alınamaz"))
         let deletion = app.buttons["confirmAccountDeletion"]
         XCTAssertFalse(deletion.isEnabled)
-        let consent = app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch
-        XCTAssertTrue(consent.exists)
-        consent.tap()
-        XCTAssertFalse(deletion.isEnabled)
+        XCTAssertFalse(app.descendants(matching:.any).matching(identifier:"confirmAccountDeletionConsent").firstMatch.exists)
     }
     func testApprovedSixColumnBoard() {
         app.open(URL(string:"masterland://presentation-review/board")!)
@@ -1241,14 +1243,14 @@ final class MasterlandPresentationTests:XCTestCase {
     }
 
     func testYalikoruBoardStandardParity() {
-        checkBoardStandard("yalikoru", readyOrder:"city3-repeat-0-0", readyCells:[0,5,14,19,20,35,36,48,51],
-                           partialCell:7, from:19, to:20, blocked:0, mergedLabel:"Balık ağı")
+        checkBoardStandard("yalikoru", readyOrder:"city3-repeat-0-0", readyCells:[0,6,8,9,14,28,33,35,48,51],
+                           partialCell:19, from:19, to:20, blocked:0, mergedLabel:"Olta kancası")
     }
 
     func testDemirdereAndIpekyoluStandardPreview() {
         let scenarios = [
-            ("demirdere", "city4", "Demirdere", 18, "Cevher arabası", "profession8"),
-            ("ipekyolu", "city5", "İpekyolu", 23, "İpek topu", "profession10"),
+            ("demirdere", "city4", "Demirdere", 18, "Bakır cevheri", "profession8"),
+            ("ipekyolu", "city5", "İpekyolu", 23, "Keten demeti", "profession10"),
         ]
         let elements = app.descendants(matching:.any)
         for (view, cityID, city, first, merged, profession) in scenarios {
@@ -1321,6 +1323,130 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertEqual(from.label,"Boş hücre")
     }
 
+
+    func testRewardedAdsUseTheSharedCityPages() {
+        for view in ["board", "badinca", "yalikoru", "demirdere", "ipekyolu"] {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            XCTAssertTrue(app.buttons["stamina"].waitForExistence(timeout:20))
+            app.buttons["stamina"].tap()
+            let watch = app.buttons["watchEnergyAd"]
+            let ready = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+                watch.exists && watch.label.contains("enerji")
+            },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:30),.completed)
+            capture(view + "-energy-ad")
+        }
+    }
+
+    func testLocalCityAdsEarnEnergyAndRefreshProducer() {
+        func watch(_ id: String) {
+            let button = app.buttons[id]
+            let ready = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in
+                button.exists && button.isHittable && button.isEnabled
+            },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:35),.completed)
+            button.tap()
+            let end = app.buttons["Close"].firstMatch
+            let video = app.buttons["Close Advertisement"].firstMatch
+            let presented = XCTNSPredicateExpectation(predicate:NSPredicate { _,_ in end.exists || video.exists },object:nil)
+            XCTAssertEqual(XCTWaiter.wait(for:[presented],timeout:45),.completed)
+            sleep(35)
+            if end.exists && end.isHittable { end.tap() }
+            else if video.exists && video.isHittable {
+                video.tap()
+                if end.waitForExistence(timeout:5) && end.isHittable { end.tap() }
+            }
+        }
+        app.open(URL(string:"masterland://presentation-review/yalikoru")!)
+        let energy = app.buttons["stamina"]
+        XCTAssertTrue(energy.waitForExistence(timeout:20))
+        let expected = String((Int(energy.label) ?? 99) + 25)
+        energy.tap()
+        watch("watchEnergyAd")
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(energy.label,expected)
+        app.open(URL(string:"masterland://presentation-review/demirdere")!)
+        let producer = app.buttons["producer22"]
+        XCTAssertTrue(producer.waitForExistence(timeout:20))
+        let before = energy.label
+        producer.tap()
+        XCTAssertTrue(app.buttons["refillProducerGems"].waitForExistence(timeout:5))
+        watch("watchProducerAd")
+        XCTAssertFalse(app.buttons["refillProducerGems"].exists)
+        app.buttons["closePage"].tap()
+        XCTAssertEqual(energy.label,before)
+        XCTAssertFalse(producer.label.contains(":"))
+    }
+
+    func testProducerDetailPortraitsMatchShelfInEveryCity() {
+        for (view, id) in [
+            ("board", "producer1"), ("badinca", "producer14"),
+            ("yalikoru", "producer17"), ("demirdere", "producer22"), ("ipekyolu", "producer27"),
+        ] {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            let producer = app.buttons[id]
+            XCTAssertTrue(producer.waitForExistence(timeout:20))
+            let elements = app.descendants(matching:.any)
+            let shelf = elements.matching(identifier:"shelf-face-" + id).firstMatch.frame
+            producer.press(forDuration:0.7)
+            let details = app.buttons["powerProductDetails"]
+            XCTAssertTrue(details.waitForExistence(timeout:5))
+            details.tap()
+            let art = elements.matching(identifier:"detail-producer-face").firstMatch
+            XCTAssertTrue(art.waitForExistence(timeout:5))
+            XCTAssertEqual(art.frame.width,shelf.width,accuracy:0.5)
+            XCTAssertEqual(art.frame.height,shelf.height,accuracy:0.5)
+            XCTAssertEqual(art.frame.midX,app.frame.midX,accuracy:1)
+        }
+    }
+
+    func testAtlasProductSlotsInAllThreeCities() {
+        let towns = [
+            ("yalikoru", [
+                ("3", [15, 16, 17, 18, 19, 20, 195, 196]),
+                ("4", [21, 22, 23, 24, 25, 26, 197, 198]),
+                ("15", [167, 199, 200, 168, 201, 202, 203]),
+                ("16", [204, 205, 206, 169, 207, 208, 209, 210]),
+                ("17", [170, 211, 212, 213, 214, 215, 216, 217])
+            ]),
+            ("demirdere", [
+                ("18", [218, 173, 219, 220, 221, 222, 223]),
+                ("19", [224, 225, 226, 227, 228, 229, 230]),
+                ("20", [176, 246, 231, 179, 232, 233, 234]),
+                ("21", [235, 236, 237, 238, 239, 175, 180, 240]),
+                ("22", [241, 242, 243, 244, 245, 174, 247, 248])
+            ]),
+            ("ipekyolu", [
+                ("23", [249, 250, 251, 183, 252, 189, 253, 254]),
+                ("24", [255, 256, 185, 257, 258, 259, 260]),
+                ("25", [261, 262, 263, 264, 265, 266, 267, 268]),
+                ("26", [269, 270, 271, 272, 273, 274, 275]),
+                ("27", [276, 277, 278, 279, 280, 281, 282])
+            ])
+        ]
+        for (view, chains) in towns {
+            app.open(URL(string:"masterland://presentation-review/\(view)")!)
+            let first = app.buttons["producer" + chains[0].0]
+            XCTAssertTrue(first.waitForExistence(timeout:20))
+            for (index, chain) in chains.enumerated() {
+                let producer = app.buttons["producer" + chain.0]
+                producer.press(forDuration:0.7)
+                let details = app.buttons["powerProductDetails"]
+                XCTAssertTrue(details.waitForExistence(timeout:5), chain.0)
+                details.tap()
+                XCTAssertTrue(app.buttons["closePage"].waitForExistence(timeout:5))
+                for item in chain.1 {
+                    let slot = app.buttons["product-slot-item\(item)"]
+                    XCTAssertTrue(slot.exists, "\(view) item\(item)")
+                    XCTAssertTrue(slot.label.contains("Açık"), slot.label)
+                }
+                if index == 0 || index == 4 { capture(view + "-producer" + chain.0 + "-atlas") }
+                app.buttons["tab-board"].tap()
+                XCTAssertTrue(producer.waitForExistence(timeout:5))
+            }
+        }
+    }
+
     func testSharedMarketAndAccountLayout() {
         for view in ["board", "badinca", "yalikoru", "demirdere", "ipekyolu"] {
             app.open(URL(string:"masterland://presentation-review/\(view)")!)
@@ -1353,6 +1479,43 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertLessThan(signOut.frame.maxY, app.descendants(matching:.any).matching(identifier:"setting-sound").firstMatch.frame.minY)
         XCTAssertFalse(app.buttons["signInApple"].exists)
         capture("shared-account-registered")
+    }
+
+    func testSharedOrderCardSurfacesAcrossFiveCities() {
+        for city in ["board", "badinca", "yalikoru", "demirdere", "ipekyolu"] {
+            app.open(URL(string: "masterland://presentation-review/\(city)")!)
+            let rail = app.descendants(matching: .any).matching(identifier: "orderRail").firstMatch
+            XCTAssertTrue(rail.waitForExistence(timeout: 15))
+            XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "order-")).firstMatch.isHittable)
+            let image = XCTAttachment(screenshot: rail.screenshot())
+            image.name = "order-rail-\(city)"
+            image.lifetime = .keepAlways
+            add(image)
+        }
+    }
+
+    func testAccountAdConsentRefreshShowsResult() {
+        XCTAssertTrue(app.buttons["profile-menu"].waitForExistence(timeout: 15))
+        app.buttons["profile-menu"].tap()
+        let privacy = app.buttons["adPrivacy"]
+        XCTAssertTrue(privacy.waitForExistence(timeout: 8))
+        for _ in 0..<3 where !privacy.isHittable { app.scrollViews.firstMatch.swipeUp() }
+        XCTAssertTrue(privacy.isHittable)
+        privacy.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "adPrivacyResult").firstMatch.waitForExistence(timeout: 20))
+    }
+
+    func testLiveAccountProviderButtonsAcceptTouches() {
+        app.buttons["profile-menu"].tap()
+        let google = app.buttons["signInGoogle"]
+        let status = app.staticTexts["accountConnectionStatus"]
+        XCTAssertTrue(google.waitForExistence(timeout: 10))
+        for id in ["signInGoogle", "signInFacebook"] {
+            let button = app.buttons[id]
+            XCTAssertTrue(button.isEnabled && button.isHittable, status.label)
+        }
+        google.tap()
+        XCTAssertTrue(app.otherElements["accountSigningIn"].waitForExistence(timeout: 5))
     }
 
     func testCityAchievementLocalization() {
@@ -1457,7 +1620,7 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertTrue(claim.waitForExistence(timeout:5))
         XCTAssertFalse(claim.isEnabled)
         app.buttons["tab-board"].tap()
-        let shipbuilding = app.buttons["order-city3-repeat-1-1"]
+        let shipbuilding = app.buttons["order-city3-repeat-1-2"]
         XCTAssertTrue(shipbuilding.waitForExistence(timeout:5))
         shipbuilding.tap()
         XCTAssertTrue(hud.label.contains("4 kazanım"))
@@ -1514,7 +1677,7 @@ final class MasterlandPresentationTests:XCTestCase {
         XCTAssertTrue(rope.label.contains("Balıkçı ipi"))
         rope.press(forDuration:0.1,thenDragTo:target)
         XCTAssertEqual(rope.label,"Boş hücre")
-        XCTAssertEqual(target.label,"Balık ağı")
+        XCTAssertEqual(target.label,"Olta kancası")
         app.buttons["tab-cities"].tap()
         XCTAssertTrue(app.buttons["jump-city3"].waitForExistence(timeout:5))
         capture("yalikoru-cities")

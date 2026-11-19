@@ -13,6 +13,7 @@ import {
   fresh,
   intro,
   level,
+  migrateCurrentSave,
   orders,
   producers,
   product,
@@ -227,6 +228,18 @@ test("the clean-start board rejects old 54-cell payloads", () => {
   const s = fresh(now);
   city(s).board = Array(54).fill(null);
   assert.equal(validateSave(s), false);
+});
+test("legacy 54-cell saves keep tile positions when expanded to the serialized board", () => {
+  const save = fresh(now);
+  delete save.boardLayoutVersion;
+  city(save).board = Array(54).fill(null);
+  city(save).board[53] = { id: "legacy", item: "item1" };
+  assert(validateSave(save));
+  const migrated = migrateCurrentSave(save, now);
+  assert(validateSave(migrated));
+  assert.equal(city(migrated).board.length, 63);
+  assert.deepEqual(city(migrated).board[53], city(save).board[53]);
+  assert.equal(city(migrated).board[54], null);
 });
 test("all 63 stationary input cells map correctly", () => {
   for (let i = 0; i < 63; i++)

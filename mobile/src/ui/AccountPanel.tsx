@@ -1,28 +1,29 @@
 import { AccountView } from "./AccountView";
 import { type Save, type Action, type Result } from "../game/engine";
-import { cloudSync } from "../account/cloudSync";
-import { deletionStore } from "../account/deletion";
+import { accountDeletionEnabled, deletionStore } from "../account/deletion";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { ActivityIndicator, View } from "react-native";
 import * as Apple from "expo-apple-authentication";
 import { accountStore, type LoginProvider } from "../account/auth";
-import { accountConfig } from "../account/client";
+import { accountConfig, facebookLoginVisible } from "../account/client";
 import { languageStore, accountText as tx } from "../i18n/locale";
 import { setLanguage } from "../i18n/preferences";
 import { Label } from "./Controls";
 
 export function AccountPanel({
+  accountDeleted,
   onClose,
   save,
   dispatch,
   onDeletion,
 }: {
+  accountDeleted?: boolean;
   onClose: () => void;
   save: Save;
   dispatch: (action: Action) => Result | null;
   onDeletion: () => void;
 }) {
-  const deletion = useSyncExternalStore(
+  const deleting = useSyncExternalStore(
     deletionStore.subscribe,
     deletionStore.get,
   );
@@ -34,7 +35,6 @@ export function AccountPanel({
     languageStore.subscribe,
     languageStore.get,
   );
-  const cloud = useSyncExternalStore(cloudSync.subscribe, cloudSync.get);
   const [signingIn, setSigningIn] = useState(false);
   const [appleAvailable, setAppleAvailable] = useState(false);
   const [languageError, setLanguageError] = useState(false);
@@ -71,9 +71,14 @@ export function AccountPanel({
   };
   if (signingIn) {
     return (
-      <View testID="accountSigningIn" style={{ marginTop: 14 }}>
-        <ActivityIndicator color="#315b31" style={{ marginVertical: 24 }} />
-        <Label>{tx("Giriş yapılıyor…", "Signing in…")}</Label>
+      <View
+        testID="accountSigningIn"
+        style={{ paddingVertical: 24, alignItems: "center", gap: 14 }}
+      >
+        <ActivityIndicator color="#315b31" />
+        <Label title size={20} style={{ textAlign: "center" }}>
+          {tx("Giriş yapılıyor…", "Signing in…")}
+        </Label>
       </View>
     );
   }
@@ -83,15 +88,20 @@ export function AccountPanel({
       dispatch={dispatch}
       model={{
         registered,
+        guestDeletionAvailable:
+          accountDeletionEnabled && account.user?.is_anonymous === true,
         name: typeof name === "string" ? name : undefined,
         providers,
         email: account.user?.email ?? undefined,
         appleAvailable,
         language,
         languageError,
-        blocked: account.busy || deletion.hasJournal || cloud.busy,
+        blocked: account.busy || deleting,
+        accountDeleted,
+        accountBusy: account.busy || deleting,
         connectionEnabled: accountConfig.enabled,
         facebookEnabled: accountConfig.facebookEnabled,
+        facebookVisible: facebookLoginVisible,
         ready: account.ready,
         error: !!account.error,
       }}

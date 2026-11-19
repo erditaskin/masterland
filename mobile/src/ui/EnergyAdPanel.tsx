@@ -1,5 +1,5 @@
 import { testModeEnabled } from "../game/testMode";
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { View } from "react-native";
 import { energyAds, adsConfig } from "../ads/service";
 import { accountText as tx, languageStore } from "../i18n/locale";
@@ -239,7 +239,17 @@ export function EnergyAdPanel({
 export function AdPrivacyControl() {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
+  const [result, setResult] = useState<"refreshed" | "saved" | "failed" | null>(null);
   if (!ad.enabled) return null;
+  const update = async () => {
+    setResult(null);
+    const openedPreferences = energyAds.get().privacyRequired;
+    await (openedPreferences ? energyAds.privacy() : energyAds.refreshConsent());
+    const current = energyAds.get();
+    setResult(
+      current.error === "consent" ? "failed" : openedPreferences ? "saved" : "refreshed",
+    );
+  };
   return (
     <View style={{ marginTop: 12 }}>
       <AppButton
@@ -247,14 +257,27 @@ export function AdPrivacyControl() {
         tone="secondary"
         disabled={ad.consentBusy}
         text={
-          ad.privacyRequired
+          ad.consentBusy
+            ? tx("Reklam izni kontrol ediliyor…", "Checking ad consent…")
+            : ad.privacyRequired
             ? tx("Reklam gizlilik tercihleri", "Ad privacy choices")
             : tx("Reklam izin bilgisini güncelle", "Refresh ad consent")
         }
         onPress={() => {
-          void (ad.privacyRequired ? energyAds.privacy() : energyAds.start());
+          void update();
         }}
       />
+      {result && (
+        <View accessibilityLiveRegion="polite" testID="adPrivacyResult">
+          <Label tone={result === "failed" ? "muted" : "success"} style={{ textAlign: "center" }}>
+            {result === "failed"
+              ? tx("Reklam izni güncellenemedi. Tekrar dene.", "Could not update ad consent. Try again.")
+              : result === "saved"
+                ? tx("Reklam tercihleri kaydedildi.", "Ad preferences saved.")
+                : tx("Reklam izin bilgisi güncellendi.", "Ad consent information refreshed.")}
+          </Label>
+        </View>
+      )}
     </View>
   );
 }

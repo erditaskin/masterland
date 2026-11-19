@@ -8,6 +8,7 @@ const intent = "00000000-0000-4000-8000-000000000002";
 function fixture(
   options: {
     consent?: boolean;
+    privacyRequired?: boolean;
     verified?: boolean;
     producerUnit?: boolean;
     testAds?: boolean;
@@ -22,7 +23,9 @@ function fixture(
     redeemed = false,
     credits = 0,
     shows = 0,
-    cancellations = 0;
+    cancellations = 0,
+    consentRefreshes = 0,
+    privacyForms = 0;
   const accountListeners = new Set<() => void>(),
     cloudListeners = new Set<() => void>();
   const events = new Map<string, () => void>();
@@ -35,10 +38,11 @@ function fixture(
       setRequestConfiguration: async () => {},
     }),
     AdsConsent: {
-      gatherConsent: async () => {},
+      gatherConsent: async () => { consentRefreshes++; },
+      showPrivacyOptionsForm: async () => { privacyForms++; },
       getConsentInfo: async () => ({
         canRequestAds: options.consent !== false,
-        privacyOptionsRequirementStatus: "none",
+        privacyOptionsRequirementStatus: options.privacyRequired ? "required" : "none",
       }),
     },
     AdsConsentPrivacyOptionsRequirementStatus: { REQUIRED: "required" },
@@ -167,6 +171,8 @@ function fixture(
     credits: () => credits,
     shows: () => shows,
     cancellations: () => cancellations,
+    consentRefreshes: () => consentRefreshes,
+    privacyForms: () => privacyForms,
     background: () => appStateChanged?.("background"),
     event: (event: string) => events.get(event)?.(),
     resync: () => {
@@ -215,6 +221,21 @@ test("closing an ad without earning grants nothing", async () => {
   await settle();
   assert.equal(f.credits(), 0);
   assert.equal(f.service.get().rewardPending, false);
+});
+test("manual privacy refresh checks consent even when ads are already permitted", async () => {
+  const f = fixture({ verified: false });
+  await f.service.start();
+  assert.equal(f.service.get().canRequestAds, true);
+  await f.service.refreshConsent();
+  assert.equal(f.consentRefreshes(), 2);
+  assert.equal(f.privacyForms(), 0);
+});
+test("the privacy action opens the native form when choices are required", async () => {
+  const f = fixture({ privacyRequired: true, verified: false });
+  await f.service.start();
+  assert.equal(f.service.get().privacyRequired, true);
+  await f.service.privacy();
+  assert.equal(f.privacyForms(), 1);
 });
 test("consent refusal prevents loading and showing immediately", async () => {
   const f = fixture({ consent: false, verified: false });

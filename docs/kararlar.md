@@ -690,3 +690,17 @@ Girişsiz hesap ekranı Apple, Google ve Facebook seçeneklerini aynı düzende 
 ## 19 Kasım 2026 — Demirdere ve İpekyolu oynanabilir önizlemeleri
 
 İki şehir, kullanıcının referansındaki beş üretici ve tema malzemeleriyle ortak şehir standardına bağlandı. İlk oynanabilir üretim zincirleri ile ürünler simülatör oturumunda etkin, normal oyunun yayın kilidi mevcut durumda kaldı. Yerel önizlemede iki şehrin tahtaları ayrı tutulur ve Şehirler listesinden geçiş yapılabilir. Meslekler ve birleşik unvanlar ortak veri üzerinden yönetilir.
+
+## 19 Kasım 2026 — Üç şehrin tam Atlas zincirleri
+
+Yalıkoru, Demirdere ve İpekyolu'ndaki kısa örnek zincirler Atlas Ağacı'nın 15 üretici ve 113 ürünlük tam sırasına taşındı. Eşleşen eski kimlikler korunur. TR/EN adları, görseller ve her birleştirme geçişi ortak katalogdan doğrulanır. Atlas ile Badınca Şekerleme Tezgâhı ve birleşik unvan koşulları arasındaki farklar şehir standardında kayıtlıdır.
+
+## 19 Kasım 2026 — Şehir standardında yerel reklam
+
+Onaylı Google test reklamı beş şehrin yerel standart ekranlarında oturumdan bağımsız çalışır. Enerji ve bekleyen üretici için aynı reklam servisi kullanılır. Hazır üreticiye tekrar reklam gösterilmez. Yerel iOS test komutu reklamı etkinleştirir; yayın bayrakları mevcut durumunu korur.
+
+### 19 Kasım 2026 — Hesap kapatma ve cihaz kaydı
+
+Hesap silme işlemi Masterland hesabını deaktif eder ve hesabın oturum, sağlayıcı eşlemesi, cihaz ve ilerleme verilerini kaldırır. Apple, Google ve Facebook yetkileri sağlayıcı tarafında korunur. Aynı sağlayıcıyla yeniden giriş yeni bir Masterland hesabı açar. Veritabanında normalleştirilmiş e-posta silinme işaretiyle birlikte benzersiz tutulur. Misafir ve kayıtlı Masterland hesaplarında kurulum UUID'si, işletim sistemi ve son görülme zamanı tutulur.
+
+Geçerli Masterland oturumuyla açılan silme ekranında uyarı ve tek kalıcı silme eylemi kalır. Sağlayıcıyla yeniden giriş ve ek onay kutusu kaldırılır.

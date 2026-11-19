@@ -70,3 +70,17 @@ Alt menünün görsel referansı Yalıkoru'dur. Belenyaka ve Badınca'da aynı a
 Demirdere'nin taş, demir ve bakır yüzeyleri ile İpekyolu'nun ahşap, mor kumaş ve pirinç yüzeyleri aynı standart yerleşime oturur. İki şehir 6 × 9 tahta, beş üretici, ortak kompakt durum bantları, ilan oranları, menü, market ve hesap akışını kullanır. Demirdere'de Madenci ve Demirci birleşince Metal Sanatkârı, İpekyolu'nda Terzi ve Tüccar birleşince İpek Taciri unvanı açılır.
 
 Yerel test oturumu `masterland://presentation-review/demirdere` veya `masterland://presentation-review/ipekyolu` bağlantısıyla açılır. İki şehir aynı önizleme oturumunda Şehirler menüsünden gezilir. Her şehrin tahtası geçişler arasında korunur. Üretim, teslim, ödül ve eşya değişiklikleri önizleme kaydında kalır.
+
+## Atlas zincirleri ve içerik karşılaştırması
+
+Yalıkoru, Demirdere ve İpekyolu'nun üretici ve ürün adları, iki dilde sıra ve basamak sayısı için web Atlas Ağacı esas alınır. Yerel katalogda sırasıyla 39, 37 ve 37 ürün bulunur. Zincir kimlikleri, oyuncuya görünen isimlerden bağımsızdır. Her basamak, aynı ortak birleştirme motorunda bir sonraki basamağa geçer ve her ürünün kendine ait alfa saydam görseli vardır.
+
+Atlas özetinde Yalıkoru'nun üçüncü kutusu Ağ Atölyesi, Demirdere'nin üçüncü kutusu Döküm Ocağı olarak geçer. Ayrıntılı ağaç ve uygulama Balıkçı Donanımı ile Demirci Donanımı adlarını kullanır. İpekyolu ayrıntılı ağaçta adsız kanonik kimlikle yer alır; mobildeki mevcut `city5` korunur.
+
+Badınca'nın Şekerleme Tezgâhı oyunda yedi, Atlas Ağacı'nda dokuz basamaktır. Diğer dört Badınca zinciri ve Belenyaka'nın beş zinciri ayrıntılı ağaçla eşleşir. Şef ve Denizci unvanlarının gereksinimleri mobilde daha önce kararlaştırılan bütün yerel meslekler kuralına bağlıdır. Atlas genelindeki Şef, Fırıncıyı da ister; Denizci, Marangozu istemez. Belenyaka'nın Köy Zanaatkârı adı yerel birleşik unvandır. Atlas'taki aktif kapsam etiketi, mobil yayın kilitlerini değiştirme yetkisi vermez.
+
+Üretici detayındaki grup portresi raftaki portreyle aynı görseli ve aynı çizim ölçüsünü kullanır. Detay portresi ortalanır. Ölçü beş şehirde ortak raf hesabından gelir.
+
+## Yerel ödüllü reklamlar
+
+Beş şehir, enerji ekranında ve bekleyen üreticinin detayında aynı ödüllü reklam akışını kullanır. Yerel iOS test derlemesi Google test reklam birimini kullanır. Oturum kontrolü test ödülünün önkoşulu değildir. Tamamlanan enerji reklamı 25 enerji ekler; üretici reklamı yalnız hedef şehirdeki seçili üreticiyi hazırlar. İki eylem ortak dört günlük hakkı paylaşır. Şehir önizleme ilerlemesi geçici kayıtta kalır.

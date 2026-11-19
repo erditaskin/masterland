@@ -1,7 +1,8 @@
-import { View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { Fragment, useEffect, useState, type ReactNode } from "react";
 import {
   city,
+  cityProducers,
   productionPlan,
   type Save,
   type Producer,
@@ -12,9 +13,15 @@ import { EnergyAdPanel } from "./EnergyAdPanel";
 import { AppButton, Button } from "./Controls";
 import { useCityTheme } from "./CityThemeProvider";
 import { DesignContent } from "./DesignContent";
-import { DesignBox, DesignImage, DesignText } from "./DesignSpace";
+import { DesignBox, DesignText } from "./DesignSpace";
 import { PaperCard } from "./PagePrimitives";
 import { DesignItem, ProducerArt } from "./BoardChrome";
+import {
+  belenyakaLayout,
+  belenyakaRect,
+  producerFaceRect,
+  producerTileMetrics,
+} from "./belenyakaLayout";
 export { ProducerPortrait } from "./ProducerPortrait";
 
 export function ProducerDetails({
@@ -58,17 +65,28 @@ export function ProducerDetails({
   const gridY = cooldown ? 1700 : 1120,
     gridHeight = Math.ceil(p.products.length / 4) * 244;
   const detailY = gridY + Math.max(cooldown ? 720 : 520, gridHeight + 32);
+  const { width, height } = useWindowDimensions();
+  const tile = producerTileMetrics(
+    belenyakaRect(belenyakaLayout.shelf, width, height),
+    cityProducers(save).length,
+    true,
+  );
+  const [, , portraitWidth, portraitHeight] = producerFaceRect(
+    [0, 0, tile.width, tile.height],
+    true,
+  );
   return (
     <DesignContent end={detailY + 1450}>
-      {index === 0 ? (
-        <DesignImage
-          source={require("../../assets/art/skara-field-hero-v2.png")}
-          rect={[110, 730, 986, 360]}
-          fit
-        />
-      ) : (
-        <ProducerArt index={index} rect={[110, 730, 986, 360]} />
-      )}
+      <ProducerArt
+        index={index}
+        rect={[
+          (1206 - portraitWidth) / 2,
+          910 - portraitHeight / 2,
+          portraitWidth,
+          portraitHeight,
+        ]}
+        shelfSize
+      />
       {cooldown && (
         <>
           <PaperCard designRect={[90, 1120, 1026, 550]} />
@@ -190,11 +208,6 @@ export function ProducerDetails({
           Üretim gücü {2 ** (productionPlan(save, p).selected - 1)}x.
           Değiştirmek için tahtadaki üreticiye basılı tut.
         </DesignText>
-      )}
-      {variant === "producer" && owned && !cooldown && (
-        <DesignBox rect={[120, detailY + 1150, 966, 300]}>
-          <EnergyAdPanel save={save} producerID={p.id} />
-        </DesignBox>
       )}
     </DesignContent>
   );

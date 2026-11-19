@@ -24,14 +24,7 @@ const publish = (change: Partial<AccountSnapshot>) => {
   listeners.forEach((listener) => listener());
 };
 let starting: Promise<void> | null = null;
-let deletionProof: { userID: string; code: string; at: number } | null = null;
-export function consumeAppleDeletionProof(userID: string) {
-  const proof = deletionProof;
-  deletionProof = null;
-  return proof?.userID === userID && Date.now() - proof.at < 240000
-    ? proof.code
-    : null;
-}
+
 const digest = (text: string) =>
   Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, text);
 const challenge = async (verifier: string) => {
@@ -110,7 +103,6 @@ export const accountStore = {
     try {
       const session = await accountClient.getSession();
       const expectedID = reauthenticate ? session?.user.id : null;
-      if (reauthenticate) deletionProof = null;
       if (reauthenticate && !expectedID)
         throw Error("No account to reauthenticate");
       if (session && !session.user.is_anonymous && !reauthenticate) {
@@ -119,7 +111,6 @@ export const accountStore = {
         publish({ ready: true, user, error: null });
         return true;
       }
-      let appleCode: string | null = null;
       if (provider === "apple") {
         const attempt = await accountClient.request(
           "/v1/auth/apple/challenge",
@@ -142,7 +133,6 @@ export const accountStore = {
           nonce: await digest(attempt.nonce),
         });
         if (!result.identityToken) throw Error("Missing identity token");
-        appleCode = result.authorizationCode;
         // Apple supplies the name separately from the ID token, only on initial authorization.
         const fullName = result.fullName
           ? Apple.formatFullName(result.fullName).trim() || null
@@ -188,8 +178,6 @@ export const accountStore = {
       const user = await accountClient.getUser();
       if (!user || (expectedID && user.id !== expectedID))
         throw Error("Session verification failed");
-      if (expectedID && appleCode)
-        deletionProof = { userID: expectedID, code: appleCode, at: Date.now() };
       publish({ ready: true, user, error: null });
       return true;
     } catch (error) {
@@ -208,7 +196,6 @@ export const accountStore = {
     publish({ busy: true, error: null });
     try {
       await accountClient.signOut();
-      deletionProof = null;
       publish({ user: null, error: null });
     } catch {
       publish({ error: "session-failed" });

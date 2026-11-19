@@ -1,6 +1,8 @@
 import {
   BOARD_COLUMNS,
   BOARD_CAPACITY,
+  BOARD_ROWS,
+  BELENYAKA_COLUMNS,
   BOARD_LAYOUT_VERSION,
   boardCapacity,
   boardColumns,
@@ -269,9 +271,16 @@ function tile(s: Save, item: string): Tile {
 // The serialized board keeps its existing width for compatibility with the save API.
 export const playableBoard = (s: Save): City["board"] =>
   city(s).board.slice(0, boardCapacity(s.cityID));
-export const count = (s: Save, id: string) =>
-  [...playableBoard(s), ...city(s).storage].filter((t) => t?.item === id)
-    .length;
+export const count = (s: Save, id: string) => {
+  const { board, storage } = city(s);
+  const capacity = Math.min(board.length, boardCapacity(s.cityID));
+  let total = 0;
+  for (let index = 0; index < capacity; index++)
+    if (board[index]?.item === id) total++;
+  for (const tile of storage)
+    if (tile?.item === id) total++;
+  return total;
+};
 export function orders(s: Save): Order[] {
   const c = city(s),
     l = level(s),
@@ -702,6 +711,11 @@ function grantEnergy(s: Save, _capacity: number, energy: number, now: number) {
 }
 export function migrateCurrentSave(s: Save, now: number): Save {
   const out = copySave(s);
+  if (out.boardLayoutVersion === undefined) {
+    for (const citySave of Object.values(out.cities))
+      while (citySave.board.length < BOARD_CAPACITY) citySave.board.push(null);
+    out.boardLayoutVersion = BOARD_LAYOUT_VERSION;
+  }
   if (s.progressionVersion !== 2) {
     const oldLevel = level(s),
       [start, end] = levelRange(s);
@@ -882,7 +896,6 @@ export function transition(
       if (receipts.includes(action.receipt)) return done("none", "");
       if (receipts.length >= 4)
         return blocked("Bugünkü reklam ödüllerin tamamlandı.");
-      s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
       if (action.producerID) {
         const p = producerCatalog.find(
           (p) => p.id === action.producerID && p.cityID === action.cityID,
@@ -891,8 +904,10 @@ export function transition(
         if (!p || !target?.owned.includes(p.id))
           return blocked("Üretici bulunamadı.");
         target.batches[p.id] = { remaining: productionBatchSize, readyAt: 0 };
+        s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
         return done("reward", "Test reklamı: üretici hazır.");
       }
+      s.testAdRewards = { day, receipts: [...receipts, action.receipt] };
       grantEnergy(s, 0, 25, now);
       return done("reward", "Test reklamı: +25 enerji kazandın.");
     }
@@ -1236,7 +1251,9 @@ export function validateSave(value: unknown): value is Save {
     if (
       !c ||
       !Array.isArray(c.board) ||
-      c.board.length !== BOARD_CAPACITY ||
+      (c.board.length !== BOARD_CAPACITY &&
+        !(s.boardLayoutVersion === undefined &&
+          c.board.length === BELENYAKA_COLUMNS * BOARD_ROWS)) ||
       !c.board.every((t) => t === null || tileValid(t)) ||
       !Array.isArray(c.storage) ||
       !c.storage.every(tileValid) ||

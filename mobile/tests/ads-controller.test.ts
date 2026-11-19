@@ -139,6 +139,31 @@ test("test earned receipts persist quota, ignore duplicates and reset on next UT
     },
   );
 });
+test("all five local city rewards preserve energy on producer refill and share quota", () => {
+  const script = `
+    import assert from 'node:assert/strict';
+    import {city,cityProducers,transition,productionBatchSize} from './src/game/engine.ts';
+    import {presentationFixture} from './src/game/presentationFixture.ts';
+    const now=1794996000000;
+    for (const view of ['board','badinca','yalikoru','demirdere','ipekyolu']) {
+      const save=presentationFixture(now,false,view);
+      const producer=cityProducers(save)[0];
+      city(save).batches[producer.id]={remaining:0,readyAt:now+120000};
+      const reward=transition(save,{type:'test-ad-reward',cityID:save.cityID,producerID:producer.id,receipt:'00000000-0000-4000-8000-000000000001'},now);
+      assert.equal(reward.kind,'reward',view);
+      assert.equal(reward.state.stamina,save.stamina);
+      assert.equal(city(reward.state).batches[producer.id].remaining,productionBatchSize);
+      const energy=transition(reward.state,{type:'test-ad-reward',receipt:'00000000-0000-4000-8000-000000000002'},now);
+      assert.equal(energy.state.stamina,save.stamina+25);
+      assert.equal(energy.state.testAdRewards.receipts.length,2);
+      assert.equal(energy.state.testOnly,true);
+    }
+  `;
+  execFileSync(process.execPath, ["--import","tsx","--input-type=module","-e",script], {
+    env: { ...process.env, EXPO_PUBLIC_TEST_MODE: "true" },
+  });
+});
+
 test("production rejects client-side test ad credit", () => {
   execFileSync(
     process.execPath,

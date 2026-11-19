@@ -64,6 +64,7 @@ export function createAccountClient(deps: {
     removeItem(key: string): Promise<void>;
   };
   fetch: typeof fetch;
+  device?: () => Promise<{ id: string; os: "ios" | "android" } | null>;
 }) {
   let session: AccountSession | null = null;
   let loading: Promise<void> | null = null;
@@ -98,44 +99,57 @@ export function createAccountClient(deps: {
     const pinned = options.anonymous ? null : session;
     if (options.ownerID && pinned?.user.id !== options.ownerID)
       throw Error("Account changed");
-    const response = await deps.fetch(`${deps.url}${path}`, {
-      method: options.method ?? "GET",
-      headers: {
+    const device = ["/v1/auth/guest", "/v1/auth/me", "/v1/auth/apple", "/v1/auth/oauth/exchange"].includes(path)
+      ? await deps.device?.()
+      : null;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await deps.fetch(`${deps.url}${path}`, {
+        method: options.method ?? "GET",
+        headers: {
+          ...(device ? {
+            "x-masterland-device-id": device.id,
+            "x-masterland-device-os": device.os,
+          } : {}),
+          ...(options.body === undefined
+            ? {}
+            : { "Content-Type": "application/json" }),
+          ...(pinned
+            ? {
+                Authorization: `Bearer ${pinned.access_token}`,
+                "x-masterland-owner": pinned.user.id,
+              }
+            : {}),
+        },
         ...(options.body === undefined
           ? {}
-          : { "Content-Type": "application/json" }),
-        ...(pinned
-          ? {
-              Authorization: `Bearer ${pinned.access_token}`,
-              "x-masterland-owner": pinned.user.id,
-            }
-          : {}),
-      },
-      ...(options.body === undefined
-        ? {}
-        : { body: JSON.stringify(options.body) }),
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!response.ok) {
-      // A delayed old-owner response must never clear a newer session.
-      if (response.status === 401 && pinned) {
-        const clear = async () => {
-          if (session?.access_token !== pinned.access_token) return;
-          await deps.storage.removeItem(deps.key);
-          session = null;
-          generation++;
-          publish();
-        };
-        const pending = tail.then(clear, clear);
-        tail = pending.catch(() => undefined);
-        await pending;
+          : { body: JSON.stringify(options.body) }),
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        // A delayed old-owner response must never clear a newer session.
+        if (response.status === 401 && pinned) {
+          const clear = async () => {
+            if (session?.access_token !== pinned.access_token) return;
+            await deps.storage.removeItem(deps.key);
+            session = null;
+            generation++;
+            publish();
+          };
+          const pending = tail.then(clear, clear);
+          tail = pending.catch(() => undefined);
+          await pending;
+        }
+        throw new AccountAPIError(
+          response.status,
+          response.status === 401 ? "unauthenticated" : "request-failed",
+        );
       }
-      throw new AccountAPIError(
-        response.status,
-        response.status === 401 ? "unauthenticated" : "request-failed",
-      );
+      return await response.json();
+    } finally {
+      clearTimeout(timeout);
     }
-    return response.json();
   };
   const install = (value: unknown, expectedGeneration: number) => {
     const next = readAccountSession(value);
@@ -231,12 +245,19 @@ export function createAccountClient(deps: {
     signOut: async () => {
       await restore();
       const pinned = session;
-      if (pinned)
-        await request("/v1/auth/logout", {
-          method: "POST",
-          body: {},
-          ownerID: pinned.user.id,
-        });
+      if (pinned) {
+        try {
+          await request("/v1/auth/logout", {
+            method: "POST",
+            body: {},
+            ownerID: pinned.user.id,
+          });
+        } catch (error) {
+          if (error instanceof AccountAPIError && error.status === 401 && !session)
+            return;
+          throw error;
+        }
+      }
       const work = async () => {
         if (session?.access_token !== pinned?.access_token)
           throw Error("Account changed");

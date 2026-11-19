@@ -518,3 +518,17 @@ Belenyaka ile Badınca ortak sahne, tahta ve kontrol yerleşimini kendi görsel 
 ## 18 Kasım 2026 — Badınca şekerleme zinciri ve tahta hizası
 
 Şekerleme Tezgâhı ve yedi şekerleme, mobil ve yerel API içerik kayıtlarına eklendi. Yerleşik ImageGen istemi, referanstaki sarılı meyveli şekerden başlayıp nane şekeri, lolipop, kâse, kavanoz, hediye kutusu ve bakır şekerleme kulesine ilerleyen yedi ayrı şeffaf oyun ikonu istedi. Kaynak PNG’nin saydam kenarları temizlendi. İki şehrin 87 ürününün görünür sınırları önceden ölçüldü. Tahta ikonlarına iki yönde orta hizalama ve kısa hücre kenarına bağlı boyut uygulandı. İlan rayı sabit 1×, 1,25× ve 1,5× genişlikleri ve dar aralıkları kullanır.
+
+## 19 Kasım 2026 — Masterland hesabını kapatma ve cihaz kaydı
+
+Kullanıcı, sağlayıcı yetkisi korunarak yalnız Masterland hesabının kapatılmasını ve aynı sağlayıcıyla yeniden girişte yeni hesap açılmasını onayladı. Misafir ve kayıtlı hesaplar için uygulama kurulum UUID'si ve işletim sistemi eklendi. Canlı Masterland yedeği ve migration sonrasında `account-lifecycle-c9fee9abfea49e5a` etkinleştirildi. Canlı sentetik misafir testi cihaz başlığıyla oturum açmayı, silme makbuzunu ve eski oturumun 401 dönmesini doğruladı. Güncel kontrollü Release fiziksel iPhone'a kuruldu. Gerçek sağlayıcı hesabıyla silme ve yeniden giriş sonucu ayrıca kaydedilecektir.
+
+Silme ekranının ikinci turunda yeniden giriş, ek onay kutusu ve manuel durum kontrolü kaldırıldı. Geçerli Masterland oturumu ile tek kalıcı silme eylemi yeterlidir. Açılışta bekleyen makbuz engelleyici pencere göstermeden denetlenir. Canlı API sürümü `account-direct-605878cbd53d476d` olarak güncellendi. Güncel kontrollü Release bağlı iPhone'a kuruldu.
+
+Silme akışı tek istemci isteğine ve tek veritabanı işlemine indirildi. Eski başarısız talepler aynı sahibin yeni isteğini engellemez. Mobil silme günlüğü ve arka plan doğrulaması kaldırıldı. Eşleşen başarılı sunucu cevabı yerel oturumu ve ilerlemeyi temizler. Hesap ekranına başarı metni ve sağlayıcı düğmeleriyle dönülür. Canlı API sürümü `account-atomic-1cdca93247bbe4e1`.
+
+## 19 Kasım 2026 — iOS yayın hazırlığı
+
+Tahta üstü ve sayfalar değişmeyen girişlerde yeniden çizilmez. Üretici süre sayaçları hazır olunca durur. Dokunma süreleri native olay zamanıyla ölçülür. Ürün sayımı ara diziler oluşturmadan çalışır. Bulut eşitlemesi yalnız kayıt değiştiğinde planlanır. API oturum ve cihaz zaman damgalarını beş dakikalık aralıkla yeniler ve kullanıcı bilgilerini tek sorguda okur. API ve oyun kataloğu beş şehirde 25 üretici, 200 ürün ve 159 başarı kimliğinde eşleşir. Eski sürüm işaretsiz 54 hücreli kayıtları API korur, güncel mobil istemci hücre sırasını koruyarak genişletir.
+
+Release simülatöründe beş şehirde seçim, boş alana taşıma, uyumsuz bırakma, eşleşen birleştirme, üretim ve görev yüzeyi testleri geçti. Fiziksel iPhone 13 Pro’da uyumsuz bırakma, doğrudan birleştirme, uzun basma, üretim, şehirler ve market Device Hub üzerinden doğrulandı. Cihazın otomatik XCTest modu telefon parolası gerektirdi.

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
-import { ScrollView, View, type ImageSourcePropType } from "react-native";
+import { memo, useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
+import { PixelRatio, ScrollView, View, type ImageSourcePropType } from "react-native";
 import {
   canDeliver,
   city,
@@ -34,7 +34,12 @@ import { approvedDesignRect, approvedLayout } from "./layout";
 import { ChromeSprite } from "./GameChrome";
 import havenBounds from "../../assets/art/haven-items-v1-bounds.json";
 import { useCityTheme } from "./CityThemeProvider";
-import { belenyakaLayout, belenyakaRect } from "./belenyakaLayout";
+import {
+  belenyakaLayout,
+  belenyakaRect,
+  producerFaceRect,
+  producerTileMetrics,
+} from "./belenyakaLayout";
 import { standardArtForCity } from "./standardCityArt";
 import { cityArt } from "./cityArt";
 import type { Page } from "./Pages";
@@ -54,9 +59,11 @@ const approvedProducerPortraits = [
 export function ProducerArt({
   index,
   rect,
+  shelfSize = false,
 }: {
   index: number;
   rect: DesignRect;
+  shelfSize?: boolean;
 }) {
   const producer = producers[index];
   if (producer) {
@@ -64,7 +71,15 @@ export function ProducerArt({
       index - producers.findIndex((p) => p.cityID === producer.cityID);
     const source = standardArtForCity(producer.cityID)?.producers[cityIndex];
     if (source)
-      return <DesignImage source={source} rect={rect} fit radius={15} />;
+      return (
+        <DesignImage
+          source={source}
+          rect={rect}
+          fit={!shelfSize}
+          testID={shelfSize ? "detail-producer-face" : undefined}
+          radius={shelfSize ? 20 : 15}
+        />
+      );
   }
   return index < 5 ? (
     <DesignImage
@@ -110,9 +125,17 @@ function ProductionTile({
   const readyAt = c.batches[p.id]?.readyAt ?? 0,
     [now, setNow] = useState(Date.now);
   useEffect(() => {
-    if (readyAt <= Date.now()) return;
-    const timer = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(timer);
+    if (readyAt <= 0) return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const update = () => {
+      const current = Date.now();
+      setNow(current);
+      const remaining = readyAt - current;
+      if (remaining > 0)
+        timer = setTimeout(update, remaining % 1000 || 1000);
+    };
+    update();
+    return () => clearTimeout(timer);
   }, [readyAt]);
   const seconds = Math.max(0, Math.ceil((readyAt - now) / 1000)),
     index = producers.indexOf(p);
@@ -141,7 +164,8 @@ function ProductionTile({
       {face ? (
         <DesignImage
           source={face}
-          rect={[x + 3, y + 2, w - 6, h * (standard ? 0.79 : 0.69)]}
+          rect={producerFaceRect(rect, standard)}
+          testID={`shelf-face-${p.id}`}
           radius={20}
         />
       ) : (
@@ -278,7 +302,7 @@ function ProductionTile({
   );
 }
 
-export function BoardChrome({
+export const BoardChrome = memo(function BoardChrome({
   width,
   height,
   top = 0,
@@ -290,6 +314,7 @@ export function BoardChrome({
   onPowerOpen,
   onDeliver,
 }: {
+  language: string;
   width: number;
   height: number;
   top?: number;
@@ -352,14 +377,15 @@ export function BoardChrome({
     ? b(belenyakaLayout.profile)
     : r(approvedLayout.account);
   const orderGap = standardArt ? 8 : 18;
+  const seamOverlap = 2 / (PixelRatio.get() * scale);
   const orderUnit = (orderRail[2] - 2 * orderGap) / 3.75;
-  const visibleSlots = Math.min(6, Math.max(1, cityList.length));
-  const tileInset = standardArt ? 48 : 0;
-  const tileGap = standardArt ? 14 : 18;
-  const tileTop = standardArt ? 10 : 0;
-  const tileWidth =
-    (inner[2] - 2 * tileInset - (visibleSlots - 1) * tileGap) / visibleSlots;
-  const tileHeight = inner[3] - 2 * tileTop;
+  const {
+    inset: tileInset,
+    gap: tileGap,
+    top: tileTop,
+    width: tileWidth,
+    height: tileHeight,
+  } = producerTileMetrics(inner, cityList.length, Boolean(standardArt));
   const producerTiles = (
     <DesignSpace scale={scale}>
       {cityList.map((p, i) => (
@@ -557,12 +583,17 @@ export function BoardChrome({
                       {cardArt ? (
                         <>
                           <DesignImage
-                            source={cardArt[0]}
-                            rect={[0, 0, 49, cardHeight]}
+                            source={cardArt[1]}
+                            rect={[
+                              49 - seamOverlap,
+                              0,
+                              w - 98 + 2 * seamOverlap,
+                              cardHeight,
+                            ]}
                           />
                           <DesignImage
-                            source={cardArt[1]}
-                            rect={[49, 0, w - 98, cardHeight]}
+                            source={cardArt[0]}
+                            rect={[0, 0, 49, cardHeight]}
                           />
                           <DesignImage
                             source={cardArt[2]}
@@ -718,4 +749,4 @@ export function BoardChrome({
       </DesignSpace>
     </View>
   );
-}
+});

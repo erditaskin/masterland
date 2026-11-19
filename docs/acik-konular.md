@@ -231,3 +231,7 @@ Toplu hazır/eksik ilan ürünü vurgusu eski arayüzde vardır; son onay panosu
 ## 18 Kasım — Önce iPhone ölçüsünde beş şehir referansı
 
 Kullanıcı, önce beş şehrin referanslarının iPhone boyutuna getirilmesini, kaydedilmesini ve kendisine gösterilmesini istedi. Tahta yan kenarlara yaklaşmalı; alt menü aşağı taşınmalı ve menü altında gereksiz boşluk bırakılmamalıdır. Kullanıcı bu yeni cihaz referanslarını onayladıktan sonra uygulama bunlara göre sürdürülecektir. Kodlama bu aşamada bekletilir. Önceki yan boşluk ve dikey kaydırma seçenekleri kesin kabul hedefi yapılmaz. Yeni referanslar onay bekleyen görsel adaylardır.
+
+## 19 Kasım — Herkese açık App Store incelemesi
+
+Masterland hesabı ve kişisel verileri tek işlemde kapatılır, sağlayıcı izni korunur. [Apple'ın hesap silme gerekliliği](https://developer.apple.com/news/?id=12m75xbj), Sign in with Apple kullanan uygulamalarda uygulama yetkilendirme belirteçlerinin iptalini ister. Mevcut sağlayıcı davranışıyla herkese açık inceleme tamamlanmış sayılmaz.

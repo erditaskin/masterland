@@ -237,27 +237,6 @@ export const gameStore = {
         removeLegacyImports,
       );
       await load("normal");
-      if (snapshot.ready) {
-        const save = {
-          ...snapshot.save,
-          rewardQueue: [
-            {
-              id: "deletion-" + requestID,
-              kind: "achievement" as const,
-              title: "Hesabın silindi",
-              message:
-                "Bulut hesabın ve bu telefondaki ilerlemen silindi. Yeni bir misafir oyununa başladın.",
-              gold: 0,
-              gems: 0,
-              energy: 0,
-              xp: 0,
-            },
-          ],
-        };
-        publish({ ...snapshot, save });
-        pending = JSON.stringify(save);
-        await persist();
-      }
     } catch {
       publish({
         ...snapshot,

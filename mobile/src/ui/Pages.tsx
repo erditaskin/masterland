@@ -10,7 +10,7 @@ import { EnergyAdPanel } from "./EnergyAdPanel";
 import { AccountPanel } from "./AccountPanel";
 import { OrderGuide } from "./OrderGuide";
 import { Market } from "./Market";
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { Label } from "./Controls";
 import {
   city,
@@ -44,6 +44,7 @@ export type Page = {
   index?: number;
   id?: string;
   cityID?: string;
+  accountDeleted?: boolean;
 };
 const titles = {
   cloud: "Bulut kaydı",
@@ -61,7 +62,7 @@ const titles = {
   achievement: "Başarı",
   achievements: "Başarılar",
 };
-export function Pages({
+export const Pages = memo(function Pages({
   page,
   save,
   width,
@@ -73,6 +74,7 @@ export function Pages({
   onInteract,
   presentationView,
 }: {
+  language: string;
   page: Page;
   save: Save;
   width: number;
@@ -126,7 +128,10 @@ export function Pages({
         <CloudSyncPanel onCancel={() => open({ kind: "profile" })} />
       )}
       {page.kind === "account-deletion" && (
-        <AccountDeletionPanel onCancel={() => open({ kind: "profile" })} />
+        <AccountDeletionPanel
+          onCancel={() => open({ kind: "profile" })}
+          onDeleted={() => open({ kind: "profile", accountDeleted: true })}
+        />
       )}
       {page.kind === "collection" && (
         <CollectionPage
@@ -224,6 +229,7 @@ export function Pages({
       )}
       {page.kind === "profile" && (
         <AccountPanel
+          accountDeleted={page.accountDeleted}
           onClose={close}
           save={save}
           dispatch={dispatch}
@@ -263,4 +269,4 @@ export function Pages({
       )}
     </PageShell>
   );
-}
+});
