@@ -658,6 +658,7 @@ export const BoardChrome = memo(function BoardChrome({
                         rect={badge}
                         size={standardArt ? 29 : 35}
                         bold
+                        fit
                         color={ready ? "#fff8e3" : undefined}
                         align="center"
                       >

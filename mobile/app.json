@@ -2,7 +2,7 @@
   "expo": {
     "name": "Masterland",
     "slug": "masterland",
-    "version": "0.2.0",
+    "version": "1.0",
     "scheme": "masterland",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -11,10 +11,11 @@
       "bundleIdentifier": "com.erditaskin.masterland",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleLocalizations": ["tr", "en"],
         "UIStatusBarHidden": true
       },
       "appleTeamId": "F3F723W4SF",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "plugins": [
       "expo-asset",

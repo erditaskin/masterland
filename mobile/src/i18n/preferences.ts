@@ -6,7 +6,7 @@ export async function loadLanguage() {
   const saved = await AsyncStorage.getItem(KEY);
   languageStore.set(
     chooseLanguage(
-      saved ?? "tr",
+      saved,
       getLocales().map((locale) => locale.languageTag),
     ),
   );

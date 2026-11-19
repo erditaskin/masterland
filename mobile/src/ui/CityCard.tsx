@@ -60,7 +60,7 @@ export const CityCard = memo(function CityCard({
             <View />
           </Button>
         </DesignBox>
-        <DesignText rect={[670, 734, 418, 83]} size={58} bold>
+        <DesignText rect={[670, 734, 418, 83]} size={58} bold fit>
           {title}
         </DesignText>
         <DesignText
