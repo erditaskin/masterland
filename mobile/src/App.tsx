@@ -471,6 +471,7 @@ function Game({
   const readyPulse = useReadyPulse(
     !page && readyOrderItems.size > 0,
     reduced || save.reducedMotion,
+    revision,
   );
   if (
     !ready ||

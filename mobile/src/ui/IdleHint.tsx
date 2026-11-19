@@ -75,8 +75,9 @@ export function IdleHint({
             withTiming(0, { duration: 350 }),
             withTiming(1, { duration: 1000 }),
             withTiming(1, { duration: 300 }),
+            withTiming(0, { duration: 180 }),
           ),
-          -1,
+          3,
           false,
         ),
       );

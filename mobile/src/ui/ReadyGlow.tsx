@@ -10,7 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 /** One UI-thread clock serves ready backgrounds and the subtle icon scale. */
-export function useReadyPulse(enabled: boolean, reduced: boolean) {
+export function useReadyPulse(enabled: boolean, reduced: boolean, revision: number) {
   const pulse = useSharedValue(0);
   useEffect(() => {
     cancelAnimation(pulse);
@@ -22,12 +22,12 @@ export function useReadyPulse(enabled: boolean, reduced: boolean) {
             withTiming(1, { duration: 550 }),
             withTiming(0, { duration: 1850 }),
           ),
-          -1,
+          3,
           false,
         ),
       );
     return () => cancelAnimation(pulse);
-  }, [enabled, reduced, pulse]);
+  }, [enabled, reduced, revision, pulse]);
   return pulse;
 }
 export function ReadyGlow({
