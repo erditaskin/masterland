@@ -1,3 +1,4 @@
+import * as Apple from "expo-apple-authentication";
 import * as Crypto from "expo-crypto";
 import { accountClient } from "./client";
 import { readDeletionReceipt } from "./deletionReceipt";
@@ -30,6 +31,18 @@ export async function deleteCurrentAccount() {
   try {
     const session = await client.getSession();
     if (!session) throw Error("Sign-in required");
+    let appleCode: string | undefined;
+    if (session.user.identities.some(({ provider }) => provider === "apple")) {
+      try {
+        const credential = await Apple.signInAsync();
+        appleCode = credential.authorizationCode ?? undefined;
+      } catch (error) {
+        if (error instanceof Error && "code" in error && error.code === "ERR_REQUEST_CANCELED")
+          return false;
+        throw error;
+      }
+      if (!appleCode) throw Error("Apple authorization code unavailable");
+    }
     const requestID = Crypto.randomUUID();
     const random = await Crypto.getRandomBytesAsync(32);
     const receipt = Array.from(random, (byte) =>
@@ -38,7 +51,13 @@ export async function deleteCurrentAccount() {
     const result = await client.request("/v1/account/deletion", {
       method: "POST",
       ownerID: session.user.id,
-      body: { request_id: requestID, receipt, confirmation: "DELETE" },
+      body: {
+        request_id: requestID,
+        receipt,
+        confirmation: "DELETE",
+        ...(appleCode ? { apple_authorization_code: appleCode } : {}),
+      },
+      timeoutMs: 25000,
     });
     if (!readDeletionReceipt(result, requestID).auth_deleted)
       throw Error("Deletion failed");
@@ -46,6 +65,7 @@ export async function deleteCurrentAccount() {
     const { cloudSync } = await import("./cloudSync");
     await cloudSync.connect(null);
     await gameStore.resetAfterAccountDeletion(requestID);
+    return true;
   } finally {
     setBusy(false);
   }

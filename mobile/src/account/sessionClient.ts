@@ -93,6 +93,7 @@ export function createAccountClient(deps: {
       body?: unknown;
       ownerID?: string;
       anonymous?: boolean;
+      timeoutMs?: number;
     } = {},
   ): Promise<unknown> => {
     if (!options.anonymous) await restore();
@@ -103,7 +104,7 @@ export function createAccountClient(deps: {
       ? await deps.device?.()
       : null;
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), options.timeoutMs ?? 15000);
     try {
       const response = await deps.fetch(`${deps.url}${path}`, {
         method: options.method ?? "GET",

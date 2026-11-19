@@ -114,7 +114,9 @@ export function AccountDeletionPanel({ onCancel, onDeleted }: {
         onDelete={() => {
           setMessage("");
           void deleteCurrentAccount()
-            .then(onDeleted)
+            .then((deleted) => {
+              if (deleted) onDeleted();
+            })
             .catch(() => {
               setMessage(tx(
                 "Hesap silinemedi. Tekrar dene.",

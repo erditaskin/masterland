@@ -704,3 +704,5 @@ Onaylı Google test reklamı beş şehrin yerel standart ekranlarında oturumdan
 Hesap silme işlemi Masterland hesabını deaktif eder ve hesabın oturum, sağlayıcı eşlemesi, cihaz ve ilerleme verilerini kaldırır. Apple, Google ve Facebook yetkileri sağlayıcı tarafında korunur. Aynı sağlayıcıyla yeniden giriş yeni bir Masterland hesabı açar. Veritabanında normalleştirilmiş e-posta silinme işaretiyle birlikte benzersiz tutulur. Misafir ve kayıtlı Masterland hesaplarında kurulum UUID'si, işletim sistemi ve son görülme zamanı tutulur.
 
 Geçerli Masterland oturumuyla açılan silme ekranında uyarı ve tek kalıcı silme eylemi kalır. Sağlayıcıyla yeniden giriş ve ek onay kutusu kaldırılır.
+
+Apple hesabı için App Store gerekliliği uygulanır. Kalıcı silme düğmesi Apple'ın uygulamaya verdiği belirteci iptal etmek için gerektiğinde Apple doğrulamasını açar. Masterland silmesi başarılı Apple iptalinden sonra tamamlanır. Google, Facebook ve misafir hesapları ek sağlayıcı adımı olmadan silinir.
