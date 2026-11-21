@@ -43,6 +43,7 @@ export interface Snapshot {
   result: Result | null;
   revision: number;
   review: boolean;
+  tutorialPractice?: boolean;
 }
 let snapshot: Snapshot = {
   save: fresh(Date.now()),
@@ -63,6 +64,7 @@ type LocalMode =
   | "milestone"
   | "presentation"
   | "presentation-full";
+let beforeTutorial: Snapshot | undefined;
 let activeMode: LocalMode = "normal";
 function publish(value: Snapshot) {
   snapshot = value;
@@ -116,6 +118,7 @@ async function load(mode: LocalMode = "normal", presentationView?: string) {
       process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL !== "local")
   )
     mode = "normal";
+  beforeTutorial = undefined;
   const token = ++loadEpoch;
   activeMode = mode;
   try {
@@ -183,6 +186,26 @@ export const gameStore = {
   dispatch: (action: Action) => {
     if (!snapshot.ready) return null;
     const previous = snapshot.save;
+    if (action.type === "onboarding-replay" && !beforeTutorial && previous.cityID === "city1") {
+      const result = transition(previous, action, Date.now());
+      beforeTutorial = snapshot;
+      publish({
+        ...snapshot,
+        save: { ...fresh(Date.now()), sound: previous.sound, reducedMotion: previous.reducedMotion },
+        result: null,
+        revision: snapshot.revision + 1,
+        review: true,
+        tutorialPractice: true,
+      });
+      return result;
+    }
+    if (action.type === "onboarding-finish" && beforeTutorial) {
+      const original = beforeTutorial;
+      beforeTutorial = undefined;
+      const result = transition(previous, action, Date.now());
+      publish({ ...original, result: null, revision: snapshot.revision + 1 });
+      return result;
+    }
     const previewTravel =
       snapshot.review && activeMode === "presentation" &&
       testModeEnabled && process.env.EXPO_PUBLIC_DISTRIBUTION_CHANNEL === "local";

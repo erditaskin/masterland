@@ -3,7 +3,7 @@ import {
   earnedAchievementsLabel,
   languageStore,
 } from "../i18n/locale";
-import { Fragment, memo, useMemo, useSyncExternalStore } from "react";
+import { Fragment, memo, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Image, PixelRatio, View } from "react-native";
 import { Button } from "./Controls";
 import {
@@ -28,6 +28,7 @@ import {
   achievementState,
   cityAchievements,
   level,
+  nextEnergySeconds,
   name,
   type Save,
 } from "../game/engine";
@@ -101,6 +102,53 @@ export function ChromeSprite({
 const achievementBadgeCrop = (
   require("../../assets/art/route-icons-v2-bounds.json") as number[][]
 )[1] as [number, number, number, number];
+
+function EnergyRefillTimer({ save, bounds }: { save: Save; bounds: readonly [number, number, number, number] }) {
+  const [now, setNow] = useState(Date.now);
+  const filling = save.stamina < 100;
+  useEffect(() => {
+    if (!filling) return;
+    const timer = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(timer);
+  }, [filling, save.energyAt]);
+  const seconds = nextEnergySeconds(save, Math.max(now, save.energyAt));
+  if (seconds === null) return null;
+  const time = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+  return (
+    <>
+      <DesignSurface rect={bounds} fill="#163749" stroke="#d8ae58" radius={11} line={1} />
+      <DesignText rect={bounds} size={24} fit bold align="center" color="#fff0c2">{`+1 · ${time}`}</DesignText>
+    </>
+  );
+}
+
+function GoldCounter({ target, reduced, language, bounds, size }: {
+  target: number; reduced: boolean; language: string;
+  bounds: readonly [number, number, number, number]; size: number;
+}) {
+  const [shown, setShown] = useState(target);
+  const current = useRef(target);
+  useEffect(() => {
+    if (reduced) {
+      current.current = target;
+      const frame = requestAnimationFrame(() => setShown(target));
+      return () => cancelAnimationFrame(frame);
+    }
+    if (current.current === target) return;
+    const from = current.current;
+    const start = Date.now();
+    const timer = setInterval(() => {
+      const progress = Math.min(1, (Date.now() - start) / 800);
+      current.current = Math.round(from + (target - from) * progress);
+      setShown(current.current);
+      if (progress === 1) clearInterval(timer);
+    }, 33);
+    return () => clearInterval(timer);
+  }, [target, reduced]);
+  return <DesignText rect={bounds} size={size} fit bold align="center" color="#fff0c2" accessible={false}>
+    {(reduced ? target : shown).toLocaleString(language === "tr" ? "tr-TR" : "en-US")}
+  </DesignText>;
+}
 
 export const WalletHUD = memo(function WalletHUD({
   save,
@@ -216,7 +264,9 @@ export const WalletHUD = memo(function WalletHUD({
                 index={index}
                 rect={[x + 7, y + h * 0.1, h * 0.8, h * 0.8]}
               />
-              <DesignText
+              {id === "stamina" && <EnergyRefillTimer save={save} bounds={[x + 64, y + h + 3, w - 128, 33]} />}
+              {id === "gold" ? <GoldCounter target={save.gold} reduced={save.reducedMotion} language={language}
+                bounds={[x + w * 0.29, y, w * 0.46, h]} size={Math.min(34, h * 0.65)} /> : <DesignText
                 rect={[x + w * 0.29, y, w * 0.46, h]}
                 size={Math.min(34, h * 0.65)}
                 fit
@@ -226,7 +276,7 @@ export const WalletHUD = memo(function WalletHUD({
                 accessible={false}
               >
                 {value}
-              </DesignText>
+              </DesignText>}
               <DesignSurface
                 rect={[
                   x + w - diameter - 7,

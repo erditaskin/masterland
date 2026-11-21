@@ -1,23 +1,41 @@
 import { testModeEnabled } from "../game/testMode";
-import { useEffect, useState, useSyncExternalStore } from "react";
-import { View } from "react-native";
-import { energyAds, adsConfig } from "../ads/service";
+import { useEffect, useSyncExternalStore } from "react";
+import { Alert, View } from "react-native";
+import { energyAds, adsConfig, type RewardedAdFailure } from "../ads/service";
 import { accountText as tx, languageStore } from "../i18n/locale";
 import type { Save } from "../game/engine";
 import { AppButton, Divider, Label } from "./Controls";
 import { EnergyGiftView } from "./EnergyGiftView";
+function adFailureMessage(error: RewardedAdFailure) {
+  switch (error) {
+    case "offline":
+      return tx("Reklam için internet gerekiyor.", "An internet connection is required.");
+    case "cloud":
+      return tx("Ödül için bulut kaydını eşitle. Hesap bölümünden kontrol edebilirsin.", "Sync your cloud save before earning rewards. Check the account page.");
+    case "consent":
+      return tx("Reklam izni doğrulanamadı. Hesap ayarlarından reklam izinlerini kontrol et.", "Could not verify ad consent. Check ad privacy in Account settings.");
+    case "account":
+      return tx("Misafir oturumu hazırlanamadı. Biraz sonra tekrar dene.", "Could not prepare the guest session. Try again shortly.");
+    case "no-fill":
+      return tx("Şu anda izlenebilir reklam yok. Biraz sonra tekrar dene.", "No ads are available right now. Try again shortly.");
+    default:
+      return tx("Reklam hazırlanamadı. Hakkın korunuyor.", "The ad could not be prepared. No reward allowance was used.");
+  }
+}
 export function EnergyAdPanel({
   save,
   producerID,
   compact = false,
   page = false,
   onCancel = () => {},
+  onBuy,
 }: {
   save: Save;
   producerID?: string;
   compact?: boolean;
   page?: boolean;
   onCancel?: () => void;
+  onBuy?: () => void;
 }) {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
@@ -43,6 +61,7 @@ export function EnergyAdPanel({
         disabled
         onWatch={() => {}}
         onCancel={onCancel}
+        purchase={onBuy ? { balance: save.gems, onPress: onBuy } : undefined}
       />
     ) : compact ? (
       <AppButton
@@ -55,6 +74,7 @@ export function EnergyAdPanel({
     ) : null;
   const previewOnly = adsConfig.testAds && !testModeEnabled;
   const showing = ad.phase === "showing" || ad.phase === "earned";
+  const preparing = ad.requesting || ad.phase === "loading" || ad.consentBusy;
   if (page)
     return (
       <EnergyGiftView
@@ -64,7 +84,7 @@ export function EnergyAdPanel({
             ? "Bugünkü hediyeler tamamlandı"
             : showing
               ? "Reklam gösteriliyor…"
-              : ad.phase === "loading" || ad.consentBusy
+              : preparing
                 ? "Hazırlanıyor…"
                 : previewOnly
                   ? "Test reklamını önizle · ödülsüz"
@@ -73,15 +93,14 @@ export function EnergyAdPanel({
         disabled={
           used >= 4 ||
           ad.rewardPending ||
-          ad.consentBusy ||
           showing ||
-          ad.phase === "loading"
+          preparing
         }
         message={
           ad.rewardPending
             ? "Ödülün doğrulanıyor. Bağlantı geldiğinde yeniden kontrol edilecek."
             : ad.error
-              ? "Reklam hazırlanamadı. Hakkın korunuyor."
+              ? adFailureMessage(ad.error)
               : ad.rewardOutcome === "verified"
                 ? "Ödül doğrulandı ve hesabına eklendi."
                 : ad.rewardOutcome === "preview"
@@ -92,6 +111,7 @@ export function EnergyAdPanel({
           void energyAds.watch();
         }}
         onCancel={onCancel}
+        purchase={onBuy ? { balance: save.gems, onPress: onBuy } : undefined}
       />
     );
   if (compact)
@@ -105,18 +125,19 @@ export function EnergyAdPanel({
             ? "Bugünkü hediyeler tamamlandı"
             : showing
               ? "Reklam gösteriliyor…"
-              : ad.phase === "loading" || ad.consentBusy
+              : preparing
                 ? "Hazırlanıyor…"
                 : previewOnly
                   ? "Test reklamını önizle · ödülsüz"
-                  : "Reklamla hazırla"
+                  : ad.error
+                    ? tx("Reklamı tekrar dene", "Retry ad")
+                    : "Reklamla hazırla"
         }
         disabled={
           used >= 4 ||
           ad.rewardPending ||
-          ad.consentBusy ||
           showing ||
-          ad.phase === "loading"
+          preparing
         }
         onPress={() => {
           void energyAds.watch(
@@ -183,20 +204,7 @@ export function EnergyAdPanel({
       )}
       {ad.error && (
         <Label size={12}>
-          {ad.error === "offline"
-            ? tx(
-                "Reklam için internet gerekiyor.",
-                "An internet connection is required.",
-              )
-            : ad.error === "cloud"
-              ? tx(
-                  "Ödül için bulut kaydını eşitle. Hesap bölümünden kontrol edebilirsin.",
-                  "Sync your cloud save before earning rewards. Check the account page.",
-                )
-              : tx(
-                  "Reklam hazırlanamadı. Hakkın korunuyor.",
-                  "The ad could not be prepared. No reward allowance was used.",
-                )}
+          {adFailureMessage(ad.error)}
         </Label>
       )}
       <AppButton
@@ -204,16 +212,15 @@ export function EnergyAdPanel({
         disabled={
           used >= 4 ||
           ad.rewardPending ||
-          ad.consentBusy ||
           showing ||
-          ad.phase === "loading"
+          preparing
         }
         text={
           used >= 4
             ? tx("Bugünkü hediyeler tamamlandı", "Today's gifts are complete")
             : showing
               ? tx("Reklam gösteriliyor…", "Showing ad…")
-              : ad.phase === "loading" || ad.consentBusy
+              : preparing
                 ? tx("Hazırlanıyor…", "Preparing…")
                 : previewOnly
                   ? tx(
@@ -239,19 +246,24 @@ export function EnergyAdPanel({
 export function AdPrivacyControl() {
   const ad = useSyncExternalStore(energyAds.subscribe, energyAds.get);
   useSyncExternalStore(languageStore.subscribe, languageStore.get);
-  const [result, setResult] = useState<"refreshed" | "saved" | "failed" | null>(null);
   if (!ad.enabled) return null;
   const update = async () => {
-    setResult(null);
-    const openedPreferences = energyAds.get().privacyRequired;
-    await (openedPreferences ? energyAds.privacy() : energyAds.refreshConsent());
+    await energyAds.privacy();
     const current = energyAds.get();
-    setResult(
-      current.error === "consent" ? "failed" : openedPreferences ? "saved" : "refreshed",
-    );
+    if (current.error === "consent") {
+      Alert.alert(tx("Reklam gizliliği", "Ad privacy"), tx(
+        "Reklam tercihleri açılamadı. Bağlantını kontrol edip tekrar dene.",
+        "Ad preferences could not be opened. Check your connection and try again.",
+      ));
+    } else if (!current.privacyRequired) {
+      Alert.alert(tx("Reklam gizliliği", "Ad privacy"), tx(
+        "Google şu anda bu cihaz için değiştirilebilir reklam tercihleri sunmuyor.",
+        "Google is not offering editable ad preferences for this device right now.",
+      ));
+    }
   };
   return (
-    <View style={{ marginTop: 12 }}>
+    <View>
       <AppButton
         testID="adPrivacy"
         tone="secondary"
@@ -259,25 +271,12 @@ export function AdPrivacyControl() {
         text={
           ad.consentBusy
             ? tx("Reklam izni kontrol ediliyor…", "Checking ad consent…")
-            : ad.privacyRequired
-            ? tx("Reklam gizlilik tercihleri", "Ad privacy choices")
-            : tx("Reklam izin bilgisini güncelle", "Refresh ad consent")
+            : tx("Reklam gizlilik tercihleri", "Ad privacy choices")
         }
         onPress={() => {
           void update();
         }}
       />
-      {result && (
-        <View accessibilityLiveRegion="polite" testID="adPrivacyResult">
-          <Label tone={result === "failed" ? "muted" : "success"} style={{ textAlign: "center" }}>
-            {result === "failed"
-              ? tx("Reklam izni güncellenemedi. Tekrar dene.", "Could not update ad consent. Try again.")
-              : result === "saved"
-                ? tx("Reklam tercihleri kaydedildi.", "Ad preferences saved.")
-                : tx("Reklam izin bilgisi güncellendi.", "Ad consent information refreshed.")}
-          </Label>
-        </View>
-      )}
     </View>
   );
 }

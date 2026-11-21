@@ -1,23 +1,29 @@
+import { orderProgressHighlights, orderProgress } from "./orderProgress";
 import { boardColumns } from "./grid";
 import {
   city,
   cityProducers,
-  count,
   orders,
   product,
   producerCatalog as producers,
   productionPlan,
   playableBoard,
+  type Order,
   type Save,
 } from "./engine";
 export function idleHint(
   save: Save,
   now: number,
+  activeOrders: readonly Order[] = orders(save),
 ): { from: number; to: number; item: string } | { producerID: string } | null {
   const board = playableBoard(save);
   const columns = boardColumns(save.cityID);
   const matches = new Map<string, number[]>();
-  const wanted = orders(save).flatMap((order) => order.requirements);
+  const progress = orderProgress(activeOrders, save);
+  const { ready, partial } = orderProgressHighlights(progress);
+  const wanted = progress.flatMap(({ requirements }) =>
+    requirements.filter((requirement) => requirement.available < requirement.quantity),
+  );
   let best:
     | {
         from: number;
@@ -28,7 +34,7 @@ export function idleHint(
       }
     | undefined;
   for (const [to, tile] of board.entries()) {
-    if (!tile) continue;
+    if (!tile || ready.has(tile.item) || partial.has(tile.item)) continue;
     const p = product(tile.item);
     const next = producers[p.producer]?.products[p.tier];
     if (!next) continue;
@@ -42,7 +48,7 @@ export function idleHint(
         if (requirement.item_id === next.id)
           return Math.max(
             max,
-            count(save, next.id) + 1 >= requirement.quantity ? 4 : 3,
+            requirement.available + 1 >= requirement.quantity ? 4 : 3,
           );
         return requirement.item_id === tile.item ? Math.max(max, 2) : max;
       }, 0);

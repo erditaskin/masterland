@@ -706,3 +706,31 @@ Hesap silme işlemi Masterland hesabını deaktif eder ve hesabın oturum, sağl
 Geçerli Masterland oturumuyla açılan silme ekranında uyarı ve tek kalıcı silme eylemi kalır. Sağlayıcıyla yeniden giriş ve ek onay kutusu kaldırılır.
 
 Apple hesabı için App Store gerekliliği uygulanır. Kalıcı silme düğmesi Apple'ın uygulamaya verdiği belirteci iptal etmek için gerektiğinde Apple doğrulamasını açar. Masterland silmesi başarılı Apple iptalinden sonra tamamlanır. Google, Facebook ve misafir hesapları ek sağlayıcı adımı olmadan silinir.
+
+## 19 Kasım 2026 — Şehir bazlı görev zorluğu
+
+Geri bildirim Belenyaka'daki 6. hesap seviyesine aittir. Hesap seviyesi şehir erişimini belirler. Görev zorluğu her şehirde ayrı hesaplanır. İki tanıtım veya tekrar görevi teslimi bir aşama ilerletir. Belenyaka'da hesap seviyesi 6 ve üstü için görev aşaması en az 5'tir. Diğer şehirler ilk girişte aşama 1'den başlar. Mevcut şehir erişim kuralları ve kayıt şeması korunur.
+
+Görev havuzunda aşama 1–4 için ürün basamağı 1, 5–8 için basamak 2, 9–13 için basamak 3, 14–20 için basamak 4, 21–30 için basamak 5, 31–45 için basamak 6, sonrasında basamak 7 ağırlıklıdır. Aşama 5–8 arasında bir görev grubunda en fazla tek basamak 1 ürünü istenir. Aşama 9'dan itibaren tekrar görevlerinde basamak 1 yer almaz. Şehir tanıtım görevleri kendi içeriğini korur. Görevler yalnızca sahip olunan üreticilerin zincirlerini kullanır.
+
+Hazır görevler önde kalır. Kalanlar karşılanan adetlerin toplam istenen adede oranına göre sıralanır. Henüz tamamlanmamış görevde adedi karşılanan kalem kartta ve tahtada koyu yeşil görünür. Tahtada hazır görevin açık yeşili önceliklidir. Birleştirme ipucu yeşil vurgulu görev ürünlerini kullanmaz.
+
+Yeni oyuncu 10 elmasla başlar. Mevcut oyuncuların bakiyesi korunur. Enerji ekranında ödüllü reklam ve mevcut 3 elmas karşılığı 25 enerji seçeneği birlikte sunulur. Üretici bekleme ekranı reklam ve elmasla hazırlama seçeneklerini ortak akıştan sunar.
+
+## 21 Kasım 2026 — İlk deneyim ve oyun içi sunum
+
+Yeni kayıt 100 enerji ve 25 elmasla başlar. Mevcut bakiyelere başlangıç hediyesi eklenmez. Yeni kayıt ilk kez sıfır enerjiye indiğinde +100 enerji hediyesi açılır. Alınmamış hediye kayıtta bekler. Hediye şehir başına tekrarlanmaz.
+
+İlk açılış öğreticisi gerçek Belenyaka tahtasında üretim, eşleştirme, sipariş teslimi ve enerji seçenekleriyle ilerler. Öğretici geçilebilir. Hesap bağlama isteğe bağlıdır. TR ve EN oyun içi ekranlar bu sürümün kapsamındadır. App Store görselleri ve tanıtım videosu ayrı bir iştir.
+
+Üretici detayında satın alma ve bekleme aksiyonları ilk görünür alanda yer alır. Hazır sipariş kartının tamamı teslim eder. Eksik siparişte ürün ikonuna dokunmak o ürünün tarifini açar. İlk aşamalarda iki ürünlü tekrar siparişleri üç ürünlülere göre önceliklidir. Aşama 9'dan sonra en fazla bir üç ürünlü tekrar siparişi bulunabilir. Aşama 21'den itibaren üç ürünlü sipariş için ayrılan yuva her yenilemede uygundur.
+
+Başarılar ödülü hazır, devam eden ve alınmış gruplarıyla sıralanır. Altın artışı ve azalışı kısa sayım ve sesle bildirilir. Enerji sayacı bir sonraki pasif enerjiye kalan süreyi gösterir. İlk 100 üzeri enerji deneyiminde üreticiye basılı tutma ve güç seçimi anlatılır. Seviye kutlaması mevcut ödül miktarlarını sunar.
+
+Bu değişiklikler incelenen 1.0 (4) paketinden ayrı tutulur. Facebook ve reklam tercih formunun dağıtılan sürümdeki kabulü fiziksel cihazda doğrulanır.
+
+Belenyaka Hesap ayarlarından öğretici tekrar açılabilir. Tekrar açma mevcut tahtayı, bakiyeleri ve ilerlemeyi korur. Üretim sesi yaklaşık 50 ms sürer. Altın değişimleri ile başarı ve seviye kutlamaları ayrı ses kullanır. Oyun ses ayarı ve iPhone sessiz modu bütün seslere uygulanır.
+
+Hesap ayarlarından tekrar açılan öğretici, geçici Belenyaka tahtasında üretim, iki hücre arasında sürükleme ve hazır siparişi teslim etme adımlarını baştan gösterir. Bitirme veya geçme, gerçek kayda döndürür. Alıştırma ayrı ödül, satın alma veya bulut kaydı oluşturmaz. Rehber karakteri karşılama ve kısa yönlendirmelerde görünür. Öğretici ve kutlama kartları ortak modal yüzeyini ve Hareketi Azalt desteğini kullanır.
+
+Tam ekran ödül kutlamalarında Belenyaka rehberi ve zanaatkâr, kartın üstünde sırt sırta görünür. Havai fişekler ödül metni ve düğmesinin üstündeki karanlık alanda kısa bir kez oynar. Hareketi Azalt açıkken karakterler sabit görünür. Keşif bildirimi mevcut kompakt düzenini kullanır.

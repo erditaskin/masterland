@@ -1,7 +1,15 @@
+import { RewardFireworks } from "./RewardFireworks";
+import { RewardAmounts } from "./RewardAmounts";
+import { accountText } from "../i18n/locale";
 import { RouteIcon } from "./Achievements";
 import { useEffect } from "react";
-import { View, useWindowDimensions } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { Image, View, useWindowDimensions } from "react-native";
+import Animated, {
+  FadeIn,
+  FadeInUp,
+  FadeOut,
+  ZoomIn,
+} from "react-native-reanimated";
 import {
   achievementName,
   achievements,
@@ -9,15 +17,17 @@ import {
 } from "../game/engine";
 import { ActionButton, Label } from "./Controls";
 import { Item, Sprite } from "./Art";
-import { PagePaper } from "./Skin";
+import { ModalCard } from "./ModalCard";
 export function RewardCelebration({
   notice,
   dismiss,
   reduced,
+  hideDiscovery = false,
 }: {
   notice: RewardNotice;
   dismiss: () => void;
   reduced: boolean;
+  hideDiscovery?: boolean;
 }) {
   const { width, height } = useWindowDimensions();
   const small = notice.kind === "discovery";
@@ -25,22 +35,24 @@ export function RewardCelebration({
     notice.kind === "achievement"
       ? achievements.find((entry) => notice.id === `achievement-${entry.id}`)
       : undefined;
-  const title = achievement ? achievementName(achievement) : notice.title;
+  const reachedLevel =
+    notice.kind === "level" ? notice.id.slice("level-".length) : null;
+  const title = reachedLevel
+    ? accountText(
+        `${reachedLevel}. seviyeye ulaştın!`,
+        `You reached level ${reachedLevel}!`,
+      )
+    : achievement
+      ? achievementName(achievement)
+      : notice.title;
   useEffect(() => {
     if (!small) return;
     const timer = setTimeout(dismiss, 2000);
     return () => clearTimeout(timer);
   }, [notice.id, small, dismiss]);
-  const w = Math.min(width - 32, 360),
-    h = small ? 100 : 330;
-  const rewards = [
-    notice.gold ? `+${notice.gold} altın` : "",
-    notice.gems ? `+${notice.gems} elmas` : "",
-    notice.energy ? `+${notice.energy} enerji` : "",
-    notice.xp ? `+${notice.xp} XP` : "",
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  if (small && hideDiscovery) return null;
+  const w = Math.min(width - 32, 360);
+  const portraitHeight = Math.min(132, height * 0.18);
   return (
     <View
       testID="rewardCelebration"
@@ -52,62 +64,105 @@ export function RewardCelebration({
         justifyContent: small ? "flex-end" : "center",
         alignItems: "center",
         paddingBottom: small ? Math.max(80, height * 0.1) : 0,
-        backgroundColor: small ? "transparent" : "#10241988",
+        backgroundColor: small ? "transparent" : "#071619cc",
       }}
     >
       <Animated.View
         key={notice.id}
-        entering={reduced ? undefined : FadeIn.duration(160)}
+        entering={
+          reduced
+            ? undefined
+            : small
+              ? FadeIn.duration(160)
+              : ZoomIn.duration(240)
+        }
         exiting={reduced ? undefined : FadeOut.duration(120)}
         style={{
           width: w,
-          minHeight: h,
-          padding: small ? 16 : 28,
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 10,
         }}
       >
-        <PagePaper width={w} height={h} rolled />
-        {small ? (
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-            {notice.itemID && <Item id={notice.itemID} size={55} />}
-            <View style={{ flex: 1 }}>
-              <Label title size={18}>
-                {title}
-              </Label>
-              <Label size={12}>{rewards}</Label>
-            </View>
-          </View>
-        ) : (
-          <>
-            {notice.ornament ? (
-              <RouteIcon kind={notice.ornament} size={72} />
-            ) : (
-              <Sprite
-                kind="icons"
-                index={notice.kind === "level" ? 5 : 6}
-                size={72}
+        {!small && (
+          <View
+            pointerEvents="none"
+            accessible={false}
+            style={{ height: portraitHeight, marginBottom: -8 }}
+          >
+            {!reduced && <RewardFireworks width={w} />}
+            <Animated.View
+              entering={reduced ? undefined : FadeInUp.duration(270)}
+              style={{ position: "absolute", inset: 0, alignItems: "center" }}
+            >
+              <Image
+                source={require("../../assets/art/tutorial/reward-celebration-duo.png")}
+                style={{ width: "86%", height: portraitHeight + 2 }}
+                resizeMode="contain"
               />
-            )}
-            <Label title size={25} style={{ textAlign: "center" }}>
-              {title}
-            </Label>
-            {!!notice.message && (
-              <Label size={13} style={{ textAlign: "center" }}>
-                {notice.message}
-              </Label>
-            )}
-            <Label size={16} style={{ textAlign: "center" }}>
-              {rewards}
-            </Label>
-            <ActionButton
-              text="Harika!"
-              testID="dismissReward"
-              onPress={dismiss}
-            />
-          </>
+            </Animated.View>
+          </View>
         )}
+        <ModalCard reduced compact={small}>
+          <View style={{ alignItems: "center", gap: small ? 4 : 12 }}>
+            {small ? (
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 12 }}
+              >
+                {notice.itemID && <Item id={notice.itemID} size={55} />}
+                <View style={{ flex: 1 }}>
+                  <Label title size={18}>
+                    {title}
+                  </Label>
+                  <RewardAmounts reward={notice} size={12} />
+                </View>
+              </View>
+            ) : (
+              <>
+                {notice.kind === "level" ? (
+                  <View
+                    style={{
+                      borderRadius: 44,
+                      borderWidth: 3,
+                      borderColor: "#f7c66c",
+                      backgroundColor: "#214963",
+                      width: 86,
+                      height: 86,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Label title size={37} color="#fff1bb">
+                      {reachedLevel}
+                    </Label>
+                  </View>
+                ) : notice.ornament ? (
+                  <RouteIcon kind={notice.ornament} size={72} />
+                ) : (
+                  <Sprite kind="icons" index={6} size={72} />
+                )}
+                <Label title size={25} style={{ textAlign: "center" }}>
+                  {title}
+                </Label>
+                {!!notice.message && (
+                  <Label size={13} style={{ textAlign: "center" }}>
+                    {notice.message}
+                  </Label>
+                )}
+                <RewardAmounts
+                  reward={notice}
+                  size={notice.kind === "level" ? 28 : 16}
+                />
+                <ActionButton
+                  text={
+                    notice.kind === "level"
+                      ? accountText("Devam et", "Continue")
+                      : "Harika!"
+                  }
+                  testID="dismissReward"
+                  onPress={dismiss}
+                />
+              </>
+            )}
+          </View>
+        </ModalCard>
       </Animated.View>
     </View>
   );

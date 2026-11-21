@@ -43,6 +43,7 @@ export type Page = {
   variant?: "producer" | "collection";
   index?: number;
   id?: string;
+  itemID?: string;
   cityID?: string;
   accountDeleted?: boolean;
 };
@@ -58,7 +59,7 @@ const titles = {
   "order-guide": "Üretim Rehberi",
   producer: "Üretici",
   info: "Eşya",
-  energy: "Enerji hediyesi",
+  energy: "Enerji al",
   achievement: "Başarı",
   achievements: "Başarılar",
 };
@@ -121,6 +122,7 @@ export const Pages = memo(function Pages({
         page.kind === "achievement" ? backToAchievements() : close()
       }
       routeKey={`${page.kind}:${page.variant ?? ""}:${page.id ?? page.index ?? ""}`}
+      dimmed={page.kind === "achievement"}
       scroll={page.kind !== "cities" && page.kind !== "achievements"}
       onBodyHeight={setBodyHeight}
     >
@@ -143,7 +145,7 @@ export const Pages = memo(function Pages({
         />
       )}
       {page.kind === "order-guide" && page.id && (
-        <OrderGuide key={page.id} id={page.id} save={save} onBoard={close} />
+        <OrderGuide key={page.itemID ?? page.id} id={page.id} itemID={page.itemID} save={save} onBoard={close} />
       )}
       {page.kind === "producer" && (
         <ProducerDetails
@@ -172,7 +174,7 @@ export const Pages = memo(function Pages({
         <OrdersPage
           save={save}
           onDeliver={(id) => act({ type: "deliver", id })}
-          onGuide={(id) => open({ kind: "order-guide", id })}
+          onGuide={(id, itemID) => open({ kind: "order-guide", id, itemID })}
         />
       )}
       {page.kind === "cities" && (
@@ -258,7 +260,15 @@ export const Pages = memo(function Pages({
           );
         })()}
       {page.kind === "energy" && (
-        <EnergyAdPanel save={save} page onCancel={close} />
+        <EnergyAdPanel
+          save={save}
+          page
+          onCancel={close}
+          onBuy={() => {
+            if (act({ type: "exchange", id: "energy25" })?.kind === "reward")
+              close();
+          }}
+        />
       )}
       {page.kind === "market" && (
         <Market

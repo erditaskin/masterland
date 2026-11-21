@@ -1,3 +1,4 @@
+import { FirstRunGuide } from "./ui/FirstRunGuide";
 import { boardCapacity, boardColumns } from "./game/grid";
 import { PresentationPage } from "./ui/PresentationPage";
 import { presentationRailOrders } from "./game/presentationFixture";
@@ -51,6 +52,8 @@ import { useGameAudio } from "./ui/useGameAudio";
 import { Board } from "./ui/Board";
 import { prioritizeOrderRail, orderItemHighlights } from "./ui/orderRail";
 import { useReadyPulse } from "./ui/ReadyGlow";
+import { belenyakaLayout, belenyakaRect, producerTileMetrics } from "./ui/belenyakaLayout";
+import type { FocusRect } from "./ui/GuideSpotlight";
 import { fitReferenceBoard } from "./ui/layout";
 import { PowerMenu, type PowerAnchor } from "./ui/PowerMenu";
 import { Label, ActionButton } from "./ui/Controls";
@@ -61,6 +64,7 @@ import {
   energyCap,
   energyIntervalMs,
   city,
+  cityProducers,
   count,
   name,
   orders,
@@ -135,7 +139,7 @@ function Game({
     void loadLanguage().catch(() => undefined);
   }, []);
   const snapshot = useSyncExternalStore(gameStore.subscribe, gameStore.get),
-    { save, ready, error, result, revision, review } = snapshot;
+    { save, ready, error, result, revision, review, tutorialPractice } = snapshot;
   const guestInitialized = useRef(false);
   useEffect(() => {
     if (!ready) return;
@@ -166,6 +170,7 @@ function Game({
   const uiSound = useCallback(() => playAudio("tap"), [playAudio]);
   const open = useCallback(
       (p: Page) => {
+        if (gameStore.get().tutorialPractice) return;
         uiSound();
         setPowerMenu(null);
         setPage(p);
@@ -361,9 +366,22 @@ function Game({
     );
     return () => clearTimeout(timer);
   }, [result, revision]);
+  const lastGold = useRef(save.gold);
+  const celebration = save.rewardQueue?.[0];
+  const celebrationID = celebration?.kind === "achievement" || celebration?.kind === "level" ? celebration.id : undefined;
+  const lastCelebration = useRef<string | undefined>(undefined);
   useEffect(() => {
-    if (result) playAudio(result.kind);
-  }, [result, revision, playAudio]);
+    if (celebrationID === lastCelebration.current) return;
+    lastCelebration.current = celebrationID;
+    if (celebrationID) playAudio("achievement");
+  }, [celebrationID, playAudio]);
+  useEffect(() => {
+    const goldChanged = lastGold.current !== save.gold;
+    lastGold.current = save.gold;
+    if (!result) return;
+    if (goldChanged && result.kind !== "blocked") playAudio("gold");
+    if (!goldChanged || result.kind === "produce" || result.kind === "merge") playAudio(result.kind);
+  }, [result, revision, playAudio, save.gold]);
   useEffect(() => {
     if (error) SplashScreen.hide();
   }, [error]);
@@ -468,6 +486,39 @@ function Game({
     () => orderItemHighlights(activeOrders, save),
     [activeOrders, save],
   );
+  const guideStep = save.onboarding;
+  const matchingWheat = guideStep === "merge"
+    ? activeBoard.flatMap((tile, i) => tile?.item === "item1" ? [i] : []).slice(0, 2)
+    : [];
+  const waitingForPair = guideStep === "merge" && matchingWheat.length < 2;
+  const waitingForOrder = guideStep === "deliver" && readyOrderItems.size === 0;
+  const guideOrderNeedsWheat = waitingForOrder && activeOrders.some((order) =>
+    order.requirements.every((requirement) =>
+      count(save, requirement.item_id) + (requirement.item_id === "item1" ? 1 : 0) >= requirement.quantity,
+    ),
+  );
+  const px = width / 1206;
+  const shelf = belenyakaRect(belenyakaLayout.shelf, width, height);
+  const [shelfX, shelfY] = shelf;
+  const tile = producerTileMetrics(shelf, cityProducers(save).length, true);
+  const producerFocus: FocusRect = [(shelfX + tile.inset) * px, (shelfY + tile.top) * px + layout.producerOffset, tile.width * px, tile.height * px];
+  const [railX, railY, railW, railH] = belenyakaRect(belenyakaLayout.orders, width, height);
+  let guideFocus: FocusRect[] = [];
+  if (guideStep === "produce" || waitingForPair || guideOrderNeedsWheat) {
+    guideFocus = [producerFocus];
+  } else if (guideStep === "deliver" && !waitingForOrder) {
+    const order = activeOrders[0]!;
+    const orderWidth = (railW - 16) / 3.75 * (1 + 0.25 * (order.requirements.length - 1));
+    guideFocus = [[railX * px, railY * px, orderWidth * px, railH * px]];
+  } else if (matchingWheat.length === 2) {
+    const columns = boardColumns(save.cityID);
+    guideFocus = matchingWheat.map((i) => [
+      layout.boardLeft + frameInset + (i % columns) * cellWidth,
+      boardTop + frameInset + Math.floor(i / columns) * cellHeight,
+      cellWidth,
+      cellHeight,
+    ]);
+  }
   const readyPulse = useReadyPulse(
     !page && readyOrderItems.size > 0,
     reduced || save.reducedMotion,
@@ -565,9 +616,11 @@ function Game({
               <IdleHint
                 key={save.cityID}
                 save={save}
+                orders={activeOrders}
                 reduced={reduced || save.reducedMotion}
                 enabled={
                   !page &&
+                  (review && !tutorialPractice || !guideStep || guideStep === "done") &&
                   !powerMenu &&
                   !save.rewardQueue?.length
                 }
@@ -696,14 +749,32 @@ function Game({
           <ActionButton text="Tekrar dene" onPress={gameStore.retry} />
         </View>
       )}
+      {(!review || tutorialPractice) && !page && (!save.rewardQueue?.[0] || save.rewardQueue[0].kind === "discovery") && !powerMenu && (
+        <FirstRunGuide
+          step={guideStep}
+          practice={Boolean(tutorialPractice)}
+          focus={guideFocus}
+          waitingForPair={waitingForPair}
+          waitingForOrder={waitingForOrder}
+          orderNeedsWheat={guideOrderNeedsWheat}
+          gift={save.welcomeEnergy === "pending"}
+          powerHint={(save.onboarding === undefined || save.onboarding === "done") && !save.powerHintSeen && save.stamina > 100}
+          top={top + 4}
+          reduced={reduced || save.reducedMotion}
+          dispatch={dispatch}
+          openEnergy={() => open({ kind: "energy" })}
+          openAccount={() => open({ kind: "profile" })}
+        />
+      )}
       {!!save.rewardQueue?.[0] && (
         <RewardCelebration
           notice={save.rewardQueue[0]}
+          hideDiscovery={(!review || Boolean(tutorialPractice)) && !!guideStep && guideStep !== "done"}
           dismiss={dismissReward}
           reduced={reduced || save.reducedMotion}
         />
       )}
-      {review && !presentation && (
+      {review && !tutorialPractice && !presentation && (
         <Text
           testID="visualReviewMarker"
           pointerEvents="none"

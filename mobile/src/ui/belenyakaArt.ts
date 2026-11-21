@@ -31,10 +31,10 @@ export const belenyakaArt = {
   ],
   give: require("../../assets/art/belenyaka-html/ilan-ver-dugmesi.png"),
   producers: [
-    require("../../assets/art/belenyaka-html/uretici-1.png"),
-    require("../../assets/art/belenyaka-html/uretici-2.png"),
-    require("../../assets/art/belenyaka-html/uretici-3.png"),
-    require("../../assets/art/belenyaka-html/uretici-4.png"),
-    require("../../assets/art/belenyaka-html/uretici-5.png"),
+    require("../../assets/art/producer-hd/city1-1.jpg"),
+    require("../../assets/art/producer-hd/city1-2.jpg"),
+    require("../../assets/art/producer-hd/city1-3.jpg"),
+    require("../../assets/art/producer-hd/city1-4.jpg"),
+    require("../../assets/art/producer-hd/city1-5.jpg"),
   ],
 };

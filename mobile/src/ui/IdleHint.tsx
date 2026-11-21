@@ -10,12 +10,13 @@ import Animated, {
   cancelAnimation,
 } from "react-native-reanimated";
 import { idleHint } from "../game/idleHint";
-import { type Save } from "../game/engine";
+import { type Order, type Save } from "../game/engine";
 import { Item } from "./Art";
 import { Label } from "./Controls";
 /** One timeout and one UI-thread animation. No game action is dispatched. */
 export function IdleHint({
   save,
+  orders,
   enabled,
   reduced,
   activity,
@@ -26,6 +27,7 @@ export function IdleHint({
   width,
 }: {
   save: Save;
+  orders: readonly Order[];
   enabled: boolean;
   reduced: boolean;
   activity: number;
@@ -58,8 +60,8 @@ export function IdleHint({
   const visible =
     enabled && !touching && foreground && activation?.activity === activity;
   const hint = useMemo(
-    () => (visible && activation ? idleHint(save, activation.at) : null),
-    [visible, activation, save],
+    () => (visible && activation ? idleHint(save, activation.at, orders) : null),
+    [visible, activation, save, orders],
   );
   const hasHint = !!hint;
   const phase = useSharedValue(0);

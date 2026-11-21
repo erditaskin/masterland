@@ -1,16 +1,18 @@
-import {
-  canDeliver,
-  count,
-  product,
-  type Save,
-  type Order,
-} from "../game/engine";
+import { product, type Order, type Save } from "../game/engine";
+import { orderProgress } from "../game/orderProgress";
+
+export { orderItemHighlights } from "../game/orderProgress";
+
+export function ordersByProgress<T extends Order>(input: T[], save: Save) {
+  return orderProgress(input, save).sort(
+    (a, b) =>
+      Number(b.ready) - Number(a.ready) ||
+      b.fulfilled * a.total - a.fulfilled * b.total,
+  );
+}
+
 export function readyOrdersFirst<T extends Order>(input: T[], save: Save): T[] {
-  const ready: T[] = [],
-    waiting: T[] = [];
-  for (const order of input)
-    (canDeliver(save, order) ? ready : waiting).push(order);
-  return [...ready, ...waiting];
+  return ordersByProgress(input, save).map(({ order }) => order);
 }
 
 /** Keep the main order first; expose available production variety before duplicates. */
@@ -36,19 +38,4 @@ export function prioritizeOrderRail(input: Order[], save?: Save): Order[] {
   }
   const ordered = [...result, ...remaining];
   return save ? readyOrdersFirst(ordered, save) : ordered;
-}
-
-/** Fulfilled individual requirements stay distinct from fully deliverable orders. */
-export function orderItemHighlights(input: Order[], save: Save) {
-  const ready = new Set<string>(),
-    partial = new Set<string>();
-  for (const order of input) {
-    const complete = canDeliver(save, order);
-    for (const requirement of order.requirements) {
-      if (count(save, requirement.item_id) >= requirement.quantity)
-        (complete ? ready : partial).add(requirement.item_id);
-    }
-  }
-  for (const id of ready) partial.delete(id);
-  return { ready, partial };
 }

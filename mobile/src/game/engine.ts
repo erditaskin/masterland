@@ -190,6 +190,9 @@ export interface Save {
   boardLayoutVersion?: 2;
   progressionVersion?: 2;
   testOnly?: boolean;
+  onboarding?: "welcome" | "produce" | "merge" | "deliver" | "energy" | "done";
+  welcomeEnergy?: "available" | "pending" | "claimed";
+  powerHintSeen?: boolean;
   xp: number;
   gold: number;
   gems: number;
@@ -239,7 +242,9 @@ export function fresh(now: number): Save {
     ...(testModeEnabled ? { testOnly: true } : {}),
     xp: 0,
     gold: 0,
-    gems: 0,
+    gems: 25,
+    onboarding: "welcome",
+    welcomeEnergy: "available",
     stamina: 100,
     staminaCapacity: 100,
     claimedAchievements: [],
@@ -281,6 +286,13 @@ export const count = (s: Save, id: string) => {
     if (tile?.item === id) total++;
   return total;
 };
+export function cityOrderStage(s: Save): number {
+  const { introIndex, repeatIndex } = city(s);
+  const delivered = introIndex + repeatIndex;
+  const startingStage = s.cityID === "city1" && level(s) >= 6 ? 5 : 1;
+  return Math.max(startingStage, 1 + Math.floor(delivered / 2));
+}
+
 export function orders(s: Save): Order[] {
   const c = city(s),
     l = level(s),
@@ -293,48 +305,50 @@ export function orders(s: Save): Order[] {
     )
   )
     result.push(opening);
-  const available = cityProducers(s)
-    .filter((p) => c.owned.includes(p.id))
-    .flatMap((p) => p.products)
-    .filter(
-      (p) =>
-        p.tier <= Math.min(5, 2 + Math.floor(l / 3)) ||
-        s.discoveries.includes(p.id),
-    );
-  for (let i = 0; i < 5 && available.length; i++) {
-    // Keep one quick, base-product order so expensive upper tiers cannot stall play.
-    const quick = available.filter((p) => p.tier === 1);
-    const groups = [...new Set(available.map((p) => p.producer))];
-    const group = available.filter(
-      (p) => p.producer === groups[(c.repeatIndex + i) % groups.length],
-    );
-    const p = (
-        i === 0 && quick.length
-          ? quick[c.repeatIndex % quick.length]
-          : group[
-              (c.repeatIndex + Math.floor(i / groups.length)) % group.length
-            ]
-      )!,
-      m =
-        s.mastery[
-          producerProfession.get(producerCatalog[p.producer]!.id) ?? ""
-        ] ?? 0,
-      q = 1 + Math.min(2, Math.floor(l / 5));
-    const different = available.filter((item) => item.producer !== p.producer);
-    const wanted = i === 0 || l < 3 ? 1 : i % 2 === 0 ? 3 : 2;
-    const requirements = [{ item_id: p.id, quantity: q }];
-    for (const candidate of [
-      ...different.slice((c.repeatIndex + i) % Math.max(1, different.length)),
-      ...different,
-    ]) {
-      if (requirements.length >= wanted) break;
-      if (
-        requirements.some(
-          (r) => product(r.item_id).producer === candidate.producer,
-        )
-      )
-        continue;
-      requirements.push({ item_id: candidate.id, quantity: 1 });
+  const stage = cityOrderStage(s);
+  const bands = [4, 8, 13, 20, 30, 45];
+  const band = bands.findIndex((end) => stage <= end);
+  const target = band === -1 ? 7 : band + 1;
+  const groups = cityProducers(s).filter((p) => c.owned.includes(p.id));
+  // Once players can merge, keep Tier 1 out of the ordinary order pool.
+  const minimum = stage >= 5 ? Math.max(2, target - 1) : 1;
+  const highest = Math.max(0, ...groups.map((p) => p.products.length));
+  const floor = Math.min(minimum, highest);
+  const eligible = groups.filter((p) => p.products.length >= floor);
+  const nextTier = stage <= 4 ? c.repeatIndex % 4 === 0 : c.repeatIndex % 3 === 0;
+  const basicInterval = stage - 3;
+  const offerBasic = stage >= 5 && stage <= 8 && c.repeatIndex % basicInterval === 0;
+
+  for (let i = 0; i < 5 && eligible.length; i++) {
+    const offset = c.repeatIndex + i;
+    const primary = eligible[offset % eligible.length]!;
+    const ceiling = Math.min(primary.products.length, target + 1);
+    const tier = i === 0 && offerBasic
+      ? 1
+      : i === 0 && target >= 3
+        ? floor
+        : i === 4 && nextTier
+          ? ceiling
+          : Math.min(target, ceiling);
+    const p = primary.products[tier - 1]!;
+    const m = s.mastery[producerProfession.get(primary.id) ?? ""] ?? 0;
+    const quantity = tier === 1 || tier >= 4 ? 1 : 1 + (offset % 2);
+    const requirements = [{ item_id: p.id, quantity }];
+    const early = stage <= 4;
+    const triple = stage >= 9 && (stage >= 21 || c.repeatIndex % 3 === 0);
+    const wanted = i === 0 || (early && i === 4) ? 1 : i === 4 && triple ? 3 : 2;
+    // A mixed order adds smaller items without multiplying its main merge cost.
+    let extraBudget = Math.max(2 ** floor, 2 ** (target - 1));
+    for (let step = 1; step < eligible.length && requirements.length < wanted; step++) {
+      const other = eligible[(offset + step) % eligible.length]!;
+      const extraTier = Math.min(
+        other.products.length,
+        i === 4 ? floor : target,
+        1 + Math.floor(Math.log2(extraBudget)),
+      );
+      if (extraTier < floor) break;
+      requirements.push({ item_id: other.products[extraTier - 1]!.id, quantity: 1 });
+      extraBudget -= 2 ** (extraTier - 1);
     }
     result.push({
       id: `${s.cityID}-repeat-${c.repeatIndex}-${i}`,
@@ -363,6 +377,7 @@ export function orders(s: Save): Order[] {
 export const canDeliver = (s: Save, o: Order) =>
   o.requirements.every((r) => count(s, r.item_id) >= r.quantity);
 export type Action =
+  | { type: "onboarding-start" | "onboarding-replay" | "onboarding-finish" | "welcome-energy" | "power-hint-seen" }
   | { type: "produce"; id: string }
   | { type: "power"; id: string; mode: number }
   | { type: "energy-capacity" }
@@ -443,6 +458,11 @@ export const productionPowerCosts = reference.energy_design.power_costs;
 // Compatibility export: this is a passive refill limit, never a wallet capacity.
 export const energyCap = (_s: Save) => 100;
 export const energyUpgradeCost = (_s: Save) => 3;
+export function nextEnergySeconds(s: Save, now: number): number | null {
+  if (s.stamina >= 100) return null;
+  const elapsed = Math.max(0, now - s.energyAt);
+  return Math.ceil((energyIntervalMs - elapsed % energyIntervalMs) / 1000);
+}
 export function energyCountdown(s: Save, now: number) {
   if (s.stamina >= 100) return "";
   const seconds = Math.max(
@@ -831,6 +851,27 @@ export function transition(
     }
   };
   switch (action.type) {
+    case "onboarding-replay":
+      if (s.cityID !== "city1") return blocked("");
+      s.onboarding = "welcome";
+      return done("none", "");
+    case "onboarding-start":
+      if (s.onboarding !== "welcome") return blocked("");
+      s.onboarding = "produce";
+      return done("none", "");
+    case "onboarding-finish":
+      if (!s.onboarding || s.onboarding === "done") return blocked("");
+      s.onboarding = "done";
+      return done("none", "");
+    case "welcome-energy":
+      if (s.welcomeEnergy !== "pending") return blocked("");
+      s.welcomeEnergy = "claimed";
+      grantEnergy(s, 0, 100, now);
+      return done("reward", "+100 enerji");
+    case "power-hint-seen":
+      if (s.powerHintSeen) return blocked("");
+      s.powerHintSeen = true;
+      return done("none", "");
     case "dismiss-reward": {
       if (s.rewardQueue?.[0]?.id !== action.id) return blocked("");
       s.rewardQueue.shift();
@@ -955,6 +996,10 @@ export function transition(
       if (s.stamina < plan.cost) return blocked("Dayanıklılık yenileniyor.");
       if (s.stamina >= 100) s.energyAt = now;
       s.stamina -= plan.cost;
+      if (s.stamina === 0 && s.welcomeEnergy === "available")
+        s.welcomeEnergy = "pending";
+      if (s.onboarding === "produce" && s.cityID === "city1")
+        s.onboarding = "merge";
       const item = plan.product.id;
       c.board[i] = tile(s, item);
       const b = c.batches[p.id] ?? {
@@ -1062,6 +1107,8 @@ export function transition(
       c.board[from] = null;
       c.board[to] = tile(s, next.id);
       discover(next.id);
+      if (s.onboarding === "merge" && s.cityID === "city1")
+        s.onboarding = "deliver";
       return done("merge", "", from, to);
     }
     case "deliver": {
@@ -1092,6 +1139,8 @@ export function transition(
           quantity: r.quantity,
         })),
       );
+      if (s.onboarding === "deliver" && s.cityID === "city1")
+        s.onboarding = "energy";
       s.gold += o.gold;
       s.xp += o.xp;
       s.titles = Array.from(new Set([...s.titles, ...o.titles]));
@@ -1217,6 +1266,9 @@ export function validateSave(value: unknown): value is Save {
         ) ||
         new Set(s.claimedAchievements).size !==
           s.claimedAchievements.length)) ||
+    (s.onboarding !== undefined && !["welcome", "produce", "merge", "deliver", "energy", "done"].includes(s.onboarding)) ||
+    (s.welcomeEnergy !== undefined && !["available", "pending", "claimed"].includes(s.welcomeEnergy)) ||
+    (s.powerHintSeen !== undefined && typeof s.powerHintSeen !== "boolean") ||
     (s.rewardQueue !== undefined &&
       (!Array.isArray(s.rewardQueue) ||
         !s.rewardQueue.every(

@@ -1,3 +1,4 @@
+import { fulfilledRequirementColor, fulfilledRequirementBorder } from "../game/orderProgress";
 import { BOARD_ROWS } from "../game/grid";
 import { displayText } from "../i18n/display";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
@@ -212,12 +213,12 @@ function OrderHighlight({
           borderRadius: 8,
           backgroundColor: ready
             ? "rgba(157, 255, 72, 0.33)"
-            : "rgba(29, 72, 37, 0.43)",
+            : fulfilledRequirementColor,
           backgroundImage: ready
             ? "linear-gradient(135deg, rgba(109, 232, 46, 0.36) 0%, rgba(187, 255, 120, 0.20) 50%, rgba(109, 232, 46, 0.36) 100%)"
             : undefined,
           borderWidth: ready ? 1.1 : 0.6,
-          borderColor: ready ? "#96f23b" : "#496e39",
+          borderColor: ready ? "#96f23b" : fulfilledRequirementBorder,
         },
         visibility,
       ]}

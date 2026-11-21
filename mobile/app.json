@@ -2,7 +2,7 @@
   "expo": {
     "name": "Masterland",
     "slug": "masterland",
-    "version": "1.0",
+    "version": "1.0.1",
     "scheme": "masterland",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
         "UIStatusBarHidden": true
       },
       "appleTeamId": "F3F723W4SF",
-      "buildNumber": "4"
+      "buildNumber": "6"
     },
     "plugins": [
       "expo-asset",

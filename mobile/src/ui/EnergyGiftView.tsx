@@ -1,3 +1,5 @@
+import { exchanges } from "../game/engine";
+import { accountText as tx } from "../i18n/locale";
 import { DesignContent } from "./DesignContent";
 import { DesignText } from "./DesignSpace";
 import { ChromeSprite } from "./GameChrome";
@@ -12,6 +14,7 @@ export function EnergyGiftView({
   message,
   onWatch,
   onCancel,
+  purchase,
 }: {
   used: number;
   text: string;
@@ -19,19 +22,22 @@ export function EnergyGiftView({
   message?: string;
   onWatch: () => void;
   onCancel: () => void;
+  purchase?: { balance: number; onPress: () => void };
 }) {
+  const offer = exchanges.find(({ id }) => id === "energy25")!;
+  const offset = purchase ? 170 : 0;
   return (
-    <DesignContent end={message ? 2580 : 2300}>
+    <DesignContent end={(message ? 2580 : 2300) + offset}>
       <ChromeSprite index={5} rect={[372, 760, 462, 462]} />
       <DesignText rect={[90, 1250, 1026, 156]} size={100} bold align="center">
         +25 enerji
       </DesignText>
       <DesignText rect={[110, 1430, 986, 90]} size={43} align="center">
-        İsteğe bağlı reklamı tamamla.
+        {tx("Reklam izle veya elmas kullan.", "Watch an ad or use gems.")}
       </DesignText>
       <PaperCard designRect={[250, 1570, 706, 132]} />
       <DesignText rect={[250, 1570, 706, 132]} size={39} bold align="center">
-        Günlük hediyeler: {used}/4
+        {tx(`Günlük reklam ödülleri: ${used}/4`, `Daily ad rewards: ${used}/4`)}
       </DesignText>
       <AppButton
         designRect={[90, 1770, 1026, 132]}
@@ -40,17 +46,30 @@ export function EnergyGiftView({
         testID="watchEnergyAd"
         onPress={onWatch}
       />
+      {purchase && (
+        <AppButton
+          designRect={[90, 1940, 1026, 132]}
+          text={tx(
+            `${offer.gems} elmas · +${offer.energy} enerji`,
+            `${offer.gems} gems · +${offer.energy} energy`,
+          )}
+          tone="secondary"
+          disabled={purchase.balance < offer.gems}
+          testID="buyEnergyGems"
+          onPress={purchase.onPress}
+        />
+      )}
       <AppButton
-        designRect={[240, 1940, 726, 132]}
+        designRect={[240, 1940 + offset, 726, 132]}
         text="Vazgeç"
         tone="secondary"
         onPress={onCancel}
       />
-      <DesignText rect={[110, 2160, 986, 110]} size={37} align="center">
+      <DesignText rect={[110, 2160 + offset, 986, 110]} size={37} align="center">
         Reklam tamamlanmadan ödül verilmez.
       </DesignText>
       {message && (
-        <DesignText rect={[110, 2320, 986, 210]} size={38} align="center">
+        <DesignText rect={[110, 2320 + offset, 986, 210]} size={38} align="center">
           {message}
         </DesignText>
       )}

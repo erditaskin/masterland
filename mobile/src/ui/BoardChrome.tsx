@@ -1,10 +1,9 @@
+import { orderProgress, fulfilledRequirementColor, fulfilledRequirementBorder } from "../game/orderProgress";
 import { memo, useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
 import { PixelRatio, ScrollView, View, type ImageSourcePropType } from "react-native";
 import {
-  canDeliver,
   city,
   cityProducers,
-  count,
   level,
   name,
   productionPlan,
@@ -271,6 +270,12 @@ function ProductionTile({
           rect={[x + w * 0.29, statusIconTop, statusIconSize, statusIconSize]}
         />
       )}
+      {owned && (
+        <DesignText rect={[x + w * 0.60, y + 4, w * 0.36, 34]}
+          size={23} fit bold align="center" color="#fff0c2" accessible={false}>
+          {`${plan.cost}×`}
+        </DesignText>
+      )}
       <View
         ref={anchor}
         collapsable={false}
@@ -327,21 +332,17 @@ export const BoardChrome = memo(function BoardChrome({
   onDeliver: (id: string) => void;
 }) {
   const orderScroll = useRef<ComponentRef<typeof ScrollView>>(null);
+  const progress = useMemo(() => orderProgress(orders, save), [orders, save]);
   const readyIDs = useMemo(
-    () =>
-      new Set(
-        orders
-          .filter((order) => canDeliver(save, order))
-          .map((order) => order.id),
-      ),
-    [orders, save],
+    () => new Set(progress.filter(({ ready }) => ready).map(({ order }) => order.id)),
+    [progress],
   );
   const previousReady = useRef<ReadonlySet<string>>(new Set());
   useEffect(() => {
-    if ([...readyIDs].some((id) => !previousReady.current.has(id)))
+    if (save.onboarding === "deliver" && readyIDs.size || [...readyIDs].some((id) => !previousReady.current.has(id)))
       orderScroll.current?.scrollTo({ x: 0, animated: false });
     previousReady.current = readyIDs;
-  }, [readyIDs]);
+  }, [readyIDs, save.onboarding]);
   const scale = width / 1206,
     cityList = cityProducers(save);
   const theme = useCityTheme();
@@ -541,8 +542,7 @@ export const BoardChrome = memo(function BoardChrome({
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ gap: orderGap * scale }}
           >
-            {orders.map((order) => {
-              const ready = readyIDs.has(order.id);
+            {progress.map(({ order, ready, requirements }) => {
               const w = standardArt
                 ? orderUnit *
                   (1 + 0.25 * Math.max(0, order.requirements.length - 1))
@@ -568,8 +568,8 @@ export const BoardChrome = memo(function BoardChrome({
                 ? standardArt?.order
                 : standardArt?.orderMissing;
               return (
+                <View key={order.id} style={{ width: w * scale, height: orderRail[3] * scale }}>
                 <Button
-                  key={order.id}
                   testID={"order-" + order.id}
                   label={`${order.requirements.map((r) => r.quantity + " " + name(r.item_id)).join(", ")}, ${order.gold} altın, ${order.xp} XP${ready ? ", Hazır, Ver" : ""}`}
                   onPress={() => onDeliver(order.id)}
@@ -607,12 +607,21 @@ export const BoardChrome = memo(function BoardChrome({
                           variant="order"
                         />
                       )}
-                      {order.requirements.map((r, i) => (
+                      {requirements.map((r, i) => (
                         <View
                           key={r.item_id}
                           pointerEvents="none"
                           style={{ position: "absolute", inset: 0 }}
                         >
+                          {!ready && r.available === r.quantity && (
+                            <DesignSurface
+                              rect={[itemLeft + i * slotWidth, cardHeight * 0.08, itemWidth, cardHeight * 0.86]}
+                              radius={10}
+                              fill={fulfilledRequirementColor}
+                              stroke={fulfilledRequirementBorder}
+                              line={1}
+                            />
+                          )}
                           <DesignItem
                             id={r.item_id}
                             rect={[
@@ -634,7 +643,7 @@ export const BoardChrome = memo(function BoardChrome({
                             align="center"
                             bold
                           >
-                            {Math.min(count(save, r.item_id), r.quantity)}/
+                            {r.available}/
                             {r.quantity}
                           </DesignText>
                         </View>
@@ -715,6 +724,14 @@ export const BoardChrome = memo(function BoardChrome({
                     </DesignSpace>
                   </View>
                 </Button>
+                {!ready && requirements.map((r, i) => (
+                  <Button key={r.item_id} label={name(r.item_id)}
+                    children={null} testID={`order-item-${order.id}-${r.item_id}`}
+                    style={{ position: "absolute", left: (itemLeft + i * slotWidth) * scale,
+                      top: 0, width: slotWidth * scale, height: cardHeight * scale }}
+                    onPress={() => open({ kind: "order-guide", id: order.id, itemID: r.item_id })} />
+                ))}
+                </View>
               );
             })}
           </ScrollView>

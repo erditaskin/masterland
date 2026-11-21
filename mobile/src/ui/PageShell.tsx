@@ -16,6 +16,7 @@ export function PageShell({
   scroll = true,
   routeKey,
   onBodyHeight,
+  dimmed = false,
 }: {
   title: string;
   width: number;
@@ -24,6 +25,7 @@ export function PageShell({
   reduced: boolean;
   children: ReactNode;
   scroll?: boolean;
+  dimmed?: boolean;
   routeKey: string;
   onBodyHeight?: (height: number) => void;
 }) {
@@ -46,11 +48,12 @@ export function PageShell({
   return (
     <Animated.View
       testID="fullScreenPage"
-      pointerEvents="box-none"
+      pointerEvents={dimmed ? "auto" : "box-none"}
       style={{
         position: "absolute",
         inset: 0,
         opacity: settled ? undefined : opacity,
+        backgroundColor: dimmed ? "#071619bb" : undefined,
       }}
     >
       <DesignSpace scale={scale}>

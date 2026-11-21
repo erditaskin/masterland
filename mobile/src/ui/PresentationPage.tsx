@@ -88,7 +88,7 @@ export function PresentationPage({
             ? producers[0]!.name
             : view === "achievement"
               ? "Başarı"
-              : "Enerji hediyesi";
+              : "Enerji al";
   return (
     <>
       <PageShell
@@ -198,6 +198,7 @@ export function PresentationPage({
             disabled={false}
             onWatch={noop}
             onCancel={close}
+            purchase={{ balance: save.gems, onPress: noop }}
           />
         )}
       </PageShell>

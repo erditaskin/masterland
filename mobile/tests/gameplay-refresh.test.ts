@@ -46,7 +46,7 @@ test("every chain can be merged to its final tier with zero gold at level one", 
     }
   }
 });
-test("level three generates two and three distinct owned producer requirements", () => {
+test("early orders favor two products and later cities offer at most one triple", () => {
   let s = fresh(now);
   while (level(s) < 3) s.xp++;
   city(s).owned = producers
@@ -55,7 +55,9 @@ test("level three generates two and three distinct owned producer requirements",
     .map((p) => p.id);
   const list = orders(s);
   assert(list.some((o) => o.requirements.length === 2));
-  assert(list.some((o) => o.requirements.length === 3));
+  assert(!list.some((o) => o.requirements.length === 3));
+  city(s).repeatIndex = 18;
+  assert.equal(orders(s).filter((o) => o.requirements.length === 3).length, 1);
   for (const o of list) {
     assert.equal(
       new Set(
@@ -90,17 +92,24 @@ test("insufficient gems do not refresh or charge", () => {
   assert.equal(r.state.gems, 2);
   assert.equal(city(r.state).batches.producer1!.readyAt, now + 1000);
 });
-test("idle hint prioritizes a merge that completes an order and never changes the board", () => {
+test("idle hint skips ready and partially fulfilled requirements", () => {
   const s = fresh(now);
-  city(s).board[0] = { id: "a", item: "item1" };
-  city(s).board[1] = { id: "b", item: "item1" };
+  const chain = producers[0]!.products;
+  for (const [index, tier] of [1, 1, 2, 2, 3, 3].entries()) {
+    city(s).board[index] = { id: "hint-" + index, item: chain[tier - 1]!.id };
+  }
+  const sample = [
+    { ...orders(s)[0]!, requirements: [{ item_id: chain[0]!.id, quantity: 1 }] },
+    { ...orders(s)[1]!, requirements: [
+      { item_id: chain[1]!.id, quantity: 2 },
+      { item_id: chain[3]!.id, quantity: 1 },
+    ] },
+  ];
   const before = JSON.stringify(s);
-  const hint = idleHint(s, now);
-  assert.deepEqual(
-    hint && "from" in hint ? [hint.from, hint.to] : null,
-    [0, 1],
-  );
+  assert.deepEqual(idleHint(s, now, sample), { from: 4, to: 5, item: chain[2]!.id });
   assert.equal(JSON.stringify(s), before);
+  city(s).board[5] = null;
+  assert.deepEqual(idleHint(s, now, sample), { producerID: producers[0]!.id });
 });
 test("idle hint never points to a waiting or energy-starved producer", () => {
   const s = fresh(now);

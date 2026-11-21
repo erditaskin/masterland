@@ -22,11 +22,11 @@ const badincaArt: typeof belenyakaArt = {
   ],
   give: require("../../assets/art/badinca/ilan-ver-dugmesi.png"),
   producers: [
-    require("../../assets/art/badinca/producer-1.png"),
-    require("../../assets/art/badinca/producer-2.png"),
-    require("../../assets/art/badinca/producer-3.png"),
-    require("../../assets/art/badinca/producer-4.png"),
-    require("../../assets/art/badinca/producer-5.png"),
+    require("../../assets/art/producer-hd/city2-1.jpg"),
+    require("../../assets/art/producer-hd/city2-2.jpg"),
+    require("../../assets/art/producer-hd/city2-3.jpg"),
+    require("../../assets/art/producer-hd/city2-4.jpg"),
+    require("../../assets/art/producer-hd/city2-5.jpg"),
   ],
 };
 
@@ -41,11 +41,11 @@ const yalikoruArt: typeof belenyakaArt = {
   navigationSelected: require("../../assets/art/yalikoru/menu-selected.png"),
   orderMissing: badincaArt.orderMissing,
   producers: [
-    require("../../assets/art/yalikoru/producer-1.png"),
-    require("../../assets/art/yalikoru/producer-2.png"),
-    require("../../assets/art/yalikoru/producer-3.png"),
-    require("../../assets/art/yalikoru/producer-4.png"),
-    require("../../assets/art/yalikoru/producer-5.png"),
+    require("../../assets/art/producer-hd/city3-1.jpg"),
+    require("../../assets/art/producer-hd/city3-2.jpg"),
+    require("../../assets/art/producer-hd/city3-3.jpg"),
+    require("../../assets/art/producer-hd/city3-4.jpg"),
+    require("../../assets/art/producer-hd/city3-5.jpg"),
   ],
 };
 
@@ -60,11 +60,11 @@ const ipekyoluArt: typeof belenyakaArt = {
   navigationSelected: undefined,
   orderMissing: badincaArt.orderMissing,
   producers: [
-    require("../../assets/art/ipekyolu/producer-1.png"),
-    require("../../assets/art/ipekyolu/producer-2.png"),
-    require("../../assets/art/ipekyolu/producer-3.png"),
-    require("../../assets/art/ipekyolu/producer-4.png"),
-    require("../../assets/art/ipekyolu/producer-5.png"),
+    require("../../assets/art/producer-hd/city5-1.jpg"),
+    require("../../assets/art/producer-hd/city5-2.jpg"),
+    require("../../assets/art/producer-hd/city5-3.jpg"),
+    require("../../assets/art/producer-hd/city5-4.jpg"),
+    require("../../assets/art/producer-hd/city5-5.jpg"),
   ],
 };
 
@@ -80,11 +80,11 @@ const demirdereArt: typeof belenyakaArt = {
   navigationSelected: undefined,
   orderMissing: badincaArt.orderMissing,
   producers: [
-    require("../../assets/art/demirdere/producer-1.png"),
-    require("../../assets/art/demirdere/producer-2.png"),
-    require("../../assets/art/demirdere/producer-3.png"),
-    require("../../assets/art/demirdere/producer-4.png"),
-    require("../../assets/art/demirdere/producer-5.png"),
+    require("../../assets/art/producer-hd/city4-1.jpg"),
+    require("../../assets/art/producer-hd/city4-2.jpg"),
+    require("../../assets/art/producer-hd/city4-3.jpg"),
+    require("../../assets/art/producer-hd/city4-4.jpg"),
+    require("../../assets/art/producer-hd/city4-5.jpg"),
   ],
 };
 

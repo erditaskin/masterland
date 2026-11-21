@@ -87,19 +87,19 @@ test("Yalıkoru exercises the harbor board in a transient preview", () => {
     orders(fixture)
       .slice(0, 3)
       .map((order) => order.requirements.length),
-    [1, 2, 3],
+    [1, 2, 2],
   );
   const result = transition(fixture, { type: "move", from: 19, to: 20 }, now);
   assert.equal(result.kind, "merge");
   assert.equal(city(result.state).board[20]?.item, "item199");
 });
 
-test("all three standard city boards suggest their nearest mergeable pair", () => {
+test("standard city boards suggest a mergeable pair outside fulfilled orders", () => {
   const now = 1794996000000;
   for (const [view, from, to] of [
     ["board-mixed", 1, 7],
     ["badinca", 6, 7],
-    ["yalikoru", 19, 20],
+    ["yalikoru", 25, 42],
   ] as const) {
     const save = presentationFixture(now, false, view);
     const hint = idleHint(save, now);

@@ -15,6 +15,7 @@ function fixture(
     testMode?: boolean;
     flush?: () => Promise<void>;
     localSyncFailure?: boolean;
+    loadError?: { code: string };
   } = {},
 ) {
   let user: { id: string } | null = { id: owner };
@@ -28,7 +29,7 @@ function fixture(
     privacyForms = 0;
   const accountListeners = new Set<() => void>(),
     cloudListeners = new Set<() => void>();
-  const events = new Map<string, () => void>();
+  const events = new Map<string, (error?: { code: string }) => void>();
   let appStateChanged: ((state: string) => void) | undefined;
   let request: { unit: string; options: any } | null = null;
   const sdk = {
@@ -39,6 +40,10 @@ function fixture(
     }),
     AdsConsent: {
       gatherConsent: async () => { consentRefreshes++; },
+      requestInfoUpdate: async () => {
+        consentRefreshes++;
+        return { privacyOptionsRequirementStatus: options.privacyRequired ? "required" : "none" };
+      },
       showPrivacyOptionsForm: async () => { privacyForms++; },
       getConsentInfo: async () => ({
         canRequestAds: options.consent !== false,
@@ -50,16 +55,19 @@ function fixture(
     AdEventType: { CLOSED: "closed", ERROR: "error" },
     TestIds: { REWARDED: "test-unit" },
     RewardedAd: {
-      createForAdRequest: (unit: string, options: any) => {
-        request = { unit, options };
+      createForAdRequest: (unit: string, requestOptions: any) => {
+        request = { unit, options: requestOptions };
         return {
-          addAdEventListener: (event: string, callback: () => void) => {
+          addAdEventListener: (event: string, callback: (error?: { code: string }) => void) => {
             events.set(event, callback);
             return () => {
               events.delete(event);
             };
           },
-          load: () => events.get("loaded")?.(),
+          load: () => {
+            if (options.loadError) events.get("error")?.(options.loadError);
+            else events.get("loaded")?.();
+          },
           show: async () => {
             shows++;
           },
@@ -237,6 +245,13 @@ test("the privacy action opens the native form when choices are required", async
   await f.service.privacy();
   assert.equal(f.privacyForms(), 1);
 });
+test("privacy status refresh skips the native form when it is not required", async () => {
+  const f = fixture({ privacyRequired: false, verified: false });
+  await f.service.start();
+  await f.service.privacy();
+  assert.equal(f.privacyForms(), 0);
+  assert.equal(f.service.get().privacyRequired, false);
+});
 test("consent refusal prevents loading and showing immediately", async () => {
   const f = fixture({ consent: false, verified: false });
   await f.service.start();
@@ -395,5 +410,17 @@ test("backgrounding before completion frees quota without losing a later verifie
   await settle();
   await settle();
   assert.equal(f.credits(), 1);
+  assert.equal(f.cancellations(), 1);
+});
+
+
+test("no-fill remains visible and releases the live reservation without using allowance", async () => {
+  const f = fixture({ verified: false, loadError: { code: "googleMobileAds/no-fill" } });
+  await f.service.start();
+  assert.equal(await f.service.watch(), false);
+  assert.equal(f.service.get().error, "no-fill");
+  assert.equal(f.service.get().requesting, false);
+  assert.equal(f.service.get().dailyUsed, 0);
+  assert.equal(f.shows(), 0);
   assert.equal(f.cancellations(), 1);
 });

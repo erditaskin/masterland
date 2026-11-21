@@ -1,3 +1,4 @@
+import { DesignRewardAmounts } from "./RewardAmounts";
 import { useMemo, useState, type ReactElement } from "react";
 import { FlatList, View } from "react-native";
 import { cityThemes } from "./cityTheme";
@@ -24,7 +25,6 @@ import {
 } from "./DesignSpace";
 import { DesignProgress } from "./DesignProgress";
 import { ChromeSprite } from "./GameChrome";
-import { rewardText } from "./Achievements";
 
 function RoutePin({
   a,
@@ -70,9 +70,7 @@ function RoutePin({
         >
           {status}
         </DesignText>
-        <DesignText rect={[360, 1011, 710, 59]} size={33} fit>
-          {rewardText(a)}
-        </DesignText>
+        <DesignRewardAmounts rect={[360, 1011, 710, 59]} size={33} reward={a.reward} />
         <DesignBox rect={[90, 730, 1026, 360]}>
           <Button
             testID={"achievement-" + a.id}
@@ -102,14 +100,17 @@ export function CityAchievementsList({
   legacyFirst?: boolean;
 }) {
   const nodes = useMemo(() => {
-    const entries = cityAchievements(cityID);
-    if (legacyFirst) return entries;
-    return entries.sort(
-      (a, b) =>
-        Number(b.metric.startsWith("city_mastery_")) -
-        Number(a.metric.startsWith("city_mastery_")),
-    );
-  }, [cityID, legacyFirst]);
+    const priority: Record<string, number> = { ready: 0, progress: 1, locked: 1, claimed: 2 };
+    return cityAchievements(cityID)
+      .map((entry) => ({ entry, state: achievementState(save, entry) }))
+      .sort((a, b) =>
+        (priority[a.state] ?? 1) - (priority[b.state] ?? 1) ||
+        (legacyFirst ? 0 : Number(b.entry.metric.startsWith("city_mastery_")) -
+          Number(a.entry.metric.startsWith("city_mastery_"))) ||
+        (a.entry.metric === b.entry.metric ? a.entry.target - b.entry.target : 0),
+      )
+      .map(({ entry }) => entry);
+  }, [cityID, legacyFirst, save]);
   return (
     <FlatList
       testID="cityAchievementList"

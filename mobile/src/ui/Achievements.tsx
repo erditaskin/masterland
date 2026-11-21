@@ -1,3 +1,4 @@
+import { DesignRewardAmounts } from "./RewardAmounts";
 import { DesignContent } from "./DesignContent";
 import { DesignText } from "./DesignSpace";
 import { DesignProgress } from "./DesignProgress";
@@ -98,20 +99,6 @@ export function AchievementDetails({
             "Reach this rank in every profession in the city.",
           )
         : contentText(a.id + "_description");
-  const reward = [
-    a.reward.title
-      ? accountText(
-          `${name(a.reward.title)} unvanı`,
-          `${name(a.reward.title)} title`,
-        )
-      : null,
-    a.reward.gold ? `+${a.reward.gold} altın` : null,
-    a.reward.gems ? `+${a.reward.gems} elmas` : null,
-    a.reward.energy ? `+${a.reward.energy} enerji` : null,
-    a.reward.xp ? `+${a.reward.xp} XP` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
   return (
     <DesignContent end={2510}>
       <ChromeSprite index={6} rect={[435, 750, 336, 336]} />
@@ -141,9 +128,8 @@ export function AchievementDetails({
       <DesignText rect={[126, 1700, 954, 80]} size={52} bold align="center">
         Ödül
       </DesignText>
-      <DesignText rect={[126, 1790, 954, 170]} size={49} bold align="center">
-        {reward}
-      </DesignText>
+      {a.reward.title && <DesignText rect={[126, 1780, 954, 62]} size={36} fit bold align="center">{name(a.reward.title)}</DesignText>}
+      <DesignRewardAmounts rect={[126, 1845, 954, 100]} size={45} reward={a.reward} />
       <ActionButton
         designRect={[90, 2060, 1026, 132]}
         text={

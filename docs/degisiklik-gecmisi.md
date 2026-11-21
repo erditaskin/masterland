@@ -536,3 +536,41 @@ Release simülatöründe beş şehirde seçim, boş alana taşıma, uyumsuz bır
 Canlı API sürümü `4448a3a40048aaea19ec2c10043640c8d2d55e55` öncesinde veritabanı yedeği alındı. Sentetik misafir hesabında eski 54 hücreli kayıt, güncel oynanabilir şehir kaydı ve beş şehirli katalog örneği yazılıp geri okundu. Sentetik hesap kapatıldı ve eski oturum 401 döndü. Canlı şehir açılma kuralları korunur.
 
 iPhone 13 Pro, iOS 27.2.1 ve bağlı Device Hub ile boşta tahta ekranında iki 20 saniyelik Time Profiler ölçümü alındı. İlk ölçümde ortalama uygulama CPU kullanımı %45,96, hazır görev ve birleştirme animasyonları üç turla sınırlandıktan sonra %3,63 oldu. Sabit vurgular görünür kalır ve etkileşim yeniden animasyon başlatır. Bu örnek pil süresi veya bütün iOS modelleri için ölçüm değildir.
+
+## 19 Kasım 2026 — Görev zorluğu ve enerji seçenekleri
+
+Belenyaka'da 6. seviye oyuncudan gelen geri bildirim üzerine her tekrar grubuna zorunlu basamak 1 görevi ekleyen kural kaldırıldı. Şehir teslim sayaçları ortak aşama hesabında kullanılır. Kart sırası, kısmi gereksinim vurgusu ve boşta birleştirme ipucu, tahta ve depo envanterinden aynı hesapla beslenir. Enerji ekranı marketteki elmas takasını kullanır. Başlangıç elması yalnız yeni kayıt oluşturulurken verilir.
+
+192 motor ve entegrasyon testi geçti. iPhone 16 Pro iOS 18.6 Release simülatöründe beş şehirde görev sırası, uygun birleştirme ipucu, sürükleme, geçersiz bırakma ve 3 elmas karşılığı 25 enerji kontrol edildi. Google test reklamı Yalıkoru'da 25 enerji verdi ve Demirdere'de bekleyen üreticiyi hazırladı.
+
+Masterland 1.0.1 (5) App Store Connect tarafından işlendi. Arkadaşlar TestFlight grubuna eklendi ve Beta App Review durumu Waiting for Review olarak doğrulandı. İlk App Store sürümü 1.0 kendi inceleme sırasında bekliyor.
+
+## 21 Kasım 2026 — Üretici görselleri
+
+ImageGen ile beş şehrin 25 üreticisi için orijinal 5×5 görsel atlas üretildi. İstem, her satırda bir şehrin beş üreticisini, çerçevesiz ve yazısız, kare ve keskin sahnelerle betimledi. Atlas, 244×244 JPEG kesitlere ayrıldı. Şehir rafları ve ürün rehberi aynı dosyaları kullanır. Dosyalar `mobile/assets/art/producer-hd/` altındadır.
+
+195 otomatik test geçti. iPhone 16 Pro Release simülatöründe beş şehirde enerji satın alma ve raf ile üretici detayının görsel boyut eşitliği doğrulandı. Belenyaka'da sipariş ürününe doğrudan dokunma ve üretici açma aksiyonunun portreden önce gelmesi doğrulandı. Facebook görünürlüğü açık imzalı cihaz QA paketi derlendi. Fiziksel Facebook oturumu ve Google reklam tercih formu kabulü bekleniyor.
+
+## 21 Kasım 2026 — Sipariş ve ilk oyun akışı
+
+Hazır siparişe ürün görseli üzerinden de teslim verilir. Eksik siparişte görsel doğrudan ürüne ait tarifi açar. İlk oyun rehberi üretici, birleştirilecek ürünler ve sipariş sırasına göre etkileşim alanını aydınlatır. Başarı ayrıntısı koyu arka planda açılır ve seviye kutlaması Hareketi Azalt ayarına uyan kısa havai fişek animasyonu kullanır.
+
+Reklam gizliliği satırının konumu sabitlendi. Google tercih formu sunduğunda yerel form açılır. Diğer durumlarda geri bildirim Hesap ekranının satırlarını kaydırmadan açılır. Bağlı iPhone'da Facebook girişinin oyuna döndüğü doğrulandı.
+
+Release simülatöründe eksik siparişin ürün tarifine gittiği, hazır siparişin ürün alanına çift dokunuşta bir kez teslim verdiği ve seviye kutlamasının kapanıp tahtaya döndüğü doğrulandı. Yeni QA paketi bağlı iPhone'a kuruldu. Cihaz kilidi yüzünden Google tercih formunun fiziksel doğrulaması bekliyor.
+
+## 21 Kasım 2026 — Öğreticiye dönüş ve oyun sesleri
+
+Mevcut kayıtlar öğreticiyi kendiliğinden tekrar başlatmaz. Belenyaka'da Hesap ayarlarından öğretici yeniden açılır. iPhone 13 Pro'da mevcut tahta üzerinden karşılama ve üretici vurgusu görüldü. Sipariş adımı hazır kart yoksa mevcut görevleri tamamlamayı anlatır.
+
+Üretim sesi 120 ms'den yaklaşık 50 ms'ye kısaltıldı. Hızlı üretimde üç hazır oynatıcı dönüşümlü çalışır. Altın değişimi ve kutlama ayrı sesler kullanır. 195 test geçti. Release simülatöründe üretim ve seviye kutlaması akışı geçti. Fiziksel ses seviyesi ve duyulabilirlik ayrıca doğrulanmalıdır.
+
+## 21 Kasım 2026 — Karakterli öğretici ve kutlama kartları
+
+ImageGen ile Belenyaka için şeffaf bir rehber karakteri üretildi. Karakter karşılama kartında ve tahta yönlendirmelerinde kullanılır. Üretici vurgusu gerçek raf ölçülerinden hesaplanır. Birleştirmede yalnız iki hedef hücre açılır ve sürükleme yönü gösterilir. Teslimde ilk hazır sipariş aydınlatılır. Keşif bildirimi öğretici hedeflerini örtmez. Öğretici ve kutlama kartları ortak yüzey kullanır.
+
+Tekrar açılan öğretici bellekteki bir alıştırma kaydında çalışır. Yerel ve bulut kaydı, ödüller ve bakiye gerçek oyundan ayrıdır. Release simülatöründe üretim, sürükleme, teslim, kutlama ve gerçek kayda dönüş test edildi.
+
+## 21 Kasım 2026 — Ödül kutlaması
+
+ImageGen ile Belenyaka rehberi ve zanaatkâr için şeffaf bir tebrik görseli üretildi. Tam ekran ödül kartlarında karakterler kartın üstüne, üç havai fişek patlaması arkalarındaki karanlık alana yerleşir. Efekt bir kez oynar ve Hareketi Azalt ayarına uyar. Release simülatöründe başarı ödülü ve seviye kutlaması açıldı, yerleşim incelendi ve düğmelerden geri dönüldü. 195 otomatik test geçti.

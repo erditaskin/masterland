@@ -11,9 +11,14 @@ module.exports = () => {
       { iosUrlScheme: iosClient.split(".").reverse().join(".") },
     ]);
   const appId = process.env.EXPO_PUBLIC_ADMOB_IOS_APP_ID;
+  const androidAppId = process.env.EXPO_PUBLIC_ADMOB_ANDROID_APP_ID;
   plugins.push([
     "react-native-google-mobile-ads",
     {
+      // The sample ID keeps future Android QA builds bootable until its AdMob app is configured.
+      androidAppId: /^ca-app-pub-\d+~\d+$/.test(androidAppId || "")
+        ? androidAppId
+        : "ca-app-pub-3940256099942544~3347511713",
       iosAppId: /^ca-app-pub-\d+~\d+$/.test(appId || "")
         ? appId
         : "ca-app-pub-3940256099942544~1458002511",

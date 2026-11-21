@@ -25,17 +25,19 @@ export const adsConfig = resolveAdsConfig({
   producerRewardedUnit:
     process.env.EXPO_PUBLIC_ADMOB_IOS_PRODUCER_REWARDED_AD_UNIT_ID,
 });
+export type RewardedAdFailure = "consent" | "offline" | "no-fill" | "ad" | "cloud" | "account";
 type Snapshot = {
   enabled: boolean;
   phase: AdPhase;
   consentBusy: boolean;
+  requesting: boolean;
   canRequestAds: boolean;
   privacyRequired: boolean;
   dailyUsed: number;
   rewardPending: boolean;
   rewardOutcome: "preview" | "granted" | "verified" | null;
   needsAccount: boolean;
-  error: "consent" | "offline" | "ad" | "cloud" | null;
+  error: RewardedAdFailure | null;
 };
 let snapshot: Snapshot = {
   enabled:
@@ -48,6 +50,7 @@ let snapshot: Snapshot = {
   needsAccount: !adsConfig.testAds && !accountStore.get().user,
   phase: "idle",
   consentBusy: false,
+  requesting: false,
   canRequestAds: false,
   privacyRequired: false,
   error: null,
@@ -155,7 +158,7 @@ const controller = new EnergyAdController(
         () => {},
       );
     }
-    publish({ phase, ...(phase === "error" ? { error: "ad" as const } : {}) });
+    publish({ phase, ...(phase === "error" ? { error: snapshot.error ?? "ad" } : {}) });
   },
   async (receipt) => {
     if (!snapshot.enabled) throw Error("Rewards disabled");
@@ -224,8 +227,13 @@ async function updateConsent(privacy = false) {
     try {
       const { AdsConsent, AdsConsentPrivacyOptionsRequirementStatus } =
         await sdk();
-      if (privacy) await AdsConsent.showPrivacyOptionsForm();
-      else await AdsConsent.gatherConsent();
+      if (privacy) {
+        const refreshed = await AdsConsent.requestInfoUpdate();
+        if (refreshed.privacyOptionsRequirementStatus === AdsConsentPrivacyOptionsRequirementStatus.REQUIRED)
+          await AdsConsent.showPrivacyOptionsForm();
+      } else {
+        await AdsConsent.gatherConsent();
+      }
       const info = await AdsConsent.getConsentInfo();
       publish({
         canRequestAds: info.canRequestAds,
@@ -369,7 +377,14 @@ export const energyAds = {
             events.earned,
           ),
           ad.addAdEventListener(AdEventType.CLOSED, events.closed),
-          ad.addAdEventListener(AdEventType.ERROR, events.failed),
+          ad.addAdEventListener(AdEventType.ERROR, (error) => {
+            const code = error?.reason ?? error?.code?.split("/").at(-1);
+            if (code === "no-fill" || code === "mediation-no-fill")
+              publish({ error: "no-fill" });
+            else if (code === "network-error")
+              publish({ error: "offline" });
+            events.failed();
+          }),
         ];
         return {
           load: () => ad.load(),
@@ -408,12 +423,26 @@ export const energyAds = {
         Date.now() - liveIntent.preparedAt >= 14 * 60 * 1000
       )
         controller.reset();
+      publish({ requesting: true, error: null });
+      if (!(await connected())) {
+        publish({ error: "offline" });
+        return false;
+      }
       if (!snapshot.canRequestAds) await updateConsent();
-      if (!snapshot.canRequestAds) return false;
+      if (!snapshot.canRequestAds) {
+        publish({ error: "consent" });
+        return false;
+      }
       if (!adsConfig.testAds) {
-        if (!(await accountStore.ensureGuest())) return false;
+        if (!(await accountStore.ensureGuest())) {
+          publish({ error: "account" });
+          return false;
+        }
         const owner = accountStore.get().user?.id;
-        if (!owner) return false;
+        if (!owner) {
+          publish({ error: "account" });
+          return false;
+        }
         if (cloudSync.get().ownerID !== owner) await cloudSync.connect(owner);
         else if (cloudSync.get().phase !== "synced") await cloudSync.retry();
         if (cloudSync.get().phase !== "synced") {
@@ -451,11 +480,12 @@ export const energyAds = {
       return await energyAds.show();
     })()
       .catch(() => {
-        publish({ error: "ad" });
+        if (!snapshot.error) publish({ error: "ad" });
         return false;
       })
       .finally(() => {
         watchJob = null;
+        publish({ requesting: false });
       });
     return watchJob;
   },

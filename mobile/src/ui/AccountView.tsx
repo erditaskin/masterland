@@ -3,7 +3,7 @@ import type { Save, Action, Result } from "../game/engine";
 import { accountText as tx } from "../i18n/locale";
 import { DesignContent } from "./DesignContent";
 import { DesignBox, DesignSurface, DesignText } from "./DesignSpace";
-import { AppButton, AppCheckbox, Label } from "./Controls";
+import { AppButton, AppCheckbox } from "./Controls";
 import { PaperCard } from "./PagePrimitives";
 import { ProviderButton } from "./ProviderButton";
 import { AdPrivacyControl } from "./EnergyAdPanel";
@@ -80,7 +80,7 @@ export function AccountView({
       : tx("Cihazda kayıtlı", "Saved on this device");
 
   return (
-    <DesignContent end={settingsY + 970} testID="accountPanel">
+    <DesignContent end={settingsY + 1102} testID="accountPanel">
       {model.registered ? (
         <>
           <PaperCard designRect={[90, 730, 1026, 345]} />
@@ -185,18 +185,33 @@ export function AccountView({
           onPress={() => actions.language(code)}
         />
       ))}
-      <DesignBox rect={[90, settingsY + 535, 1026, 180]}>
+      <DesignBox rect={[90, settingsY + 548, 1026, 112]}>
         <AdPrivacyControl />
-        {model.languageError && <Label>Dil tercihi kaydedilemedi.</Label>}
+
       </DesignBox>
+      {model.languageError && <DesignText rect={[90, settingsY + 829, 1026, 72]} size={34} fit>
+        Dil tercihi kaydedilemedi.
+      </DesignText>}
       {(model.registered || model.guestDeletionAvailable) && (
         <AppButton
-          designRect={[90, settingsY + 744, 1026, 112]}
+          designRect={[90, settingsY + 700, 1026, 112]}
           text={tx("Hesabımı sil", "Delete my account")}
           tone="danger"
           testID="openAccountDeletion"
           disabled={model.blocked}
           onPress={actions.deletion}
+        />
+      )}
+      {save.cityID === "city1" && (
+        <AppButton
+          designRect={[90, settingsY + 947, 1026, 112]}
+          text={tx("Öğreticiyi yeniden aç", "Replay tutorial")}
+          tone="secondary"
+          testID="replayTutorial"
+          disabled={model.blocked}
+          onPress={() => {
+            if (dispatch({ type: "onboarding-replay" })?.kind === "none") actions.close();
+          }}
         />
       )}
     </DesignContent>

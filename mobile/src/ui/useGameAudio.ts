@@ -12,17 +12,19 @@ export function useGameAudio(enabled: boolean) {
   const c = useAudioPlayer(require("../../assets/audio/produce-2.wav"));
   const merge = useAudioPlayer(require("../../assets/audio/merge.wav"));
   const reward = useAudioPlayer(require("../../assets/audio/reward.wav"));
+  const gold = useAudioPlayer(require("../../assets/audio/gold.wav"));
+  const achievement = useAudioPlayer(require("../../assets/audio/achievement.wav"));
   const blocked = useAudioPlayer(require("../../assets/audio/blocked.wav"));
   const players = useMemo(
-    () => [ui, a, b, c, merge, reward, blocked],
-    [ui, a, b, c, merge, reward, blocked],
+    () => [ui, a, b, c, merge, reward, blocked, gold, achievement],
+    [ui, a, b, c, merge, reward, blocked, gold, achievement],
   );
-  const active = useRef<typeof ui | null>(null);
-  const last = useRef(0),
-    serial = useRef(0),
-    variant = useRef(0);
+  const playback = useRef(new Map<typeof ui, number>());
+  const serial = useRef(0);
+  const lastTap = useRef(0);
+  const variant = useRef(0);
   const stop = useCallback(() => {
-    serial.current++;
+    playback.current.clear();
     players.forEach((p) => p.pause());
   }, [players]);
   useEffect(() => {
@@ -39,45 +41,40 @@ export function useGameAudio(enabled: boolean) {
     if (!enabled) stop();
   }, [enabled, stop]);
   return useCallback(
-    (kind: Result["kind"] = "tap") => {
+    (kind: Result["kind"] | "gold" | "achievement" = "tap") => {
       if (
         !enabled ||
         kind === "none" ||
-        AppState.currentState !== "active" ||
-        Date.now() - last.current < 65
+        AppState.currentState !== "active"
       )
         return;
-      last.current = Date.now();
-      const p =
-        kind === "produce"
-          ? [a, b, c][variant.current++ % 3]!
-          : kind === "merge"
-            ? merge
-            : kind === "reward" || kind === "unlock"
-              ? reward
-              : kind === "blocked"
-                ? blocked
-                : ui;
+      if (kind === "tap") {
+        const now = Date.now();
+        if (now - lastTap.current < 65) return;
+        lastTap.current = now;
+      }
+      const p = {
+        tap: ui,
+        produce: kind === "produce" ? [a, b, c][variant.current++ % 3]! : a,
+        merge,
+        reward,
+        unlock: reward,
+        blocked,
+        move: ui,
+        gold,
+        achievement,
+      }[kind];
       const token = ++serial.current;
-      // At most one short cue is audible. A rapid action replaces the previous cue.
-      if (active.current && active.current !== p) active.current.pause();
-      active.current = p;
-      p.volume =
-        kind === "produce"
-          ? 0.5
-          : kind === "blocked"
-            ? 0.45
-            : kind === "reward"
-              ? 0.7
-              : 0.6;
+      playback.current.set(p, token);
+      p.volume = kind === "tap" ? 0.35 : kind === "gold" || kind === "achievement" ? 0.85 : 0.65;
       void p
         .seekTo(0)
         .then(() => {
-          if (token === serial.current && AppState.currentState === "active")
+          if (token === playback.current.get(p) && AppState.currentState === "active")
             p.play();
         })
         .catch(() => {});
     },
-    [enabled, ui, a, b, c, merge, reward, blocked],
+    [enabled, ui, a, b, c, merge, reward, blocked, gold, achievement],
   );
 }

@@ -4,6 +4,9 @@ import {
   advance,
   city,
   cityRule,
+  cityOrderStage,
+  newCity,
+  product,
   cityProducers,
   fresh,
   migrateCurrentSave,
@@ -163,21 +166,93 @@ test("production builds block test refill and StoreKit credit at domain boundary
   );
 });
 
-test("fully unlocked high-tier collections always retain a quick playable order", () => {
+test("all five cities begin at stage one and retire Tier 1 independently", () => {
   const s = fresh(now);
-  s.xp = 2000;
-  city(s).owned = cityProducers(s).map((p) => p.id);
-  city(s).opened = cityProducers(s).flatMap((p) => p.products.map((v) => v.id));
-  city(s).introIndex = 6;
-  for (let i = 0; i < 100; i++) {
-    city(s).repeatIndex = i;
-    assert(
-      orders(s).some((o) =>
-        o.requirements.every((r) => productTier(r.item_id) === 1),
-      ),
-    );
+  s.xp = 55000;
+  for (const id of ["city2", "city3", "city4", "city5"]) s.cities[id] = newCity(id);
+  for (const id of Object.keys(s.cities)) {
+    s.cityID = id;
+    const c = city(s);
+    assert.equal(cityOrderStage(s), id === "city1" ? 5 : 1);
+    c.owned = cityProducers(s).map((producer) => producer.id);
+    const repeats = () => orders(s).filter((order) => order.id.includes("-repeat-"));
+    for (let i = id === "city1" ? 0 : 8; i < 16; i++) {
+      c.repeatIndex = i;
+      const tiers = repeats().flatMap((order) =>
+        order.requirements.map((requirement) => product(requirement.item_id).tier),
+      );
+      assert(tiers.filter((tier) => tier === 1).length <= 1, id);
+      assert(tiers.filter((tier) => tier === 2).length > tiers.length / 2, id);
+    }
+    for (let i = 16; i < 120; i++) {
+      c.repeatIndex = i;
+      const list = repeats();
+      assert.equal(list.length, 5);
+      assert.equal(list[0]!.requirements.length, 1);
+      for (const order of list) {
+        assert(order.requirements.every((r) => product(r.item_id).tier >= 2), id);
+        assert(order.requirements.every((r) => r.quantity === 1 || product(r.item_id).tier < 4));
+      }
+    }
   }
-  function productTier(id: string) {
-    return producers.flatMap((p) => p.products).find((p) => p.id === id)!.tier;
-  }
+  s.cityID = "city1";
+  assert.equal(cityOrderStage(s), 60);
+});
+
+test("Belenyaka level six graduates repeat orders to Tier 2 without rewriting the save", () => {
+  const s = fresh(now);
+  assert.equal(s.gems, 25);
+  s.gems = 0;
+  s.xp = 720;
+  const existing = JSON.parse(JSON.stringify(s));
+  const restored = migrateCurrentSave(existing, now);
+  assert.equal(restored.gems, 0);
+  assert.equal(cityOrderStage(restored), 5);
+  const tiers = orders(restored)
+    .filter((order) => order.id.includes("-repeat-"))
+    .flatMap((order) => order.requirements.map((line) => product(line.item_id).tier));
+  assert(tiers.filter((tier) => tier === 2).length > tiers.length / 2);
+  assert(tiers.filter((tier) => tier === 1).length <= 1);
+  const purchase = run(s, { type: "exchange", id: "energy25" });
+  assert.equal(purchase.kind, "blocked");
+  s.gems = 3;
+  const paid = run(s, { type: "exchange", id: "energy25" });
+  assert.equal(paid.state.gems, 0);
+  assert.equal(paid.state.stamina, s.stamina + 25);
+});
+
+test("welcome energy survives a save and can only be collected once", () => {
+  const initial = fresh(now);
+  assert.equal(initial.stamina, 100);
+  assert.equal(initial.gems, 25);
+  assert.equal(run(initial, { type: "welcome-energy" }).kind, "blocked");
+  initial.stamina = 1;
+  const empty = run(initial, { type: "produce", id: "producer1" }).state;
+  assert.equal(empty.welcomeEnergy, "pending");
+  const resumed = migrateCurrentSave(JSON.parse(JSON.stringify(empty)), now);
+  const claimed = run(resumed, { type: "welcome-energy" }).state;
+  assert.equal(claimed.stamina, 100);
+  assert.equal(claimed.welcomeEnergy, "claimed");
+  assert.equal(run(claimed, { type: "welcome-energy" }).kind, "blocked");
+  claimed.stamina = 1;
+  assert.equal(run(claimed, { type: "produce", id: "producer1" }).state.welcomeEnergy, "claimed");
+});
+
+test("the real board advances onboarding and skip persists until explicit replay", () => {
+  let s = fresh(now);
+  s = run(s, { type: "onboarding-start" }).state;
+  assert.equal(s.onboarding, "produce");
+  s = run(s, { type: "produce", id: "producer1" }).state;
+  assert.equal(s.onboarding, "merge");
+  s = run(s, { type: "produce", id: "producer1" }).state;
+  const occupied = city(s).board.flatMap((tile, index) => tile ? [index] : []);
+  s = run(s, { type: "move", from: occupied[0]!, to: occupied[1]! }).state;
+  assert.equal(s.onboarding, "deliver");
+  s = run(s, { type: "onboarding-finish" }).state;
+  assert.equal(migrateCurrentSave(s, now).onboarding, "done");
+  assert.equal(run(s, { type: "onboarding-start" }).kind, "blocked");
+  const replayed = run(s, { type: "onboarding-replay" }).state;
+  assert.equal(replayed.onboarding, "welcome");
+  assert.deepEqual(city(replayed).board, city(s).board);
+  assert.deepEqual([replayed.gold, replayed.gems, replayed.stamina], [s.gold, s.gems, s.stamina]);
 });

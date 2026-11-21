@@ -1,4 +1,4 @@
-import { orderItemHighlights, prioritizeOrderRail } from "../src/ui/orderRail";
+import { orderItemHighlights, prioritizeOrderRail, readyOrdersFirst } from "../src/ui/orderRail";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
@@ -553,4 +553,29 @@ test("Belenyaka six-column input keeps the seventh column outside the board", ()
   assert.equal(hitCell(239, 199, 40, 38, 6), 35);
   assert.equal(hitCell(240, 199, 40, 38, 6), null);
   assert.equal(hitCell(0, 342, 40, 38, 6), null);
+});
+
+test("order sorting accounts for units in storage and preserves tie order", () => {
+  const save = fresh(now);
+  const [first, second, third] = producers[0]!.products;
+  city(save).board[0] = { id: "unit-board", item: first!.id };
+  city(save).storage = [{ id: "unit-storage", item: first!.id }];
+  const partial = {
+    ...orders(save)[0]!,
+    id: "partial",
+    requirements: [
+      { item_id: first!.id, quantity: 2 },
+      { item_id: third!.id, quantity: 1 },
+    ],
+  };
+  const input = [
+    { ...partial, id: "empty", requirements: [{ item_id: second!.id, quantity: 1 }] },
+    { ...partial, id: "half", requirements: [{ item_id: first!.id, quantity: 4 }] },
+    partial,
+    { ...partial, id: "tie" },
+    { ...partial, id: "ready", requirements: [partial.requirements[0]!] },
+  ];
+  assert.deepEqual(readyOrdersFirst(input, save).map(({ id }) => id), [
+    "ready", "partial", "tie", "half", "empty",
+  ]);
 });

@@ -17,23 +17,25 @@ export function OrderGuide({
   save,
   onBoard,
   targetOrder,
+  itemID,
 }: {
   id: string;
   save: Save;
   onBoard: () => void;
   targetOrder?: Order;
+  itemID?: string;
 }) {
   const order = targetOrder ?? orders(save).find((o) => o.id === id),
     [selected, setSelected] = useState(0);
-  if (!order) return <Label>Bu ilan teslim edildi.</Label>;
-  const requirement = order.requirements[selected] ?? order.requirements[0]!;
-  const target = product(requirement.item_id),
+  if (!order && !itemID) return <Label>Bu ilan teslim edildi.</Label>;
+  const target = product(itemID ?? order!.requirements[selected]!.item_id),
     producer = producers[target.producer]!;
   const steps = producer.products.slice(1, target.tier);
+  const options = itemID ? [] : (order?.requirements ?? []);
   const extra = Math.max(0, steps.length - 1) * 420;
   return (
     <DesignContent
-      end={2220 + extra + (order.requirements.length > 1 ? 170 : 0)}
+      end={2220 + extra + (options.length > 1 ? 170 : 0)}
       testID="orderGuide"
     >
       <PaperCard designRect={[90, 730, 1026, 250]} selected />
@@ -92,14 +94,14 @@ export function OrderGuide({
         text="Tahtaya dön"
         onPress={onBoard}
       />
-      {order.requirements.length > 1 &&
-        order.requirements.map((r, i) => (
+      {options.length > 1 &&
+        options.map((r, i) => (
           <AppButton
             key={r.item_id}
             designRect={[
-              90 + (i * 1026) / order.requirements.length,
+              90 + (i * 1026) / options.length,
               2220 + extra,
-              990 / order.requirements.length,
+              990 / options.length,
               132,
             ]}
             text={product(r.item_id).name}
