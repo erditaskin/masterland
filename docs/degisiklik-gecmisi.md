@@ -574,3 +574,7 @@ Tekrar açılan öğretici bellekteki bir alıştırma kaydında çalışır. Ye
 ## 21 Kasım 2026 — Ödül kutlaması
 
 ImageGen ile Belenyaka rehberi ve zanaatkâr için şeffaf bir tebrik görseli üretildi. Tam ekran ödül kartlarında karakterler kartın üstüne, üç havai fişek patlaması arkalarındaki karanlık alana yerleşir. Efekt bir kez oynar ve Hareketi Azalt ayarına uyar. Release simülatöründe başarı ödülü ve seviye kutlaması açıldı, yerleşim incelendi ve düğmelerden geri dönüldü. 195 otomatik test geçti.
+
+## 21 Kasım 2026 — TestFlight 1.0.1 (6)
+
+Mobil değişiklikler `4a68727` ile GitHub main dalına gönderildi. İmzalı 1.0.1 (6) TestFlight'a yüklendi ve Arkadaşlar harici test grubuna eklendi. App Store Connect'te build durumu Testing olarak doğrulandı. App Store 1.0 inceleme gönderimine dokunulmadı.
